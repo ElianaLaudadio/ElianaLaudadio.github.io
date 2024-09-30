@@ -1,0 +1,41 @@
+{
+    "Chicken": {
+      "Alfredo": ["Chicken breast", "Heavy cream", "Parmesan cheese", "Garlic", "Butter", "Fettuccine pasta"],
+      "Pineapple Teriyaki Chicken": ["Chicken breast", "Pineapple", "Soy sauce", "Teriyaki sauce", "Brown sugar", "Garlic", "Ginger"],
+      "Honey Garlic Chicken": ["Chicken thighs", "Honey", "Soy sauce", "Garlic", "Ginger"],
+      "Chicken Shawarma": ["Chicken thighs", "Yogurt", "Lemon juice", "Garlic", "Cumin", "Paprika", "Turmeric"],
+      "Lemon Chicken": ["Chicken breasts", "Lemon", "Garlic", "Chicken broth", "Thyme"],
+      "Marry Me Chicken": ["Chicken breasts", "Heavy cream", "Sun-dried tomatoes", "Garlic", "Parmesan cheese", "Spinach"],
+      "Marsala": ["Chicken breasts", "Marsala wine", "Mushrooms", "Garlic", "Chicken broth"]
+    },
+    "Beef": {
+      "Hamburger": ["Ground beef", "Hamburger buns", "Lettuce", "Tomato", "Cheese", "Ketchup", "Mustard"],
+      "Steak": ["Steak", "Salt", "Pepper", "Butter", "Garlic", "Rosemary"],
+      "General Tso Meatballs": ["Ground beef", "Soy sauce", "Brown sugar", "Garlic", "Ginger", "Sesame oil"],
+      "Pot Roast": ["Beef chuck roast", "Potatoes", "Carrots", "Onion", "Beef broth", "Garlic", "Thyme"]
+    },
+    "Pork": {
+      "Chorizo": ["Chorizo", "Potatos"],
+      "Hot Dogs": ["Hot dogs", "Hot dog buns", "Ketchup", "Mustard", "Relish", "Onions"],
+      "Carbonara": ["Pasta", "Pancetta", "Egg yolks", "Parmesan cheese", "Garlic", "Black pepper"],
+      "Ramen": ["Ramen noodles", "Pork belly", "Egg", "Green onions", "Miso paste", "Soy sauce"],
+      "Spam Fried Rice": ["Spam", "Rice", "Egg", "Carrots", "Peas", "Soy sauce", "Sesame oil"]
+    },
+    "Fish": {
+      "Salmon": ["Salmon fillet", "Lemon", "Garlic", "Butter", "Dill", "Salt", "Pepper"],
+      "Mahi Mahi": ["Mahi mahi fillet", "Lime", "Cilantro", "Garlic", "Olive oil", "Salt", "Pepper"],
+      "Fish Tacos": ["White fish fillets", "Tortillas", "Cabbage", "Tomato", "Avocado", "Lime", "Cilantro"]
+    },
+    "Misc": {
+      "Frozen Meals": ["Frozen meal of choice"],
+      "Garlic Parm Pasta": ["Pasta", "Garlic", "Parmesan cheese", "Butter", "Cream"],
+      "Gumbo": ["Chicken thighs", "Andouille sausage", "Shrimp", "Bell peppers", "Onion", "Celery", "Okra", "Rice"],
+      "Pasta": ["Pasta of choice", "Tomato sauce", "Ground beef", "Onion", "Garlic", "Italian seasoning"],
+      "Sandwich": ["Bread", "Turkey", "Lettuce", "Tomato", "Mayonnaise", "Mustard"],
+      "Breakfast for Dinner": ["Eggs", "Bacon", "Hash browns", "Pancakes"],
+      "Super Fries": ["Potatoes", "Cheese", "Bacon", "Sour cream", "Green onions"]
+    },
+    "Custom Item": {
+      "Vodka Sauce": ["Pasta", "Tomato sauce", "Vodka", "Heavy cream", "Parmesan cheese", "Garlic", "Onion"]
+    }
+  }

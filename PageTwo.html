@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traverse My Meals</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex; /* Use flexbox for layout */
+        }
+        .sidebar {
+            width: 150px;
+            background-color: #f0f0f0;
+            padding: 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+            border-right: 1px solid #ccc;
+        }
+        .sidebar a {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .sidebar button {
+            width: 100%;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: darkred;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .main-content {
+            margin-left: 170px; /* Adjust margin to accommodate sidebar */
+            padding-left: 20px;
+        }
+        h1 {
+            font-weight: bold;
+            font-size: 50px;
+            color: darkred;
+            margin-top: 20px;
+        }
+        .btn-container {
+            margin-bottom: 20px;
+        }
+        .btn-container a {
+            display: block;
+            margin-bottom: 10px;
+            text-decoration: none;
+        }
+        .btn-container button {
+            width: 100%;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: darkred;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .meal-category {
+            font-weight: bold;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        .meal-list {
+            margin-bottom: 20px;
+        }
+        .custom-item {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="sidebar">
+        <a href="/Users/elianalaudadio/Desktop/Project/index.html">
+            <button>Home</button>
+        </a>
+        <a href="/Users/elianalaudadio/Desktop/Project/PageTwo.html">
+            <button>Hungry?</button>
+        </a>
+        <a href="/Users/elianalaudadio/Desktop/Project/PageOne.html">
+            <button>Shopping List</button>
+        </a>
+        <a href="/Users/elianalaudadio/Desktop/Project/resume.html">
+            <button>My Resume</button>
+        </a>
+    </div>
+
+    <div class="main-content">
+        <h1>Traverse My Meals</h1>
+
+        <p style="font-weight: bold; font-size: 20px;">Click to Add Meals to Shopping List</p>
+        
+
+        <!-- Chicken Section -->
+        <div class="meal-category">Chicken</div>
+        <div class="meal-list">
+            <input type="checkbox" id="chicken1" name="meals" value="Alfredo">
+            <label for="chicken1">Alfredo</label>
+
+            <input type="checkbox" id="chicken2" name="meals" value="Pineapple Teriyaki Chicken">
+            <label for="chicken2">Pineapple Teriyaki Chicken</label>
+
+            <input type="checkbox" id="chicken3" name="meals" value="Honey Garlic Chicken">
+            <label for="chicken3">Honey Garlic Chicken</label>
+
+            <input type="checkbox" id="chicken4" name="meals" value="Chicken Shawarma">
+            <label for="chicken4">Chicken Shawarma</label>
+
+            <input type="checkbox" id="chicken5" name="meals" value="Lemon Chicken">
+            <label for="chicken5">Lemon Chicken</label>
+
+            <input type="checkbox" id="chicken6" name="meals" value="Marry Me Chicken">
+            <label for="chicken6">Marry Me Chicken</label>
+
+            <input type="checkbox" id="chicken7" name="meals" value="Marsala">
+            <label for="chicken7">Marsala</label>
+        </div>
+
+        <!-- Beef Section -->
+        <div class="meal-category">Beef</div>
+        <div class="meal-list">
+            <input type="checkbox" id="beef1" name="meals" value="Hamburger">
+            <label for="beef1">Hamburger</label>
+
+            <input type="checkbox" id="beef2" name="meals" value="Steak">
+            <label for="beef2">Steak</label>
+
+            <input type="checkbox" id="beef3" name="meals" value="General Tso Meatballs">
+            <label for="beef3">General Tso Meatballs</label>
+
+            <input type="checkbox" id="beef4" name="meals" value="Pot Roast">
+            <label for="beef4">Pot Roast</label>
+        </div>
+
+        <!-- Pork Section -->
+        <div class="meal-category">Pork</div>
+        <div class="meal-list">
+            <input type="checkbox" id="pork1" name="meals" value="Chorizo">
+            <label for="pork1">Chorizo</label>
+
+            <input type="checkbox" id="pork2" name="meals" value="Hot Dogs">
+            <label for="pork2">Hot Dogs</label>
+
+            <input type="checkbox" id="pork3" name="meals" value="Carbonara">
+            <label for="pork3">Carbonara</label>
+
+            <input type="checkbox" id="pork4" name="meals" value="Ramen">
+            <label for="pork4">Ramen</label>
+
+            <input type="checkbox" id="pork5" name="meals" value="Spam Fried Rice">
+            <label for="pork5">Spam Fried Rice</label>
+        </div>
+
+        <!-- Fish Section -->
+        <div class="meal-category">Fish</div>
+        <div class="meal-list">
+            <input type="checkbox" id="fish1" name="meals" value="Salmon">
+            <label for="fish1">Salmon</label>
+
+            <input type="checkbox" id="fish2" name="meals" value="Mahi Mahi">
+            <label for="fish2">Mahi Mahi</label>
+
+            <input type="checkbox" id="fish3" name="meals" value="Fish Tacos">
+            <label for="fish3">Fish Tacos</label>
+        </div>
+
+        <!-- Misc Section -->
+        <div class="meal-category">Misc</div>
+        <div class="meal-list">
+            <input type="checkbox" id="misc1" name="meals" value="Frozen Meals">
+            <label for="misc1">Frozen Meals</label>
+
+            <input type="checkbox" id="misc2" name="meals" value="Garlic Parm Pasta">
+            <label for="misc2">Garlic Parm Pasta</label>
+
+            <input type="checkbox" id="misc3" name="meals" value="Gumbo">
+            <label for="misc3">Gumbo</label>
+
+            <input type="checkbox" id="misc4" name="meals" value="Pasta">
+            <label for="misc4">Pasta</label>
+
+            <input type="checkbox" id="misc5" name="meals" value="Sandwich">
+            <label for="misc5">Sandwich</label>
+
+            <input type="checkbox" id="misc6" name="meals" value="Breakfast for Dinner">
+            <label for="misc6">Breakfast for Dinner</label>
+
+            <input type="checkbox" id="misc7" name="meals" value="Super Fries">
+            <label for="misc7">Super Fries</label>
+        </div>
+
+        <!-- Custom Item Section -->
+        <div class="meal-list">
+            <input type="checkbox" id="customItem" name="meals">
+            <label for="customItem">Vodka Sauce</label>
+        </div>
+        
+    </div>
+</div>
+
+<script src="index.js"></script>
+
+</body>
+</html>
