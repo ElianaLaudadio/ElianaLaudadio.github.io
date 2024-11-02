@@ -11,75 +11,103 @@
             display: flex;
             flex-direction: column; /* Stack header and content */
             align-items: center; /* Center the content */
+            font-family: 'Times New Roman', Times, serif; /* Set font to Times New Roman */
         }
-        .header {
+        .header-container {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 30px;
-            border-bottom: 1px solid black;
+            flex-direction: column; /* Stack header elements */
+            align-items: center; /* Center header */
             width: 100%; /* Full width */
-            padding: 10px 1in; /* Padding for left/right */
+            border-bottom: 1px solid black;
+            padding: 10px 0; /* Padding for top/bottom */
         }
-        .image-container {
-            position: relative; /* Create a positioning context */
-            margin-top: 20px;
+        header {
+            font-size: 50px; /* Adjust header size */
+            margin: 10px 0; /* Add margin */
+        }
+        .button-container {
             display: flex;
-            justify-content: flex-start; /* Align items to the left */
-            margin-left: 1in; /* Align with header */
-        }
-        .image-container img {
-            width: 1200px; /* Fixed width */
-            height: auto; /* Maintain aspect ratio */
-            border: 2px solid black;
-        }
-        .text-overlay {
-            position: absolute; /* Position text over image */
-            left: 50px; /* Distance from left */
-            top: 50px; /* Distance from top */
-            color: black; /* Text color */
-            background-color: none; /* Semi-transparent background for readability */
-            padding: 10px; /* Padding around text */
-            border-radius: 5px; /* Rounded corners */
-            width: 450px; /* Fixed width for text */
-            font-size: 30px;
+            flex-wrap: wrap; /* Allow buttons to wrap */
+            justify-content: center; /* Center buttons */
+            gap: 10px; /* Space between buttons */
+            margin: 10px 0; /* Add margin */
         }
         .header-button {
             background: none; 
             border: none; 
             font-size: 22px; 
-            margin-left: 20px; 
             cursor: pointer;
+            padding: 10px 20px; /* Add padding */
+            transition: border 0.3s; /* Smooth transition for border */
         }
         .header-button:hover {
             border: 2px solid black; /* Black border on hover */
+        }
+        .image-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center; /* Center the image */
+            width: 100%; /* Full width */
+        }
+        .image-container img {
+            width: 80%; /* Smaller, responsive width */
+            max-width: 600px; /* Max width for larger screens */
+            height: auto; /* Maintain aspect ratio */
+            border: 2px solid black;
+        }
+        .text-container {
+            margin-top: 20px; /* Space between image and text */
+            max-width: 800px; /* Max width for the text */
+            text-align: center; /* Center text */
+            font-size: 20px; /* Text size */
+            padding: 0 10px; /* Padding for text */
+        }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header {
+                font-size: 30px; /* Smaller header size on mobile */
+                margin: 0 10px; /* Adjust margins */
+            }
+            .header-button {
+                font-size: 18px; /* Smaller button size on mobile */
+                padding: 5px 10px; /* Adjust padding for smaller screens */
+            }
+            .text-container {
+                font-size: 16px; /* Smaller text size on mobile */
+            }
+            .image-container img {
+                width: 90%; /* More responsive width on mobile */
+                max-width: none; /* Remove max-width restriction */
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <header style="font-size: 50px; margin-left: 1in;">ELIANA LAUDADIO</header>
-        <div style="text-align: right;">
-            <a href="index.html" style="text-decoration: none;">
+    <div class="header-container">
+        <header>ELIANA LAUDADIO</header>
+        <div class="button-container">
+            <a href="/Users/elianalaudadio/Desktop/Portfolio/index.html" style="text-decoration: none;">
                 <button class="header-button">HOME</button>
             </a>
-            <a href="portfolio.html" style="text-decoration: none;">
+            <a href="/Users/elianalaudadio/Desktop/Portfolio/portfolio.html" style="text-decoration: none;">
                 <button class="header-button">PORTFOLIO</button>
             </a>
-            <a href="aboutme.html" style="text-decoration: none;">
+            <a href="/Users/elianalaudadio/Desktop/Portfolio/aboutme.html" style="text-decoration: none;">
                 <button class="header-button">ABOUT ME</button>
             </a>
         </div>
     </div>
 
     <div class="image-container">
-        <img src="photos/emptyindex.png" alt="Description of image">
-        <div class="text-overlay">
-            <p><strong>HI, MY NAME IS ELIANA LAUDADIO &#128075;</strong></p>
-            <p>I am a technically minded professional with a strong passion for software and cybersecurity. I thrive on tackling challenging concepts and enjoy creating solutions that enhance everyday life.</p>
-        </div>
+        <img src="photos/unnamed.jpeg" alt="Description of image">
+    </div>
+
+    <div class="text-container">
+        <p><strong>HI, MY NAME IS ELIANA LAUDADIO &#128075;</strong></p>
+        <p>I am a technically minded professional with a strong passion for software and cybersecurity. I thrive on tackling challenging concepts and enjoy creating solutions that enhance everyday life.</p>
     </div>
 
 </body>
 </html>
+
