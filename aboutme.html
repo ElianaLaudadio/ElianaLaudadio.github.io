@@ -4,37 +4,52 @@
     <meta charset="UTF-8">
     <title>About Me &#x1F469;&zwj;&#x1F4BB;</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
-    <script src=""></script>
     <style>
         body {
             background-color: #FCFBF4;
             font-family: 'Times New Roman', Times, serif; /* Set font to Times New Roman */
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center content horizontally */
+        }
+        .header-container {
+            display: flex;
+            flex-direction: column; /* Stack header elements */
+            align-items: center; /* Center header */
+            width: 100%; /* Ensure it takes full width */
+            border-bottom: 1px solid black;
+            padding: 10px 0; /* Add padding */
         }
         header {
-            font-size: 50px;
-            margin-left: 1in;
-            margin-right: 20px;
+            font-size: 50px; /* Adjust header size */
+            margin: 10px 0; /* Add margin */
         }
         .button-container {
-            text-align: right;
-            margin-right: 1in;
+            display: flex;
+            flex-wrap: wrap; /* Allow buttons to wrap */
+            justify-content: center; /* Center buttons */
+            gap: 10px; /* Space between buttons */
+            margin: 10px 0; /* Add margin */
         }
         .button {
+            font-size: 22px;
             background: none;
             border: none;
-            font-size: 22px;
-            margin-left: 20px;
             cursor: pointer;
-            font-family: 'Times New Roman', Times, serif; /* Ensure buttons also use Times New Roman */
+            padding: 10px 20px; /* Add padding */
+            transition: border 0.3s; /* Smooth transition for border */
+        }
+        .button:hover {
+            border: 2px solid black; /* Black border on hover */
         }
         .about-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin-top: 20px;
+            width: 100%; /* Full width for containers */
         }
         .about-image {
             width: 100%;
@@ -45,53 +60,47 @@
         .text-container {
             font-size: 18px;
             line-height: 1.5;
-            margin: 0 1in;
-            font-family: 'Times New Roman', Times, serif; /* Ensure text container uses Times New Roman */
+            margin: 0 1in; /* Side margins for text */
+            text-align: center; /* Center text */
         }
         /* Responsive adjustments */
         @media (max-width: 768px) {
             header {
                 font-size: 30px; /* Smaller header size on mobile */
-                margin-left: 10px;
-                margin-right: 10px;
-            }
-            .button-container {
-                margin-right: 10px; /* Adjust button container margin */
-            }
-            .text-container {
-                margin: 0 10px; /* Adjust text container margin for mobile */
+                margin: 0 10px; /* Adjust margins */
             }
             .button {
                 font-size: 18px; /* Smaller button size on mobile */
+                padding: 5px 10px; /* Adjust padding for smaller screens */
+            }
+            .text-container {
+                margin: 0 10px; /* Adjust text container margin for mobile */
             }
         }
     </style>
 </head>
 <body>
 
-<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid black;">
+<div class="header-container">
     <header>ELIANA LAUDADIO</header>
     <div class="button-container">
         <a href="/Users/elianalaudadio/Desktop/Portfolio/index.html" style="text-decoration: none;">
-            <button class="button" onmouseover="this.style.border='2px solid black';"
-                    onmouseout="this.style.border='none';">HOME</button>
+            <button class="button">HOME</button>
         </a>
         <a href="/Users/elianalaudadio/Desktop/Portfolio/portfolio.html" style="text-decoration: none;">
-            <button class="button" onmouseover="this.style.border='2px solid black';"
-                    onmouseout="this.style.border='none';">PORTFOLIO</button>
+            <button class="button">PORTFOLIO</button>
         </a>
         <a href="/Users/elianalaudadio/Desktop/Portfolio/aboutme.html" style="text-decoration: none;">
-            <button class="button" onmouseover="this.style.border='2px solid black';"
-                    onmouseout="this.style.border='none';">ABOUT ME</button>
+            <button class="button">ABOUT ME</button>
         </a>
     </div>
 </div>
 
 <div class="about-container">
-    <img src="photos/gym.jpeg" alt="Description of image" class="about-image">
+    <img src="gym.jpeg" alt="Description of image" class="about-image">
     <div class="text-container">
-        <p style="text-align: center;"><strong>ABOUT</strong></p>
-        <p style="text-align: center; font-style: italic;">"Every time I'm about to neglect a part of my routine, I think about the woman I'd like to be. She's consistent. Disciplined. And I can be that a second from now by doing it."</p>
+        <p><strong>ABOUT</strong></p>
+        <p style="font-style: italic;">"Every time I'm about to neglect a part of my routine, I think about the woman I'd like to be. She's consistent. Disciplined. And I can be that a second from now by doing it."</p>
         <p>Hi, my name is Eliana Laudadio. I am a dedicated and enthusiastic Computer Science graduate with a strong foundation in software development and a passion for leveraging technology to solve real-world challenges.</p>
         <p>On a personal note, I am passionate about living a healthy lifestyle, which I attribute to my Italian-American upbringing. The values of health and wellness were instilled in me from a young age, and I love to incorporate my culture into my fitness journey—whether it's through traditional recipes made healthier or finding balance in my meals. I enjoy spending time at the gym, believing that a holistic approach to health enhances both my personal and professional life. Naturally, as the technical mind that I am, I like to incorporate my software skills to enhance my personal priorities. This is something that is showcased in my personal favorite Grocery List application project.</p>
         <p>With that, I am proficient in multiple programming languages—including Java, C++, and Python—and I enjoy tackling complex problems and creating efficient solutions. My personal project, a meal planning application, demonstrates my ability to integrate software development with practical value, showcasing my skills in database management and user experience design.</p>
@@ -101,7 +110,4 @@
 
 </body>
 </html>
-
-
-    
 
