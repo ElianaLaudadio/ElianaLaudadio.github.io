@@ -6,34 +6,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="">
     <script src=""></script>
+    <style>
+        body {
+            background-color: #FCFBF4;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            font-size: 50px;
+            margin-left: 1in;
+            margin-right: 20px;
+        }
+        .button-container {
+            text-align: right;
+            margin-right: 1in;
+        }
+        .button {
+            background: none;
+            border: none;
+            font-size: 22px;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+        .about-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .about-image {
+            width: 100%;
+            max-width: 600px; /* Max width for larger screens */
+            height: auto;
+            margin-bottom: 20px;
+        }
+        .text-container {
+            font-size: 18px;
+            line-height: 1.5;
+            margin: 0 1in;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header {
+                font-size: 30px; /* Smaller header size on mobile */
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+            .button-container {
+                margin-right: 10px; /* Adjust button container margin */
+            }
+            .text-container {
+                margin: 0 10px; /* Adjust text container margin for mobile */
+            }
+            .button {
+                font-size: 18px; /* Smaller button size on mobile */
+            }
+        }
+    </style>
 </head>
-<body style="background-color:#FCFBF4;">
+<body>
 
-<div style="display: flex; justify-content: space-between; align-items: center; font-size: 30px; border-bottom: 1px solid black;">
-    <header style="font-size: 50px; margin-left: 1in; margin-right: 20px;">ELIANA LAUDADIO</header>
-    <div style="text-align: right;">
-        <a href="index.html" style="text-decoration: none;">
-            <button style="background: none; border: none; font-size: 22px; margin-left: 20px; cursor: pointer;"
-                    onmouseover="this.style.border='2px solid black';"
+<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid black;">
+    <header>ELIANA LAUDADIO</header>
+    <div class="button-container">
+        <a href="/Users/elianalaudadio/Desktop/Portfolio/index.html" style="text-decoration: none;">
+            <button class="button" onmouseover="this.style.border='2px solid black';"
                     onmouseout="this.style.border='none';">HOME</button>
         </a>
-        <a href="portfolio.html" style="text-decoration: none;">
-            <button style="background: none; border: none; font-size: 22px; margin-left: 20px; cursor: pointer;"
-                    onmouseover="this.style.border='2px solid black';"
+        <a href="/Users/elianalaudadio/Desktop/Portfolio/portfolio.html" style="text-decoration: none;">
+            <button class="button" onmouseover="this.style.border='2px solid black';"
                     onmouseout="this.style.border='none';">PORTFOLIO</button>
         </a>
-        <a href="aboutme.html" style="text-decoration: none;">
-            <button style="background: none; border: none; font-size: 22px; margin-left: 20px; cursor: pointer;"
-                    onmouseover="this.style.border='2px solid black';"
+        <a href="/Users/elianalaudadio/Desktop/Portfolio/aboutme.html" style="text-decoration: none;">
+            <button class="button" onmouseover="this.style.border='2px solid black';"
                     onmouseout="this.style.border='none';">ABOUT ME</button>
         </a>
     </div>
 </div>
 
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;">
-    <img src="photos/gym.jpeg" alt="Description of image" style="width: 600px; height: auto; margin-bottom: 20px;">
-    <div style="font-size: 18px; line-height: 1.5;">
-        <p style="text-align: center;"><strong>ABOUT ME</strong></p>
+<div class="about-container">
+    <img src="gym.jpeg" alt="Description of image" class="about-image">
+    <div class="text-container">
+        <p style="text-align: center;"><strong>ABOUT</strong></p>
         <p style="text-align: center; font-style: italic;">"Every time I'm about to neglect a part of my routine, I think about the woman I'd like to be. She's consistent. Disciplined. And I can be that a second from now by doing it."</p>
         <p>Hi, my name is Eliana Laudadio. I am a dedicated and enthusiastic Computer Science graduate with a strong foundation in software development and a passion for leveraging technology to solve real-world challenges.</p>
         <p>On a personal note, I am passionate about living a healthy lifestyle, which I attribute to my Italian-American upbringing. The values of health and wellness were instilled in me from a young age, and I love to incorporate my culture into my fitness journey—whether it's through traditional recipes made healthier or finding balance in my meals. I enjoy spending time at the gym, believing that a holistic approach to health enhances both my personal and professional life. Naturally, as the technical mind that I am, I like to incorporate my software skills to enhance my personal priorities. This is something that is showcased in my personal favorite Grocery List application project.</p>
@@ -44,6 +99,7 @@
 
 </body>
 </html>
+
 
     
 
