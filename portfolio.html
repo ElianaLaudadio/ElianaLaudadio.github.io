@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio &#x1F469;&zwj;&#x1F4BB;</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-color: #FCFBF4;
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .image-container button {
+            background: none; 
+            border: none; 
+            cursor: pointer; 
+            margin: 0 10px; /* Space between buttons */
+            padding: 0; /* Remove padding */
+            outline: none; /* Remove default focus outline */
+        }
+        .image-container img {
+            width: 425px; /* Set width */
+            height: 300px; /* Set height for uniformity */
+            object-fit: cover; /* Ensure images fill the area without distortion */
+        }
+        .header-button {
+            font-size: 22px; 
+            margin-left: 20px; 
+            background: none; 
+            border: none; 
+            cursor: pointer;
+        }
+        .header-button:hover {
+            border: 2px solid black; /* Black border on hover */
+        }
+        .image-container button:hover {
+            border: 2px solid black; /* Black border on hover */
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 30px; border-bottom: 1px solid black;">
+        <header style="font-size: 50px; margin-left: 1in; margin-right: 20px;">ELIANA LAUDADIO</header>
+        <div style="text-align: right;">
+            <a href="/Users/elianalaudadio/Desktop/Portfolio/index.html" style="text-decoration: none;">
+                <button class="header-button">HOME</button>
+            </a>
+            <a href="/Users/elianalaudadio/Desktop/Portfolio/portfolio.html" style="text-decoration: none;">
+                <button class="header-button">PORTFOLIO</button>
+            </a>
+            <a href="/Users/elianalaudadio/Desktop/Portfolio/aboutme.html" style="text-decoration: none;">
+                <button class="header-button">ABOUT ME</button>
+            </a>
+        </div>
+    </div>
+
+    <div class="image-container">
+        <button onclick="window.location.href='/Users/elianalaudadio/Desktop/Portfolio/aboutme.html'">&lt;</button>
+        <button onclick="window.location.href='/Users/elianalaudadio/Desktop/Portfolio/app.html'">
+            <img src="One_Krabs_Trash_.webp" alt="Description of image 1">
+        </button>
+        <button onclick="window.location.href='/Users/elianalaudadio/Desktop/Portfolio/paper.html'">
+            <img src="women!!.jpg" alt="Description of image 2">
+        </button>
+        <button onclick="window.location.href='/Users/elianalaudadio/Desktop/Portfolio/bigO.html'">
+            <img src="maybe.webp" alt="Description of image 3">
+        </button>
+        <button onclick="window.location.href='/Users/elianalaudadio/Desktop/Portfolio/bigO.html'">&gt;</button>
+    </div>
+
+    <div class="image-container">
+        <button onclick="window.location.href='/Users/elianalaudadio/Desktop/Portfolio/ds.html'">
+            <img src="algorithms.jpeg" alt="Description of new image 1">
+        </button>
+        <button onclick="window.location.href='/Users/elianalaudadio/Desktop/Portfolio/newpage2.html'">
+            <img src="c++.png" alt="Description of new image 2">
+        </button>
+        <button onclick="window.location.href='/Users/elianalaudadio/Desktop/Portfolio/newpage3.html'">
+            <img src="Robot_thinking.jpeg" alt="Description of new image 3">
+        </button>
+    </div>
+</body>
+</html>
