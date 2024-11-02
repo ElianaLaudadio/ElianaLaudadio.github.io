@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome &#128075;</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-color: #FCFBF4;
+            margin: 0; /* Remove default margin */
+            display: flex;
+            flex-direction: column; /* Stack header and content */
+            align-items: center; /* Center the content */
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 30px;
+            border-bottom: 1px solid black;
+            width: 100%; /* Full width */
+            padding: 10px 1in; /* Padding for left/right */
+        }
+        .image-container {
+            position: relative; /* Create a positioning context */
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-start; /* Align items to the left */
+            margin-left: 1in; /* Align with header */
+        }
+        .image-container img {
+            width: 1200px; /* Fixed width */
+            height: auto; /* Maintain aspect ratio */
+            border: 2px solid black;
+        }
+        .text-overlay {
+            position: absolute; /* Position text over image */
+            left: 50px; /* Distance from left */
+            top: 50px; /* Distance from top */
+            color: black; /* Text color */
+            background-color: none; /* Semi-transparent background for readability */
+            padding: 10px; /* Padding around text */
+            border-radius: 5px; /* Rounded corners */
+            width: 450px; /* Fixed width for text */
+            font-size: 30px;
+        }
+        .header-button {
+            background: none; 
+            border: none; 
+            font-size: 22px; 
+            margin-left: 20px; 
+            cursor: pointer;
+        }
+        .header-button:hover {
+            border: 2px solid black; /* Black border on hover */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <header style="font-size: 50px; margin-left: 1in;">ELIANA LAUDADIO</header>
+        <div style="text-align: right;">
+            <a href="/Users/elianalaudadio/Desktop/Portfolio/index.html" style="text-decoration: none;">
+                <button class="header-button">HOME</button>
+            </a>
+            <a href="/Users/elianalaudadio/Desktop/Portfolio/portfolio.html" style="text-decoration: none;">
+                <button class="header-button">PORTFOLIO</button>
+            </a>
+            <a href="/Users/elianalaudadio/Desktop/Portfolio/aboutme.html" style="text-decoration: none;">
+                <button class="header-button">ABOUT ME</button>
+            </a>
+        </div>
+    </div>
+
+    <div class="image-container">
+        <img src="emptyindex.png" alt="Description of image">
+        <div class="text-overlay">
+            <p><strong>HI, MY NAME IS ELIANA LAUDADIO &#128075;</strong></p>
+            <p>I am a technically minded professional with a strong passion for software and cybersecurity. I thrive on tackling challenging concepts and enjoy creating solutions that enhance everyday life.</p>
+        </div>
+    </div>
+
+</body>
+</html>
