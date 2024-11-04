@@ -9,93 +9,93 @@
             background-color: #FCFBF4;
             display: flex;
             flex-direction: column;
-            align-items: center; /* Center content horizontally */
-            font-family: 'Times New Roman', Times, serif; /* Set font */
-            padding: 0 10px; /* Add some padding */
+            align-items: center; 
+            font-family: 'Times New Roman', Times, serif; 
+            margin: 0; /* Remove default margin */
         }
         .header-container {
             display: flex;
-            flex-direction: column; /* Stack header elements */
-            align-items: center; /* Center header */
-            width: 100%; /* Ensure it takes full width */
+            flex-direction: column; 
+            align-items: center; 
+            width: 100%; 
             border-bottom: 1px solid black;
-            padding: 10px 0; /* Add padding */
+            padding: 10px 0; 
         }
         header {
-            font-size: 32px; /* Adjust header size */
-            margin: 10px 0; /* Add margin */
+            font-size: 50px; /* Adjusted header size */
+            margin: 10px 0; 
         }
         .button-container {
             display: flex;
-            flex-direction: row; /* Keep buttons in a row */
-            justify-content: center; /* Center buttons */
-            flex-wrap: wrap; /* Allow wrapping on small screens */
-            gap: 10px; /* Space between buttons */
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 10px; 
+            margin: 10px 0; /* Added margin */
         }
         .header-button {
-            font-size: 18px; /* Adjust button size */
             background: none; 
             border: none; 
+            font-size: 22px; /* Adjusted button size */
             cursor: pointer;
-            padding: 10px 20px; /* Add padding */
-            transition: border 0.3s; /* Smooth transition for border */
+            padding: 10px 20px; 
+            transition: border 0.3s; 
         }
         .header-button:hover {
-            border: 2px solid black; /* Black border on hover */
+            border: 2px solid black; 
         }
         .image-container {
             display: flex;
-            flex-direction: column; /* Stack boxes vertically */
-            align-items: center; /* Center boxes */
+            flex-direction: column; 
+            align-items: center; 
             margin-top: 20px;
-            width: 100%; /* Full width for containers */
+            width: 100%; 
         }
         .project-box {
-            position: relative; /* Allow absolute positioning of pseudo-elements */
-            width: 90%; /* Responsive width */
-            max-width: 425px; /* Max width for larger screens */
-            height: 150px; /* Adjust height */
-            background-color: black; /* Black background */
-            color: #FCFBF4; /* Off-white font color */
+            position: relative; 
+            width: 90%; 
+            max-width: 425px; 
+            height: 150px; 
+            background-color: black; 
+            color: #FCFBF4; 
             display: flex;
-            justify-content: center; /* Center text horizontally */
-            align-items: center; /* Center text vertically */
-            font-size: 20px; /* Font size */
-            margin: 10px 0; /* Space between boxes */
-            text-align: center; /* Center text */
-            cursor: pointer; /* Change cursor to pointer */
-            text-decoration: none; /* Remove underline from text */
-            overflow: hidden; /* Hide overflow for pseudo-elements */
-            border-radius: 20px; /* Slightly round the corners */
-            transition: transform 0.3s; /* Smooth scale transition */
+            justify-content: center; 
+            align-items: center; 
+            font-size: 20px; 
+            margin: 10px 0; 
+            text-align: center; 
+            cursor: pointer; 
+            text-decoration: none; 
+            overflow: hidden; 
+            border-radius: 20px; 
+            transition: transform 0.3s; 
         }
         .project-box:hover {
-            transform: scale(1.05); /* Slightly enlarge on hover */
+            transform: scale(1.05); 
         }
         .project-box::before,
         .project-box::after {
             content: '';
             position: absolute;
-            background-color: black; /* Same background as the box */
-            z-index: -1; /* Place behind the box */
+            background-color: black; 
+            z-index: -1; 
         }
         .project-box::before {
-            width: 100%; /* Cover full width */
-            height: 100%; /* Cover full height */
-            border-radius: 50%; /* Round edges for a splat effect */
-            transform: translate(-50%, -50%) rotate(30deg); /* Position and rotate */
-            left: 50%; /* Center horizontally */
-            top: 50%; /* Center vertically */
-            filter: blur(15px); /* Add blur for softness */
+            width: 100%; 
+            height: 100%; 
+            border-radius: 50%; 
+            transform: translate(-50%, -50%) rotate(30deg); 
+            left: 50%; 
+            top: 50%; 
+            filter: blur(15px); 
         }
         .project-box::after {
-            width: 60%; /* Slightly smaller */
-            height: 60%; /* Slightly smaller */
-            border-radius: 50%; /* Round edges for a splat effect */
-            transform: translate(-50%, -50%) rotate(-30deg); /* Position and rotate */
-            left: 50%; /* Center horizontally */
-            top: 50%; /* Center vertically */
-            filter: blur(10px); /* Add blur for softness */
+            width: 60%; 
+            height: 60%; 
+            border-radius: 50%; 
+            transform: translate(-50%, -50%) rotate(-30deg); 
+            left: 50%; 
+            top: 50%; 
+            filter: blur(10px); 
         }
     </style>
 </head>
@@ -103,29 +103,28 @@
     <div class="header-container">
         <header>ELIANA LAUDADIO</header>
         <div class="button-container">
-            <a href="/Users/elianalaudadio/Desktop/Portfolio/index.html" style="text-decoration: none;">
+            <a href="index.html" style="text-decoration: none;">
                 <button class="header-button">HOME</button>
             </a>
-            <a href="/Users/elianalaudadio/Desktop/Portfolio/portfolio.html" style="text-decoration: none;">
+            <a href="portfolio.html" style="text-decoration: none;">
                 <button class="header-button">PORTFOLIO</button>
             </a>
-            <a href="/Users/elianalaudadio/Desktop/Portfolio/aboutme.html" style="text-decoration: none;">
+            <a href="aboutme.html" style="text-decoration: none;">
                 <button class="header-button">ABOUT ME</button>
             </a>
         </div>
     </div>
 
     <div class="image-container">
-        <a href="Portfolio/app.html" class="project-box">GROCERY LIST APPLICATION</a>
-        <a href="/Users/elianalaudadio/Desktop/Portfolio/paper.html" class="project-box">WOMEN IN COMPUTING - A RESEARCH PAPER</a>
-        <a href="/Users/elianalaudadio/Desktop/Portfolio/bigO.html" class="project-box">LEARN BIG-O ANALYSIS</a>
+        <a href="app.html" class="project-box"> JAVASCRIPT -  GROCERY APPLICATION</a>
+        <a href="paper.html" class="project-box">WOMEN IN COMPUTING RESEARCH PAPER</a>
+        <a href="bigO.html" class="project-box">LEARN BIG-O ANALYSIS</a>
     </div>
 
     <div class="image-container">
-        <a href="/Users/elianalaudadio/Desktop/Portfolio/ds.html" class="project-box">LEARN DATA STRUCTURES AND ALGORITHMS</a>
+        <a href="ds.html" class="project-box"> JAVA - LEARN DATA STRUCTURES AND ALGORITHMS</a>
         <a href="/Users/elianalaudadio/Desktop/Portfolio/newpage2.html" class="project-box">MY C++ PROJECTS</a>
-        <a href="/Users/elianalaudadio/Desktop/Portfolio/newpage3.html" class="project-box">MACHINE LEARNING PROJECT</a>
+        <a href="/Users/elianalaudadio/Desktop/Portfolio/newpage3.html" class="project-box">PYTHON - MACHINE LEARNING PROJECT</a>
     </div>
 </body>
 </html>
-
