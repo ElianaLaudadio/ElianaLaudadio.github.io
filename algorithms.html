@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Learn Data &#x1f3d7;</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-color: #FCFBF4;
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            border-bottom: 1px solid black;
+            padding: 10px 0;
+        }
+        header {
+            font-size: 50px;
+            margin: 10px 0;
+        }
+        .button-container {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .button {
+            font-size: 22px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            transition: border 0.3s;
+        }
+        .button:hover {
+            border: 2px solid black;
+        }
+        .dropdown-container {
+            margin-top: 20px;
+            width: 80%;
+        }
+        .dropdown {
+            margin-bottom: 10px;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+        .dropdown-header {
+            background-color: darkslategray;
+            color: whitesmoke;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .dropdown-header span.icon {
+            margin-left: 10px;
+            font-size: 18px;
+        }
+        .dropdown-content {
+            display: none;
+            padding: 10px;
+            background-color: #ffffff;
+        }
+        .dropdown.open .dropdown-content {
+            display: block;
+        }
+        .dropdown.open .dropdown-header .icon {
+            transform: rotate(180deg);
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const dropdownHeaders = document.querySelectorAll(".dropdown-header");
+            dropdownHeaders.forEach(header => {
+                header.addEventListener("click", function () {
+                    const dropdown = this.parentElement;
+                    dropdown.classList.toggle("open");
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+
+<div class="header-container">
+    <header>ELIANA LAUDADIO</header>
+    <div class="button-container">
+        <a href="/Users/elianalaudadio/Desktop/Portfolio/index.html" style="text-decoration: none;">
+            <button class="button">HOME</button>
+        </a>
+        <a href="/Users/elianalaudadio/Desktop/Portfolio/portfolio.html" style="text-decoration: none;">
+            <button class="button">PORTFOLIO</button>
+        </a>
+        <a href="/Users/elianalaudadio/Desktop/Portfolio/aboutme.html" style="text-decoration: none;">
+            <button class="button">ABOUT ME</button>
+        </a>
+    </div>
+</div>
+
+<div class="dropdown-container">
+    <!-- Section 1 -->
+    <div class="dropdown">
+        <div class="dropdown-header">ARRAY LISTS <span class="icon">▼</span></div>
+        <div class="dropdown-content">
+            <p style="font-weight: bold;">What it is:</p>
+            <p>An ArrayList is a resizable array implementation in Java that allows dynamic storage and manipulation of elements, enabling efficient addition and removal after the compilation phase, while storing reference types.</p>
+            <p style="font-weight: bold;">When to Use an Array List</p>
+            <ul>
+                <li>Where arrays are a fixed allocation size, ArrayLists can grow or shrink dynamically to contain desired elements</li>
+                <li>Does not support primitive data types; only use reference types</li>
+                <li>Supports random access; elements can be accessed directly rather than in a fixed sequence</li>
+                <li>Runtime Complexity:</li>
+            </ul>
+            <p style="font-weight: bold;">Simple ArrayList Methods:</p>
+            <ul>
+                <li>add(element): adds element at the end of the list</li>
+                <li>remove(index): removes element at desired index</li>
+                <li>get(index): returns element at desired index</li>
+                <li>set(index, element): sets desired index with desired element</li>
+                <li>size(): returns the size of the arraylist</li>
+            </ul>
+
+            <p style="font-weight: bold;">Implementation:</p>
+
+            <div >
+                <pre style="background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+        
+            
+        
+            import java.util.ArrayList;    
+        
+            public class Main {
+            
+                public static void main(String[] args) {
+                    
+                    ArrayList<String> grocery = new ArrayList<String>(); 
+                                                        
+                    grocery.add("milk");
+                    grocery.add("eggs");
+                    grocery.add("cheese");
+                    
+                    grocery.set(0, "low fat milk");
+                    grocery.remove(2);
+                    grocery.clear();
+                    
+                    for(int i = 0; i < grocery.size(); i++) {     
+                        System.out.println(grocery.get(i));
+                    }
+                }
+            }
+        
+                </pre>
+            </div>
+
+        </div>
+    </div>
+    <div class="dropdown">
+        <div class="dropdown-header">LINKED LISTS <span class="icon">▼</span></div>
+        <div class="dropdown-content">
+            <p>A LinkedList is a linear data structure where each element (node) contains a reference to the next node, allowing efficient insertion and deletion operations at any position.</p>
+        </div>
+    </div>
+    <div class="dropdown">
+        <div class="dropdown-header">STACKS <span class="icon">▼</span></div>
+        <div class="dropdown-content">
+            <p>A Stack is a Last-In-First-Out (LIFO) data structure used for operations like recursion, undo functionality, and expression evaluation.</p>
+        </div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="dropdown">
+        <div class="dropdown-header">QUEUES <span class="icon">▼</span></div>
+        <div class="dropdown-content">
+            <p>A Queue is a First-In-First-Out (FIFO) data structure used in scheduling, buffering, and asynchronous tasks.</p>
+        </div>
+    </div>
+    <div class="dropdown">
+        <div class="dropdown-header">PRIORITY QUEUES <span class="icon">▼</span></div>
+        <div class="dropdown-content">
+            <p>A Priority Queue assigns priorities to elements, ensuring higher-priority elements are dequeued before lower-priority ones, regardless of insertion order.</p>
+        </div>
+    </div>
+    <div class="dropdown">
+        <div class="dropdown-header">BINARY TREES <span class="icon">▼</span></div>
+        <div class="dropdown-content">
+            <p>A Binary Tree is a hierarchical data structure with nodes having up to two children, used in searching, sorting, and hierarchical data representation.</p>
+        </div>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="dropdown">
+        <div class="dropdown-header">HEAPS <span class="icon">▼</span></div>
+        <div class="dropdown-content">
+            <p>A Heap is a complete binary tree used for implementing priority queues, with the heap property ensuring parent nodes are ordered with respect to their children.</p>
+        </div>
+    </div>
+    <div class="dropdown">
+        <div class="dropdown-header">HASH TABLES <span class="icon">▼</span></div>
+        <div class="dropdown-content">
+            <p>A Hash Table maps keys to values for efficient lookups, insertions, and deletions using a hash function to index data.</p>
+        </div>
+    </div>
+    <div class="dropdown">
+        <div class="dropdown-header">GRAPHS <span class="icon">▼</span></div>
+        <div class="dropdown-content">
+            <p>A Graph is a collection of nodes (vertices) and edges, used to model pairwise relations in applications like networking, search engines, and transportation.</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
