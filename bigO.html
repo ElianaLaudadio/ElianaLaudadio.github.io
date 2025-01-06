@@ -2,62 +2,88 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>About Me &#x1F469;&zwj;&#x1F4BB;</title>
+    <title>Learn BigO Analysis &#x1f3d7;</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
             background-color: #FCFBF4;
-            margin: 0; /* Remove default margin */
-            font-family: Arial, sans-serif; /* Use a more web-friendly font */
+            font-family: 'Times New Roman', Times, serif; /* Set font to Times New Roman */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center content horizontally */
         }
         .header-container {
             display: flex;
-            flex-direction: column; /* Stack header and buttons */
-            align-items: center; /* Center the header and buttons */
+            flex-direction: column; /* Stack header elements */
+            align-items: center; /* Center header */
+            width: 100%; /* Ensure it takes full width */
             border-bottom: 1px solid black;
-            padding: 10px 0; /* Padding for top/bottom */
+            padding: 10px 0; /* Add padding */
         }
         header {
-            font-size: 40px; /* Adjust header size to be smaller */
+            font-size: 50px; /* Adjust header size */
             margin: 10px 0; /* Add margin */
-            text-align: center; /* Center header text */
         }
         .button-container {
             display: flex;
+            flex-wrap: wrap; /* Allow buttons to wrap */
             justify-content: center; /* Center buttons */
-            flex-wrap: wrap; /* Allow buttons to wrap on small screens */
+            gap: 10px; /* Space between buttons */
+            margin: 10px 0; /* Add margin */
         }
-        .header-button {
-            background: none; 
-            border: none; 
-            font-size: 22px; 
-            margin: 10px; /* Spacing between buttons */
+        .button {
+            font-size: 22px;
+            background: none;
+            border: none;
             cursor: pointer;
+            padding: 10px 20px; /* Add padding */
             transition: border 0.3s; /* Smooth transition for border */
         }
-        .header-button:hover {
+        .button:hover {
             border: 2px solid black; /* Black border on hover */
         }
-        h2 {
-            text-align: center;
-            font-size: 24px; /* Responsive font size */
-            margin: 20px 0; /* Margin around heading */
+        .about-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            width: 100%; /* Full width for containers */
         }
-        p {
-            text-align: center;
-            font-size: 16px; /* Responsive font size */
-            margin: 0 10px; /* Margin for paragraph */
+        .about-image {
+            width: 100%;
+            max-width: 600px; /* Max width for larger screens */
+            height: auto;
+            margin-bottom: 20px;
         }
-        .code-container {
-            margin: 20px;
-            overflow-x: auto; /* Allow horizontal scrolling for code on small screens */
+        .text-container {
+            font-size: 18px;
+            line-height: 1.5;
+            margin: 0 1in; /* Side margins for text */
+            text-align: left; /* Align text to the left */
         }
-        pre {
-            background-color: #f4f4f4;
-            padding: 10px;
-            border-radius: 5px;
-            white-space: pre-wrap; /* Allow wrapping of long lines */
-            word-wrap: break-word; /* Break long words if necessary */
+        .text-container p.italic {
+            font-style: italic; /* Keep italic style for this specific paragraph */
+            text-align: center; /* Center this italicized paragraph */
+        }
+        .text-container p.about-title {
+            text-align: center; /* Center the "ABOUT" title */
+            font-weight: bold; /* Make the title bold */
+        }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header {
+                font-size: 30px; /* Smaller header size on mobile */
+                margin: 0 10px; /* Adjust margins */
+            }
+            .button {
+                font-size: 18px; /* Smaller button size on mobile */
+                padding: 5px 10px; /* Adjust padding for smaller screens */
+            }
+            .text-container {
+                margin: 0 10px; /* Adjust text container margin for mobile */
+            }
         }
     </style>
 </head>
@@ -66,86 +92,26 @@
 <div class="header-container">
     <header>ELIANA LAUDADIO</header>
     <div class="button-container">
-        <a href="/Users/elianalaudadio/Desktop/Portfolio/index.html" style="text-decoration: none;">
-            <button class="header-button">HOME</button>
+        <a href="index.html" style="text-decoration: none;">
+            <button class="button">HOME</button>
         </a>
-        <a href="/Users/elianalaudadio/Desktop/Portfolio/portfolio.html" style="text-decoration: none;">
-            <button class="header-button">PORTFOLIO</button>
+        <a href="portfolio.html" style="text-decoration: none;">
+            <button class="button">PORTFOLIO</button>
         </a>
-        <a href="/Users/elianalaudadio/Desktop/Portfolio/aboutme.html" style="text-decoration: none;">
-            <button class="header-button">ABOUT ME</button>
+        <a href="aboutme.html" style="text-decoration: none;">
+            <button class="button">ABOUT ME</button>
         </a>
     </div>
 </div>
 
-<h2>My C++ Code Example</h2>
-<p>The C++ program hw3 enhances the functionality of your previous homework assignment by allowing for customizable word censorship. Instead of exclusively targeting Greek letter words, hw3 accepts a specified list of words to censor, offering greater flexibility in text processing.</p>
-<p>The program operates based on command-line arguments. It expects a sequence of words to be censored, followed by a mandatory dash (-), and optionally, a list of files from which to read input. If no files are provided, it defaults to reading from standard input.</p>
+<div style="text-align: center;font-size: 2em; font-weight: bold; " >
 
-<div class="code-container">
-    <pre><code>
-#include <cassert>
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-
-using namespace std;
-
-void censorship(vector<string> v, string line, int dash = -1){  
-    string r = "CENSORED";
-    string bad;
-
-    size_t condition;
-    if(dash == -1){   
-        condition = v.size();
-    } else {
-        condition = dash;
-    }
-
-    for(size_t i = 0; i < condition; i++){ //arguments loop
-        bad = v[i]; 
-        size_t word_size = bad.size();
-        size_t word_size_plus_one = word_size + 1;
-        size_t found = line.find(bad);
-
-        if (found != string::npos){
-            if((line.substr(0,word_size) == bad)){
-                if(isalpha(line[word_size])){ 
-                } else {
-                    line.replace(line.find(bad), word_size, r);
-                }
-            }      
-        }
-
-        while (found != string::npos){
-            if((isalpha(line[found-1]) || (isalpha(line[found + word_size])))){   
-            } else { 
-                line.replace(line.find(bad), word_size, r);
-            }
-            found = line.find(bad);
-        }
-
-        found = line.find(bad);
-        if (found != string::npos){
-            if((line.substr((line.size() - word_size),line.size()) == bad)){ 
-                if(isalpha(line[line.size() - word_size_plus_one])){
-                } else {
-                    line.replace(line.find(bad), word_size, r);
-                }
-            }
-        }
-    }
-    cout << line << "\n";
-}
-
-int main(int argc, char *argv[]){
-    // Code omitted for brevity
-    return 0;
-}
-    </code></pre>
+<p style="font-size:200px">
+    &#x1f3d7;
+</p>
 </div>
 
 </body>
 </html>
+
 
