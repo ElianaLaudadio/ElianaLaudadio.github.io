@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Learn Data &#x1f3d7;</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-color: #FCFBF4;
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            border-bottom: 1px solid black;
+            padding: 10px 0;
+        }
+        header {
+            font-size: 50px;
+            margin: 10px 0;
+            text-align: center; /* Ensures the text is centered */
+        }
+        .button-container {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .button {
+            font-size: 22px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px 20px;
+            transition: border 0.3s;
+            text-decoration: none;
+            text-align: center;
+            color: black;
+            appearance: none;
+            border-radius: 0;
+        }
+        .button:hover {
+            border: 2px solid black;
+        }
+        .dropdown-container {
+            margin-top: 20px;
+            width: 80%;
+        }
+        .dropdown {
+            margin-bottom: 10px;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+        .dropdown-header {
+            background-color: darkslategray;
+            color: whitesmoke;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .dropdown-header span.icon {
+            margin-left: 10px;
+            font-size: 18px;
+        }
+        .dropdown-content {
+            display: none;
+            padding: 10px;
+            background-color: #ffffff;
+        }
+        .dropdown.open .dropdown-content {
+            display: block;
+        }
+        .dropdown.open .dropdown-header .icon {
+            transform: rotate(180deg);
+        }
+    
+        /* Media Query for Mobile Devices */
+        @media (max-width: 768px) {
+            header {
+                font-size: 40px; /* Adjust font size for smaller screens */
+            }
+            pre {
+            font-size: 10px; /* Reduce font size for smaller screens */
+            padding: 8px; /* Adjust padding for smaller screens */
+        }
+
+        }
+    </style>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const dropdownHeaders = document.querySelectorAll(".dropdown-header");
+            dropdownHeaders.forEach(header => {
+                header.addEventListener("click", function () {
+                    const dropdown = this.parentElement;
+                    dropdown.classList.toggle("open");
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+
+<div class="header-container">
+    <header>ELIANA LAUDADIO</header>
+    <div class="button-container">
+        <a href="/Users/elianalaudadio/Desktop/Portfolio/index.html" style="text-decoration: none;">
+            <button class="button">HOME</button>
+        </a>
+        <a href="/Users/elianalaudadio/Desktop/Portfolio/portfolio.html" style="text-decoration: none;">
+            <button class="button">PORTFOLIO</button>
+        </a>
+        <a href="/Users/elianalaudadio/Desktop/Portfolio/aboutme.html" style="text-decoration: none;">
+            <button class="button">ABOUT ME</button>
+        </a>
+    </div>
+</div>
+
+<div class="dropdown-container">
+    <!-- Section 1 -->
+    <div class="dropdown">
+        <div class="dropdown-header">LINEAR SEARCH <span class="icon">▼</span></div>
+        <div class="dropdown-content">
+            <p style="font-weight: bold;">What it is</p>
+            <p>An ArrayList is a resizable array implementation in Java that allows dynamic storage and manipulation of elements, enabling efficient addition and removal after the compilation phase, while storing reference types.</p>
+
+
+        </div>
+    </div>
+    <div class="dropdown">
+        <div class="dropdown-header">BINARY SEARCH <span class="icon">▼</span></div>
+        <div class="dropdown-content">
+            <p style="font-weight: bold;">What it is</p>
+            <p>A linked list is a data structure consisting of a collection of nodes, where each node contains a data field and a reference (link) to the next node in the sequence. </p>
+
+
+
+        </div>
+    </div>
+    <div class="dropdown">
+        <div class="dropdown-header">DEPTH FIRST SEARCH <span class="icon">▼</span></div>
+        <div class="dropdown-content">
+            <p style="font-weight: bold;">What it is</p>
+    <p>A stack is a last in, first out data structure. They allow us to store objects into a logical vertical tower.</p>
+ 
+ 
+
+
+
+
+        </div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="dropdown">
+        <div class="dropdown-header">BREADTH FIRST SEARCH <span class="icon">▼</span></div>
+        <div class="dropdown-content">
+
+            <p style="font-weight: bold;">What it is</p>
+            <p>A queue is similar to a stack, but instead it is a first in, first out (FIFO) data structure. Queues allow us to store objects into a line.</p>
+ 
+
+
+
+
+        </div>
+    </div>
+    <div class="dropdown">
+        <div class="dropdown-header">SELECTION SORT <span class="icon">▼</span></div>
+        <div class="dropdown-content">
+            <p style="font-weight: bold;">What it is</p>
+            <p>A  priority queue is similar to a regular queue, as it is a first in, first out (FIFO) data structure. Queues allow us to store objects into a line, however priority queues allow us to give weight and order to each element.</p>
+
+
+        </div>
+    </div>
+    <div class="dropdown">
+        <div class="dropdown-header">INSERTION SORT <span class="icon">▼</span></div>
+        <div class="dropdown-content">
+            <p style="font-weight: bold;">What it is</p>
+            <p>A binary tree is a data structure made up of nodes, where each node has at most two children, referred to as the left and right child. It is often used to organize data hierarchically, allowing for efficient searching, inserting, and deleting of elements.</p>
+
+ 
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    <!-- Section 3 -->
+    <div class="dropdown">
+        <div class="dropdown-header">HEAP SORT <span class="icon">▼</span></div>
+        <div class="dropdown-content">
+            <p style="font-weight: bold;">What it is</p>
+
+
+        </div>
+    </div>
+    <div class="dropdown">
+        <div class="dropdown-header">BUBBLE SORT <span class="icon">▼</span></div>
+        <div class="dropdown-content">
+            <p style="font-weight: bold;">What it is</p>
+
+            <p>A hash table is a data structure that stores key-value pairs, allowing for fast access to values based on their unique keys.</p>
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
