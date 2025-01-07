@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Learn Data &#x1f3d7;</title>
+    <title>Learn Big O &#x1F469;&zwj;&#x1F4BB;</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
@@ -46,6 +46,33 @@
         .button:hover {
             border: 2px solid black;
         }
+        .content {
+            max-width: 800px;
+            margin: 20px;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: darkslategray;
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin: 10px 0;
+            color: #333;
+        }
+        ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        li {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
     </style>
 </head>
 <body>
@@ -53,17 +80,47 @@
 <div class="header-container">
     <header>ELIANA LAUDADIO</header>
     <div class="button-container">
-        <a href="/Users/elianalaudadio/Desktop/Portfolio/index.html" style="text-decoration: none;">
+        <a href="index.html" style="text-decoration: none;">
             <button class="button">HOME</button>
         </a>
-        <a href="/Users/elianalaudadio/Desktop/Portfolio/portfolio.html" style="text-decoration: none;">
+        <a href="portfolio.html" style="text-decoration: none;">
             <button class="button">PORTFOLIO</button>
         </a>
-        <a href="/Users/elianalaudadio/Desktop/Portfolio/aboutme.html" style="text-decoration: none;">
+        <a href="aboutme.html" style="text-decoration: none;">
             <button class="button">ABOUT ME</button>
         </a>
+
     </div>
+</div>
+
+<div class="content" id="big-o">
+    <h2 style="text-align: center;">Learn Big O Analysis</h2>
+    <p>
+        Big O analysis is a way to describe the efficiency of algorithms. It helps developers understand how the runtime or space requirements of an algorithm grow as the input size increases. 
+    </p>
+
+    <div style="text-align: center;"><img src="photos/bigo!.png" alt="Description of image" class="about-image"></div>
+    
+
+    <ul>
+        <li><strong>O(1):</strong> Constant time – The runtime does not depend on the input size.</li>
+        <li><strong>O(log n):</strong> Logarithmic time – The runtime increases logarithmically as input size grows. Common in binary search.</li>
+        <li><strong>O(n):</strong> Linear time – The runtime grows proportionally with the input size.</li>
+        <li><strong>O(n log n):</strong> Log-linear time – Often found in efficient sorting algorithms like Merge Sort.</li>
+        <li><strong>O(n²):</strong> Quadratic time – Common in algorithms with nested loops, like Bubble Sort.</li>
+        <li><strong>O(2ⁿ):</strong> Exponential time – The runtime doubles with each additional input. Often seen in recursive algorithms.</li>
+    </ul>
+    <p>
+        Choosing the right algorithm often depends on balancing time and space efficiency. Understanding Big O can guide you in writing optimized and scalable code.
+    </p>
 </div>
 
 </body>
 </html>
+
+
+
+
+
+
+
