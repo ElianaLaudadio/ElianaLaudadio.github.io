@@ -18,7 +18,7 @@
             padding: 10px 0; /* Padding for top/bottom */
         }
         header {
-            font-size: 40px; /* Adjust header size to be smaller */
+            font-size: 32px; /* Adjust header size for responsiveness */
             margin: 10px 0; /* Add margin */
             text-align: center; /* Center header text */
         }
@@ -26,12 +26,13 @@
             display: flex;
             justify-content: center; /* Center buttons */
             flex-wrap: wrap; /* Allow buttons to wrap on small screens */
+            gap: 10px; /* Add spacing between buttons */
         }
         .header-button {
             background: none; 
             border: none; 
-            font-size: 22px; 
-            margin: 10px; /* Spacing between buttons */
+            font-size: 18px; /* Adjust button font size */
+            padding: 8px 15px; /* Add padding for buttons */
             cursor: pointer;
             transition: border 0.3s; /* Smooth transition for border */
         }
@@ -39,28 +40,63 @@
             border: 2px solid black; /* Black border on hover */
         }
         .content-container {
-            max-width: calc(100% - 2in); /* Ensure 1-inch margins on both sides */
+            max-width: 90%; /* Set max width for readability */
             margin: 0 auto; /* Center the content */
-            padding: 0 1in; /* Add padding inside the container */
+            padding: 10px; /* Add padding inside the container */
             box-sizing: border-box; /* Include padding in the width calculation */
         }
         h2, h3 {
-            font-size: 24px;
+            font-size: 20px; /* Reduce heading font size for smaller screens */
         }
         p {
-            font-size: 16px;
+            font-size: 14px; /* Adjust paragraph font size */
+            line-height: 1.5; /* Improve readability */
             margin: 10px 0;
         }
         pre {
             background-color: #f4f4f4;
             padding: 10px;
             border-radius: 5px;
+            font-size: 12px; /* Reduce font size for code blocks */
             white-space: pre-wrap; /* Allow wrapping of long lines */
             word-wrap: break-word; /* Break long words if necessary */
         }
         .code-container {
             margin: 20px 0;
             overflow-x: auto; /* Allow horizontal scrolling for code on small screens */
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            header {
+                font-size: 28px; /* Smaller header font size for mobile */
+            }
+            .header-button {
+                font-size: 16px; /* Adjust button font size for mobile */
+                padding: 6px 10px; /* Adjust padding for smaller screens */
+            }
+            h2, h3 {
+                font-size: 18px; /* Adjust heading sizes */
+            }
+            p {
+                font-size: 13px; /* Adjust paragraph font size */
+            }
+            pre {
+                font-size: 11px; /* Reduce font size for code blocks */
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                font-size: 24px; /* Smaller header font size for very small screens */
+            }
+            .header-button {
+                font-size: 14px; /* Further adjust button font size */
+                padding: 5px 8px; /* Further adjust padding */
+            }
+            .content-container {
+                padding: 5px; /* Reduce padding on very small screens */
+            }
         }
     </style>
 </head>
@@ -104,202 +140,200 @@ CENSORED are 177777
 This poem is too CENSORED.
     </pre>
 
-
     <div class="code-container">
         <pre><code>
-#include <cassert>
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
-                
-using namespace std;
-                 
-                
-void censorship(vector<string> v, string line, int dash = -1){  
-    string r = "CENSORED";
-    string bad;
-                  
-    size_t condition;
-        if(dash == -1){   
-            condition = v.size();
-}
-        else{
-            condition = dash;
-}
-                
-                
-for(size_t i = 0; i < condition; i++){      //arguments loop
-    bad = v[i]; 
-                
-    size_t word_size = bad.size();
-    size_t word_size_plus_one = word_size + 1;
-                
-    size_t found = line.find(bad);
-//------------------------------------------------------------------------------------ replace bad at begining of a sentence
-                
-                
-    if (found != string::npos){
-                  
-    if((line.substr(0,word_size) == bad)){
-        if(isalpha(line[word_size])){ 
-                                                             //MAKE SURE NOT TO GO OVER SIZE OF VECTOR                                      
-    }                                     
-                
-        else{
-            line.replace(line.find(bad), word_size, r);
-                // cout << "FIRST IF\n"; 
-        }
-    }      
-}  //found if
-//------------------------------------------------------------------------------------ replace bad in the middle of a sentence
-                
-        while (found != string::npos){
-                      
-            if((isalpha(line[found-1]) || (isalpha(line[found + word_size])))){   
+                #include <cassert>
+                #include <iostream>
+                #include <fstream>
+                #include <string>
+                #include <vector>
                                 
-    } 
-            else{ 
-                          
-                line.replace(line.find(bad), word_size, r);                    
-                //                   cout << "second IF\n";                                                 
-    }
-                
-                
-        found = line.find(bad);
-} //found if
-                
-//------------------------------------------------------------------------------------ replace b at end of sentence
-        found = line.find(bad);
-        if (found != string::npos){
-                
-        if((line.substr((line.size() - word_size),line.size()) == bad)){ 
-                                       
-            if(isalpha(line[line.size() - word_size_plus_one])){
-    }
-        else{
-            line.replace(line.find(bad), word_size, r);
-        // cout << "THird IF\n";
-        }
-    }
-}  //found if
-                
-                
-}//end loop
-cout << line << "\n";
-                
- }//end censorship
-                
-//------------------------------------------------------------------------------------------------------------------------ MAIN
-                
-int main(int argc, char *argv[]){
-    string newline = "\n";
-                
-    string line;
-    string r = "CENSORED";
-                
-    string bad; //word to be censored
-                   
-    size_t dash;
-                 
-    bool b = false;
-                
-                
-    vector<string> v;
-        for(int i = 1; i < argc; i++){                       
-            v.push_back(argv[i]);
-        } 
-                
-                
-        for(size_t i = 0; i < v.size(); i++){
-            if(v[i].find('-') != std::string::npos){  // if there is a dash
-            if(b == true){                         //if b already == true, do nothing
-            //do nothing
-        }  
-            else{
-                b = true;
-                dash = i;
-    }      
-}   
-                
-        else{                                   //if there is not a dash
-            if(b == false){                     // and there has never been a dash
-                //do nothing
-        }
-        }
-}
-                
-//--------------------------------------------------------------------------------------ERROR CHECKING
-                
-    if(b == false){
-        cerr << argv[0] << ": Required '-' argument is missing" << newline;
-            abort();
-}
-                
-    if(argc == 1){                                                          
-        cerr << argv[0] << ": All required arguments are missing" << newline;
-        abort();
-}
-                
-    string more_than_once;
-                   
-    for(size_t i = 0; i < dash; i++){
-        more_than_once = v[i];
-            for(size_t j = 0; j < dash; j++){
-            if(!(j == i)){
-            if(more_than_once == v[j]){
-                    cerr << argv[0] << ": Same argument -" << more_than_once << "- cannot be given more than once" << newline;
+                using namespace std;
+                                 
+                                
+                void censorship(vector<string> v, string line, int dash = -1){  
+                    string r = "CENSORED";
+                    string bad;
+                                  
+                    size_t condition;
+                        if(dash == -1){   
+                            condition = v.size();
+                }
+                        else{
+                            condition = dash;
+                }
+                                
+                                
+                for(size_t i = 0; i < condition; i++){      //arguments loop
+                    bad = v[i]; 
+                                
+                    size_t word_size = bad.size();
+                    size_t word_size_plus_one = word_size + 1;
+                                
+                    size_t found = line.find(bad);
+                //------------------------------------------------------------------------------------ replace bad at begining of a sentence
+                                
+                                
+                    if (found != string::npos){
+                                  
+                    if((line.substr(0,word_size) == bad)){
+                        if(isalpha(line[word_size])){ 
+                                                                             //MAKE SURE NOT TO GO OVER SIZE OF VECTOR                                      
+                    }                                     
+                                
+                        else{
+                            line.replace(line.find(bad), word_size, r);
+                                // cout << "FIRST IF\n"; 
+                        }
+                    }      
+                }  //found if
+                //------------------------------------------------------------------------------------ replace bad in the middle of a sentence
+                                
+                        while (found != string::npos){
+                                      
+                            if((isalpha(line[found-1]) || (isalpha(line[found + word_size])))){   
+                                                
+                    } 
+                            else{ 
+                                          
+                                line.replace(line.find(bad), word_size, r);                    
+                                //                   cout << "second IF\n";                                                 
+                    }
+                                
+                                
+                        found = line.find(bad);
+                } //found if
+                                
+                //------------------------------------------------------------------------------------ replace b at end of sentence
+                        found = line.find(bad);
+                        if (found != string::npos){
+                                
+                        if((line.substr((line.size() - word_size),line.size()) == bad)){ 
+                                                       
+                            if(isalpha(line[line.size() - word_size_plus_one])){
+                    }
+                        else{
+                            line.replace(line.find(bad), word_size, r);
+                        // cout << "THird IF\n";
+                        }
+                    }
+                }  //found if
+                                
+                                
+                }//end loop
+                cout << line << "\n";
+                                
+                 }//end censorship
+                                
+                //------------------------------------------------------------------------------------------------------------------------ MAIN
+                                
+                int main(int argc, char *argv[]){
+                    string newline = "\n";
+                                
+                    string line;
+                    string r = "CENSORED";
+                                
+                    string bad; //word to be censored
+                                   
+                    size_t dash;
+                                 
+                    bool b = false;
+                                
+                                
+                    vector<string> v;
+                        for(int i = 1; i < argc; i++){                       
+                            v.push_back(argv[i]);
+                        } 
+                                
+                                
+                        for(size_t i = 0; i < v.size(); i++){
+                            if(v[i].find('-') != std::string::npos){  // if there is a dash
+                            if(b == true){                         //if b already == true, do nothing
+                            //do nothing
+                        }  
+                            else{
+                                b = true;
+                                dash = i;
+                    }      
+                }   
+                                
+                        else{                                   //if there is not a dash
+                            if(b == false){                     // and there has never been a dash
+                                //do nothing
+                        }
+                        }
+                }
+                                
+                //--------------------------------------------------------------------------------------ERROR CHECKING
+                                
+                    if(b == false){
+                        cerr << argv[0] << ": Required '-' argument is missing" << newline;
+                            abort();
+                }
+                                
+                    if(argc == 1){                                                          
+                        cerr << argv[0] << ": All required arguments are missing" << newline;
                         abort();
-            }
-        }//end if
-    }//end second error checking loop
-}//end error checking loop
-//-------------------------------------------------------------------------------------- ONLY CENSORED ARGUMENTS
-    if(b){
-        if(dash == v.size()-1){
-        while (getline(cin, line)) {            //This runs through the words to be censored
-            censorship(v, line);
-                
-        }//end while
-    }
-}
-//-------------------------------------------------------------------------------------- CENSORED ARGUMENTS AND FILES
-    if(b){
-        // cout << "Censored and files included in argument" << newline;
-                
-        size_t first_file = dash + 1;
-        for(size_t i = 0; i < dash; i++){      //arguments loop
-        // bad = v[i];
-                
-        for(size_t k = 0; k < v[i].size();k++){
-                if(!(isalpha(v[i][k]))){
-                    cerr << argv[0] << ": Arguments -" << v[i] << "- must be purly alphabetic" << newline;
-                    abort();
-        }
-    }//end error checking loop
- }//end first for
-                             
-            for(size_t j = first_file; j < v.size(); j++){  //file loop
+                }
                                 
-            string filename = v[j];
-            ifstream in(filename);
-                         
-            if(!(in.is_open())){
-                cerr << argv[0] << ": File argument -" << v[j] << "- is not readable" << newline;
-                    abort();
-}
-                
-                 while(getline(in, line)){
-                    censorship(v, line, dash);
-                
-        }//end while
-    }//end second for
-} //end "Censored and files included in argument"
-                
-//-------------------------------------------------------------------------------------- END CODE 
-return 0;
-}
-                
+                    string more_than_once;
+                                   
+                    for(size_t i = 0; i < dash; i++){
+                        more_than_once = v[i];
+                            for(size_t j = 0; j < dash; j++){
+                            if(!(j == i)){
+                            if(more_than_once == v[j]){
+                                    cerr << argv[0] << ": Same argument -" << more_than_once << "- cannot be given more than once" << newline;
+                                        abort();
+                            }
+                        }//end if
+                    }//end second error checking loop
+                }//end error checking loop
+                //-------------------------------------------------------------------------------------- ONLY CENSORED ARGUMENTS
+                    if(b){
+                        if(dash == v.size()-1){
+                        while (getline(cin, line)) {            //This runs through the words to be censored
+                            censorship(v, line);
+                                
+                        }//end while
+                    }
+                }
+                //-------------------------------------------------------------------------------------- CENSORED ARGUMENTS AND FILES
+                    if(b){
+                        // cout << "Censored and files included in argument" << newline;
+                                
+                        size_t first_file = dash + 1;
+                        for(size_t i = 0; i < dash; i++){      //arguments loop
+                        // bad = v[i];
+                                
+                        for(size_t k = 0; k < v[i].size();k++){
+                                if(!(isalpha(v[i][k]))){
+                                    cerr << argv[0] << ": Arguments -" << v[i] << "- must be purly alphabetic" << newline;
+                                    abort();
+                        }
+                    }//end error checking loop
+                 }//end first for
+                                             
+                            for(size_t j = first_file; j < v.size(); j++){  //file loop
+                                                
+                            string filename = v[j];
+                            ifstream in(filename);
+                                         
+                            if(!(in.is_open())){
+                                cerr << argv[0] << ": File argument -" << v[j] << "- is not readable" << newline;
+                                    abort();
+                }
+                                
+                                 while(getline(in, line)){
+                                    censorship(v, line, dash);
+                                
+                        }//end while
+                    }//end second for
+                } //end "Censored and files included in argument"
+                                
+                //-------------------------------------------------------------------------------------- END CODE 
+                return 0;
+                }
         </code></pre>
     </div>
 
@@ -307,3 +341,4 @@ return 0;
 
 </body>
 </html>
+
