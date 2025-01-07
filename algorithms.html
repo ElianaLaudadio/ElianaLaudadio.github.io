@@ -266,7 +266,7 @@ public class MyClass {
     <ul>
         
         <li>Stacks operate on a Last In, First Out (LIFO) basis, meaning the last element added is the first one to be removed.</li>
-        <li>Stack indexs start at 1; if you search for the element at the first index, it will return 1.</li>
+        <li>Stack indexes start at 1; if you search for the element at the first index, it will return 1.</li>
         <li>Stacks can grow and shrink in size dynamically, depending on the number of elements they contain, especially when implemented using linked lists.</li>
         <li>Stacks do not allow random access to elements; you can only access the top element directly.</li>
     </ul>
@@ -341,12 +341,12 @@ public class MyClass {
                 <li>Queues operate on a First In, First Out (FIFO) basis, meaning the first element in the queue will be the first one to be removed.</li>
                 <li>Queues can grow and shrink in size dynamically, depending on the number of elements they contain, especially when implemented using linked lists.</li>
                 <li>Queues do not allow random access to elements; you can only access the top element directly.</li>
-                <li>The conecept of adding to a queue is called "enqueue", while removing from the queue is dequeue</li>
+                <li>The concept of adding to a queue is called "enqueue", while removing from the queue is dequeue</li>
             </ul>
         
             <p style="font-weight: bold;">Simple Queue Methods</p>
             <ul>
-                <li>offer(element): adds element to the top of the stack, also known as enqueue</li>
+                <li>offer(element): adds element to the top of the queue, also known as enqueue</li>
                 <li>pull(): removes first element that was put into the queue, also known as dequeue</li>
                 <li>peek(): returns first element that was put in the queue, but does not remove it</li>
                 <li>empty(): returns a boolean true or false whether the queue is empty or not</li>
@@ -399,40 +399,406 @@ public class MyClass {
     <div class="dropdown">
         <div class="dropdown-header">PRIORITY QUEUES <span class="icon">▼</span></div>
         <div class="dropdown-content">
-            <p>A Priority Queue assigns priorities to elements, ensuring higher-priority elements are dequeued before lower-priority ones, regardless of insertion order.</p>
+            <p style="font-weight: bold;">What it is</p>
+            <p>A  priority queue is similar to a regular queue, as it is a first in, first out (FIFO) data structure. Queues allow us to store objects into a line, however priority queues allow us to give weight and order to each element.</p>
+
+            <p>In simple terms, priority queues work the same as queues as you add in each element. However with priority queues, we want to sort the elements in the queue before we begin the dequeue process. So, say you enter 3, 5, 1, 4, 2, but you want to give priority to the lowest numbers first, we will sort the list into 1, 2, 3, 4, 5 and then begin treating the list as if it were a normal queue; allowing 1 to be dequeued first.</p>
+
+            <p style="font-weight: bold;">When to Use a Priority Queue</p>
+
+            <ul>
+                <li>Priority Queues operate on a First In, First Out (FIFO) basis, meaning the first element in the queue will be the first one to be removed.</li>
+                <li>Using strings in priority queues alphabetizes them</li>
+                <li>Priority Queues use Heaps to sort the contents </li>
+                <li>Priority Queues can grow and shrink in size dynamically, depending on the number of elements they contain, especially when implemented using linked lists.</li>
+                <li>Priority Queues do not allow random access to elements; you can only access the top element directly.</li>
+        
+            </ul>
+
+            <p style="font-weight: bold;">Simple Priority Queue Methods</p>
+            <ul>
+                <li>offer(element): adds element to the top of the stack, also known as enqueue</li>
+                <li>pull(): removes first element that was put into the queue, also known as dequeue</li>
+                <li>peek(): returns first element that was put in the queue, but does not remove it</li>
+                <li>empty(): returns a boolean true or false whether the queue is empty or not</li>
+                <li>contains(element): returns if the element is in the queue.</li>
+                <li>Collections.reverseOrder(): method to go from biggest to smallest element instead</li>
+            </ul>
+
+            <p style="font-weight: bold;">Implementation</p>
+
+            <div style="margin: 20px;">
+                <pre style="background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+        
+            
+        <code>
+import java.util.LinkedList;
+import java.util.Queue;
+        
+public class MyClass {
+    public static void main(String[] args) {
+        Queue<Integer> priority_queue = new PriorityQueue<Integer>();  
+        
+        System.out.println(priority_queue.empty());
+        priority_queue.offer(3);
+        priority_queue.offer(5);
+        priority_queue.offer(1);
+        priority_queue.offer(4);
+        priority_queue.offer(2);
+        
+        
+        System.out.println(priority_queue.peek());
+            
+            while(!priority_queue.isEmpty()){
+                System.out.println(priority_queue);  
+            }
+        
+        
+        
+    }
+}
+        
+//                                     PRIORITY QUEUE EXAMPLE
+//
+//            QUEUE ENTERED: [3], [5], [1], [4], [2]             
+//            PRIORITY QUEUE PRINTED: [1], [2], [3], [4], [5]
+        
+        
+        
+        </code>
+                </pre>
+            </div>
+
         </div>
     </div>
     <div class="dropdown">
         <div class="dropdown-header">BINARY TREES <span class="icon">▼</span></div>
         <div class="dropdown-content">
-            <p>A Binary Tree is a hierarchical data structure with nodes having up to two children, used in searching, sorting, and hierarchical data representation.</p>
+            <p style="font-weight: bold;">What it is</p>
+            <p>A binary tree is a data structure made up of nodes, where each node has at most two children, referred to as the left and right child. It is often used to organize data hierarchically, allowing for efficient searching, inserting, and deleting of elements.</p>
+
+            <p>Binary trees work by linking nodes together, with each node containing a value and pointers to its left and right children. When you want to find, add, or remove a node, you start at the root and follow the links left or right based on comparisons until you reach the desired position.</p>
+
+            <p style="font-weight: bold;">When to Use a Binary Tree</p>
+
+            <ul>
+                <li>Efficient searching and sorting of data.</li>
+                <li>Hierarchical organization of data, such as representing file systems or organizational charts.</li>
+                <li>Fast insertion and deletion operations compared to linear data structures.</li>
+                <li>Storing sorted data with the ability to retrieve it in sorted order (in-order traversal).</li>
+                <li>Implementing priority queues and heaps (e.g., binary heap).</li>
+                <li>Representing relationships between elements, such as in decision trees or expression trees.</li>
+                <li>Balancing trade-offs between space and time efficiency (e.g., binary search trees).</li>
+                <li>Situations where the data is frequently accessed and modified.</li>
+            </ul>
+
+
+            <p style="font-weight: bold;">Tree Vocabulary:</p>
+            <ul>
+                <li>"Tree": Non-linear data structure where nodes are organized into a hierarchy</li>
+                <li>"Root": Top node of the tree; does not have any incoming edges</li>
+                <li>"Leaf": Any nodes at the bottom of the tree that do not have any outgoing edges</li>
+                <li>"Parent Nodes": Nodes that have outgoing edges</li>
+                <li>"Child Nodes": Nodes that have incoming edges </li>
+                <li>"Internal Node": A node with at least one child</li>
+                <li>"Siblings": Any child nodes that share the same parent nodes</li>
+                <li>"Sub-Tree": Smaller tree within a larger tree </li>
+                <li>"Size": Tree size is equal to the number of nodes</li>
+                <li>"Depth": Tree depth is the number of edges below the root node. The root starts at 0.</li>
+                <li>"Height": Tree height is the number of edges above the furthest leaf node.</li>
+            </ul>
+
+            <p style="font-weight: bold;">Binary Tree Specifics</p>
+            <ul>
+                <li>Each node has no more than 2 children</li>
+                <li>"Full": A binary tree is full if every node contains 0 or 2 children</li>
+                <li>"Complete": A binary tree is complete if all levels, except possibly the last level, contain all possible nodes and all nodes in the last level are as far left as possible.</li>
+                <li>"Perfect": A binary tree is perfect, if all internal nodes have 2 children and all leaf nodes are at the same level</li>
+        
+            </ul>
+
+            <p style="font-weight: bold;">Traversing a Binary Tree</p>
+
+            <ul>
+        
+                <li>Searching a binary tree: Searching through a binary tree involves starting at the root and comparing the target value to each node, moving left for smaller values and right for larger values until the target is found or a leaf node is reached.</li>
+                <li>Adding to a binary tree: To add a value to a binary tree, start at the root and compare the new value to the current node's value. If the new value is smaller, move to the left child; if it's larger, move to the right child. Repeat this process until you find an empty spot (a null child), where you can insert the new value as a new node.</li>
+                <li>Removing from a binary tree: Removing a value from a binary tree involves three main steps: first, locate the node with the value to be removed by traversing the tree. If the node has no children, simply remove it; if it has one child, replace the node with its child. If the node has two children, find the node's in-order successor (the smallest value in its right subtree), replace the target node's value with that successor, and then remove the successor node from its original position.</li>
+        
+            </ul>
+
+            <p style="font-weight: bold;">Implementation</p>
+
+            <div style="margin: 20px;">
+                <pre style="background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+        
+            
+        <code>
+        
+        //    a example of a simple tree:
+        
+        //          [1]          - 1 is the root, and the parent node of 2 and 3
+        //         /   \         - these connections between nodes are edges
+        //       [2]   [3]       - 2 and 3 are internal nodes that are siblings of eachother
+        //      / \    / \
+        //    [4] [5][6] [7]     - All of these nodes are childeren of either 2 or 3. Since they themselves
+        //                              do not have childeren, they are leaf nodes
+        //
+        //                       - The numbers in this tree represent the order of indices in list form
+        
+        
+        //----------------------------------------------------------------------
+        //SEARCHING A TREE
+        
+        //          [4]          - Given this tree, lets search for the element '5'
+        //    (<)  /   \  (>)    - 1. First we will compare it to index 0, which is element '4' (Always start with the root)
+        //       [2]   [6]            -  5 > 4, so we will traverse to the right half of the tree
+        //      / \    / \       - 2. Now, we will compare '5' to the right child of '4', which is element '6'
+        //    [1] [3][5] [7]          - 5 < 6, so we will traverse to the left of element '6'
+        //                       - 3. Now we will compare '5' to the left element of '6'
+        //                            - 5 == 5, we have found our element at index 6.
+        
+        //----------------------------------------------------------------------
+        //ADDING TO A TREE
+        
+        //          [4]          - Given this tree, lets insert the element '9'
+        //    (<)  /   \  (>)    - 1. First we will compare it to index 0, which is element '4' (Always start with the root)
+        //       [2]   [6]            -  9 > 4, so we will traverse to the right half of the tree
+        //      / \    / \       - 2. Now, we will compare '9' to the right child of '4', which is element '6'
+        //    [1] [3][5] [7]          - 9 > 6, so we will traverse to the right of element '6'
+        //                       - 3. Now, we will compare '9' to the right child of '6', which is element '7'
+        //                            - 9 > 7, so we will place '9' to the right of element '7'
+        
+            
+        
+        //          [4]          - Tree after adding element '9'
+        //    (<)  /   \  (>)                
+        //       [2]   [6]                       
+        //      / \    / \                   
+        //    [1] [3][5] [7]  
+        //                 \
+        //                 [9]
+        
+        //          [4]          - Tree after adding element '8'
+        //    (<)  /   \  (>)                
+        //       [2]   [6]                       
+        //      / \    / \                   
+        //    [1] [3][5] [7]  
+        //                 \
+        //                 [9]
+        //                /
+        //              [8]
+        
+        //----------------------------------------------------------------------
+        //REMOVNG FROM A TREE
+        
+        //          [4]          - There are 3 different cases when it comes to removal of a BST:
+        //    (<)  /   \  (>)       1. Removing a leaf node; if we remove '8', then the child of element '9' 
+        //       [2]   [6]             becomes 'null'          
+        //      / \    / \                   
+        //    [1] [3][5] [7]  
+        //                 \
+        //                 [9]
+        
+        
+        //          [4]                      
+        //    (<)  /   \  (>)       2. Removing an internal node with one child; if we remove '7', then '9' will 
+        //       [2]   [6]             take its place          
+        //      / \    / \                   
+        //    [1] [3][5] [9]  
+        
+                    
+        //          [5]                      
+        //    (<)  /   \  (>)       3. Removing an internal node with two childeren; if we remove '4', then we want 
+        //       [2]   [6]             to replace it with its left-most child in it's right subtree, in this case, it 
+        //      / \    / \             would be element '5'      
+        //    [1] [3]    [9]  
+        
+        
+        </code>
+                </pre>
+            </div>
+
         </div>
     </div>
+
+
+
+
+
+
+
 
     <!-- Section 3 -->
     <div class="dropdown">
         <div class="dropdown-header">HEAPS <span class="icon">▼</span></div>
         <div class="dropdown-content">
-            <p>A Heap is a complete binary tree used for implementing priority queues, with the heap property ensuring parent nodes are ordered with respect to their children.</p>
+            <p style="font-weight: bold;">What it is</p>
+            <p>My number one rule when studying any computer science topic is to not ask too many questions. Simply, do not think too much and take each topic as it comes and one step at a time. In this sense, if you have been flowing through these data structures as so, you did not take a moment to ask yourself how queues become sorted into priority queues. As we are taking information as it comes; it has come time to satisfy some curiosity and to discuss heaps.</p>
+
+            <p>Simply put, heaps are binary trees! When you create a priority queue out of a queue, it simply creates a min or max heap to order your elements. Keep it simple!</p>
+
+
         </div>
     </div>
     <div class="dropdown">
         <div class="dropdown-header">HASH TABLES <span class="icon">▼</span></div>
         <div class="dropdown-content">
-            <p>A Hash Table maps keys to values for efficient lookups, insertions, and deletions using a hash function to index data.</p>
+            <p style="font-weight: bold;">What it is</p>
+
+            <p>A hash table is a data structure that stores key-value pairs, allowing for fast access to values based on their unique keys.</p>
+
+            <p>Hash tables use a hash function to convert each key into a unique index, which determines where the corresponding value is stored in an underlying array. This allows for quick access to values, but if two keys hash to the same index (a collision), the hash table must handle it using techniques like chaining (storing multiple values at that index in a list) or open addressing (finding another index). Despite potential collisions, hash tables are efficient and commonly used for tasks like database indexing and caching.</p>
+        
+            <p style="font-weight: bold;">When to Use a Hash Table</p>
+
+            <ul>
+                <li>Fast lookups, insertions, and deletions with average-case time complexity of O(1).</li>
+                <li>Storing key-value pairs, such as dictionaries or maps in programming.</li>
+                <li>Handling scenarios where data must be quickly retrieved based on a unique key.</li>
+                <li>Implementing caching mechanisms, like memoization in dynamic programming.</li>
+                <li>Detecting duplicates in a dataset efficiently.</li>
+                <li>Building hash-based data structures, such as hash sets and hash maps.</li>
+                <li>Counting frequencies of elements in a collection.</li>
+                <li>Designing algorithms for problems like two-sum or finding intersections of arrays.</li>
+                <li>Managing relationships between objects, such as adjacency lists in graph representations.</li>
+            </ul>
+
+            <p style="font-weight: bold;">Hash Table Vocabulary:</p>
+            <ul>
+                <li>"Entry<K,E>": Key, Element pair</li>
+                <li>"Hash code method": A method that takes a key, runs it through a specific formula, and returns a hash value.</li>
+                <li>"Hash": Integer given from a hash code method</li>
+            </ul>
+
+            <p style="font-weight: bold;">Types of Hash Tables</p>
+
+            <ul> 
+                <li>Chaining: Chaining is a collision handling method in hash tables where, if two keys hash to the same index, both values are stored in a list at that index. This allows multiple values to coexist and be accessed by searching through the list. </li>
+                <li>Open Addressing: Open addressing is a collision resolution method in hash tables where, if an index is occupied, the table finds the next available index using a probing sequence, storing each key directly in the array. </li>
+            </ul>
+        
+            <p style="font-weight: bold;">Implementation</p>
+
+            <div style="margin: 20px;">
+                <pre style="background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+        
+            
+        <code>
+        
+// A QUICK HASH TABLE
+//      Entry<K,V>                              Hash Method      Hash Table (capacity = 5)
+//                                         K % capacity
+//
+//      100, "milk"                           100 % 5  = 0              0[100, milk]
+//      154, "eggs"                           154 % 5  = 4              1[679, bacon]
+//      247, "cookies"                        247 % 5  = 2              2[247, cookies]
+//      679, "bacon"                          671 % 5  = 1              3[]
+//                                                                      4[154, eggs]
+//                                                                   
+//
+//----------------------------------------------------------------------
+// CHAINING
+//
+//      Entry<K,V>                              Hash Method      Hash Table (capacity = 5)
+//                                         K % capacity
+//
+//      100, "milk"                           100 % 5  = 0              0[100, milk], [200, cat food]
+//      154, "eggs"                           154 % 5  = 4              1[679, bacon]
+//      247, "cookies"                        247 % 5  = 2              2[247, cookies]
+//      679, "bacon"                          671 % 5  = 1              3[]
+//      200, "cat food"                       200 % 5  = 0              4[154, eggs]
+        
+        
+//----------------------------------------------------------------------
+
+// OPEN ADDRESSING (Linear Probing)
+//
+//      Entry                              Hash Method      Hash Table (capacity = 5)
+//                                         K % capacity
+//
+//      100, "milk"                           100 % 5  = 0              0[100, milk]
+//      154, "eggs"                           154 % 5  = 4              1[679, bacon]
+//      247, "cookies"                        247 % 5  = 2              2[247, cookies]
+//      679, "bacon"                          679 % 5  = 4 -> 0 -> 1    3[200, cat food]
+//      200, "cat food"                       200 % 5  = 0 -> 1 -> 2    4[154, eggs]
+        
+        
+        
+        </code>
+                </pre>
+            </div>
+
+
+
         </div>
     </div>
     <div class="dropdown">
         <div class="dropdown-header">GRAPHS <span class="icon">▼</span></div>
         <div class="dropdown-content">
+            <p style="font-weight: bold;">What it is</p>
             <p>A Graph is a collection of nodes (vertices) and edges, used to model pairwise relations in applications like networking, search engines, and transportation.</p>
+
+            <p style="font-weight: bold;">When to Use a Graph</p>
+
+            <ul>
+                <li>Modeling complex networks, such as social media connections, transportation systems, or computer networks.</li>
+                <li>Finding optimal paths or routes, like shortest paths in navigation systems or delivery logistics.</li>
+                <li>Representing dependencies and relationships, such as project task scheduling or dependency graphs in build systems.</li>
+                <li>Analyzing and solving traversal problems, like exploring connected components or searching for specific nodes.</li>
+                <li>Detecting and analyzing cycles, such as in circular dependencies or feedback loops.</li>
+                <li>Solving advanced graph theory problems, including minimum spanning trees or maximum flow algorithms.</li>
+            </ul>
+
+            <p style="font-weight: bold;">Graph Vocabulary:</p>
+            <ul>
+                <li>"Vertex": Represents an item in the graph, my also be called a node</li>
+                <li>"Edge": Represents a connection between two vertices in a graph</li>
+                <li>"Adjacency": Two vertices are adjacent if they are connected by an edge</li>
+                <li>"Path": Sequence of edges from source to destination</li>
+                <li>"Path Length": The number of edges in a path</li>
+                <li>"Distance": The number of edges from the shortest path of the two vertices</li>
+                <li>"Weights:" Numerical values associated with edges in weighted graphs</li>
+            </ul>
+
+            <p style="font-weight: bold;">Implementation</p>
+
+            <div style="margin: 20px;">
+                <pre style="background-color: #f4f4f4; padding: 10px; border-radius: 5px;">
+        
+            
+        <code>
+
+             [A]  
+            /   \  
+         5 /     \ 3  
+          /       \     2
+        [B]-------[C] ------ [D]
+              4                \
+                                \ 7
+                                 \
+                                  [E]
+
+     
+        
+        
+        
+        </code>
+                </pre>
+            </div>
+
+
+
+
+
+
+
         </div>
     </div>
 </div>
 
 </body>
 </html>
-
 
 
 
