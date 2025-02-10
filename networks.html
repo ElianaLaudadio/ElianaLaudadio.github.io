@@ -264,33 +264,255 @@
 
         <!-- Sub-dropdowns (4 total) -->
         <div class="sub-dropdown">
-            <div class="sub-dropdown-header">Sub Topic 1.1 <span class="icon">▼</span></div>
+            <div class="sub-dropdown-header">3.1 ORGANIZATIONAL PROCESSES AND PROCEDURES <span class="icon">▼</span></div>
             <div class="sub-dropdown-content">
-                <p>Explanation about Sub Topic 1.1</p>
+
+                <ul>
+                    <li><strong>Documentation</strong>
+                        <ul>
+                            <li><strong>Physical vs. logical diagrams</strong>: Diagrams showing the physical and logical layout of systems.</li>
+                            <li><strong>Rack diagrams</strong>: Diagrams showing the arrangement of equipment in a server rack.</li>
+                            <li><strong>Cable maps and diagrams</strong>: Diagrams detailing the cabling used in a network.</li>
+                            <li><strong>Network diagrams</strong>
+                                <ul>
+                                    <li><strong>Layer 1</strong>: Physical layout of the network (cabling, devices).</li>
+                                    <li><strong>Layer 2</strong>: Data link layer, showing switches and data paths.</li>
+                                    <li><strong>Layer 3</strong>: Network layer, showing routing and IP addresses.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Asset inventory</strong>
+                                <ul>
+                                    <li><strong>Hardware</strong>: List of physical equipment like computers, routers, etc.</li>
+                                    <li><strong>Software</strong>: List of software applications used within the organization.</li>
+                                    <li><strong>Licensing</strong>: Tracking of software licenses for compliance.</li>
+                                    <li><strong>Warranty support</strong>: Information about warranties for devices or systems.</li>
+                                </ul>
+                            </li>
+                            <li><strong>IP address management (IPAM)</strong>: Managing and assigning IP addresses in a network.</li>
+                            <li><strong>Service-level agreement (SLA)</strong>: Contract that defines the level of service expected from a provider.</li>
+                            <li><strong>Wireless survey/heat map</strong>: A map showing the coverage and performance of a wireless network.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Life-cycle management</strong>
+                        <ul>
+                            <li><strong>End-of-life (EOL)</strong>: Point at which a product is no longer supported by the manufacturer.</li>
+                            <li><strong>End-of-support (EOS)</strong>: When a product no longer receives official support or updates.</li>
+                            <li><strong>Software management</strong>
+                                <ul>
+                                    <li><strong>Patches and bug fixes</strong>: Updates made to fix security holes or issues in software.</li>
+                                    <li><strong>Operating system (OS)</strong>: Management of the operating system to ensure it is up-to-date.</li>
+                                    <li><strong>Firmware</strong>: Software embedded into hardware that may need updates for functionality.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Decommissioning</strong>: The process of taking a system or equipment out of service.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Change management</strong>
+                        <ul>
+                            <li><strong>Request process tracking/service request</strong>: Tracking requests for changes or support to ensure proper follow-through.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Configuration management</strong>
+                        <ul>
+                            <li><strong>Production configuration</strong>: The current, working setup of hardware and software in a live environment.</li>
+                            <li><strong>Backup configuration</strong>: A saved copy of the production configuration for recovery purposes.</li>
+                            <li><strong>Baseline/golden configuration</strong>: The standard, optimal configuration to which systems should adhere.</li>
+                        </ul>
+                    </li>
+                </ul>
+            
+
+
+
+
+
             </div>
         </div>
         <div class="sub-dropdown">
-            <div class="sub-dropdown-header">Sub Topic 1.2 <span class="icon">▼</span></div>
+            <div class="sub-dropdown-header">3.2 NETWORK MONITORING TECHNOLOGIES <span class="icon">▼</span></div>
             <div class="sub-dropdown-content">
-                <p>Explanation about Sub Topic 1.2</p>
+
+                <ul>
+                    <li><strong>Methods</strong>
+                        <ul>
+                            <li><strong>SNMP</strong>: Simple Network Management Protocol used for network device management.
+                                <ul>
+                                    <li><strong>Traps</strong>: Notifications sent by devices to inform management systems of specific events.</li>
+                                    <li><strong>Management information base (MIB)</strong>: A database used by SNMP to store information about the network devices.</li>
+                                    <li><strong>Versions</strong>: Different versions of SNMP with varying features and security levels.
+                                        <ul>
+                                            <li><strong>v2c</strong>: The second version of SNMP, offering improved features and performance over v1.</li>
+                                            <li><strong>v3</strong>: The third version of SNMP, focusing on security and encryption.</li>
+                                        </ul>
+                                    </li>
+                                    <li><strong>Community strings</strong>: Authentication strings used in SNMP to access network devices.</li>
+                                    <li><strong>Authentication</strong>: Security method used in SNMPv3 to ensure that data is being sent to and from authorized devices.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Flow data</strong>: Information about network traffic flow, often used for traffic analysis and monitoring.</li>
+                            <li><strong>Packet capture</strong>: The process of intercepting and analyzing data packets being transmitted across the network.</li>
+                            <li><strong>Baseline metrics</strong>: Standardized performance data used to compare and detect anomalies in the network.
+                                <ul>
+                                    <li><strong>Anomaly alerting/notification</strong>: Alerts generated when network traffic deviates from established baseline metrics.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Log aggregation</strong>: Collecting logs from multiple sources for centralized analysis and management.
+                                <ul>
+                                    <li><strong>Syslog collector</strong>: A tool that gathers log messages from devices and systems in a network.</li>
+                                    <li><strong>Security information and event management (SIEM)</strong>: A system used to monitor and analyze security events and logs across a network.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Application programming interface (API) integration</strong>: The ability to connect network monitoring tools with other systems or services via APIs for enhanced functionality.</li>
+                            <li><strong>Port mirroring</strong>: A method of monitoring network traffic by duplicating data packets from one port to another for analysis.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Solutions</strong>
+                        <ul>
+                            <li><strong>Network discovery</strong>: The process of identifying devices and systems on a network.
+                                <ul>
+                                    <li><strong>Ad hoc</strong>: A one-time network discovery process, typically initiated manually.</li>
+                                    <li><strong>Scheduled</strong>: A recurring network discovery process, typically automated to run at set intervals.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Traffic analysis</strong>: The process of examining network traffic patterns to assess performance or identify issues.</li>
+                            <li><strong>Performance monitoring</strong>: Tracking network performance to ensure it meets defined standards or service level agreements (SLAs).</li>
+                            <li><strong>Availability monitoring</strong>: Ensuring that network devices and services are accessible and operating as expected.</li>
+                            <li><strong>Configuration monitoring</strong>: Monitoring and managing network configurations to ensure they are correct and secure.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+
+
             </div>
         </div>
         <div class="sub-dropdown">
-            <div class="sub-dropdown-header">Sub Topic 1.3 <span class="icon">▼</span></div>
+            <div class="sub-dropdown-header">3.3 DISASTER RECOVERY <span class="icon">▼</span></div>
             <div class="sub-dropdown-content">
-                <p>Explanation about Sub Topic 1.3</p>
+
+                <ul>
+                    <li><strong>DR Metrics</strong>
+                        <ul>
+                            <li><strong>Recovery Point Objective (RPO)</strong>: The maximum acceptable amount of data loss measured in time.</li>
+                            <li><strong>Recovery Time Objective (RTO)</strong>: The maximum acceptable amount of time for the system to be restored after a disaster.</li>
+                            <li><strong>Mean Time to Repair (MTTR)</strong>: The average time required to repair and restore a system after a failure.</li>
+                            <li><strong>Mean Time Between Failures (MTBF)</strong>: The average time between consecutive failures of a system or component.</li>
+                        </ul>
+                    </li>
+                    <li><strong>DR Sites</strong>
+                        <ul>
+                            <li><strong>Cold Site</strong>: A location with infrastructure but no immediate hardware or data backup available; requires setup during an outage.</li>
+                            <li><strong>Warm Site</strong>: A location with infrastructure and some pre-configured hardware, but data backups still need to be restored during recovery.</li>
+                            <li><strong>Hot Site</strong>: A fully equipped and operational backup site with current data and systems available for immediate failover.</li>
+                        </ul>
+                    </li>
+                    <li><strong>High-Availability Approaches</strong>
+                        <ul>
+                            <li><strong>Active-Active</strong>: Multiple systems or locations running simultaneously to provide load balancing and fault tolerance.</li>
+                            <li><strong>Active-Passive</strong>: One system actively provides services while the other remains as a standby in case of failure.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Testing</strong>
+                        <ul>
+                            <li><strong>Tabletop Exercises</strong>: A simulated disaster scenario where participants discuss and review procedures in a low-stress, non-technical environment.</li>
+                            <li><strong>Validation Tests</strong>: Practical tests designed to validate the functionality of the DR plan, often involving failover and recovery procedures.</li>
+                        </ul>
+                    </li>
+                </ul>
+
             </div>
         </div>
         <div class="sub-dropdown">
-            <div class="sub-dropdown-header">Sub Topic 1.4 <span class="icon">▼</span></div>
+            <div class="sub-dropdown-header">3.4 IPv4 AND IPv6<span class="icon">▼</span></div>
             <div class="sub-dropdown-content">
-                <p>Explanation about Sub Topic 1.4</p>
+ 
+                <ul>
+                    <li><strong>Dynamic Addressing - DHCP</strong>
+                        <ul>
+                            <li><strong>Reservations</strong>: Assigning specific IP addresses to specific devices based on MAC addresses.</li>
+                            <li><strong>Scope</strong>: The range of IP addresses available for DHCP assignment.</li>
+                            <li><strong>Lease Time</strong>: The duration for which an IP address is assigned to a device before it needs to be renewed.</li>
+                            <li><strong>Options</strong>: Additional configuration parameters provided by the DHCP server, such as DNS server or gateway information.</li>
+                            <li><strong>Relay/IP Helper</strong>: A mechanism to forward DHCP requests between clients and servers on different subnets.</li>
+                            <li><strong>Exclusions</strong>: IP addresses within the scope that are excluded from being assigned to clients by DHCP.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Stateless Address Autoconfiguration (SLAAC)</strong>: A method used by IPv6 devices to configure their own IP addresses without needing a DHCP server.</li>
+                    <li><strong>Name Resolution - DNS</strong>
+                        <ul>
+                            <li><strong>Domain Name Security Extensions (DNSSEC)</strong>: A suite of extensions to DNS to add security, such as ensuring data integrity and authenticity.</li>
+                            <li><strong>DNS over HTTPS (DoH) and DNS over TLS (DoT)</strong>: Protocols that encrypt DNS queries to increase privacy and security.</li>
+                            <li><strong>Record Types</strong>
+                                <ul>
+                                    <li><strong>Address (A)</strong>: Maps a domain to an IPv4 address.</li>
+                                    <li><strong>AAAA</strong>: Maps a domain to an IPv6 address.</li>
+                                    <li><strong>Canonical Name (CNAME)</strong>: Aliases one domain to another domain.</li>
+                                    <li><strong>Mail Exchange (MX)</strong>: Defines mail servers for a domain.</li>
+                                    <li><strong>Text (TXT)</strong>: Stores arbitrary text, often used for verification and policies.</li>
+                                    <li><strong>Nameserver (NS)</strong>: Specifies authoritative name servers for a domain.</li>
+                                    <li><strong>Pointer (PTR)</strong>: Used for reverse DNS lookups, mapping IP addresses to domain names.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Zone Types</strong>
+                                <ul>
+                                    <li><strong>Forward</strong>: A DNS zone where requests are answered with IP addresses or names.</li>
+                                    <li><strong>Reverse</strong>: A DNS zone used for reverse lookups, mapping IP addresses to domain names.</li>
+                                    <li><strong>Authoritative vs. Non-Authoritative</strong>: Authoritative servers provide the definitive answers for their domain, while non-authoritative servers relay answers from other sources.</li>
+                                    <li><strong>Primary vs. Secondary</strong>: Primary DNS servers hold the original records, while secondary servers hold copies for redundancy.</li>
+                                    <li><strong>Recursive</strong>: A type of DNS query where the server performs full resolution on behalf of the client.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Hosts File</strong>: A local file used to map hostnames to IP addresses, typically for systems to resolve names without needing DNS queries.</li>
+                    <li><strong>Time Protocols</strong>
+                        <ul>
+                            <li><strong>Network Time Protocol (NTP)</strong>: A protocol used to synchronize system clocks over a network.</li>
+                            <li><strong>Precision Time Protocol (PTP)</strong>: A more precise time synchronization protocol, typically used in industrial and high-performance environments.</li>
+                            <li><strong>Network Time Security (NTS)</strong>: An extension to NTP that adds security features, ensuring the integrity of time synchronization against attacks.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+
             </div>
         </div>
         <div class="sub-dropdown">
-            <div class="sub-dropdown-header">Sub Topic 1.4 <span class="icon">▼</span></div>
+            <div class="sub-dropdown-header">3.5 NETWORK ACCEESS AND MANAGEMENT METHODS <span class="icon">▼</span></div>
             <div class="sub-dropdown-content">
-                <p>Explanation about Sub Topic 1.4</p>
+
+                <ul>
+                    <li><strong>Site-to-Site VPN</strong>: A VPN connection between two or more networks, allowing them to securely communicate over the internet.</li>
+                    <li><strong>Client-to-Site VPN</strong>
+                        <ul>
+                            <li><strong>Clientless</strong>: A VPN connection that does not require the installation of client software, often using a web browser to establish the connection.</li>
+                            <li><strong>Split Tunnel vs. Full Tunnel</strong>
+                                <ul>
+                                    <li><strong>Split Tunnel</strong>: Only traffic destined for the corporate network is routed through the VPN, while other internet traffic bypasses the VPN.</li>
+                                    <li><strong>Full Tunnel</strong>: All traffic, including internet traffic, is routed through the VPN for enhanced security and privacy.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Connection Methods</strong>
+                        <ul>
+                            <li><strong>SSH</strong>: A secure, encrypted protocol for remote access to network devices and systems.</li>
+                            <li><strong>Graphical User Interface (GUI)</strong>: A user-friendly interface with graphical elements for managing and interacting with systems and devices.</li>
+                            <li><strong>API</strong>: An interface that allows different software systems to communicate and interact programmatically.</li>
+                            <li><strong>Console</strong>: A text-based interface for directly managing network devices or systems, often used for initial configuration and troubleshooting.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Jump Box/Host</strong>: A secure, intermediary server used to access and manage devices in a network, often placed in a DMZ (demilitarized zone) for added security.</li>
+                    <li><strong>In-band vs. Out-of-Band Management</strong>
+                        <ul>
+                            <li><strong>In-band Management</strong>: Management of network devices using the same network as the device's normal traffic, typically via SSH or a web interface.</li>
+                            <li><strong>Out-of-Band Management</strong>: Management of network devices using a dedicated management network or port, separate from the production traffic, offering enhanced security and availability during network failures.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+
+
             </div>
         </div>
     </div>
@@ -305,21 +527,151 @@
 
         <!-- Sub-dropdowns (4 total) -->
         <div class="sub-dropdown">
-            <div class="sub-dropdown-header">Sub Topic 1.1 <span class="icon">▼</span></div>
+            <div class="sub-dropdown-header">4.1 BASIC NETWORK SECURITY<span class="icon">▼</span></div>
             <div class="sub-dropdown-content">
-                <p>Explanation about Sub Topic 1.1</p>
+                <ul>
+                    <li><strong>Logical security
+                        <ul>
+                            <li><strong>Encryption
+                                <ul>
+                                    <li><strong>Data in transit</strong></li>
+                                    <li><strong>Data at rest</strong></li>
+                                </ul>
+                            </strong></li>
+                            <li><strong>Certificates
+                                <ul>
+                                    <li><strong>Public key infrastructure (PKI)</strong></li>
+                                    <li><strong>Self-signed</strong></li>
+                                </ul>
+                            </strong></li>
+                            <li><strong>Identity and access management (IAM)
+                                <ul>
+                                    <li><strong>Authentication</strong></li>
+                                    <li><strong>Multifactor authentication (MFA)</strong></li>
+                                    <li><strong>Single sign-on (SSO)</strong></li>
+                                    <li><strong>Remote Authentication Dial-in User Service (RADIUS)</strong></li>
+                                    <li><strong>LDAP</strong></li>
+                                    <li><strong>Security Assertion Markup Language (SAML)</strong></li>
+                                    <li><strong>Terminal Access Controller Access Control System Plus (TACACS+)</strong></li>
+                                    <li><strong>Time-based authentication</strong></li>
+                                    <li><strong>Authorization</strong></li>
+                                    <li><strong>Least privilege</strong></li>
+                                    <li><strong>Role-based access control</strong></li>
+                                </ul>
+                            </strong></li>
+                            <li><strong>Geofencing</strong></li>
+                        </ul>
+                    </strong></li>
+                    <li><strong>Physical security
+                        <ul>
+                            <li><strong>Camera</strong></li>
+                            <li><strong>Locks</strong></li>
+                        </ul>
+                    </strong></li>
+                    <li><strong>Deception technologies
+                        <ul>
+                            <li><strong>Honeypot</strong></li>
+                            <li><strong>Honeynet</strong></li>
+                        </ul>
+                    </strong></li>
+                    <li><strong>Common security terminology
+                        <ul>
+                            <li><strong>Risk</strong></li>
+                            <li><strong>Vulnerability</strong></li>
+                            <li><strong>Exploit</strong></li>
+                            <li><strong>Threat</strong></li>
+                            <li><strong>Confidentiality, Integrity, and Availability (CIA) triad</strong></li>
+                        </ul>
+                    </strong></li>
+                    <li><strong>Audits and regulatory compliance
+                        <ul>
+                            <li><strong>Data locality</strong></li>
+                            <li><strong>Payment Card Industry Data Security Standards (PCI DSS)</strong></li>
+                            <li><strong>General Data Protection Regulation (GDPR)</strong></li>
+                        </ul>
+                    </strong></li>
+                    <li><strong>Network segmentation enforcement
+                        <ul>
+                            <li><strong>Internet of Things (IoT) and Industrial Internet of Things (IIoT)</strong></li>
+                            <li><strong>Supervisory control and data acquisition (SCADA), industrial control system (ICS), operational technology (OT)</strong></li>
+                            <li><strong>Guest</strong></li>
+                            <li><strong>Bring your own device (BYOD)</strong></li>
+                        </ul>
+                    </strong></li>
+                </ul>
+
+
+
             </div>
         </div>
         <div class="sub-dropdown">
-            <div class="sub-dropdown-header">Sub Topic 1.2 <span class="icon">▼</span></div>
+            <div class="sub-dropdown-header">4.2 TYPES OF ATTACKS <span class="icon">▼</span></div>
             <div class="sub-dropdown-content">
-                <p>Explanation about Sub Topic 1.2</p>
+
+                <ul>
+                    <li><strong>Denial-of-service (DoS)/Distributed denial-of-service (DDoS)</strong></li>
+                    <li><strong>VLAN hopping</strong></li>
+                    <li><strong>Media Access Control (MAC) flooding</strong></li>
+                    <li><strong>Address Resolution Protocol (ARP) poisoning</strong></li>
+                    <li><strong>ARP spoofing</strong></li>
+                    <li><strong>DNS poisoning</strong></li>
+                    <li><strong>DNS spoofing</strong></li>
+                    <li><strong>Rogue devices and services
+                        <ul>
+                            <li><strong>DHCP</strong></li>
+                            <li><strong>AP</strong></li>
+                        </ul>
+                    </strong></li>
+                    <li><strong>Evil twin</strong></li>
+                    <li><strong>On-path attack</strong></li>
+                    <li><strong>Social engineering
+                        <ul>
+                            <li><strong>Phishing</strong></li>
+                            <li><strong>Dumpster diving</strong></li>
+                            <li><strong>Shoulder surfing</strong></li>
+                            <li><strong>Tailgating</strong></li>
+                        </ul>
+                    </strong></li>
+                </ul>
+
+
             </div>
         </div>
         <div class="sub-dropdown">
-            <div class="sub-dropdown-header">Sub Topic 1.3 <span class="icon">▼</span></div>
+            <div class="sub-dropdown-header">4.3 SECUITY FEATURES, DEFENCE TECHNIQUES, AND SOLUTIONS <span class="icon">▼</span></div>
             <div class="sub-dropdown-content">
-                <p>Explanation about Sub Topic 1.3</p>
+
+                <ul>
+                    <li><strong>Device hardening
+                        <ul>
+                            <li><strong>Disable unused ports and services</strong></li>
+                            <li><strong>Change default passwords</strong></li>
+                        </ul>
+                    </strong></li>
+                    <li><strong>Network access control (NAC)
+                        <ul>
+                            <li><strong>Port security</strong></li>
+                            <li><strong>802.1X</strong></li>
+                            <li><strong>MAC filtering</strong></li>
+                        </ul>
+                    </strong></li>
+                    <li><strong>Key management</strong></li>
+                    <li><strong>Security rules
+                        <ul>
+                            <li><strong>Access control list (ACL)</strong></li>
+                            <li><strong>Uniform Resource Locator (URL) filtering</strong></li>
+                            <li><strong>Content filtering</strong></li>
+                        </ul>
+                    </strong></li>
+                    <li><strong>Zones
+                        <ul>
+                            <li><strong>Trusted vs. untrusted</strong></li>
+                            <li><strong>Screened subnet</strong></li>
+                        </ul>
+                    </strong></li>
+                </ul>
+
+
             </div>
         </div>
 
