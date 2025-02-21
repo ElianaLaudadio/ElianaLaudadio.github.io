@@ -368,31 +368,31 @@
                           </ul>
                         </li>
                       
-                        <li><strong>Virtual Extensible Local Area Network (VXLAN)</strong>
+                        <li><strong>Virtual Extensible Local Area Network (VXLAN):</strong> a network virtualization technology that allows for the creation of scalable, isolated Layer 2 networks over a Layer 3 infrastructure, enabling better data center mobility and flexibility.
                           <ul>
-                            <li><strong>Data center interconnect (DCI)</strong></li>
-                            <li><strong>Layer 2 encapsulation</strong></li>
+                            <li><strong>Data center interconnect (DCI):</strong> methods used to connect two or more data centers over a long distance, enabling the seamless transfer of data and resources between them.</li>
+                            <li><strong>Layer 2 encapsulation:</strong> the process of wrapping Layer 2 data frames (like Ethernet frames) in a Layer 3 packet for transmission over a network, allowing data to be sent across different network segments or technologies while maintaining Layer 2 information.</li>
                           </ul>
                         </li>
                       
                         <li><strong>Zero trust architecture (ZTA)</strong>
                           <ul>
-                            <li><strong>Policy-based authentication</strong></li>
-                            <li><strong>Authorization</strong></li>
-                            <li><strong>Least privilege access</strong></li>
+                            <li><strong>Policy-based authentication:</strong> a security method where access to a network or service is granted based on predefined policies or rules</li>
+                            <li><strong>Authorization:</strong> the process of granting or denying access to resources or actions based on a user's identity and their assigned permissions or roles</li>
+                            <li><strong>Least privilege access:</strong> a security principle where users or systems are granted the minimum level of access or permissions necessary to perform their tasks</li>
                           </ul>
                         </li>
                       
-                        <li><strong>Secure Access Secure Edge (SASE)/Security Service Edge (SSE)</strong></li>
+                        <li><strong>Secure Access Secure Edge (SASE)/Security Service Edge (SSE):</strong> SASE (Secure Access Secure Edge) is a cloud-based security framework that combines network security services with WAN capabilities to secure access to applications and data across distributed environments, while SSE (Security Service Edge) focuses on cloud-native security services like secure web gateways and zero trust access to protect users and data in the cloud.</li>
                       
-                        <li><strong>Infrastructure as code (IaC)</strong>
+                        <li><strong>Infrastructure as code (IaC):</strong> Using code to manage systems
                           <ul>
                             <li><strong>Automation</strong>
                               <ul>
                                 <li><strong>Playbooks/templates/reusable tasks</strong></li>
-                                <li><strong>Configuration drift/compliance</strong></li>
+                                <li><strong>Configuration drift/compliance: </strong>refers to the gradual changes or deviations that occur in an infrastructure's configuration over time, often unintentionally, which can lead to inconsistencies and potential issues.</li>
                                 <li><strong>Upgrades</strong></li>
-                                <li><strong>Dynamic inventories</strong></li>
+                                <li><strong>Dynamic inventories:</strong> automatically generated lists of resources or systems (like servers or virtual machines) that can change over time</li>
                               </ul>
                             </li>
                             <li><strong>Source control</strong>
@@ -408,12 +408,12 @@
                       
                         <li><strong>IPv6 addressing</strong>
                           <ul>
-                            <li><strong>Mitigating address exhaustion</strong></li>
+                            <li><strong>Mitigating address exhaustion:</strong> involves efficiently managing and allocating IP addresses to prevent running out of available addresses as networks grow.</li>
                             <li><strong>Compatibility requirements</strong>
                               <ul>
-                                <li><strong>Tunneling</strong></li>
-                                <li><strong>Dual stack</strong></li>
-                                <li><strong>NAT64</strong></li>
+                                <li><strong>Tunneling:</strong> refers to the technique of encapsulating IPv6 packets within IPv4 packets (or vice versa) to allow them to travel over a network that doesn't natively support IPv6, enabling communication between IPv6 networks over an IPv4 infrastructure.</li>
+                                <li><strong>Dual stack:</strong> refers to a network configuration where devices and systems are configured to support both IPv4 and IPv6 simultaneously.</li>
+                                <li><strong>NAT64:</strong> a technology used to enable communication between IPv6-only and IPv4-only networks. It allows IPv6 devices to communicate with IPv4 devices by translating IPv6 packets into IPv4 packets, and vice versa, using a special IPv6 prefix to represent IPv4 addresses.</li>
                               </ul>
                             </li>
                           </ul>
@@ -896,33 +896,202 @@
 
         <!-- Sub-dropdowns (4 total) -->
         <div class="sub-dropdown">
-            <div class="sub-dropdown-header">Sub Topic 1.1 <span class="icon">▼</span></div>
+            <div class="sub-dropdown-header">5.1 TROUBLESHOOTING METHODOLOGY<span class="icon">▼</span></div>
             <div class="sub-dropdown-content">
-                <p>Explanation about Sub Topic 1.1</p>
+
+                <ul>
+                    <li><strong>Identify the problem</strong>
+                        <ul>
+                            <li><strong>Gather information</strong></li>
+                            <li><strong>Question users</strong></li>
+                            <li><strong>Identify symptoms</strong></li>
+                            <li><strong>Determine if anything has changed</strong></li>
+                            <li><strong>Duplicate the problem, if possible</strong></li>
+                            <li><strong>Approach multiple problems individually</strong></li>
+                        </ul>
+                    </li>
+                    <li><strong>Establish a theory of probable cause</strong>
+                        <ul>
+                            <li><strong>Question the obvious</strong></li>
+                            <li><strong>Consider multiple approaches</strong>
+                                <ul>
+                                    <li><strong>Top-to-bottom/bottom-to-top OSI model</strong></li>
+                                    <li><strong>Divide and conquer</strong></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Test the theory to determine the cause</strong>
+                        <ul>
+                            <li><strong>If theory is confirmed, determine next steps to resolve problem</strong></li>
+                            <li><strong>If theory is not confirmed, establish a new theory or escalate</strong></li>
+                        </ul>
+                    </li>
+                    <li><strong>Establish a plan of action to resolve the problem and identify potential effects</strong></li>
+                    <li><strong>Implement the solution or escalate as necessary</strong></li>
+                    <li><strong>Verify full system functionality and implement preventive measures if applicable</strong></li>
+                    <li><strong>Document findings, actions, outcomes, and lessons learned throughout the process</strong></li>
+                </ul>
+                
+
+
             </div>
         </div>
         <div class="sub-dropdown">
-            <div class="sub-dropdown-header">Sub Topic 1.2 <span class="icon">▼</span></div>
+            <div class="sub-dropdown-header">5.2  CABLING AND PHYSICAL ISSUES<span class="icon">▼</span></div>
             <div class="sub-dropdown-content">
-                <p>Explanation about Sub Topic 1.2</p>
+                <ul>
+                    <li><strong>Cable issues</strong>
+                        <ul>
+                            <li><strong>Incorrect cable</strong>
+                                <ul>
+                                    <li><strong>Single mode vs. multimode</strong></li>
+                                    <li><strong>Category 5/6/7/8</strong></li>
+                                    <li><strong>Shielded twisted pair (STP) vs. unshielded twisted pair (UTP)</strong></li>
+                                </ul>
+                            </li>
+                            <li><strong>Signal degradation</strong>
+                                <ul>
+                                    <li><strong>Crosstalk</strong></li>
+                                    <li><strong>Interference</strong></li>
+                                    <li><strong>Attenuation</strong></li>
+                                </ul>
+                            </li>
+                            <li><strong>Improper termination</strong></li>
+                            <li><strong>Transmitter (TX)/Receiver (RX) transposed</strong></li>
+                        </ul>
+                    </li>
+                    <li><strong>Interface issues</strong>
+                        <ul>
+                            <li><strong>Increasing interface counters</strong>
+                                <ul>
+                                    <li><strong>Cyclic redundancy check (CRC)</strong></li>
+                                    <li><strong>Runts</strong></li
+                
+
+
+
+                                    </div>
+                                    </div> 
+        </div>
+        <div class="sub-dropdown">
+            <div class="sub-dropdown-header">5.3 NETWORK TROUBLESHOOTING<span class="icon">▼</span></div>
+            <div class="sub-dropdown-content">
+
+                <ul>
+                    <li><strong>Switching issues</strong>
+                      <ul>
+                        <li><strong>STP</strong>
+                          <ul>
+                            <li>Network loops</li>
+                            <li>Root bridge selection</li>
+                            <li>Port roles</li>
+                            <li>Port states</li>
+                          </ul>
+                        </li>
+                        <li><strong>Incorrect VLAN assignment</strong></li>
+                        <li><strong>ACLs</strong></li>
+                      </ul>
+                    </li>
+                    <li><strong>Route selection</strong>
+                      <ul>
+                        <li><strong>Routing table</strong></li>
+                        <li><strong>Default routes</strong></li>
+                      </ul>
+                    </li>
+                    <li><strong>Address pool exhaustion</strong></li>
+                    <li><strong>Incorrect default gateway</strong></li>
+                    <li><strong>Incorrect IP address</strong></li>
+                    <li><strong>Duplicate IP address</strong></li>
+                    <li><strong>Incorrect subnet mask</strong></li>
+                  </ul>
+                  
+
             </div>
         </div>
         <div class="sub-dropdown">
-            <div class="sub-dropdown-header">Sub Topic 1.3 <span class="icon">▼</span></div>
+            <div class="sub-dropdown-header">5.4 TROUBLESHOOT PERFORMANCE ISSUES<span class="icon">▼</span></div>
             <div class="sub-dropdown-content">
-                <p>Explanation about Sub Topic 1.3</p>
+                <ul>
+                    <li><strong>Congestion/contention</strong>
+                      <ul>
+                        <li><strong>Bottlenecking</strong></li>
+                        <li><strong>Bandwidth</strong>
+                          <ul>
+                            <li>Throughput capacity</li>
+                          </ul>
+                        </li>
+                        <li><strong>Latency</strong></li>
+                        <li><strong>Packet loss</strong></li>
+                        <li><strong>Jitter</strong></li>
+                      </ul>
+                    </li>
+                    <li><strong>Wireless</strong>
+                      <ul>
+                        <li><strong>Interference</strong>
+                          <ul>
+                            <li>Channel overlap</li>
+                          </ul>
+                        </li>
+                        <li><strong>Signal degradation or loss</strong></li>
+                        <li><strong>Insufficient wireless coverage</strong></li>
+                        <li><strong>Client disassociation issues</strong></li>
+                        <li><strong>Roaming misconfiguration</strong></li>
+                      </ul>
+                    </li>
+                  </ul>
+                  
+
             </div>
         </div>
         <div class="sub-dropdown">
-            <div class="sub-dropdown-header">Sub Topic 1.4 <span class="icon">▼</span></div>
+            <div class="sub-dropdown-header">5.5 USE TOOLS AND PROTOCOLS TO SOLVE NETWORKING ISSUES <span class="icon">▼</span></div>
             <div class="sub-dropdown-content">
-                <p>Explanation about Sub Topic 1.4</p>
-            </div>
-        </div>
-        <div class="sub-dropdown">
-            <div class="sub-dropdown-header">Sub Topic 1.4 <span class="icon">▼</span></div>
-            <div class="sub-dropdown-content">
-                <p>Explanation about Sub Topic 1.4</p>
+
+                <ul>
+                    <li><strong>Software tools</strong>
+                      <ul>
+                        <li><strong>Protocol analyzer</strong></li>
+                        <li><strong>Command line</strong>
+                          <ul>
+                            <li>ping</li>
+                            <li>traceroute/tracert</li>
+                            <li>nslookup</li>
+                            <li>tcpdump</li>
+                            <li>dig</li>
+                            <li>netstat</li>
+                            <li>ip/ifconfig/ipconfig</li>
+                            <li>arp</li>
+                          </ul>
+                        </li>
+                        <li><strong>Nmap</strong></li>
+                        <li><strong>Link Layer Discovery Protocol (LLDP)/Cisco Discovery Protocol (CDP)</strong></li>
+                        <li><strong>Speed tester</strong></li>
+                      </ul>
+                    </li>
+                    <li><strong>Hardware tools</strong>
+                      <ul>
+                        <li><strong>Toner</strong></li>
+                        <li><strong>Cable tester</strong></li>
+                        <li><strong>Taps</strong></li>
+                        <li><strong>Wi-Fi analyzer</strong></li>
+                        <li><strong>Visual fault locator</strong></li>
+                      </ul>
+                    </li>
+                    <li><strong>Basic networking device commands</strong>
+                      <ul>
+                        <li>show mac-address-table</li>
+                        <li>show route</li>
+                        <li>show interface</li>
+                        <li>show config</li>
+                        <li>show arp</li>
+                        <li>show vlan</li>
+                        <li>show power</li>
+                      </ul>
+                    </li>
+                  </ul>
+                  
+
             </div>
         </div>
     </div>
