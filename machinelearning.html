@@ -10,7 +10,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-family: 'Times New Roman', Times, serif;
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
       margin: 0;
     }
 
@@ -21,11 +21,27 @@
       overflow: hidden;
     }
 
+    /* Dark overlay */
+    .image-wrapper::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4); /* Adjust opacity here */
+      z-index: 1;
+    }
+
     .profile-photo {
       width: 100vw;
       height: 100%;
       object-fit: cover;
       display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
     }
 
     .name-overlay {
@@ -37,17 +53,19 @@
       color: white;
       text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
       text-align: center;
+      z-index: 2;
     }
 
     .button-container {
       position: absolute;
-      bottom: 15%; /* moved up slightly */
+      bottom: 18%; /* moved up slightly */
       left: 50%;
       transform: translateX(-50%);
       display: flex;
       flex-direction: column;
       gap: 10px;
       align-items: center;
+      z-index: 2;
     }
 
     .header-button {
@@ -66,7 +84,7 @@
     }
 
     .header-button:hover {
-      background-color: black;
+      background-color: #4d061c;
     }
 
     .desktop-photo {
@@ -109,11 +127,11 @@
       <a href="/Users/elianalaudadio/Desktop/Portfolio/index.html">
         <button class="header-button">home</button>
       </a>
-      <a href="/Users/elianalaudadio/Desktop/Portfolio/portfolio.html">
-        <button class="header-button">portfolio</button>
+      <a href="/Users/elianalaudadio/Desktop/Portfolio/template.html">
+        <button class="header-button">daily template</button>
       </a>
       <a href="/Users/elianalaudadio/Desktop/Portfolio/aboutme.html">
-        <button class="header-button">about me</button>
+        <button class="header-button">meal planner</button>
       </a>
     </div>
   </div>
