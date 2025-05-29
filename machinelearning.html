@@ -2,68 +2,140 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Machine Learning Project &#x1F469;&zwj;&#x1F4BB;</title>
+    <title>Portfolio &#x1F469;&zwj;&#x1F4BB;</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
             background-color: #FCFBF4;
-            font-family: 'Times New Roman', Times, serif;
-            margin: 0;
-            padding: 0;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: center; 
+            font-family: 'Times New Roman', Times, serif; 
+            margin: 0; /* Remove default margin */
         }
         .header-container {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
+            flex-direction: column; 
+            align-items: center; 
+            width: 100%; 
             border-bottom: 1px solid black;
-            padding: 10px 0;
+            padding: 10px 0; 
         }
         header {
-            font-size: 50px;
-            margin: 10px 0;
-            text-align: center;
+            font-size: 50px; /* Adjusted header size */
+            margin: 10px 0; 
         }
         .button-container {
             display: flex;
-            gap: 10px;
-            margin: 10px 0;
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 10px; 
+            margin: 10px 0; /* Added margin */
         }
-        .button {
-            font-size: 22px;
-            background: none;
-            border: none;
+        .header-button {
+            background: none; 
+            border: none; 
+            font-size: 22px; /* Adjusted button size */
             cursor: pointer;
-            padding: 10px 20px;
-            transition: border 0.3s;
+            padding: 10px 20px; 
+            transition: border 0.3s; 
+            color: black; /* Ensures consistent text color */
             text-decoration: none;
-            text-align: center;
-            color: black;
+            outline: none; /* Removes focus outline */
+            -webkit-tap-highlight-color: transparent; /* Removes blue highlight on mobile devices */
         }
-        .button:hover {
-            border: 2px solid black;
+        .header-button:hover {
+            border: 2px solid black; 
+        }
+        .image-container {
+            display: flex;
+            flex-direction: column; 
+            align-items: center; 
+            margin-top: 20px;
+            width: 100%; 
+        }
+        .project-box {
+            position: relative; 
+            width: 90%; 
+            max-width: 425px; 
+            height: 150px; 
+            background-color: black; 
+            color: #FCFBF4; 
+            display: flex;
+            justify-content: center; 
+            align-items: center; 
+            font-size: 20px; 
+            margin: 10px 0; 
+            text-align: center; 
+            cursor: pointer; 
+            text-decoration: none; 
+            overflow: hidden; 
+            border-radius: 20px; 
+            transition: transform 0.3s; 
+        }
+        .project-box:hover {
+            transform: scale(1.05); 
+        }
+        .project-box::before,
+        .project-box::after {
+            content: '';
+            position: absolute;
+            background-color: black; 
+            z-index: -1; 
+        }
+        .project-box::before {
+            width: 100%; 
+            height: 100%; 
+            border-radius: 50%; 
+            transform: translate(-50%, -50%) rotate(30deg); 
+            left: 50%; 
+            top: 50%; 
+            filter: blur(15px); 
+        }
+        .project-box::after {
+            width: 60%; 
+            height: 60%; 
+            border-radius: 50%; 
+            transform: translate(-50%, -50%) rotate(-30deg); 
+            left: 50%; 
+            top: 50%; 
+            filter: blur(10px); 
+        }
+
+        .profile-photo {
+            width: 100%;
+    height: auto;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+        /* Media Query for Mobile Devices */
+        @media (max-width: 768px) {
+            header {
+                font-size: 40px; /* Adjust font size for smaller screens */
+            }
         }
     </style>
 </head>
 <body>
-
-<div class="header-container">
-    <header>ELIANA LAUDADIO</header>
-    <div class="button-container">
-        <a href="index.html" style="text-decoration: none;">
-            <button class="button">HOME</button>
-        </a>
-        <a href="portfolio.html" style="text-decoration: none;">
-            <button class="button">PORTFOLIO</button>
-        </a>
-        <a href="aboutme.html" style="text-decoration: none;">
-            <button class="button">ABOUT ME</button>
-        </a>
+    <div class="header-container">
+        <header>ELIANA LAUDADIO</header>
+        <div class="button-container">
+            <a href="/Users/elianalaudadio/Desktop/Portfolio/index.html" style="text-decoration: none;">
+                <button class="header-button">HOME</button>
+            </a>
+            <a href="/Users/elianalaudadio/Desktop/Portfolio/portfolio.html" style="text-decoration: none;">
+                <button class="header-button">PORTFOLIO</button>
+            </a>
+            <a href="/Users/elianalaudadio/Desktop/Portfolio/aboutme.html" style="text-decoration: none;">
+                <button class="header-button">ABOUT ME</button>
+            </a>
+        </div>
     </div>
-</div>
+
+    <img src="photos/ croppedmain.jpeg" alt="Description of image" class="profile-photo">
+
 
 </body>
 </html>
