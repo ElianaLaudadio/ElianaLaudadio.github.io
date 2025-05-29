@@ -110,6 +110,24 @@
     padding: 0;
 }
 
+.desktop-photo {
+    display: block;
+}
+
+.mobile-photo {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .desktop-photo {
+        display: none;
+    }
+
+    .mobile-photo {
+        display: block;
+    }
+}
+
         /* Media Query for Mobile Devices */
         @media (max-width: 768px) {
             header {
@@ -134,7 +152,8 @@
         </div>
     </div>
 
-    <img src="photos/croppedmain.jpeg" alt="Description of image" class="profile-photo">
+    <img src="croppedmain.jpeg" alt="Description of image" class="profile-photo">
+    <img src="mainphoto.jpeg" alt="Mobile image" class="profile-photo mobile-photo">
 
 
 </body>
