@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Protein & Calorie Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .tracker {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 360px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      text-align: left;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .progress-circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin: 20px auto;
+      background: conic-gradient(#ccc 0%, #ccc 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .result {
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    .message {
+      margin-top: 10px;
+      font-weight: bold;
+      color: green;
+    }
+
+    .section-title {
+      margin-top: 30px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="tracker">
+    <h2>Protein & Calorie Tracker</h2>
+
+    <label for="proteinGoal">Protein Goal (grams):</label>
+    <input type="number" id="proteinGoal" placeholder="e.g. 150" oninput="calculateProgress()" />
+
+    <label for="calorieGoal">Calorie Goal:</label>
+    <input type="number" id="calorieGoal" placeholder="e.g. 2000" oninput="calculateProgress()" />
+
+    <label for="protein">Protein (grams):</label>
+    <input type="number" id="protein" oninput="calculateProgress()" />
+
+    <label for="carbs">Carbs (grams):</label>
+    <input type="number" id="carbs" oninput="calculateProgress()" />
+
+    <label for="fat">Fat (grams):</label>
+    <input type="number" id="fat" oninput="calculateProgress()" />
+
+    <div class="section-title">Protein Progress</div>
+    <div class="progress-circle" id="proteinCircle">
+      <div id="proteinText">0%</div>
+    </div>
+    <div class="message" id="proteinMessage"></div>
+
+    <div class="section-title">Calorie Progress</div>
+    <div class="progress-circle" id="calorieCircle">
+      <div id="calorieText">0%</div>
+    </div>
+    <div class="result" id="totalCalories">Total Calories: 0</div>
+    <div class="message" id="calorieMessage"></div>
+
+    <audio id="celebrationSound" src="https://assets.mixkit.co/sfx/preview/mixkit-small-group-cheer-and-applause-518.mp3" preload="auto"></audio>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    let proteinConfettiFired = false;
+    let calorieConfettiFired = false;
+
+    function calculateProgress() {
+      const protein = parseFloat(document.getElementById('protein').value) || 0;
+      const carbs = parseFloat(document.getElementById('carbs').value) || 0;
+      const fat = parseFloat(document.getElementById('fat').value) || 0;
+      const proteinGoal = parseFloat(document.getElementById('proteinGoal').value) || 0;
+      const calorieGoal = parseFloat(document.getElementById('calorieGoal').value) || 0;
+
+      const totalCalories = (protein * 4) + (carbs * 4) + (fat * 9);
+      document.getElementById('totalCalories').innerText = `Total Calories: ${totalCalories.toFixed(0)}`;
+
+      const proteinPercent = proteinGoal > 0 ? Math.min((protein / proteinGoal) * 100, 100) : 0;
+      const caloriePercent = calorieGoal > 0 ? Math.min((totalCalories / calorieGoal) * 100, 100) : 0;
+
+      updateCircle("proteinCircle", "proteinText", proteinPercent);
+      updateCircle("calorieCircle", "calorieText", caloriePercent);
+
+      handleConfetti(protein, proteinGoal, "proteinMessage", "🎉 Protein goal reached!", "protein");
+      handleConfetti(totalCalories, calorieGoal, "calorieMessage", "🎉 Calorie goal reached!", "calorie");
+    }
+
+    function updateCircle(circleId, textId, percent) {
+      const circle = document.getElementById(circleId);
+      const text = document.getElementById(textId);
+      text.innerText = `${Math.round(percent)}%`;
+      circle.style.background = `conic-gradient(#4caf50 ${percent}%, #ccc ${percent}%)`;
+    }
+
+    function handleConfetti(value, goal, messageId, messageText, type) {
+      const message = document.getElementById(messageId);
+      const sound = document.getElementById('celebrationSound');
+
+      const alreadyFired = type === "protein" ? proteinConfettiFired : calorieConfettiFired;
+
+      if (goal > 0 && value >= goal && !alreadyFired) {
+        if (type === "protein") proteinConfettiFired = true;
+        if (type === "calorie") calorieConfettiFired = true;
+
+        message.textContent = messageText;
+        confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+        sound.play().catch(() => {});
+      }
+
+      if (value < goal) {
+        if (type === "protein") proteinConfettiFired = false;
+        if (type === "calorie") calorieConfettiFired = false;
+        message.textContent = "";
+      }
+    }
+  </script>
+</body>
+</html>
