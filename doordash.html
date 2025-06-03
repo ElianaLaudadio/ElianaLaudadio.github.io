@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>DashNow - Food Delivery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding-top: 70px;
+      padding-bottom: 40px;
+      color: #333;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #a31525;
+      padding: 15px 0;
+      text-align: center;
+      z-index: 999;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 16px;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    nav a:hover {
+      color: #ffe1e1;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 30px auto;
+      padding: 0 16px;
+    }
+
+    section {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      margin-bottom: 30px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #a31525;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .cards {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      background: #fdfaf5;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card img {
+      width: 140px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: #a31525;
+    }
+
+    .card p {
+      margin: 6px 0 0 0;
+      font-size: 14px;
+      color: #555;
+    }
+
+    #nutrition {
+      text-align: center;
+      padding: 10px 20px;
+    }
+
+    #nutrition h2 {
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #a31525;
+      font-size: 24px;
+    }
+
+    #nutrition p {
+      margin: 0;
+      color: #555;
+      font-size: 14px;
+    }
+
+    #go-to-cart {
+      text-align: center;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    #go-to-cart button {
+      background-color: #a31525;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #go-to-cart button:hover {
+      background-color: #d1323f;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #f9f9f9;
+      color: #888;
+      font-size: 14px;
+      border-radius: 10px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .card {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+        padding: 12px;
+      }
+
+      .card img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+      }
+
+      .card h3 {
+        font-size: 20px;
+        margin-top: 10px;
+      }
+
+      .card p {
+        font-size: 15px;
+      }
+
+      nav a {
+        display: block;
+        margin: 10px 0;
+        font-size: 18px;
+      }
+
+      nav {
+        padding: 10px 0;
+      }
+
+      #go-to-cart button {
+        width: 100%;
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .section-title,
+      #nutrition h2 {
+        font-size: 20px;
+      }
+
+      .card h3 {
+        font-size: 18px;
+      }
+
+      .card p {
+        font-size: 13px;
+      }
+
+      nav a {
+        font-size: 16px;
+      }
+
+      main {
+        padding: 0 12px;
+      }
+
+      footer {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/Users/elianalaudadio/Desktop/Portfolio/personaltraining.html">Home</a>
+    <a href="/Users/elianalaudadio/Desktop/Portfolio/template.html">Goals + Progress</a>
+    <a href="/Users/elianalaudadio/Desktop/Portfolio/doordash.html">Meal Planner</a>
+  </nav>
+
+  <main>
+    <section id="nutrition">
+      <h2>Meal Planner</h2>
+    </section>
+
+    <section id="go-to-cart">
+      <h3>Go to Cart</h3>
+      <p>Ready to check your selected meals? Click below to view your cart.</p>
+      <button onclick="location.href='/Users/elianalaudadio/Desktop/Portfolio/cart.html'">Go to Cart</button>
+    </section>
+
+    <section>
+      <h3 class="section-title">Featured Meals</h3>
+      <div class="cards">
+        <a href="breakfast.html" class="card">
+          <img src="filler!.avif" alt="Breakfast" />
+          <div>
+            <h3>Breakfast</h3>
+            <p>4.8 ★ • Fast Delivery • $$</p>
+          </div>
+        </a>
+        <div class="card">
+          <img src="filler!.avif" alt="Lunch" />
+          <div>
+            <h3>Lunch - Dinner</h3>
+            <p>4.7 ★ • Free delivery over $20</p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="filler!.avif" alt="Snacks" />
+          <div>
+            <h3>Snacks</h3>
+            <p>Healthy Options • 30 min delivery</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 DashNow. All rights reserved.
+  </footer>
+</body>
+</html>
