@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>DashNow - Your Cart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #121212;
+      margin: 0;
+      padding-top: 70px;
+      padding-bottom: 40px;
+      color: #e0e0e0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #1f1f1f;
+      padding: 15px 0;
+      text-align: center;
+      z-index: 999;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+    }
+
+    nav a {
+      color: #ddd;
+      text-decoration: none;
+      margin: 0 20px;
+      font-size: 16px;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #aaa;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #bbb;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .cart-item {
+      background: #1f1f1f;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 15px 20px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.8);
+      flex-wrap: wrap;
+    }
+
+    .cart-item input[type="checkbox"] {
+      transform: scale(1.2);
+      filter: invert(1);
+      cursor: pointer;
+    }
+
+    .cart-item p {
+      margin: 0;
+      font-size: 16px;
+      flex-grow: 1;
+      word-break: break-word;
+      color: #ccc;
+    }
+
+    .empty {
+      text-align: center;
+      color: #666;
+      margin-top: 50px;
+      font-size: 18px;
+    }
+
+    .btn-group {
+      text-align: center;
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    button {
+      padding: 12px 20px;
+      background-color: #2c2c2c;
+      color: #eee;
+      border: 1px solid #444;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #444;
+      color: #fff;
+    }
+
+    button:disabled {
+      background-color: #555;
+      cursor: not-allowed;
+      color: #999;
+    }
+
+    .add-item {
+      margin-bottom: 30px;
+      text-align: center;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .add-item input {
+      padding: 12px;
+      width: 250px;
+      max-width: 100%;
+      border: 1px solid #444;
+      border-radius: 6px;
+      font-size: 16px;
+      background-color: #222;
+      color: #eee;
+    }
+
+    .add-item input::placeholder {
+      color: #888;
+    }
+
+    .add-item input:focus {
+      outline: 2px solid #666;
+      background-color: #2a2a2a;
+    }
+
+    .add-item button {
+      padding: 12px 16px;
+      font-size: 16px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #1a1a1a;
+      color: #666;
+      font-size: 14px;
+      border-radius: 10px;
+      max-width: 960px;
+      margin: 30px auto 0 auto;
+    }
+
+    @media (max-width: 600px) {
+      nav a {
+        display: block;
+        margin: 8px 0;
+        font-size: 15px;
+      }
+
+      .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .btn-group {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      button {
+        width: 100%;
+        max-width: 300px;
+      }
+
+      .add-item {
+        flex-direction: column;
+      }
+
+      .add-item input {
+        width: 100%;
+      }
+
+      .section-title {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/Users/elianalaudadio/Desktop/PersonalTraining/index.html">Home</a>
+    <a href="/Users/elianalaudadio/Desktop/PersonalTraining/template.html">Goals + Progress</a>
+    <a href="/Users/elianalaudadio/Desktop/PersonalTraining/workouts.html">Workouts</a>
+    <a href="/Users/elianalaudadio/Desktop/PersonalTraining/doordash.html">Meal Planner</a>
+  </nav>
+
+  <main>
+    <h2 class="section-title">Grocery List</h2>
+
+    <div class="add-item">
+      <input type="text" id="manualItem" placeholder="Enter an ingredient..." />
+      <button onclick="addManualItem()">➕ Add Item</button>
+    </div>
+
+    <div id="cartContainer"></div>
+
+    <div class="btn-group">
+      <button onclick="removeSelected()">Remove Selected</button>
+      <button onclick="clearCart()">Clear Cart</button>
+    </div>
+  </main>
+
+
+
+  <script>
+    function loadCart() {
+      const cartContainer = document.getElementById('cartContainer');
+      cartContainer.innerHTML = '';
+      const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+
+      if (cartItems.length === 0) {
+        cartContainer.innerHTML = '<p class="empty">Your cart is empty. Go add some items!</p>';
+        return;
+      }
+
+      cartItems.forEach((item, index) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.classList.add('cart-item');
+
+        itemDiv.innerHTML = `
+          <input type="checkbox" data-index="${index}">
+          <p>${item}</p>
+        `;
+
+        cartContainer.appendChild(itemDiv);
+      });
+    }
+
+    function removeSelected() {
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+      if (checkboxes.length === 0) return;
+
+      let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+
+      const indexesToRemove = Array.from(checkboxes)
+        .map(cb => parseInt(cb.dataset.index))
+        .sort((a, b) => b - a);
+
+      for (const i of indexesToRemove) {
+        cartItems.splice(i, 1);
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+      loadCart();
+    }
+
+    function clearCart() {
+      localStorage.removeItem('cart');
+      loadCart();
+    }
+
+    function addManualItem() {
+      const input = document.getElementById('manualItem');
+      const item = input.value.trim();
+      if (!item) return;
+
+      let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+      cartItems.push(item);
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+
+      input.value = '';
+      loadCart();
+    }
+
+    loadCart();
+  </script>
+</body>
+</html>
