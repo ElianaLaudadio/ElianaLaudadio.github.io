@@ -1,201 +1,306 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Nutrition Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #121212;
-      color: #eee;
-      margin: 0;
-      padding-top: 70px;
-      padding-bottom: 40px;
-    }
+<meta charset="UTF-8" />
+<title>Client Sign-Up</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background-color: #1e1e1e;
-      padding: 15px 0;
-      text-align: center;
-      z-index: 999;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-    }
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #121212;
+    color: #eee;
+    margin: 0;
+    padding-top: 70px;
+    padding-bottom: 40px;
+  }
 
-    nav a {
-      color: #eee;
-      text-decoration: none;
-      margin: 0 20px;
-      font-size: 16px;
-      font-weight: 600;
-      transition: color 0.3s ease;
-    }
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #1e1e1e;
+    padding: 15px 0;
+    text-align: center;
+    z-index: 999;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  }
 
-    nav a:hover {
-      color: #fff;
-    }
+  nav a {
+    color: #eee;
+    text-decoration: none;
+    margin: 0 20px;
+    font-size: 16px;
+    font-weight: 600;
+  }
 
-    main {
-      max-width: 960px;
-      margin: 30px auto;
-      padding: 0 20px;
-    }
+  main {
+    max-width: 960px;
+    margin: 30px auto;
+    padding: 0 20px;
+  }
 
-    section {
-      background: #1e1e1e;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
-      margin-bottom: 30px;
-    }
+  section {
+    background: #1e1e1e;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.7);
+    margin-bottom: 30px;
+  }
 
-    h2 {
-      color: #fff;
-      margin-top: 0;
-      text-align: center;
-    }
+  h2 {
+    text-align: center;
+  }
 
-    section p {
-      color: #ccc;
-      font-size: 16px;
-      margin-top: 10px;
-      text-align: center;
-    }
+  label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+    color: #ddd;
+  }
 
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: 600;
-      color: #ddd;
-    }
+  input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 6px;
+    background-color: #2c2c2c;
+    border: 1px solid #444;
+    color: #eee;
+  }
 
-    input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 6px;
-      border: 1px solid #444;
-      background-color: #2c2c2c;
-      color: #eee;
-      font-size: 16px;
-      box-sizing: border-box;
-      transition: border-color 0.3s ease;
-    }
+  button {
+    background-color: #eee;
+    color: #121212;
+    border: none;
+    padding: 12px 18px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
 
-    input:focus, select:focus, textarea:focus {
-      border-color: #fff;
-      outline: none;
-      background-color: #3a3a3a;
-    }
+  .hidden {
+    display: none;
+  }
 
-    button {
-      background-color: #eee;
-      color: #121212;
-      border: none;
-      padding: 12px 18px;
-      font-size: 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-top: 20px;
-      transition: background-color 0.3s ease;
-      display: inline-block;
-    }
-
-    button:hover {
-      background-color: #ddd;
-    }
-
-    #send-to-coach {
-      text-align: center;
-      margin-top: 30px;
-      color: #ccc;
-    }
-
-    @media (max-width: 600px) {
-      nav a {
-        display: block;
-        margin: 10px 0;
-        font-size: 18px;
-      }
-
-      main {
-        padding: 0 10px;
-      }
-
-      section {
-        padding: 20px 15px;
-      }
-
-      h2 {
-        font-size: 22px;
-      }
-    }
-  </style>
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+  }
+</style>
 </head>
+
 <body>
 
-  <nav>
-    <a href="/myfolder/index.html">Home</a>
-    <a href="/myfolder/template.html">Goals + Progress</a>
-    <a href="/myfolder/workouts.html">Workouts</a>
-    <a href="/myfolder/doordash.html">Meal Planner</a>
-  </nav>
+<nav>
+  <a href="/myfolder/index.html">Home</a>
+  <a href="/myfolder/template.html">Goals + Progress</a>
+  <a href="/myfolder/workouts.html">Workouts</a>
+  <a href="/myfolder/doordash.html">Meal Planner</a>
+</nav>
 
-  <main>
-    <section id="signup-form">
-      <h2>Client Sign-Up</h2>
-      <p>Please fill out the form below to get started with your personalized training plan.</p>
-      <form id="sign-in-form">
-        <label for="name">Full Name</label>
-        <input type="text" id="name" name="name" required />
 
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required />
+<main>
+  <section id="form-container">
+    <h2>Client Sign-Up</h2>
 
-        <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" name="phone" required />
+    <form id="signup">
 
-        <label for="date">Date</label>
-        <input type="date" id="date" name="date" required />
+      <!-- -------------------- PAGE 1 -------------------- -->
+      <div class="form-page" id="page1">
+        <label>Full Name</label>
+        <input type="text" name="fullName" required>
 
-        <label for="age">Age</label>
-        <input type="number" id="age" name="age" min="0" required />
+        <label>Email (connects to Google Sheets)</label>
+        <input type="email" name="email" required>
 
-        <label for="height">Height (inches or cm)</label>
-        <input type="text" id="height" name="height" required />
+        <label>Phone Number</label>
+        <input type="tel" name="phone" required>
 
-        <label for="weight">Weight (lbs or kg)</label>
-        <input type="text" id="weight" name="weight" required />
+        <label>Date of Birth</label>
+        <input type="date" name="dob" required>
 
-        <label for="sex">Sex</label>
-        <select id="sex" name="sex" required>
+        <label>Age</label>
+        <input type="number" name="age" min="0" required>
+
+        <label>Height (inches or cm)</label>
+        <input type="text" name="height" required>
+
+        <label>Weight (lbs or kg)</label>
+        <input type="text" name="weight" required>
+
+        <div class="buttons">
+          <button type="button" onclick="nextPage(2)">Next Page →</button>
+        </div>
+      </div>
+
+
+      <!-- -------------------- PAGE 2 -------------------- -->
+      <div class="form-page hidden" id="page2">
+        <h3>Goals / Physiological Analysis</h3>
+
+        <label>Primary Goal</label>
+        <select id="goalType" name="goalType">
           <option value="">-- Select --</option>
-          <option value="female">Female</option>
-          <option value="male">Male</option>
-          <option value="nonbinary">Non-binary</option>
-          <option value="prefer_not">Prefer not to say</option>
+          <option value="weight">General weight loss / gain</option>
+          <option value="powerlifting">Powerlifting</option>
+          <option value="general">General fitness</option>
         </select>
 
-        <label for="goals">What are your fitness goals?</label>
-        <textarea id="goals" name="goals" rows="4" placeholder="E.g., Lose weight, build muscle, improve endurance..." required></textarea>
-      </form>
+        <!-- Conditional: Weight Loss/Gain -->
+        <div id="weightGoals" class="hidden">
+          <label>Tell me about your goals</label>
+          <textarea name="weightGoalDesc" rows="3"></textarea>
 
-      <div id="send-to-coach">
-        <p>Lets Get Started!</p>
-        <button onclick="sendToCoach()">Send to Coach</button>
+          <label>Exercise History</label>
+          <textarea name="exerciseHistory" rows="3"></textarea>
+
+          <label>Past obstacles / things that didn’t work?</label>
+          <textarea name="obstacles" rows="3"></textarea>
+        </div>
+
+        <!-- Conditional: Powerlifting -->
+        <div id="plSection" class="hidden">
+          <label>Powerlifting Experience</label>
+          <select name="plExperience">
+            <option value="">-- Select --</option>
+            <option value="none">None</option>
+            <option value="little">A little</option>
+            <option value="moderate">Moderate</option>
+            <option value="a_lot">A lot</option>
+          </select>
+
+          <label>SBD Numbers (skip if new)</label>
+          <textarea name="sbdNumbers" rows="2"></textarea>
+
+          <label>Have you competed before?</label>
+          <select id="plCompeted" name="plCompeted">
+            <option value="">-- Select --</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+
+          <div id="plCompDetails" class="hidden">
+            <label>How many times?</label>
+            <input type="number" name="plComps">
+
+            <label>Weight class at last meet</label>
+            <input type="text" name="plWeightClass">
+
+            <label>Last meet numbers (SBD)</label>
+            <textarea name="plMeetSBD" rows="2"></textarea>
+
+            <label>Anything feel off? Any improvements?</label>
+            <textarea name="plImprovements" rows="3"></textarea>
+
+            <label>Specific concerns or goals?</label>
+            <textarea name="plConcerns" rows="3"></textarea>
+          </div>
+        </div>
+
+        <div class="buttons">
+          <button type="button" onclick="nextPage(1)">← Back</button>
+          <button type="button" onclick="nextPage(3)">Next Page →</button>
+        </div>
       </div>
-    </section>
-  </main>
 
-  <script>
-    function sendToCoach() {
-      window.location.href = "/Users/elianalaudadio/Desktop/Portfolio/cart.html";
+
+      <!-- -------------------- PAGE 3 -------------------- -->
+      <div class="form-page hidden" id="page3">
+        <h3>Injury Analysis</h3>
+
+        <label>Past Injuries</label>
+        <textarea name="pastInjuries" rows="3"></textarea>
+
+        <label>Current Injuries / Pain</label>
+        <textarea name="currentInjuries" rows="3"></textarea>
+
+        <div class="buttons">
+          <button type="button" onclick="nextPage(2)">← Back</button>
+          <button type="button" onclick="nextPage(4)">Next Page →</button>
+        </div>
+      </div>
+
+
+      <!-- -------------------- PAGE 4 -------------------- -->
+      <div class="form-page hidden" id="page4">
+        <h3>Preferences</h3>
+
+        <label>How many days/week can you commit?</label>
+        <input type="text" name="daysPerWeek">
+
+        <label>Job (for schedule context)</label>
+        <input type="text" name="job">
+
+        <label>Preferred check-in frequency</label>
+        <select name="checkin">
+          <option value="">-- Select --</option>
+          <option>Weekly</option>
+          <option>Bi-weekly</option>
+          <option>Monthly</option>
+        </select>
+
+        <label>Other restrictions / preferences / things you're proud of</label>
+        <textarea name="preferences" rows="3"></textarea>
+
+        <div class="buttons">
+          <button type="button" onclick="nextPage(3)">← Back</button>
+          <button type="submit">Submit to Coach</button>
+        </div>
+      </div>
+
+    </form>
+  </section>
+</main>
+
+
+<script>
+  // PAGE SWITCHING
+  function nextPage(page) {
+    document.querySelectorAll('.form-page').forEach(p => p.classList.add('hidden'));
+    document.getElementById('page' + page).classList.remove('hidden');
+    window.scrollTo(0,0);
+  }
+
+  // CONDITIONAL OPTIONS
+  const goalSelect = document.getElementById("goalType");
+  const weightGoals = document.getElementById("weightGoals");
+  const plSection = document.getElementById("plSection");
+  const plComp = document.getElementById("plCompeted");
+  const plCompDetails = document.getElementById("plCompDetails");
+
+  goalSelect.addEventListener("change", () => {
+    weightGoals.classList.add("hidden");
+    plSection.classList.add("hidden");
+
+    if (goalSelect.value === "weight") weightGoals.classList.remove("hidden");
+    if (goalSelect.value === "powerlifting") plSection.classList.remove("hidden");
+  });
+
+  plComp.addEventListener("change", () => {
+    if (plComp.value === "yes") {
+      plCompDetails.classList.remove("hidden");
+    } else {
+      plCompDetails.classList.add("hidden");
     }
-  </script>
+  });
+
+  // FORM SUBMISSION (ready for Google Sheets)
+  document.getElementById("signup").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    // Replace with your Google Apps Script URL
+    const scriptURL = "YOUR_GOOGLE_SHEETS_SCRIPT_URL";
+
+    fetch(scriptURL, { method: "POST", body: new FormData(this)})
+      .then(() => alert("Form successfully submitted!"))
+      .catch(err => alert("Error: " + err));
+  });
+</script>
+
 </body>
 </html>
