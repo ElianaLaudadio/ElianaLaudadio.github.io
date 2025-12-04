@@ -54,7 +54,6 @@
     text-align: center;
   }
 
-  /* Center the form and make all fields uniform */
   form {
     max-width: 600px;
     margin: auto;
@@ -131,7 +130,7 @@
         <label>Full Name</label>
         <input type="text" name="fullName" required>
 
-        <label>Email</label>
+        <label>Email (connects to Google Sheets)</label>
         <input type="email" name="email" required>
 
         <label>Phone Number</label>
@@ -159,11 +158,10 @@
         <h3>Goals / Physiological Analysis</h3>
 
         <label>Primary Goal</label>
-        <select id="goalType" name="goalType">
+        <select id="goalType" name="goalType" required>
           <option value="">-- Select --</option>
           <option value="weight">General weight loss / gain</option>
           <option value="powerlifting">Powerlifting</option>
-          <option value="general">General fitness</option>
         </select>
 
         <!-- Conditional: Weight Loss/Gain -->
@@ -262,7 +260,7 @@
 
         <div class="buttons">
           <button type="button" onclick="nextPage(3)">← Back</button>
-          <button type="submit">Submit to Coach</button>
+          <button type="submit">Submit</button>
         </div>
       </div>
 
