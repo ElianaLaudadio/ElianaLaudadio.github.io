@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Meal Planner &#x1F345;</title>
+  <title>Meal Planner 🍅</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg: #000;
       --fg: #fff;
       --muted: #ccc;
-      --accent: #111;
       --card-bg: #111;
       --hover: #222;
     }
@@ -42,7 +42,6 @@
       margin: 0 20px;
       font-size: 16px;
       font-weight: 600;
-      transition: color 0.3s ease;
       position: relative;
     }
 
@@ -66,49 +65,42 @@
       background: var(--card-bg);
       padding: 24px;
       border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
+      box-shadow: 0 4px 20px rgba(255,255,255,0.05);
       max-width: 640px;
       margin: 10px auto 30px auto;
     }
 
     #go-to-cart h3 {
-      margin-bottom: 10px;
-      color: var(--fg);
-      font-weight: 600;
       font-size: 26px;
+      margin-bottom: 10px;
     }
 
     #go-to-cart p {
-      margin-bottom: 15px;
       color: var(--muted);
-      font-size: 16px;
     }
 
-    #go-to-cart button {
+    button {
       background-color: var(--card-bg);
       color: var(--fg);
       border: none;
       padding: 12px 24px;
-      font-size: 18px;
+      font-size: 16px;
       border-radius: 6px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
     }
 
-    #go-to-cart button:hover {
+    button:hover {
       background-color: var(--hover);
     }
 
     section {
-      padding: 0 20px 40px 20px;
+      padding: 0 20px 40px;
       max-width: 700px;
       margin: 0 auto;
     }
 
     .section-title {
       font-size: 28px;
-      color: var(--fg);
-      font-weight: 600;
       text-align: center;
       margin-bottom: 30px;
     }
@@ -123,33 +115,19 @@
       border: 1px solid #333;
       border-radius: 12px;
       background: var(--card-bg);
-      transition: transform 0.2s ease, background 0.2s ease;
+      padding: 20px;
       cursor: pointer;
-      box-shadow: 0 2px 12px rgba(255, 255, 255, 0.05);
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      padding: 16px;
-      color: var(--fg);
+      box-shadow: 0 2px 12px rgba(255,255,255,0.05);
     }
 
     .card:hover {
-      transform: translateY(-4px);
       background: var(--hover);
-    }
-
-    .card img {
-      width: 120px;
-      height: 90px;
-      object-fit: cover;
-      border-radius: 10px;
-      flex-shrink: 0;
+      transform: translateY(-4px);
     }
 
     .card h3 {
-      margin: 0 0 8px 0;
+      margin: 0 0 6px 0;
       font-size: 20px;
-      color: var(--fg);
     }
 
     .card p {
@@ -161,42 +139,27 @@
     footer {
       text-align: center;
       padding: 20px;
-      background-color: var(--bg);
+      border-top: 1px solid #333;
       color: var(--muted);
       font-size: 14px;
-      border-top: 1px solid #333;
-      max-width: 960px;
-      margin: 0 auto;
     }
 
+    /* ---------- MODAL ---------- */
     .modal {
       display: none;
       position: fixed;
+      inset: 0;
+      background-color: rgba(0,0,0,0.8);
       z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.8);
     }
 
     .modal-content {
-      background-color: var(--card-bg);
+      background: var(--card-bg);
       margin: 10% auto;
       padding: 20px;
       border-radius: 12px;
       width: 90%;
       max-width: 500px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-      color: var(--fg);
-    }
-
-    .modal-content img {
-      width: 60%;
-      display: block;
-      margin: 0 auto 15px auto;
-      border-radius: 8px;
     }
 
     .close {
@@ -207,9 +170,8 @@
     }
 
     ul {
-      list-style-type: none;
+      list-style: none;
       padding: 0;
-      margin-bottom: 20px;
     }
 
     ul li {
@@ -217,167 +179,121 @@
       font-size: 16px;
     }
 
-    button {
-      padding: 10px 16px;
-      margin: 6px;
-      background-color: var(--card-bg);
-      color: var(--fg);
-      border: none;
-      border-radius: 6px;
-      font-size: 15px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: var(--hover);
-    }
-
+    /* ---------- MOBILE ONLY ---------- */
     @media (max-width: 600px) {
-      nav a {
-        display: block;
-        margin: 10px 0;
-        font-size: 15px;
-      }
-
       .card {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .card img {
-        width: 100%;
-        height: auto;
+        text-align: center;
       }
 
       .modal-content {
         margin: 20% auto;
-        padding: 15px;
-      }
-
-      #go-to-cart h3 {
-        font-size: 22px;
-      }
-
-      #go-to-cart p {
-        font-size: 14px;
-      }
-
-      .section-title {
-        font-size: 24px;
+        text-align: center;
       }
     }
   </style>
 </head>
+
 <body>
 
-  <nav>
-    <a href="/Users/elianalaudadio/Desktop/PersonalTraining/index.html">Home</a>
-    <a href="/Users/elianalaudadio/Desktop/PersonalTraining/template.html">Goals + Progress</a>
-    <a href="/Users/elianalaudadio/Desktop/PersonalTraining/workouts.html">Workouts</a>
-    <a href="/Users/elianalaudadio/Desktop/PersonalTraining/doordash.html">Meal Planner</a>
-  </nav>
+<nav>
+  <a href="/Users/elianalaudadio/Desktop/PersonalTraining/index.html">Home</a>
+  <a href="/Users/elianalaudadio/Desktop/PersonalTraining/template.html">Goals + Progress</a>
+  <a href="/Users/elianalaudadio/Desktop/PersonalTraining/workouts.html">Workouts</a>
+  <a href="/Users/elianalaudadio/Desktop/PersonalTraining/doordash.html">Meal Planner</a>
+</nav>
 
-  <section id="go-to-cart">
-    <h3>Grocery List</h3>
-    <p>Ready to check your selected meals? Click below to view your Grocery List.</p>
-    <button onclick="location.href='/Users/elianalaudadio/Desktop/PersonalTraining/cart.html'">Go to Grocery List</button>
-  </section>
+<section id="go-to-cart">
+  <h3>Grocery List</h3>
+  <p>Ready to check your selected meals?</p>
+  <button onclick="location.href='/Users/elianalaudadio/Desktop/PersonalTraining/cart.html'">
+    Go to Grocery List
+  </button>
+</section>
 
-  <section>
-    <h2 class="section-title">Breakfast</h2>
-    <div class="cards" id="cards"></div>
-  </section>
+<section>
+  <h2 class="section-title">Breakfast</h2>
+  <div class="cards" id="cards"></div>
+</section>
 
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <img id="modalImg" src="filler!.avif" alt="" />
-      <h3 id="modalTitle"></h3>
-      <ul id="modalList"></ul>
-      <div style="text-align:center;">
-        <button onclick="addAllToCart()">Add All</button>
-        <button onclick="addSelectedToCart()">Add Selected</button>
-      </div>
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h3 id="modalTitle"></h3>
+    <ul id="modalList"></ul>
+    <div>
+      <button onclick="addAllToCart()">Add All</button>
+      <button onclick="addSelectedToCart()">Add Selected</button>
     </div>
   </div>
+</div>
 
-  <footer>
+<footer></footer>
 
-  </footer>
+<script>
+  const snacks = [
+    { title: "Protein Cereal", ingredients: ["Kashi - Go Cereal", "Milk"] },
+    { title: "Fruit & Yogurt", ingredients: ["Greek yogurt", "Blueberries", "Strawberries", "Honey"] },
+    { title: "Chia Bliss", ingredients: ["Chia seeds", "Milk", "Honey", "Strawberries"] },
+    { title: "Cottage Cheese on Sour Dough", ingredients: ["Cottage cheese", "Sourdough bread", "Honey"] },
+    { title: "Eggs + Breakfast Meat", ingredients: ["Eggs", "Breakfast Meat"] },
+    { title: "Protein Waffles", ingredients: ["Protein waffle mix", "Butter", "Maple syrup", "Blueberries"] }
+  ];
 
-  <script>
-   const snacks = [
-     { title: "Protein Cereal", ingredients: ["Kashi - Go Cereal", "Milk"] },
-     { title: "Fruit & Yogurt", ingredients: ["Greek yogurt", "Blueberries", "Strawberries", "Honey"] },
-     { title: "Chia Bliss", ingredients: ["Chia seeds", "Milk", "Honey", "Strawberries"] },
-     { title: "Cottage Cheese on Sour Dough", ingredients: ["Cottage cheese", "Sourdough bread", "Honey"] },
-     { title: "Eggs + Breakfast Meat", ingredients: ["Eggs", "Breakfast Meat"] },
-     { title: "Protein Waffles", ingredients: ["Protein waffle mix", "butter", "Maple syrup", "Blueberries"] }
-   ];
+  const cards = document.getElementById("cards");
+  const modal = document.getElementById("modal");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalList = document.getElementById("modalList");
+  let currentIngredients = [];
 
-    const cards = document.getElementById("cards");
-    const modal = document.getElementById("modal");
-    const modalImg = document.getElementById("modalImg");
-    const modalTitle = document.getElementById("modalTitle");
-    const modalList = document.getElementById("modalList");
-    let currentIngredients = [];
+  snacks.forEach(snack => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <h3>${snack.title}</h3>
+      <p>Click to view ingredients</p>
+    `;
+    card.onclick = () => showModal(snack);
+    cards.appendChild(card);
+  });
 
-    snacks.forEach(snack => {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        <img src="filler!.avif" alt="${snack.title}" />
-        <div>
-          <h3>${snack.title}</h3>
-          <p>Click to view ingredients</p>
-        </div>
-      `;
-      card.onclick = () => showModal(snack);
-      cards.appendChild(card);
+  function showModal(item) {
+    modal.style.display = "block";
+    modalTitle.textContent = item.title;
+    modalList.innerHTML = "";
+    currentIngredients = item.ingredients;
+
+    item.ingredients.forEach(ingredient => {
+      const li = document.createElement("li");
+      li.innerHTML = `<input type="checkbox" value="${ingredient}"> ${ingredient}`;
+      modalList.appendChild(li);
     });
+  }
 
-    function showModal(item) {
-      modal.style.display = "block";
-      modalImg.src = "filler!.avif";
-      modalTitle.textContent = item.title;
-      modalList.innerHTML = "";
-      currentIngredients = item.ingredients;
-      item.ingredients.forEach(ingredient => {
-        const li = document.createElement("li");
-        li.innerHTML = `<input type='checkbox' value="${ingredient}" /> ${ingredient}`;
-        modalList.appendChild(li);
-      });
-    }
+  function closeModal() {
+    modal.style.display = "none";
+  }
 
-    function closeModal() {
-      modal.style.display = "none";
-    }
+  function addToCart(items) {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push(...items);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    closeModal();
+  }
 
-    function addToCart(items) {
-      const cart = JSON.parse(localStorage.getItem("cart")) || [];
-      cart.push(...items);
-      localStorage.setItem("cart", JSON.stringify(cart));
-      closeModal();
-    }
+  function addAllToCart() {
+    addToCart(currentIngredients);
+  }
 
-    function addAllToCart() {
-      addToCart(currentIngredients);
-    }
+  function addSelectedToCart() {
+    const selected = Array.from(document.querySelectorAll("#modalList input:checked"))
+      .map(cb => cb.value);
+    addToCart(selected);
+  }
 
-    function addSelectedToCart() {
-      const selected = Array.from(document.querySelectorAll("#modalList input:checked"))
-                            .map(cb => cb.value);
-      addToCart(selected);
-    }
+  window.onclick = e => {
+    if (e.target === modal) closeModal();
+  };
+</script>
 
-    window.onclick = function(event) {
-      if (event.target === modal) {
-        closeModal();
-      }
-    }
-  </script>
 </body>
 </html>
-
-
