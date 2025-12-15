@@ -69,6 +69,7 @@
       cursor: pointer;
       margin: 0 auto;
       width: 30px;
+      transition: all 0.3s ease;
     }
 
     .hamburger div {
@@ -76,6 +77,18 @@
       height: 3px;
       background-color: var(--fg);
       transition: all 0.3s ease;
+    }
+
+    .hamburger.active div:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active div:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active div:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
     }
 
     .nav-links {
@@ -310,7 +323,7 @@
 <body>
 
   <nav>
-    <div class="hamburger" onclick="toggleMenu()">
+    <div class="hamburger" onclick="toggleMenu(this)">
       <div></div>
       <div></div>
       <div></div>
@@ -419,11 +432,13 @@
       if (event.target === modal) closeModal();
     }
 
-    function toggleMenu() {
+    function toggleMenu(el) {
+      el.classList.toggle('active');
       document.querySelector('.nav-links').classList.toggle('active');
     }
   </script>
 </body>
 </html>
+
 
 
