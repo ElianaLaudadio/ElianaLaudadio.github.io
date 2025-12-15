@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>Nutrition Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -38,6 +39,10 @@
       font-weight: 600;
     }
 
+    nav a:hover {
+      color: #bbb;
+    }
+
     main {
       max-width: 960px;
       margin: 30px auto;
@@ -52,7 +57,7 @@
       margin-bottom: 30px;
     }
 
-    /* ✅ ONLY CHANGE */
+    /* ✅ ONLY VISUAL CHANGE */
     #nutrition {
       text-align: center;
     }
@@ -66,29 +71,32 @@
       display: block;
       margin-top: 10px;
       color: #ddd;
-      font-weight: 500;
     }
 
-    input[type="number"], input[type="text"] {
+    input {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
       border-radius: 6px;
       border: 1px solid #444;
-      background-color: #111;
+      background: #111;
       color: #eee;
+      font-size: 16px;
     }
 
     button {
-      background-color: #222;
+      background: #222;
       color: #eee;
       border: none;
       padding: 10px 16px;
-      font-size: 16px;
       border-radius: 6px;
+      font-size: 16px;
       cursor: pointer;
       margin-top: 15px;
-      font-weight: 600;
+    }
+
+    button:hover {
+      background: #444;
     }
 
     #weight-buttons {
@@ -97,12 +105,13 @@
     }
 
     #weight-buttons button {
-      width: 48%;
+      width: 50%;
     }
 
     canvas {
       width: 100% !important;
       height: 300px !important;
+      margin-top: 20px;
     }
 
     .progress-circle {
@@ -110,12 +119,19 @@
       height: 140px;
       border-radius: 50%;
       margin: 20px auto;
-      background: conic-gradient(#666 0%, #666 100%);
+      background: conic-gradient(#444 0%, #444 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 22px;
       font-weight: bold;
+    }
+
+    .message {
+      text-align: center;
+      color: #6fe36f;
+      font-weight: bold;
+      min-height: 24px;
     }
 
     .goals-grid {
@@ -129,13 +145,6 @@
       background: #111;
       padding: 15px;
       border-radius: 8px;
-      text-align: center;
-    }
-
-    .message {
-      margin-top: 10px;
-      font-weight: bold;
-      color: #6fe36f;
       text-align: center;
     }
   </style>
@@ -152,70 +161,83 @@
 
 <main>
 
-<section id="nutrition">
-  <h2>Nutrition Tracker & Goals</h2>
-  <p>Welcome to your personalized dashboard. Track your weight, set your goals, and monitor your daily nutrition all in one place.</p>
-</section>
+  <section id="nutrition">
+    <h2>Nutrition Tracker & Goals</h2>
+    <p>
+      Welcome to your personalized dashboard. Track your weight, set your goals,
+      and monitor your daily nutrition all in one place.
+    </p>
+  </section>
 
-<section id="weight">
-  <h2>Weight Tracking</h2>
-  <label>Today's Weight (lbs)</label>
-  <input type="number" id="weight-input" step="0.1">
-  <div id="weight-buttons">
-    <button onclick="addWeight()">Add Entry</button>
-    <button onclick="deleteLastEntry()">Delete Last Entry</button>
-  </div>
-  <canvas id="weightChart"></canvas>
-</section>
+  <section id="weight">
+    <h2>Weight Tracking</h2>
 
-<section id="input">
-  <h2>Daily Nutrition Input</h2>
-  <label>Protein (grams)</label>
-  <input type="number" id="protein" oninput="calculateProgress()">
-  <label>Carbs (grams)</label>
-  <input type="number" id="carbs" oninput="calculateProgress()">
-  <label>Fat (grams)</label>
-  <input type="number" id="fat" oninput="calculateProgress()">
+    <label>Today's Weight (lbs)</label>
+    <input type="number" id="weight-input" step="0.1" />
 
-  <div class="progress-circle" id="proteinCircle"><div id="proteinText">0%</div></div>
-  <div class="message" id="proteinMessage"></div>
+    <div id="weight-buttons">
+      <button onclick="addWeight()">Add Entry</button>
+      <button onclick="deleteLastEntry()">Delete Last Entry</button>
+    </div>
 
-  <div class="progress-circle" id="calorieCircle"><div id="calorieText">0%</div></div>
-  <div class="message" id="calorieMessage"></div>
+    <canvas id="weightChart"></canvas>
+  </section>
 
-  <div class="message" id="totalCalories">Total Calories: 0</div>
-</section>
+  <section>
+    <h2>Daily Nutrition Input</h2>
 
-<section id="goals">
-  <h2>Set Your Goals</h2>
-  <label>Goal Weight</label>
-  <input type="number" id="goal-weight">
-  <label>Daily Calories</label>
-  <input type="number" id="calories-goal">
-  <label>Protein Goal</label>
-  <input type="number" id="protein-goal">
-  <label>Carbs Goal</label>
-  <input type="number" id="carbs-goal">
-  <label>Fats Goal</label>
-  <input type="number" id="fats-goal">
-  <button onclick="saveGoals()">Save Goals</button>
+    <label>Protein (g)</label>
+    <input type="number" id="protein" oninput="calculateProgress()">
 
-  <div class="goals-grid">
-    <div class="goal-box"><span id="display-weight">–</span></div>
-    <div class="goal-box"><span id="display-calories">–</span></div>
-    <div class="goal-box"><span id="display-protein">–</span></div>
-    <div class="goal-box"><span id="display-carbs">–</span></div>
-    <div class="goal-box"><span id="display-fats">–</span></div>
-  </div>
-</section>
+    <label>Carbs (g)</label>
+    <input type="number" id="carbs" oninput="calculateProgress()">
+
+    <label>Fat (g)</label>
+    <input type="number" id="fat" oninput="calculateProgress()">
+
+    <div class="progress-circle" id="proteinCircle">
+      <div id="proteinText">0%</div>
+    </div>
+
+    <div class="message" id="proteinMessage"></div>
+
+    <div class="progress-circle" id="calorieCircle">
+      <div id="calorieText">0%</div>
+    </div>
+
+    <div class="message" id="calorieMessage"></div>
+    <div class="message" id="totalCalories">Total Calories: 0</div>
+  </section>
+
+  <section>
+    <h2>Set Your Goals</h2>
+
+    <input type="number" id="goal-weight" placeholder="Goal Weight">
+    <input type="number" id="calories-goal" placeholder="Calories">
+    <input type="number" id="protein-goal" placeholder="Protein">
+    <input type="number" id="carbs-goal" placeholder="Carbs">
+    <input type="number" id="fats-goal" placeholder="Fats">
+
+    <button onclick="saveGoals()">Save Goals</button>
+
+    <div class="goals-grid">
+      <div class="goal-box"><span id="display-weight">–</span></div>
+      <div class="goal-box"><span id="display-calories">–</span></div>
+      <div class="goal-box"><span id="display-protein">–</span></div>
+      <div class="goal-box"><span id="display-carbs">–</span></div>
+      <div class="goal-box"><span id="display-fats">–</span></div>
+    </div>
+  </section>
 
 </main>
+
+<audio id="celebrationSound" src="https://assets.mixkit.co/sfx/preview/mixkit-small-group-cheer-and-applause-518.mp3"></audio>
 
 <script>
   const ctx = document.getElementById('weightChart').getContext('2d');
   let weightData = JSON.parse(localStorage.getItem('weightEntries') || '[]');
 
-  let chart = new Chart(ctx, {
+  const chart = new Chart(ctx, {
     type: 'line',
     data: {
       labels: weightData.map(e => e.date),
@@ -224,12 +246,17 @@
         data: weightData.map(e => e.weight),
         borderColor: '#eee',
         backgroundColor: 'rgba(238,238,238,0.15)',
-        borderWidth: 2,
         fill: true,
         tension: 0.3,
-        pointRadius: 5,
-        pointBackgroundColor: '#eee'
+        pointRadius: 5
       }]
+    },
+    options: {
+      plugins: { legend: { labels: { color: '#eee' } } },
+      scales: {
+        x: { ticks: { color: '#eee' } },
+        y: { ticks: { color: '#eee' } }
+      }
     }
   });
 
@@ -238,11 +265,12 @@
   }
 
   function addWeight() {
-    const weight = parseFloat(document.getElementById('weight-input').value);
-    if (isNaN(weight)) return;
+    const weight = parseFloat(weight-input.value);
+    if (!weight) return alert("Enter a weight");
     weightData.push({ date: getTodayDate(), weight });
     localStorage.setItem('weightEntries', JSON.stringify(weightData));
     updateChart();
+    weight-input.value = "";
   }
 
   function deleteLastEntry() {
