@@ -57,7 +57,7 @@
       margin-bottom: 30px;
     }
 
-    /* ✅ ONLY VISUAL CHANGE */
+    /* ✅ ONLY CHANGE */
     #nutrition {
       text-align: center;
     }
@@ -169,7 +169,7 @@
     </p>
   </section>
 
-  <section id="weight">
+  <section>
     <h2>Weight Tracking</h2>
 
     <label>Today's Weight (lbs)</label>
@@ -231,9 +231,13 @@
 
 </main>
 
-<audio id="celebrationSound" src="https://assets.mixkit.co/sfx/preview/mixkit-small-group-cheer-and-applause-518.mp3"></audio>
+<audio id="celebrationSound"
+  src="https://assets.mixkit.co/sfx/preview/mixkit-small-group-cheer-and-applause-518.mp3"
+  preload="auto">
+</audio>
 
 <script>
+  /* ---------- WEIGHT GRAPH ---------- */
   const ctx = document.getElementById('weightChart').getContext('2d');
   let weightData = JSON.parse(localStorage.getItem('weightEntries') || '[]');
 
@@ -265,15 +269,16 @@
   }
 
   function addWeight() {
-    const weight = parseFloat(weight-input.value);
-    if (!weight) return alert("Enter a weight");
+    const weight = parseFloat(document.getElementById('weight-input').value);
+    if (isNaN(weight)) return alert("Please enter a weight");
     weightData.push({ date: getTodayDate(), weight });
     localStorage.setItem('weightEntries', JSON.stringify(weightData));
     updateChart();
-    weight-input.value = "";
+    document.getElementById('weight-input').value = '';
   }
 
   function deleteLastEntry() {
+    if (!weightData.length) return;
     weightData.pop();
     localStorage.setItem('weightEntries', JSON.stringify(weightData));
     updateChart();
@@ -284,6 +289,82 @@
     chart.data.datasets[0].data = weightData.map(e => e.weight);
     chart.update();
   }
+
+  /* ---------- GOALS + PROGRESS ---------- */
+  function saveGoals() {
+    const goals = {
+      weight: goal-weight.value,
+      calories: calories-goal.value,
+      protein: protein-goal.value,
+      carbs: carbs-goal.value,
+      fats: fats-goal.value
+    };
+    localStorage.setItem('macroGoals', JSON.stringify(goals));
+    displayGoals();
+    calculateProgress();
+  }
+
+  function displayGoals() {
+    const g = JSON.parse(localStorage.getItem('macroGoals')) || {};
+    display-weight.textContent = g.weight ? g.weight + ' lbs' : '–';
+    display-calories.textContent = g.calories ? g.calories + ' kcal' : '–';
+    display-protein.textContent = g.protein ? g.protein + ' g' : '–';
+    display-carbs.textContent = g.carbs ? g.carbs + ' g' : '–';
+    display-fats.textContent = g.fats ? g.fats + ' g' : '–';
+  }
+
+  let proteinConfetti = false;
+  let calorieConfetti = false;
+
+  function calculateProgress() {
+    const protein = +document.getElementById('protein').value || 0;
+    const carbs = +document.getElementById('carbs').value || 0;
+    const fat = +document.getElementById('fat').value || 0;
+
+    const totalCalories = Math.round(protein * 4 + carbs * 4 + fat * 9);
+    totalCalories.innerText = `Total Calories: ${totalCalories}`;
+
+    const goals = JSON.parse(localStorage.getItem('macroGoals')) || {};
+    const proteinGoal = +goals.protein || 1;
+    const calorieGoal = +goals.calories || 1;
+
+    const proteinPct = Math.min(100, (protein / proteinGoal) * 100);
+    const caloriePct = Math.min(100, (totalCalories / calorieGoal) * 100);
+
+    proteinText.innerText = `${Math.round(proteinPct)}%`;
+    calorieText.innerText = `${Math.round(caloriePct)}%`;
+
+    proteinCircle.style.background =
+      `conic-gradient(#6fe36f ${proteinPct}%, #444 ${proteinPct}% 100%)`;
+
+    calorieCircle.style.background =
+      `conic-gradient(#6fe36f ${caloriePct}%, #444 ${caloriePct}% 100%)`;
+
+    proteinMessage.innerText = proteinPct >= 100 ? "Protein Goal Achieved!" : "";
+    calorieMessage.innerText = caloriePct >= 100 ? "Calorie Goal Achieved!" : "";
+
+    const sound = document.getElementById('celebrationSound');
+
+    if (proteinPct >= 100 && !proteinConfetti) {
+      confetti({ particleCount: 200, spread: 100 });
+      sound.play();
+      proteinConfetti = true;
+    }
+    if (proteinPct < 100) proteinConfetti = false;
+
+    if (caloriePct >= 100 && !calorieConfetti) {
+      confetti({ particleCount: 200, spread: 100 });
+      sound.play();
+      calorieConfetti = true;
+    }
+    if (caloriePct < 100) calorieConfetti = false;
+  }
+
+  window.onload = () => {
+    displayGoals();
+    updateChart();
+    calculateProgress();
+  };
 </script>
 
 </body>
