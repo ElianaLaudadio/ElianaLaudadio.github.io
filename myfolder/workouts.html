@@ -24,16 +24,20 @@
       padding-bottom: 40px;
     }
 
-    nav {
+    /* ---------- HEADER & NAV ---------- */
+    header {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       background-color: var(--bg);
-      padding: 18px 0;
-      text-align: center;
       z-index: 999;
       border-bottom: 1px solid #333;
+    }
+
+    nav {
+      padding: 18px 0;
+      text-align: center;
     }
 
     nav a {
@@ -67,24 +71,17 @@
       font-size: 36px;
       cursor: pointer;
       color: var(--fg);
-      position: fixed;
-      top: 15px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
+      margin: 0 auto;
+      text-align: center;
     }
 
     #mobile-menu {
       display: none;
       flex-direction: column;
-      position: fixed;
-      top: 70px;
-      left: 0;
       width: 100%;
       background-color: var(--bg);
       text-align: center;
       border-top: 1px solid #333;
-      z-index: 998;
     }
 
     #mobile-menu a {
@@ -93,6 +90,7 @@
       font-size: 18px;
     }
 
+    /* ---------- CONTENT ---------- */
     #go-to-cart {
       text-align: center;
       background: var(--card-bg);
@@ -182,6 +180,8 @@
 
       #hamburger {
         display: block;
+        font-size: 40px;
+        padding: 10px 0;
       }
 
       .card {
@@ -205,19 +205,21 @@
   </style>
 </head>
 <body>
-  <nav>
-    <a href="/myfolder/index.html">Home</a>
-    <a href="/myfolder/template.html">Goals + Progress</a>
-    <a href="/myfolder/workouts.html">Workouts</a>
-    <a href="/myfolder/doordash.html">Meal Planner</a>
-    <span id="hamburger">&#9776;</span>
-    <div id="mobile-menu">
+  <header>
+    <nav>
       <a href="/myfolder/index.html">Home</a>
       <a href="/myfolder/template.html">Goals + Progress</a>
       <a href="/myfolder/workouts.html">Workouts</a>
       <a href="/myfolder/doordash.html">Meal Planner</a>
-    </div>
-  </nav>
+      <span id="hamburger">&#9776;</span>
+      <div id="mobile-menu">
+        <a href="/myfolder/index.html">Home</a>
+        <a href="/myfolder/template.html">Goals + Progress</a>
+        <a href="/myfolder/workouts.html">Workouts</a>
+        <a href="/myfolder/doordash.html">Meal Planner</a>
+      </div>
+    </nav>
+  </header>
 
   <section id="go-to-cart">
     <h3>Workouts</h3>
