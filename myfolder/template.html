@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>Nutrition Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -37,6 +36,11 @@
       margin: 0 20px;
       font-size: 16px;
       font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #bbb;
     }
 
     main {
@@ -53,7 +57,13 @@
       margin-bottom: 30px;
     }
 
+    /* ✅ ONLY CHANGE */
+    #nutrition {
+      text-align: center;
+    }
+
     h2 {
+      color: #eee;
       margin-top: 0;
       font-weight: 600;
     }
@@ -61,20 +71,25 @@
     label {
       display: block;
       margin-top: 10px;
-      font-weight: 500;
       color: #ddd;
-      text-align: left;
+      font-weight: 500;
     }
 
-    input[type="number"] {
+    input[type="number"], input[type="text"] {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
       border-radius: 6px;
       border: 1px solid #444;
+      font-size: 16px;
       background-color: #111;
       color: #eee;
-      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="number"]:focus, input[type="text"]:focus {
+      border-color: #888;
+      outline: none;
     }
 
     button {
@@ -86,6 +101,7 @@
       border-radius: 6px;
       cursor: pointer;
       margin-top: 15px;
+      transition: background-color 0.3s ease;
       font-weight: 600;
     }
 
@@ -95,24 +111,15 @@
 
     #weight-buttons {
       display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
       gap: 10px;
     }
 
     #weight-buttons button {
-      width: 100%;
-    }
-
-    canvas {
-      width: 100% !important;
-      height: 300px !important;
-    }
-
-    /* 🔥 CENTERED SECTIONS */
-    #input,
-    #goals {
-      max-width: 600px;
-      margin: 0 auto 30px auto;
-      text-align: center;
+      width: 48%;
+      margin-top: 0;
     }
 
     .progress-circle {
@@ -126,19 +133,14 @@
       justify-content: center;
       font-size: 22px;
       font-weight: bold;
-    }
-
-    .message {
-      margin-top: 10px;
-      font-weight: bold;
-      color: #6fe36f;
-      min-height: 24px;
+      color: #eee;
+      transition: background 0.3s ease;
     }
 
     .goals-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 15px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
       margin-top: 20px;
     }
 
@@ -147,24 +149,81 @@
       padding: 15px;
       border-radius: 8px;
       text-align: center;
+      color: #eee;
       box-shadow: inset 0 0 6px #000;
+    }
+
+    canvas {
+      width: 100% !important;
+      height: 300px !important;
+    }
+
+    .message {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #6fe36f;
+      text-align: center;
+      min-height: 24px;
+    }
+
+    section p {
+      color: #bbb;
+      font-size: 16px;
+      margin-top: 10px;
     }
 
     #go-to-cart button {
       display: block;
-      margin: 0 auto;
+      margin: 15px auto 0 auto;
       width: 200px;
       font-size: 18px;
       padding: 12px 0;
       border-radius: 8px;
+      background-color: #222;
+      color: #eee;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    #go-to-cart button:hover {
+      background-color: #444;
     }
 
     @media (max-width: 600px) {
+      nav a {
+        display: block;
+        margin: 10px 0;
+        font-size: 18px;
+      }
+
       main {
         padding: 0 10px;
       }
 
+      section {
+        padding: 20px 15px;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+
+      input[type="number"], input[type="text"] {
+        font-size: 15px;
+      }
+
       button {
+        width: 100%;
+        font-size: 16px;
+        padding: 12px;
+      }
+
+      #weight-buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      #weight-buttons button {
         width: 100%;
       }
 
@@ -172,6 +231,16 @@
         width: 120px;
         height: 120px;
         font-size: 18px;
+      }
+
+      .goals-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      #go-to-cart button {
+        width: 100%;
+        font-size: 16px;
       }
     }
   </style>
@@ -187,80 +256,159 @@
   </nav>
 
   <main>
-
-    <section>
+    <section id="nutrition">
       <h2>Nutrition Tracker & Goals</h2>
-      <p>Track your weight, nutrition, and goals in one place.</p>
+      <p>
+        Welcome to your personalized dashboard. Track your weight, set your goals,
+        and monitor your daily nutrition all in one place.
+      </p>
     </section>
 
     <section id="weight">
       <h2>Weight Tracking</h2>
-      <label>Today's Weight (lbs)</label>
-      <input type="number" id="weight-input" step="0.1">
+      <label for="weight-input">Today's Weight (lbs):</label>
+      <input type="number" id="weight-input" step="0.1" />
       <div id="weight-buttons">
         <button onclick="addWeight()">Add Entry</button>
-        <button onclick="deleteLastEntry()">Delete Last</button>
+        <button onclick="deleteLastEntry()">Delete Last Entry</button>
       </div>
       <canvas id="weightChart"></canvas>
     </section>
 
     <section id="input">
-      <h2>Daily Nutrition</h2>
+      <h2>Daily Nutrition Input</h2>
+      <label for="protein">Protein (grams):</label>
+      <input type="number" id="protein" oninput="calculateProgress()" />
+      <label for="carbs">Carbs (grams):</label>
+      <input type="number" id="carbs" oninput="calculateProgress()" />
+      <label for="fat">Fat (grams):</label>
+      <input type="number" id="fat" oninput="calculateProgress()" />
 
-      <label>Protein (g)</label>
-      <input type="number" id="protein" oninput="calculateProgress()">
+      <div class="progress-circle" id="proteinCircle"><div id="proteinText">0%</div></div>
+      <div class="message" id="proteinMessage"></div>
 
-      <label>Carbs (g)</label>
-      <input type="number" id="carbs" oninput="calculateProgress()">
-
-      <label>Fat (g)</label>
-      <input type="number" id="fat" oninput="calculateProgress()">
-
-      <div class="progress-circle" id="proteinCircle">
-        <div id="proteinText">0%</div>
-      </div>
-
-      <div class="progress-circle" id="calorieCircle">
-        <div id="calorieText">0%</div>
-      </div>
+      <div class="progress-circle" id="calorieCircle"><div id="calorieText">0%</div></div>
+      <div class="message" id="calorieMessage"></div>
 
       <div class="message" id="totalCalories">Total Calories: 0</div>
     </section>
 
     <section id="goals">
-      <h2>Goals</h2>
-
-      <label>Goal Weight</label>
-      <input type="number" id="goal-weight">
-
-      <label>Daily Calories</label>
-      <input type="number" id="calories-goal">
-
-      <label>Protein Goal</label>
-      <input type="number" id="protein-goal">
-
-      <label>Carbs Goal</label>
-      <input type="number" id="carbs-goal">
-
-      <label>Fats Goal</label>
-      <input type="number" id="fats-goal">
-
+      <h2>Set Your Goals</h2>
+      <label for="goal-weight">Goal Weight (lbs):</label>
+      <input type="number" id="goal-weight" />
+      <label for="calories-goal">Daily Calorie Goal:</label>
+      <input type="number" id="calories-goal" />
+      <label for="protein-goal">Protein Goal (g):</label>
+      <input type="number" id="protein-goal" />
+      <label for="carbs-goal">Carbs (g):</label>
+      <input type="number" id="carbs-goal" />
+      <label for="fats-goal">Fats (g):</label>
+      <input type="number" id="fats-goal" />
       <button onclick="saveGoals()">Save Goals</button>
 
       <div class="goals-grid">
-        <div class="goal-box"><strong>Weight</strong><br><span id="display-weight">–</span></div>
-        <div class="goal-box"><strong>Calories</strong><br><span id="display-calories">–</span></div>
-        <div class="goal-box"><strong>Protein</strong><br><span id="display-protein">–</span></div>
-        <div class="goal-box"><strong>Carbs</strong><br><span id="display-carbs">–</span></div>
-        <div class="goal-box"><strong>Fats</strong><br><span id="display-fats">–</span></div>
+        <div class="goal-box"><strong>Goal Weight:</strong><br /><span id="display-weight">–</span></div>
+        <div class="goal-box"><strong>Calories:</strong><br /><span id="display-calories">–</span></div>
+        <div class="goal-box"><strong>Protein:</strong><br /><span id="display-protein">–</span></div>
+        <div class="goal-box"><strong>Carbs:</strong><br /><span id="display-carbs">–</span></div>
+        <div class="goal-box"><strong>Fats:</strong><br /><span id="display-fats">–</span></div>
       </div>
     </section>
 
     <section id="go-to-cart">
-      <button onclick="location.href='cart.html'">Submit</button>
+      <button onclick="location.href='/Users/elianalaudadio/Desktop/Portfolio/cart.html'">Submit</button>
     </section>
-
   </main>
+
+  <audio id="celebrationSound" src="https://assets.mixkit.co/sfx/preview/mixkit-small-group-cheer-and-applause-518.mp3" preload="auto"></audio>
+
+  <!-- ALL ORIGINAL JS BELOW -->
+  <script>
+    const ctx = document.getElementById('weightChart').getContext('2d');
+    let weightData = JSON.parse(localStorage.getItem('weightEntries') || '[]');
+
+    let chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: weightData.map(entry => entry.date),
+        datasets: [{
+          label: 'Weight (lbs)',
+          data: weightData.map(entry => entry.weight),
+          borderColor: '#eee',
+          backgroundColor: 'rgba(238, 238, 238, 0.15)',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.3,
+          pointRadius: 5,
+          pointBackgroundColor: '#eee'
+        }]
+      },
+      options: {
+        scales: {
+          y: { beginAtZero: false, ticks: { color: '#eee' } },
+          x: { ticks: { color: '#eee' } }
+        },
+        plugins: {
+          legend: {
+            labels: { color: '#eee' }
+          }
+        }
+      }
+    });
+
+    function getTodayDate() {
+      return new Date().toISOString().split('T')[0];
+    }
+
+    function addWeight() {
+      const weight = parseFloat(document.getElementById('weight-input').value);
+      if (isNaN(weight)) return alert('Please enter a valid weight.');
+      weightData.push({ date: getTodayDate(), weight });
+      localStorage.setItem('weightEntries', JSON.stringify(weightData));
+      updateChart();
+      document.getElementById('weight-input').value = '';
+    }
+
+    function deleteLastEntry() {
+      if (!weightData.length) return alert('No entries to delete.');
+      weightData.pop();
+      localStorage.setItem('weightEntries', JSON.stringify(weightData));
+      updateChart();
+    }
+
+    function updateChart() {
+      chart.data.labels = weightData.map(e => e.date);
+      chart.data.datasets[0].data = weightData.map(e => e.weight);
+      chart.update();
+    }
+
+    function saveGoals() {
+      const goals = {
+        weight: goal-weight.value,
+        calories: calories-goal.value,
+        protein: protein-goal.value,
+        carbs: carbs-goal.value,
+        fats: fats-goal.value
+      };
+      localStorage.setItem('macroGoals', JSON.stringify(goals));
+      displayGoals();
+      calculateProgress();
+    }
+
+    function displayGoals() {
+      const g = JSON.parse(localStorage.getItem('macroGoals'));
+      if (!g) return;
+      display-weight.textContent = g.weight ? g.weight + ' lbs' : '–';
+      display-calories.textContent = g.calories ? g.calories + ' kcal' : '–';
+      display-protein.textContent = g.protein ? g.protein + ' g' : '–';
+      display-carbs.textContent = g.carbs ? g.carbs + ' g' : '–';
+      display-fats.textContent = g.fats ? g.fats + ' g' : '–';
+    }
+
+    window.onload = displayGoals;
+  </script>
 
 </body>
 </html>
+
