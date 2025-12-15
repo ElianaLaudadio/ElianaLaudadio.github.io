@@ -6,13 +6,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #000;
+      --fg: #fff;
+      --muted: #ccc;
+      --accent: #111;
+      --card-bg: #111;
+      --hover: #222;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #121212;
+      background-color: var(--bg);
       margin: 0;
       padding-top: 70px;
       padding-bottom: 40px;
-      color: #e0e0e0;
+      color: var(--fg);
     }
 
     nav {
@@ -20,15 +29,15 @@
       top: 0;
       left: 0;
       right: 0;
-      background-color: #1f1f1f;
-      padding: 15px 0;
+      background-color: var(--bg);
+      padding: 18px 0;
       text-align: center;
       z-index: 999;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+      border-bottom: 1px solid #333;
     }
 
     nav a {
-      color: #ddd;
+      color: var(--fg);
       text-decoration: none;
       margin: 0 20px;
       font-size: 16px;
@@ -37,7 +46,7 @@
     }
 
     nav a:hover {
-      color: #aaa;
+      color: var(--muted);
     }
 
     main {
@@ -49,13 +58,13 @@
     .section-title {
       font-size: 24px;
       margin-bottom: 20px;
-      color: #bbb;
+      color: var(--fg);
       font-weight: 600;
       text-align: center;
     }
 
     .cart-item {
-      background: #1f1f1f;
+      background: var(--card-bg);
       border: 1px solid #333;
       border-radius: 8px;
       padding: 15px 20px;
@@ -63,13 +72,12 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.8);
+      box-shadow: 0 2px 8px rgba(255,255,255,0.05);
       flex-wrap: wrap;
     }
 
     .cart-item input[type="checkbox"] {
       transform: scale(1.2);
-      filter: invert(1);
       cursor: pointer;
     }
 
@@ -78,7 +86,7 @@
       font-size: 16px;
       flex-grow: 1;
       word-break: break-word;
-      color: #ccc;
+      color: var(--muted);
     }
 
     .empty {
@@ -99,9 +107,9 @@
 
     button {
       padding: 12px 20px;
-      background-color: #2c2c2c;
-      color: #eee;
-      border: 1px solid #444;
+      background-color: var(--card-bg);
+      color: var(--fg);
+      border: 1px solid #333;
       border-radius: 6px;
       font-size: 16px;
       cursor: pointer;
@@ -109,8 +117,8 @@
     }
 
     button:hover {
-      background-color: #444;
-      color: #fff;
+      background-color: var(--hover);
+      color: var(--fg);
     }
 
     button:disabled {
@@ -132,20 +140,20 @@
       padding: 12px;
       width: 250px;
       max-width: 100%;
-      border: 1px solid #444;
+      border: 1px solid #333;
       border-radius: 6px;
       font-size: 16px;
-      background-color: #222;
-      color: #eee;
+      background-color: var(--card-bg);
+      color: var(--fg);
     }
 
     .add-item input::placeholder {
-      color: #888;
+      color: var(--muted);
     }
 
     .add-item input:focus {
       outline: 2px solid #666;
-      background-color: #2a2a2a;
+      background-color: var(--hover);
     }
 
     .add-item button {
@@ -156,7 +164,7 @@
     footer {
       text-align: center;
       padding: 20px;
-      background-color: #1a1a1a;
+      background-color: var(--bg);
       color: #666;
       font-size: 14px;
       border-radius: 10px;
@@ -225,8 +233,6 @@
     </div>
   </main>
 
-
-
   <script>
     function loadCart() {
       const cartContainer = document.getElementById('cartContainer');
@@ -291,3 +297,4 @@
   </script>
 </body>
 </html>
+
