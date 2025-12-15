@@ -33,6 +33,7 @@
       padding: 18px 0;
       text-align: center;
       z-index: 999;
+      border-bottom: 1px solid #333;
     }
 
     nav a {
@@ -60,31 +61,36 @@
       width: 100%;
     }
 
+    /* Hamburger Menu */
     #hamburger {
       display: none;
-      font-size: 32px;
+      font-size: 36px;
       cursor: pointer;
       color: var(--fg);
-      position: absolute;
-      top: 12px;
+      position: fixed;
+      top: 15px;
       left: 50%;
       transform: translateX(-50%);
+      z-index: 1000;
     }
 
     #mobile-menu {
       display: none;
       flex-direction: column;
-      position: absolute;
-      top: 55px;
+      position: fixed;
+      top: 70px;
+      left: 0;
       width: 100%;
       background-color: var(--bg);
       text-align: center;
       border-top: 1px solid #333;
+      z-index: 998;
     }
 
     #mobile-menu a {
       display: block;
-      margin: 12px 0;
+      margin: 16px 0;
+      font-size: 18px;
     }
 
     #go-to-cart {
