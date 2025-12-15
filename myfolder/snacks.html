@@ -24,29 +24,36 @@
       padding-bottom: 40px;
     }
 
+    /* NAVIGATION WITH HAMBURGER */
     nav {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       background-color: var(--bg);
-      padding: 18px 0;
+      padding: 18px 20px;
       text-align: center;
       z-index: 999;
       border-bottom: 1px solid #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    nav a {
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
       color: var(--fg);
       text-decoration: none;
-      margin: 0 20px;
       font-size: 16px;
       font-weight: 600;
-      transition: color 0.3s ease;
       position: relative;
     }
 
-    nav a::after {
+    .nav-links a::after {
       content: '';
       position: absolute;
       width: 0%;
@@ -57,8 +64,22 @@
       transition: width 0.3s ease;
     }
 
-    nav a:hover::after {
+    .nav-links a:hover::after {
       width: 100%;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: var(--fg);
+      transition: all 0.3s ease;
     }
 
     #go-to-cart {
@@ -233,10 +254,25 @@
     }
 
     @media (max-width: 600px) {
-      nav a {
-        display: block;
-        margin: 10px 0;
-        font-size: 16px;
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        text-align: center;
+        background-color: var(--bg);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        padding-bottom: 10px;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .hamburger {
+        display: flex;
       }
 
       .card {
@@ -271,10 +307,18 @@
 <body>
 
   <nav>
-    <a href="/Users/elianalaudadio/Desktop/PersonalTraining/index.html">Home</a>
-    <a href="/Users/elianalaudadio/Desktop/PersonalTraining/template.html">Goals + Progress</a>
-    <a href="/Users/elianalaudadio/Desktop/PersonalTraining/workouts.html">Workouts</a>
-    <a href="/Users/elianalaudadio/Desktop/PersonalTraining/doordash.html">Meal Planner</a>
+    <div class="logo">🍎</div>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="nav-links">
+      <a href="/Users/elianalaudadio/Desktop/PersonalTraining/index.html">Home</a>
+      <a href="/Users/elianalaudadio/Desktop/PersonalTraining/template.html">Goals + Progress</a>
+      <a href="/Users/elianalaudadio/Desktop/PersonalTraining/workouts.html">Workouts</a>
+      <a href="/Users/elianalaudadio/Desktop/PersonalTraining/doordash.html">Meal Planner</a>
+    </div>
   </nav>
 
   <section id="go-to-cart">
@@ -301,55 +345,17 @@
     </div>
   </div>
 
-
-
   <script>
     const snacks = [
-      {
-        title: "Deviled Eggs",
-        img: "filler!.avif",
-        ingredients: ["Eggs", "Mayonnaise", "Mustard", "Paprika"]
-      },
-      {
-        title: "Tzatziki and Cucumber",
-        img: "filler!.avif",
-        ingredients: ["Cucumber", "Plain Greek Yogurt", "Lemon", "Dill", "Garlic"]
-      },
-      {
-        title: "Ranch and Veggies",
-        img: "filler!.avif",
-        ingredients: ["Ranch dressing", "Carrots", "Celery", "Cherry tomatoes"]
-      },
-      {
-        title: "Apple and Peanut Butter",
-        img: "filler!.avif",
-        ingredients: ["Apples", "Peanut butter"]
-      },
-      {
-        title: "Kimchi",
-        img: "filler!.avif",
-        ingredients: ["Kimchi"]
-      },
-      {
-        title: "Pickles",
-        img: "filler!.avif",
-        ingredients: ["Pickles"]
-      },
-      {
-        title: "Spring Rolls",
-        img: "filler!.avif",
-        ingredients: ["Rice paper", "Sprouts", "Chicken", "Spring roll sauce"]
-      },
-      {
-        title: "Fruit Bowl",
-        img: "filler!.avif",
-        ingredients: ["Mixed fruits"]
-      },
-      {
-        title: "Chocolate Covered Strawberries",
-        img: "filler!.avif",
-        ingredients: ["Strawberries", "Chocolate"]
-      }
+      { title: "Deviled Eggs", img: "filler!.avif", ingredients: ["Eggs", "Mayonnaise", "Mustard", "Paprika"] },
+      { title: "Tzatziki and Cucumber", img: "filler!.avif", ingredients: ["Cucumber", "Plain Greek Yogurt", "Lemon", "Dill", "Garlic"] },
+      { title: "Ranch and Veggies", img: "filler!.avif", ingredients: ["Ranch dressing", "Carrots", "Celery", "Cherry tomatoes"] },
+      { title: "Apple and Peanut Butter", img: "filler!.avif", ingredients: ["Apples", "Peanut butter"] },
+      { title: "Kimchi", img: "filler!.avif", ingredients: ["Kimchi"] },
+      { title: "Pickles", img: "filler!.avif", ingredients: ["Pickles"] },
+      { title: "Spring Rolls", img: "filler!.avif", ingredients: ["Rice paper", "Sprouts", "Chicken", "Spring roll sauce"] },
+      { title: "Fruit Bowl", img: "filler!.avif", ingredients: ["Mixed fruits"] },
+      { title: "Chocolate Covered Strawberries", img: "filler!.avif", ingredients: ["Strawberries", "Chocolate"] }
     ];
 
     const cards = document.getElementById("cards");
@@ -408,9 +414,12 @@
     }
 
     window.onclick = function(event) {
-      if (event.target === modal) {
-        closeModal();
-      }
+      if (event.target === modal) closeModal();
+    }
+
+    /* HAMBURGER MENU */
+    function toggleMenu() {
+      document.querySelector('.nav-links').classList.toggle('active');
     }
   </script>
 </body>
