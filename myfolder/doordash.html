@@ -24,13 +24,14 @@
       padding-bottom: 40px;
     }
 
+    /* NAVIGATION MATCHED TO WORKOUTS.HTML */
     nav {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       background-color: var(--bg);
-      padding: 15px 0;
+      padding: 18px 0;
       text-align: center;
       z-index: 999;
       border-bottom: 1px solid #333;
@@ -39,12 +40,12 @@
     nav a {
       color: var(--fg);
       text-decoration: none;
-      margin: 0 15px;
-      font-size: 15px;
+      margin: 0 20px;
+      font-size: 16px;
       font-weight: 600;
       transition: color 0.3s ease;
-      display: inline-block;
       position: relative;
+      display: inline-block;
     }
 
     nav a::after {
@@ -114,7 +115,6 @@
       margin-bottom: 30px;
     }
 
-    /* ---------- Featured Meal Buttons ---------- */
     .meal-buttons {
       display: flex;
       flex-direction: column;
@@ -152,7 +152,6 @@
       margin: 0 auto;
     }
 
-    /* Calendar Styles */
     #calendar-container {
       margin-top: 20px;
     }
@@ -274,20 +273,17 @@
     <div id="calendar-container"></div>
   </section>
 
-    <section id="go-to-cart">
+  <section id="go-to-cart">
     <button onclick="location.href='/myfolder/cart.html'">Go to Grocery List</button>
   </section>
 
-  <!-- ★★★★★ NEW FEATURED MEALS SECTION ★★★★★ -->
   <section style="background: var(--card-bg); border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(255,255,255,0.05); margin-top: 20px;">
     <h2 class="section-title">Featured Meals</h2>
-
     <div class="meal-buttons">
       <a href="breakfast.html" class="meal-button">Breakfast</a>
       <a href="lunch+dinner.html" class="meal-button">Lunch – Dinner</a>
       <a href="snacks.html" class="meal-button">Snacks</a>
     </div>
-
   </section>
 
   <div id="note-modal">
@@ -321,12 +317,10 @@
           <button onclick="changeMonth(1)">→</button>
         </div>
         <div class="calendar-grid">
-          ${['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => `<div class="day-name">${day}</div>`).join('')}
+          ${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(day => `<div class="day-name">${day}</div>`).join('')}
       `;
 
-      for (let i = 0; i < startDay; i++) {
-        calendarHTML += `<div></div>`;
-      }
+      for (let i = 0; i < startDay; i++) calendarHTML += `<div></div>`;
 
       for (let day = 1; day <= daysInMonth; day++) {
         const key = `${keyPrefix}-${day}`;
@@ -345,13 +339,8 @@
 
     function changeMonth(offset) {
       currentMonth += offset;
-      if (currentMonth > 11) {
-        currentMonth = 0;
-        currentYear++;
-      } else if (currentMonth < 0) {
-        currentMonth = 11;
-        currentYear--;
-      }
+      if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+      else if (currentMonth < 0) { currentMonth = 11; currentYear--; }
       generateCalendar(currentYear, currentMonth);
     }
 
@@ -370,11 +359,8 @@
 
     function saveNote() {
       const text = document.getElementById("note-text").value.trim();
-      if (text) {
-        localStorage.setItem(activeKey, text);
-      } else {
-        localStorage.removeItem(activeKey);
-      }
+      if (text) localStorage.setItem(activeKey, text);
+      else localStorage.removeItem(activeKey);
       closeModal();
       generateCalendar(currentYear, currentMonth);
     }
@@ -383,4 +369,5 @@
   </script>
 </body>
 </html>
+
 
