@@ -24,36 +24,29 @@
       padding-bottom: 40px;
     }
 
-    /* NAVIGATION WITH HAMBURGER */
+    /* DESKTOP NAVIGATION */
     nav {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       background-color: var(--bg);
-      padding: 18px 20px;
+      padding: 18px 0;
       text-align: center;
       z-index: 999;
       border-bottom: 1px solid #333;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
 
-    .nav-links {
-      display: flex;
-      gap: 20px;
-    }
-
-    .nav-links a {
+    nav a {
       color: var(--fg);
       text-decoration: none;
+      margin: 0 20px;
       font-size: 16px;
       font-weight: 600;
       position: relative;
     }
 
-    .nav-links a::after {
+    nav a::after {
       content: '';
       position: absolute;
       width: 0%;
@@ -64,24 +57,34 @@
       transition: width 0.3s ease;
     }
 
-    .nav-links a:hover::after {
+    nav a:hover::after {
       width: 100%;
     }
 
+    /* MOBILE NAVIGATION */
     .hamburger {
       display: none;
       flex-direction: column;
       gap: 4px;
       cursor: pointer;
+      margin: 0 auto;
+      width: 30px;
     }
 
     .hamburger div {
-      width: 25px;
+      width: 100%;
       height: 3px;
       background-color: var(--fg);
       transition: all 0.3s ease;
     }
 
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    /* REST OF THE STYLES (unchanged) */
     #go-to-cart {
       text-align: center;
       background: var(--card-bg);
@@ -262,7 +265,7 @@
         text-align: center;
         background-color: var(--bg);
         position: absolute;
-        top: 100%;
+        top: 70px;
         left: 0;
         padding-bottom: 10px;
       }
@@ -307,7 +310,6 @@
 <body>
 
   <nav>
-    <div class="logo">🍎</div>
     <div class="hamburger" onclick="toggleMenu()">
       <div></div>
       <div></div>
@@ -417,11 +419,11 @@
       if (event.target === modal) closeModal();
     }
 
-    /* HAMBURGER MENU */
     function toggleMenu() {
       document.querySelector('.nav-links').classList.toggle('active');
     }
   </script>
 </body>
 </html>
+
 
