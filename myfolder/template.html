@@ -8,13 +8,22 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
+    :root {
+      --bg: #000;
+      --fg: #fff;
+      --muted: #ccc;
+      --accent: #111;
+      --card-bg: #111;
+      --hover: #222;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #0d0d0d;
+      background-color: var(--bg);
       margin: 0;
       padding-top: 70px;
       padding-bottom: 40px;
-      color: #eee;
+      color: var(--fg);
     }
 
     nav {
@@ -22,24 +31,36 @@
       top: 0;
       left: 0;
       right: 0;
-      background-color: #111;
-      padding: 15px 0;
+      background-color: var(--bg);
+      padding: 18px 0;
       text-align: center;
       z-index: 999;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+      border-bottom: 1px solid #333;
     }
 
     nav a {
-      color: #eee;
+      color: var(--fg);
       text-decoration: none;
       margin: 0 20px;
       font-size: 16px;
       font-weight: 600;
       transition: color 0.3s ease;
+      position: relative;
     }
 
-    nav a:hover {
-      color: #bbb;
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      background: var(--fg);
+      bottom: -4px;
+      left: 0;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
     }
 
     main {
@@ -49,10 +70,10 @@
     }
 
     section {
-      background: #1a1a1a;
+      background: var(--card-bg);
       padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(255,255,255,0.05);
       margin-bottom: 30px;
     }
 
@@ -62,7 +83,7 @@
     }
 
     h2 {
-      color: #eee;
+      color: var(--fg);
       margin-top: 0;
       font-weight: 600;
     }
@@ -70,7 +91,7 @@
     label {
       display: block;
       margin-top: 10px;
-      color: #ddd;
+      color: var(--muted);
       font-weight: 500;
     }
 
@@ -79,21 +100,21 @@
       padding: 10px;
       margin-top: 5px;
       border-radius: 6px;
-      border: 1px solid #444;
+      border: 1px solid #333;
       font-size: 16px;
-      background-color: #111;
-      color: #eee;
+      background-color: var(--card-bg);
+      color: var(--fg);
       transition: border-color 0.3s ease;
     }
 
     input[type="number"]:focus, input[type="text"]:focus {
-      border-color: #888;
+      border-color: var(--hover);
       outline: none;
     }
 
     button {
-      background-color: #222;
-      color: #eee;
+      background-color: var(--hover);
+      color: var(--fg);
       border: none;
       padding: 10px 16px;
       font-size: 16px;
@@ -105,7 +126,7 @@
     }
 
     button:hover {
-      background-color: #444;
+      background-color: #333;
     }
 
     #weight-buttons {
@@ -126,13 +147,13 @@
       height: 140px;
       border-radius: 50%;
       margin: 20px auto;
-      background: conic-gradient(#666 0%, #666 100%);
+      background: conic-gradient(#6fe36f 0%, #6fe36f 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 22px;
       font-weight: bold;
-      color: #eee;
+      color: var(--fg);
       transition: background 0.3s ease;
     }
 
@@ -144,11 +165,11 @@
     }
 
     .goal-box {
-      background: #111;
+      background: var(--card-bg);
       padding: 15px;
-      border-radius: 8px;
+      border-radius: 12px;
       text-align: center;
-      color: #eee;
+      color: var(--fg);
       box-shadow: inset 0 0 6px #000;
     }
 
@@ -166,7 +187,7 @@
     }
 
     section p {
-      color: #bbb;
+      color: var(--muted);
       font-size: 16px;
       margin-top: 10px;
     }
@@ -177,15 +198,15 @@
       width: 200px;
       font-size: 18px;
       padding: 12px 0;
-      border-radius: 8px;
-      background-color: #222;
-      color: #eee;
+      border-radius: 12px;
+      background-color: var(--hover);
+      color: var(--fg);
       font-weight: 600;
       transition: background-color 0.3s ease;
     }
 
     #go-to-cart button:hover {
-      background-color: #444;
+      background-color: #333;
     }
 
     @media (max-width: 600px) {
@@ -327,21 +348,21 @@
         datasets: [{
           label: 'Weight (lbs)',
           data: weightData.map(entry => entry.weight),
-          borderColor: '#eee',
-          backgroundColor: 'rgba(238, 238, 238, 0.15)',
+          borderColor: 'var(--fg)',
+          backgroundColor: 'rgba(255, 255, 255, 0.15)',
           borderWidth: 2,
           fill: true,
           tension: 0.3,
           pointRadius: 5,
-          pointBackgroundColor: '#eee'
+          pointBackgroundColor: 'var(--fg)'
         }]
       },
       options: {
         scales: {
-          y: { beginAtZero: false, ticks: { color: '#eee' } },
-          x: { ticks: { color: '#eee' } }
+          y: { beginAtZero: false, ticks: { color: 'var(--fg)' } },
+          x: { ticks: { color: 'var(--fg)' } }
         },
-        plugins: { legend: { labels: { color: '#eee' } } }
+        plugins: { legend: { labels: { color: 'var(--fg)' } } }
       }
     });
 
@@ -414,21 +435,18 @@
       const proteinGoal = parseFloat(goals.protein) || 1;
       const calorieGoal = parseFloat(goals.calories) || 1;
 
-      // Protein circle
       const proteinPercent = Math.min(100, (proteinInput / proteinGoal) * 100);
       const proteinCircle = document.getElementById('proteinCircle');
       const proteinText = document.getElementById('proteinText');
       proteinText.textContent = `${Math.round(proteinPercent)}%`;
-      proteinCircle.style.background = `conic-gradient(#6fe36f ${proteinPercent}%, #444 ${proteinPercent}% 100%)`;
+      proteinCircle.style.background = `conic-gradient(#6fe36f ${proteinPercent}%, #222 ${proteinPercent}% 100%)`;
 
-      // Calorie circle
       const caloriePercent = Math.min(100, (totalCalories / calorieGoal) * 100);
       const calorieCircle = document.getElementById('calorieCircle');
       const calorieText = document.getElementById('calorieText');
       calorieText.textContent = `${Math.round(caloriePercent)}%`;
-      calorieCircle.style.background = `conic-gradient(#6fe36f ${caloriePercent}%, #444 ${caloriePercent}% 100%)`;
+      calorieCircle.style.background = `conic-gradient(#6fe36f ${caloriePercent}%, #222 ${caloriePercent}% 100%)`;
 
-      // Messages
       const proteinMessage = document.getElementById('proteinMessage');
       const calorieMessage = document.getElementById('calorieMessage');
       proteinMessage.textContent = proteinPercent >= 100 ? 'Protein Goal Achieved!' : '';
