@@ -56,6 +56,11 @@
       margin-bottom: 30px;
     }
 
+    /* CENTER ONLY NUTRITION CARD */
+    #nutrition {
+      text-align: center;
+    }
+
     h2 {
       color: #eee;
       margin-top: 0;
@@ -236,9 +241,6 @@
         width: 100%;
         font-size: 16px;
       }
-      #nutrition {
-  text-align: center;
-}
     }
   </style>
 </head>
@@ -405,22 +407,22 @@
       const proteinInput = parseFloat(document.getElementById('protein').value) || 0;
       const carbsInput = parseFloat(document.getElementById('carbs').value) || 0;
       const fatInput = parseFloat(document.getElementById('fat').value) || 0;
-
       const totalCalories = Math.round(proteinInput * 4 + carbsInput * 4 + fatInput * 9);
+
       document.getElementById('totalCalories').textContent = `Total Calories: ${totalCalories}`;
 
       const goals = JSON.parse(localStorage.getItem('macroGoals')) || {};
       const proteinGoal = parseFloat(goals.protein) || 1;
       const calorieGoal = parseFloat(goals.calories) || 1;
 
-      // Protein progress circle
+      // Protein circle
       const proteinPercent = Math.min(100, (proteinInput / proteinGoal) * 100);
       const proteinCircle = document.getElementById('proteinCircle');
       const proteinText = document.getElementById('proteinText');
       proteinText.textContent = `${Math.round(proteinPercent)}%`;
       proteinCircle.style.background = `conic-gradient(#6fe36f ${proteinPercent}%, #444 ${proteinPercent}% 100%)`;
 
-      // Calorie progress circle
+      // Calorie circle
       const caloriePercent = Math.min(100, (totalCalories / calorieGoal) * 100);
       const calorieCircle = document.getElementById('calorieCircle');
       const calorieText = document.getElementById('calorieText');
@@ -439,20 +441,15 @@
         confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
         confettiSound.play();
         proteinConfettiFired = true;
-      } else if (proteinPercent < 100) {
-        proteinConfettiFired = false;
-      }
+      } else if (proteinPercent < 100) proteinConfettiFired = false;
 
       if (caloriePercent >= 100 && !calorieConfettiFired) {
         confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
         confettiSound.play();
         calorieConfettiFired = true;
-      } else if (caloriePercent < 100) {
-        calorieConfettiFired = false;
-      }
+      } else if (caloriePercent < 100) calorieConfettiFired = false;
     }
 
-    // Load saved goals and update display on page load
     window.onload = () => {
       displayGoals();
       updateChart();
@@ -461,3 +458,4 @@
   </script>
 </body>
 </html>
+
