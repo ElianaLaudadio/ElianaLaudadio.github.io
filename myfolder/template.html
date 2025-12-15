@@ -341,6 +341,7 @@
   <script>
     const ctx = document.getElementById('weightChart').getContext('2d');
     let weightData = JSON.parse(localStorage.getItem('weightEntries') || '[]');
+
     let chart = new Chart(ctx, {
       type: 'line',
       data: {
@@ -348,21 +349,30 @@
         datasets: [{
           label: 'Weight (lbs)',
           data: weightData.map(entry => entry.weight),
-          borderColor: 'var(--fg)',
-          backgroundColor: 'rgba(255, 255, 255, 0.15)',
-          borderWidth: 2,
+          borderColor: '#6fe36f',
+          backgroundColor: 'rgba(111, 227, 111, 0.25)',
+          borderWidth: 3,
           fill: true,
           tension: 0.3,
-          pointRadius: 5,
-          pointBackgroundColor: 'var(--fg)'
+          pointRadius: 6,
+          pointBackgroundColor: '#6fe36f',
+          pointBorderColor: '#000',
+          pointBorderWidth: 2
         }]
       },
       options: {
         scales: {
-          y: { beginAtZero: false, ticks: { color: 'var(--fg)' } },
-          x: { ticks: { color: 'var(--fg)' } }
+          y: { 
+            beginAtZero: false, 
+            ticks: { color: '#fff', font: { weight: '600' } },
+            grid: { color: '#333' }
+          },
+          x: { 
+            ticks: { color: '#fff', font: { weight: '600' } },
+            grid: { color: '#333' }
+          }
         },
-        plugins: { legend: { labels: { color: 'var(--fg)' } } }
+        plugins: { legend: { labels: { color: '#6fe36f', font: { weight: '600' } } } }
       }
     });
 
