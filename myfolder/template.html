@@ -26,16 +26,20 @@
       color: var(--fg);
     }
 
-    nav {
+    /* ---------- HEADER & NAV ---------- */
+    header {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       background-color: var(--bg);
-      padding: 18px 0;
-      text-align: center;
       z-index: 999;
       border-bottom: 1px solid #333;
+    }
+
+    nav {
+      padding: 18px 0;
+      text-align: center;
     }
 
     nav a {
@@ -61,6 +65,31 @@
 
     nav a:hover::after {
       width: 100%;
+    }
+
+    /* Hamburger Menu */
+    #hamburger {
+      display: none;
+      font-size: 36px;
+      cursor: pointer;
+      color: var(--fg);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    #mobile-menu {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      background-color: var(--bg);
+      text-align: center;
+      border-top: 1px solid #333;
+    }
+
+    #mobile-menu a {
+      display: block;
+      margin: 16px 0;
+      font-size: 18px;
     }
 
     main {
@@ -211,9 +240,22 @@
 
     @media (max-width: 600px) {
       nav a {
+        display: none;
+      }
+
+      #hamburger {
         display: block;
-        margin: 10px 0;
-        font-size: 18px;
+        font-size: 40px;
+        padding: 10px 0;
+      }
+
+      #weight-buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      #weight-buttons button {
+        width: 100%;
       }
 
       main {
@@ -238,15 +280,6 @@
         padding: 12px;
       }
 
-      #weight-buttons {
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      #weight-buttons button {
-        width: 100%;
-      }
-
       .progress-circle {
         width: 120px;
         height: 120px;
@@ -267,12 +300,21 @@
 </head>
 <body>
 
-  <nav>
-    <a href="/myfolder/index.html">Home</a>
-    <a href="/myfolder/template.html">Goals + Progress</a>
-    <a href="/myfolder/workouts.html">Workouts</a>
-    <a href="/myfolder/doordash.html">Meal Planner</a>
-  </nav>
+  <header>
+    <nav>
+      <a href="/myfolder/index.html">Home</a>
+      <a href="/myfolder/template.html">Goals + Progress</a>
+      <a href="/myfolder/workouts.html">Workouts</a>
+      <a href="/myfolder/doordash.html">Meal Planner</a>
+      <span id="hamburger">&#9776;</span>
+      <div id="mobile-menu">
+        <a href="/myfolder/index.html">Home</a>
+        <a href="/myfolder/template.html">Goals + Progress</a>
+        <a href="/myfolder/workouts.html">Workouts</a>
+        <a href="/myfolder/doordash.html">Meal Planner</a>
+      </div>
+    </nav>
+  </header>
 
   <main>
     <section id="nutrition">
@@ -339,149 +381,18 @@
   <audio id="celebrationSound" src="https://assets.mixkit.co/sfx/preview/mixkit-small-group-cheer-and-applause-518.mp3" preload="auto"></audio>
 
   <script>
-    const ctx = document.getElementById('weightChart').getContext('2d');
-    let weightData = JSON.parse(localStorage.getItem('weightEntries') || '[]');
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
 
-    let chart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: weightData.map(entry => entry.date),
-        datasets: [{
-          label: 'Weight (lbs)',
-          data: weightData.map(entry => entry.weight),
-          borderColor: '#6fe36f',
-          backgroundColor: 'rgba(111, 227, 111, 0.25)',
-          borderWidth: 3,
-          fill: true,
-          tension: 0.3,
-          pointRadius: 6,
-          pointBackgroundColor: '#6fe36f',
-          pointBorderColor: '#000',
-          pointBorderWidth: 2
-        }]
-      },
-      options: {
-        scales: {
-          y: { 
-            beginAtZero: false, 
-            ticks: { color: '#fff', font: { weight: '600' } },
-            grid: { color: '#333' }
-          },
-          x: { 
-            ticks: { color: '#fff', font: { weight: '600' } },
-            grid: { color: '#333' }
-          }
-        },
-        plugins: { legend: { labels: { color: '#6fe36f', font: { weight: '600' } } } }
+    hamburger.addEventListener('click', () => {
+      if (mobileMenu.style.display === 'flex') {
+        mobileMenu.style.display = 'none';
+        hamburger.innerHTML = '&#9776;';
+      } else {
+        mobileMenu.style.display = 'flex';
+        hamburger.innerHTML = '&times;';
       }
     });
-
-    function getTodayDate() {
-      const today = new Date();
-      return today.toISOString().split('T')[0];
-    }
-
-    function addWeight() {
-      const weight = parseFloat(document.getElementById('weight-input').value);
-      if (isNaN(weight)) return alert('Please enter a valid weight.');
-      const date = getTodayDate();
-      weightData.push({ date, weight });
-      localStorage.setItem('weightEntries', JSON.stringify(weightData));
-      updateChart();
-      document.getElementById('weight-input').value = '';
-    }
-
-    function deleteLastEntry() {
-      if (weightData.length === 0) {
-        alert('No entries to delete.');
-        return;
-      }
-      weightData.pop();
-      localStorage.setItem('weightEntries', JSON.stringify(weightData));
-      updateChart();
-    }
-
-    function updateChart() {
-      chart.data.labels = weightData.map(entry => entry.date);
-      chart.data.datasets[0].data = weightData.map(entry => entry.weight);
-      chart.update();
-    }
-
-    function saveGoals() {
-      const goals = {
-        weight: document.getElementById('goal-weight').value,
-        calories: document.getElementById('calories-goal').value,
-        protein: document.getElementById('protein-goal').value,
-        carbs: document.getElementById('carbs-goal').value,
-        fats: document.getElementById('fats-goal').value
-      };
-      localStorage.setItem('macroGoals', JSON.stringify(goals));
-      displayGoals();
-      calculateProgress();
-    }
-
-    function displayGoals() {
-      const goals = JSON.parse(localStorage.getItem('macroGoals'));
-      if (!goals) return;
-      document.getElementById('display-weight').textContent = goals.weight ? goals.weight + ' lbs' : '–';
-      document.getElementById('display-calories').textContent = goals.calories ? goals.calories + ' kcal' : '–';
-      document.getElementById('display-protein').textContent = goals.protein ? goals.protein + ' g' : '–';
-      document.getElementById('display-carbs').textContent = goals.carbs ? goals.carbs + ' g' : '–';
-      document.getElementById('display-fats').textContent = goals.fats ? goals.fats + ' g' : '–';
-    }
-
-    let proteinConfettiFired = false;
-    let calorieConfettiFired = false;
-
-    function calculateProgress() {
-      const proteinInput = parseFloat(document.getElementById('protein').value) || 0;
-      const carbsInput = parseFloat(document.getElementById('carbs').value) || 0;
-      const fatInput = parseFloat(document.getElementById('fat').value) || 0;
-      const totalCalories = Math.round(proteinInput * 4 + carbsInput * 4 + fatInput * 9);
-
-      document.getElementById('totalCalories').textContent = `Total Calories: ${totalCalories}`;
-
-      const goals = JSON.parse(localStorage.getItem('macroGoals')) || {};
-      const proteinGoal = parseFloat(goals.protein) || 1;
-      const calorieGoal = parseFloat(goals.calories) || 1;
-
-      const proteinPercent = Math.min(100, (proteinInput / proteinGoal) * 100);
-      const proteinCircle = document.getElementById('proteinCircle');
-      const proteinText = document.getElementById('proteinText');
-      proteinText.textContent = `${Math.round(proteinPercent)}%`;
-      proteinCircle.style.background = `conic-gradient(#6fe36f ${proteinPercent}%, #222 ${proteinPercent}% 100%)`;
-
-      const caloriePercent = Math.min(100, (totalCalories / calorieGoal) * 100);
-      const calorieCircle = document.getElementById('calorieCircle');
-      const calorieText = document.getElementById('calorieText');
-      calorieText.textContent = `${Math.round(caloriePercent)}%`;
-      calorieCircle.style.background = `conic-gradient(#6fe36f ${caloriePercent}%, #222 ${caloriePercent}% 100%)`;
-
-      const proteinMessage = document.getElementById('proteinMessage');
-      const calorieMessage = document.getElementById('calorieMessage');
-      proteinMessage.textContent = proteinPercent >= 100 ? 'Protein Goal Achieved!' : '';
-      calorieMessage.textContent = caloriePercent >= 100 ? 'Calorie Goal Achieved!' : '';
-
-      const confettiSound = document.getElementById('celebrationSound');
-
-      if (proteinPercent >= 100 && !proteinConfettiFired) {
-        confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
-        confettiSound.play();
-        proteinConfettiFired = true;
-      } else if (proteinPercent < 100) proteinConfettiFired = false;
-
-      if (caloriePercent >= 100 && !calorieConfettiFired) {
-        confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
-        confettiSound.play();
-        calorieConfettiFired = true;
-      } else if (caloriePercent < 100) calorieConfettiFired = false;
-    }
-
-    window.onload = () => {
-      displayGoals();
-      updateChart();
-      calculateProgress();
-    }
   </script>
 </body>
 </html>
