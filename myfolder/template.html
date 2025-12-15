@@ -4,11 +4,9 @@
   <meta charset="UTF-8" />
   <title>Nutrition Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -18,6 +16,7 @@
       padding-bottom: 40px;
       color: #eee;
     }
+
     nav {
       position: fixed;
       top: 0;
@@ -29,6 +28,7 @@
       z-index: 999;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
     }
+
     nav a {
       color: #eee;
       text-decoration: none;
@@ -37,12 +37,17 @@
       font-weight: 600;
       transition: color 0.3s ease;
     }
-    nav a:hover { color: #bbb; }
+
+    nav a:hover {
+      color: #bbb;
+    }
+
     main {
       max-width: 960px;
       margin: 30px auto;
       padding: 0 20px;
     }
+
     section {
       background: #1a1a1a;
       padding: 25px;
@@ -50,216 +55,406 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
       margin-bottom: 30px;
     }
-    h2 { margin-top: 0; font-weight: 600; }
-    label { display: block; margin-top: 10px; color: #ddd; }
-    input { width: 100%; padding: 10px; margin-top: 5px; border-radius: 6px; border: 1px solid #444; background: #111; color: #eee; }
-    button { background: #222; color: #eee; border: none; padding: 10px 16px; border-radius: 6px; font-size: 16px; cursor: pointer; margin-top: 15px; }
-    button:hover { background: #444; }
-    #weight-buttons { display: flex; gap: 10px; }
-    #weight-buttons button { width: 50%; }
-    canvas { width: 100% !important; height: 300px !important; }
+
+    h2 {
+      color: #eee;
+      margin-top: 0;
+      font-weight: 600;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      color: #ddd;
+      font-weight: 500;
+    }
+
+    input[type="number"], input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #444;
+      font-size: 16px;
+      background-color: #111;
+      color: #eee;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="number"]:focus, input[type="text"]:focus {
+      border-color: #888;
+      outline: none;
+    }
+
+    button {
+      background-color: #222;
+      color: #eee;
+      border: none;
+      padding: 10px 16px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background-color 0.3s ease;
+      font-weight: 600;
+    }
+
+    button:hover {
+      background-color: #444;
+    }
+
+    #weight-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      gap: 10px;
+    }
+
+    #weight-buttons button {
+      width: 48%;
+      margin-top: 0;
+    }
+
     .progress-circle {
       width: 140px;
       height: 140px;
       border-radius: 50%;
       margin: 20px auto;
-      background: conic-gradient(#444 0%, #444 100%);
+      background: conic-gradient(#666 0%, #666 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 22px;
       font-weight: bold;
+      color: #eee;
+      transition: background 0.3s ease;
     }
-    .message { text-align: center; color: #6fe36f; font-weight: bold; min-height: 24px; }
-    .goals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; margin-top: 20px; }
-    .goal-box { background: #111; padding: 15px; border-radius: 8px; text-align: center; }
+
+    .goals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .goal-box {
+      background: #111;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      color: #eee;
+      box-shadow: inset 0 0 6px #000;
+    }
+
+    canvas {
+      width: 100% !important;
+      height: 300px !important;
+    }
+
+    .message {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #6fe36f;
+      text-align: center;
+      min-height: 24px;
+    }
+
+    section p {
+      color: #bbb;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    #go-to-cart button {
+      display: block;
+      margin: 15px auto 0 auto;
+      width: 200px;
+      font-size: 18px;
+      padding: 12px 0;
+      border-radius: 8px;
+      background-color: #222;
+      color: #eee;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    #go-to-cart button:hover {
+      background-color: #444;
+    }
+
+    @media (max-width: 600px) {
+      nav a {
+        display: block;
+        margin: 10px 0;
+        font-size: 18px;
+      }
+
+      main {
+        padding: 0 10px;
+      }
+
+      section {
+        padding: 20px 15px;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+
+      input[type="number"], input[type="text"] {
+        font-size: 15px;
+      }
+
+      button {
+        width: 100%;
+        font-size: 16px;
+        padding: 12px;
+      }
+
+      #weight-buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      #weight-buttons button {
+        width: 100%;
+      }
+
+      .progress-circle {
+        width: 120px;
+        height: 120px;
+        font-size: 18px;
+      }
+
+      .goals-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      #go-to-cart button {
+        width: 100%;
+        font-size: 16px;
+      }
+    }
   </style>
 </head>
-
 <body>
 
-<nav>
-  <a href="/myfolder/index.html">Home</a>
-  <a href="/myfolder/template.html">Goals + Progress</a>
-  <a href="/myfolder/workouts.html">Workouts</a>
-  <a href="/myfolder/doordash.html">Meal Planner</a>
-</nav>
+  <nav>
+    <a href="/myfolder/index.html">Home</a>
+    <a href="/myfolder/template.html">Goals + Progress</a>
+    <a href="/myfolder/workouts.html">Workouts</a>
+    <a href="/myfolder/doordash.html">Meal Planner</a>
+  </nav>
 
-<main>
+  <main>
+    <section id="nutrition">
+      <h2>Nutrition Tracker & Goals</h2>
+      <p>Welcome to your personalized dashboard. Track your weight, set your goals, and monitor your daily nutrition all in one place.</p>
+    </section>
 
-  <section id="nutrition">
-    <h2>Nutrition Tracker & Goals</h2>
-    <p>Welcome to your personalized dashboard. Track your weight, set your goals, and monitor your daily nutrition all in one place.</p>
-  </section>
+    <section id="weight">
+      <h2>Weight Tracking</h2>
+      <label for="weight-input">Today's Weight (lbs):</label>
+      <input type="number" id="weight-input" step="0.1" />
+      <div id="weight-buttons">
+        <button onclick="addWeight()">Add Entry</button>
+        <button onclick="deleteLastEntry()">Delete Last Entry</button>
+      </div>
+      <canvas id="weightChart"></canvas>
+    </section>
 
-  <section id="weight">
-    <h2>Weight Tracking</h2>
-    <label>Today's Weight (lbs)</label>
-    <input type="number" id="weight-input" step="0.1" />
-    <div id="weight-buttons">
-      <button onclick="addWeight()">Add Entry</button>
-      <button onclick="deleteLastEntry()">Delete Last Entry</button>
-    </div>
-    <canvas id="weightChart"></canvas>
-  </section>
+    <section id="input">
+      <h2>Daily Nutrition Input</h2>
+      <label for="protein">Protein (grams):</label>
+      <input type="number" id="protein" oninput="calculateProgress()" />
+      <label for="carbs">Carbs (grams):</label>
+      <input type="number" id="carbs" oninput="calculateProgress()" />
+      <label for="fat">Fat (grams):</label>
+      <input type="number" id="fat" oninput="calculateProgress()" />
 
-  <section id="input">
-    <h2>Daily Nutrition Input</h2>
-    <label>Protein (g)</label>
-    <input type="number" id="protein" oninput="calculateProgress()">
-    <label>Carbs (g)</label>
-    <input type="number" id="carbs" oninput="calculateProgress()">
-    <label>Fat (g)</label>
-    <input type="number" id="fat" oninput="calculateProgress()">
+      <div class="progress-circle" id="proteinCircle"><div id="proteinText">0%</div></div>
+      <div class="message" id="proteinMessage"></div>
 
-    <div class="progress-circle" id="proteinCircle"><div id="proteinText">0%</div></div>
-    <div class="message" id="proteinMessage"></div>
+      <div class="progress-circle" id="calorieCircle"><div id="calorieText">0%</div></div>
+      <div class="message" id="calorieMessage"></div>
 
-    <div class="progress-circle" id="calorieCircle"><div id="calorieText">0%</div></div>
-    <div class="message" id="calorieMessage"></div>
-    <div class="message" id="totalCalories">Total Calories: 0</div>
-  </section>
+      <div class="message" id="totalCalories">Total Calories: 0</div>
+    </section>
 
-  <section id="goals">
-    <h2>Set Your Goals</h2>
-    <input type="number" id="goal-weight" placeholder="Goal Weight">
-    <input type="number" id="calories-goal" placeholder="Calories">
-    <input type="number" id="protein-goal" placeholder="Protein">
-    <input type="number" id="carbs-goal" placeholder="Carbs">
-    <input type="number" id="fats-goal" placeholder="Fats">
-    <button onclick="saveGoals()">Save Goals</button>
-    <div class="goals-grid">
-      <div class="goal-box"><span id="display-weight">–</span></div>
-      <div class="goal-box"><span id="display-calories">–</span></div>
-      <div class="goal-box"><span id="display-protein">–</span></div>
-      <div class="goal-box"><span id="display-carbs">–</span></div>
-      <div class="goal-box"><span id="display-fats">–</span></div>
-    </div>
-  </section>
+    <section id="goals">
+      <h2>Set Your Goals</h2>
+      <label for="goal-weight">Goal Weight (lbs):</label>
+      <input type="number" id="goal-weight" placeholder="e.g. 150" />
+      <label for="calories-goal">Daily Calorie Goal:</label>
+      <input type="number" id="calories-goal" placeholder="e.g. 2000" />
+      <label for="protein-goal">Protein Goal (g):</label>
+      <input type="number" id="protein-goal" placeholder="e.g. 150" />
+      <label for="carbs-goal">Carbs (g):</label>
+      <input type="number" id="carbs-goal" placeholder="e.g. 250" />
+      <label for="fats-goal">Fats (g):</label>
+      <input type="number" id="fats-goal" placeholder="e.g. 70" />
+      <button onclick="saveGoals()">Save Goals</button>
 
-</main>
+      <div class="goals-grid">
+        <div class="goal-box"><strong>Goal Weight:</strong><br /><span id="display-weight">–</span></div>
+        <div class="goal-box"><strong>Calories:</strong><br /><span id="display-calories">–</span></div>
+        <div class="goal-box"><strong>Protein:</strong><br /><span id="display-protein">–</span></div>
+        <div class="goal-box"><strong>Carbs:</strong><br /><span id="display-carbs">–</span></div>
+        <div class="goal-box"><strong>Fats:</strong><br /><span id="display-fats">–</span></div>
+      </div>
+    </section>
 
-<audio id="celebrationSound" src="https://assets.mixkit.co/sfx/preview/mixkit-small-group-cheer-and-applause-518.mp3"></audio>
+    <section id="go-to-cart">
+      <button onclick="location.href='/Users/elianalaudadio/Desktop/Portfolio/cart.html'">Submit</button>
+    </section>
+  </main>
 
-<script>
-  const ctx = document.getElementById('weightChart').getContext('2d');
-  let weightData = JSON.parse(localStorage.getItem('weightEntries') || '[]');
+  <audio id="celebrationSound" src="https://assets.mixkit.co/sfx/preview/mixkit-small-group-cheer-and-applause-518.mp3" preload="auto"></audio>
 
-  const chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: weightData.map(e => e.date),
-      datasets: [{
-        label: 'Weight (lbs)',
-        data: weightData.map(e => e.weight),
-        borderColor: '#eee',
-        backgroundColor: 'rgba(238,238,238,0.15)',
-        fill: true,
-        tension: 0.3,
-        pointRadius: 5
-      }]
-    }
-  });
+  <script>
+    const ctx = document.getElementById('weightChart').getContext('2d');
+    let weightData = JSON.parse(localStorage.getItem('weightEntries') || '[]');
+    let chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: weightData.map(entry => entry.date),
+        datasets: [{
+          label: 'Weight (lbs)',
+          data: weightData.map(entry => entry.weight),
+          borderColor: '#eee',
+          backgroundColor: 'rgba(238, 238, 238, 0.15)',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.3,
+          pointRadius: 5,
+          pointBackgroundColor: '#eee'
+        }]
+      },
+      options: {
+        scales: {
+          y: { beginAtZero: false, ticks: { color: '#eee' } },
+          x: { ticks: { color: '#eee' } }
+        },
+        plugins: { legend: { labels: { color: '#eee' } } }
+      }
+    });
 
-  function getTodayDate() {
-    return new Date().toISOString().split('T')[0];
-  }
-
-  function addWeight() {
-    const input = document.getElementById('weight-input');
-    const weight = parseFloat(input.value);
-    if (isNaN(weight)) return alert('Enter a valid weight');
-    weightData.push({ date: getTodayDate(), weight });
-    localStorage.setItem('weightEntries', JSON.stringify(weightData));
-    updateChart();
-    input.value = '';
-  }
-
-  function deleteLastEntry() {
-    weightData.pop();
-    localStorage.setItem('weightEntries', JSON.stringify(weightData));
-    updateChart();
-  }
-
-  function updateChart() {
-    chart.data.labels = weightData.map(e => e.date);
-    chart.data.datasets[0].data = weightData.map(e => e.weight);
-    chart.update();
-  }
-
-  function saveGoals() {
-    const goals = {
-      weight: goal-weight.value,
-      calories: calories-goal.value,
-      protein: protein-goal.value,
-      carbs: carbs-goal.value,
-      fats: fats-goal.value
-    };
-    localStorage.setItem('macroGoals', JSON.stringify(goals));
-    displayGoals();
-    calculateProgress();
-  }
-
-  function displayGoals() {
-    const g = JSON.parse(localStorage.getItem('macroGoals')) || {};
-    display-weight.textContent = g.weight || '–';
-    display-calories.textContent = g.calories || '–';
-    display-protein.textContent = g.protein || '–';
-    display-carbs.textContent = g.carbs || '–';
-    display-fats.textContent = g.fats || '–';
-  }
-
-  let proteinConfettiFired = false;
-  let calorieConfettiFired = false;
-
-  function calculateProgress() {
-    const protein = parseFloat(document.getElementById('protein').value) || 0;
-    const carbs = parseFloat(document.getElementById('carbs').value) || 0;
-    const fat = parseFloat(document.getElementById('fat').value) || 0;
-
-    const totalCalories = Math.round(protein * 4 + carbs * 4 + fat * 9);
-    document.getElementById('totalCalories').textContent = `Total Calories: ${totalCalories}`;
-
-    const goals = JSON.parse(localStorage.getItem('macroGoals')) || {};
-    const proteinGoal = parseFloat(goals.protein) || 1;
-    const calorieGoal = parseFloat(goals.calories) || 1;
-
-    const proteinPercent = Math.min(100, (protein / proteinGoal) * 100);
-    proteinText.textContent = `${Math.round(proteinPercent)}%`;
-    proteinCircle.style.background = `conic-gradient(#6fe36f ${proteinPercent}%, #444 ${proteinPercent}% 100%)`;
-
-    const caloriePercent = Math.min(100, (totalCalories / calorieGoal) * 100);
-    calorieText.textContent = `${Math.round(caloriePercent)}%`;
-    calorieCircle.style.background = `conic-gradient(#6fe36f ${caloriePercent}%, #444 ${caloriePercent}% 100%)`;
-
-    proteinMessage.textContent = proteinPercent >= 100 ? 'Protein Goal Achieved!' : '';
-    calorieMessage.textContent = caloriePercent >= 100 ? 'Calorie Goal Achieved!' : '';
-
-    const sound = document.getElementById('celebrationSound');
-
-    if (proteinPercent >= 100 && !proteinConfettiFired) {
-      confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
-      sound.play();
-      proteinConfettiFired = true;
-    } else if (proteinPercent < 100) {
-      proteinConfettiFired = false;
+    function getTodayDate() {
+      const today = new Date();
+      return today.toISOString().split('T')[0];
     }
 
-    if (caloriePercent >= 100 && !calorieConfettiFired) {
-      confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
-      sound.play();
-      calorieConfettiFired = true;
-    } else if (caloriePercent < 100) {
-      calorieConfettiFired = false;
+    function addWeight() {
+      const weight = parseFloat(document.getElementById('weight-input').value);
+      if (isNaN(weight)) return alert('Please enter a valid weight.');
+      const date = getTodayDate();
+      weightData.push({ date, weight });
+      localStorage.setItem('weightEntries', JSON.stringify(weightData));
+      updateChart();
+      document.getElementById('weight-input').value = '';
     }
-  }
 
-  window.onload = () => {
-    displayGoals();
-    updateChart();
-    calculateProgress();
-  };
-</script>
+    function deleteLastEntry() {
+      if (weightData.length === 0) {
+        alert('No entries to delete.');
+        return;
+      }
+      weightData.pop();
+      localStorage.setItem('weightEntries', JSON.stringify(weightData));
+      updateChart();
+    }
 
+    function updateChart() {
+      chart.data.labels = weightData.map(entry => entry.date);
+      chart.data.datasets[0].data = weightData.map(entry => entry.weight);
+      chart.update();
+    }
+
+    function saveGoals() {
+      const goals = {
+        weight: document.getElementById('goal-weight').value,
+        calories: document.getElementById('calories-goal').value,
+        protein: document.getElementById('protein-goal').value,
+        carbs: document.getElementById('carbs-goal').value,
+        fats: document.getElementById('fats-goal').value
+      };
+      localStorage.setItem('macroGoals', JSON.stringify(goals));
+      displayGoals();
+      calculateProgress();
+    }
+
+    function displayGoals() {
+      const goals = JSON.parse(localStorage.getItem('macroGoals'));
+      if (!goals) return;
+      document.getElementById('display-weight').textContent = goals.weight ? goals.weight + ' lbs' : '–';
+      document.getElementById('display-calories').textContent = goals.calories ? goals.calories + ' kcal' : '–';
+      document.getElementById('display-protein').textContent = goals.protein ? goals.protein + ' g' : '–';
+      document.getElementById('display-carbs').textContent = goals.carbs ? goals.carbs + ' g' : '–';
+      document.getElementById('display-fats').textContent = goals.fats ? goals.fats + ' g' : '–';
+    }
+
+    let proteinConfettiFired = false;
+    let calorieConfettiFired = false;
+
+    function calculateProgress() {
+      const proteinInput = parseFloat(document.getElementById('protein').value) || 0;
+      const carbsInput = parseFloat(document.getElementById('carbs').value) || 0;
+      const fatInput = parseFloat(document.getElementById('fat').value) || 0;
+
+      const totalCalories = Math.round(proteinInput * 4 + carbsInput * 4 + fatInput * 9);
+      document.getElementById('totalCalories').textContent = `Total Calories: ${totalCalories}`;
+
+      const goals = JSON.parse(localStorage.getItem('macroGoals')) || {};
+      const proteinGoal = parseFloat(goals.protein) || 1;
+      const calorieGoal = parseFloat(goals.calories) || 1;
+
+      // Protein progress circle
+      const proteinPercent = Math.min(100, (proteinInput / proteinGoal) * 100);
+      const proteinCircle = document.getElementById('proteinCircle');
+      const proteinText = document.getElementById('proteinText');
+      proteinText.textContent = `${Math.round(proteinPercent)}%`;
+      proteinCircle.style.background = `conic-gradient(#6fe36f ${proteinPercent}%, #444 ${proteinPercent}% 100%)`;
+
+      // Calorie progress circle
+      const caloriePercent = Math.min(100, (totalCalories / calorieGoal) * 100);
+      const calorieCircle = document.getElementById('calorieCircle');
+      const calorieText = document.getElementById('calorieText');
+      calorieText.textContent = `${Math.round(caloriePercent)}%`;
+      calorieCircle.style.background = `conic-gradient(#6fe36f ${caloriePercent}%, #444 ${caloriePercent}% 100%)`;
+
+      // Messages
+      const proteinMessage = document.getElementById('proteinMessage');
+      const calorieMessage = document.getElementById('calorieMessage');
+      proteinMessage.textContent = proteinPercent >= 100 ? 'Protein Goal Achieved!' : '';
+      calorieMessage.textContent = caloriePercent >= 100 ? 'Calorie Goal Achieved!' : '';
+
+      const confettiSound = document.getElementById('celebrationSound');
+
+      if (proteinPercent >= 100 && !proteinConfettiFired) {
+        confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+        confettiSound.play();
+        proteinConfettiFired = true;
+      } else if (proteinPercent < 100) {
+        proteinConfettiFired = false;
+      }
+
+      if (caloriePercent >= 100 && !calorieConfettiFired) {
+        confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+        confettiSound.play();
+        calorieConfettiFired = true;
+      } else if (caloriePercent < 100) {
+        calorieConfettiFired = false;
+      }
+    }
+
+    // Load saved goals and update display on page load
+    window.onload = () => {
+      displayGoals();
+      updateChart();
+      calculateProgress();
+    }
+  </script>
 </body>
 </html>
