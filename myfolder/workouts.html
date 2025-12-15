@@ -61,6 +61,31 @@
       width: 100%;
     }
 
+    #hamburger {
+      display: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: var(--fg);
+      position: absolute;
+      top: 14px;
+      right: 20px;
+    }
+
+    #mobile-menu {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 55px;
+      width: 100%;
+      background-color: var(--bg);
+      text-align: center;
+    }
+
+    #mobile-menu a {
+      display: block;
+      margin: 12px 0;
+    }
+
     #go-to-cart {
       text-align: center;
       background: var(--card-bg);
@@ -145,9 +170,11 @@
 
     @media (max-width: 600px) {
       nav a {
+        display: none;
+      }
+
+      #hamburger {
         display: block;
-        margin: 10px 0;
-        font-size: 15px;
       }
 
       .card {
@@ -176,6 +203,13 @@
     <a href="/myfolder/template.html">Goals + Progress</a>
     <a href="/myfolder/workouts.html">Workouts</a>
     <a href="/myfolder/doordash.html">Meal Planner</a>
+    <span id="hamburger">&#9776;</span>
+    <div id="mobile-menu">
+      <a href="/myfolder/index.html">Home</a>
+      <a href="/myfolder/template.html">Goals + Progress</a>
+      <a href="/myfolder/workouts.html">Workouts</a>
+      <a href="/myfolder/doordash.html">Meal Planner</a>
+    </div>
   </nav>
 
   <section id="go-to-cart">
@@ -229,8 +263,21 @@
     </div>
   </section>
 
-  <footer>
+  <footer></footer>
 
-  </footer>
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    hamburger.addEventListener('click', () => {
+      if (mobileMenu.style.display === 'flex') {
+        mobileMenu.style.display = 'none';
+        hamburger.innerHTML = '&#9776;';
+      } else {
+        mobileMenu.style.display = 'flex';
+        hamburger.innerHTML = '&times;';
+      }
+    });
+  </script>
 </body>
 </html>
