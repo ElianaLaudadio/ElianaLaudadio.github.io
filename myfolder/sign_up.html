@@ -21,45 +21,8 @@
     background-color: var(--bg);
     color: var(--fg);
     margin: 0;
-    padding-top: 70px;
+    padding-top: 0;
     padding-bottom: 40px;
-  }
-
-  nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: var(--bg);
-    padding: 15px 0;
-    text-align: center;
-    z-index: 999;
-    border-bottom: 1px solid #333;
-  }
-
-  nav a {
-    color: var(--fg);
-    text-decoration: none;
-    margin: 0 20px;
-    font-size: 16px;
-    font-weight: 600;
-    transition: color 0.3s ease;
-    position: relative;
-  }
-
-  nav a::after {
-    content: '';
-    position: absolute;
-    width: 0%;
-    height: 2px;
-    background: var(--fg);
-    bottom: -4px;
-    left: 0;
-    transition: width 0.3s ease;
-  }
-
-  nav a:hover::after {
-    width: 100%;
   }
 
   main {
@@ -139,13 +102,6 @@
 
 <body>
 
-<nav>
-  <a href="/myfolder/index.html">Home</a>
-  <a href="/myfolder/template.html">Goals + Progress</a>
-  <a href="/myfolder/workouts.html">Workouts</a>
-  <a href="/myfolder/meal_planner.html">Meal Planner</a>
-</nav>
-
 <main>
   <section id="form-container">
     <h2>Client Sign-Up</h2>
@@ -191,7 +147,6 @@
           <option value="powerlifting">Powerlifting</option>
         </select>
 
-        <!-- Conditional: Weight Loss/Gain -->
         <div id="weightGoals" class="hidden">
           <label>Tell me about your goals</label>
           <textarea name="weightGoalDesc" rows="3"></textarea>
@@ -203,7 +158,6 @@
           <textarea name="obstacles" rows="3"></textarea>
         </div>
 
-        <!-- Conditional: Powerlifting -->
         <div id="plSection" class="hidden">
           <label>Powerlifting Experience</label>
           <select name="plExperience">
@@ -295,14 +249,12 @@
 </main>
 
 <script>
-  // PAGE SWITCHING
   function nextPage(page) {
     document.querySelectorAll('.form-page').forEach(p => p.classList.add('hidden'));
     document.getElementById('page' + page).classList.remove('hidden');
     window.scrollTo(0,0);
   }
 
-  // CONDITIONAL OPTIONS
   const goalSelect = document.getElementById("goalType");
   const weightGoals = document.getElementById("weightGoals");
   const plSection = document.getElementById("plSection");
@@ -325,7 +277,6 @@
     }
   });
 
-  // FORM SUBMISSION (ready for Google Sheets)
   document.getElementById("signup").addEventListener("submit", function(e){
     e.preventDefault();
 
@@ -339,4 +290,3 @@
 
 </body>
 </html>
-
