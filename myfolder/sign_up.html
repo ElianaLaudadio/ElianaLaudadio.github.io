@@ -43,6 +43,15 @@
     text-align: center;
   }
 
+  .confirmation {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 20px;
+    color: #fff;
+    display: none;
+  }
+
   form {
     max-width: 600px;
     margin: auto;
@@ -106,9 +115,12 @@
   <section id="form-container">
     <h2>Client Sign-Up</h2>
 
+    <div id="confirmationMessage" class="confirmation">
+      ✅ Your information has been successfully submitted! Thank you.
+    </div>
+
     <form id="signup">
 
-      <!-- -------------------- PAGE 1 -------------------- -->
       <div class="form-page" id="page1">
         <label>Full Name</label>
         <input type="text" name="fullName" required>
@@ -136,7 +148,6 @@
         </div>
       </div>
 
-      <!-- -------------------- PAGE 2 -------------------- -->
       <div class="form-page hidden" id="page2">
         <h3>Goals / Physiological Analysis</h3>
 
@@ -202,7 +213,6 @@
         </div>
       </div>
 
-      <!-- -------------------- PAGE 3 -------------------- -->
       <div class="form-page hidden" id="page3">
         <h3>Injury Analysis</h3>
 
@@ -218,7 +228,6 @@
         </div>
       </div>
 
-      <!-- -------------------- PAGE 4 -------------------- -->
       <div class="form-page hidden" id="page4">
         <h3>Preferences</h3>
 
@@ -283,7 +292,10 @@
     const scriptURL = "YOUR_GOOGLE_SHEETS_SCRIPT_URL";
 
     fetch(scriptURL, { method: "POST", body: new FormData(this)})
-      .then(() => alert("Form successfully submitted!"))
+      .then(() => {
+        document.getElementById("confirmationMessage").style.display = "block";
+        this.reset();
+      })
       .catch(err => alert("Error: " + err));
   });
 </script>
