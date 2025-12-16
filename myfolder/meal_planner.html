@@ -24,7 +24,6 @@
       padding-bottom: 40px;
     }
 
-    /* NAVIGATION MATCHED TO WORKOUTS.HTML */
     nav {
       position: fixed;
       top: 0;
@@ -61,6 +60,31 @@
 
     nav a:hover::after {
       width: 100%;
+    }
+
+    /* Hamburger Menu (mobile only) */
+    #hamburger {
+      display: none;
+      font-size: 36px;
+      cursor: pointer;
+      color: var(--fg);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    #mobile-menu {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      background-color: var(--bg);
+      text-align: center;
+      border-top: 1px solid #333;
+    }
+
+    #mobile-menu a {
+      display: block;
+      margin: 16px 0;
+      font-size: 18px;
     }
 
     #go-to-cart {
@@ -253,6 +277,14 @@
     }
 
     @media (max-width: 600px) {
+      nav a {
+        display: none;
+      }
+      #hamburger {
+        display: block;
+        font-size: 40px;
+        padding: 10px 0;
+      }
       .meal-button {
         width: 100%;
       }
@@ -266,6 +298,15 @@
     <a href="/myfolder/template.html">Goals + Progress</a>
     <a href="/myfolder/workouts.html">Workouts</a>
     <a href="/myfolder/meal_planner.html">Meal Planner</a>
+
+    <!-- Hamburger -->
+    <span id="hamburger">&#9776;</span>
+    <div id="mobile-menu">
+      <a href="/myfolder/index.html">Home</a>
+      <a href="/myfolder/template.html">Goals + Progress</a>
+      <a href="/myfolder/workouts.html">Workouts</a>
+      <a href="/myfolder/meal_planner.html">Meal Planner</a>
+    </div>
   </nav>
 
   <section id="calendar">
@@ -366,8 +407,20 @@
     }
 
     generateCalendar(currentYear, currentMonth);
+
+    // Hamburger toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    hamburger.addEventListener('click', () => {
+      if (mobileMenu.style.display === 'flex') {
+        mobileMenu.style.display = 'none';
+        hamburger.innerHTML = '&#9776;';
+      } else {
+        mobileMenu.style.display = 'flex';
+        hamburger.innerHTML = '&times;';
+      }
+    });
   </script>
 </body>
 </html>
-
-
