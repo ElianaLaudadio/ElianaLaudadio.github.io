@@ -24,6 +24,7 @@
       color: var(--fg);
     }
 
+    /* ---------- NAV ---------- */
     nav {
       position: fixed;
       top: 0;
@@ -42,6 +43,31 @@
       margin: 0 20px;
       font-size: 16px;
       font-weight: 600;
+    }
+
+    /* Hamburger Menu (same as workouts.html) */
+    #hamburger {
+      display: none;
+      font-size: 36px;
+      cursor: pointer;
+      color: var(--fg);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    #mobile-menu {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      background-color: var(--bg);
+      text-align: center;
+      border-top: 1px solid #333;
+    }
+
+    #mobile-menu a {
+      display: block;
+      margin: 16px 0;
+      font-size: 18px;
     }
 
     main {
@@ -141,18 +167,22 @@
       margin: 30px auto 0;
     }
 
-    /* ✅ MOBILE-ONLY CENTERING */
+    /* ---------- MOBILE ONLY ---------- */
     @media (max-width: 600px) {
+      nav a {
+        display: none;
+      }
+
+      #hamburger {
+        display: block;
+        font-size: 40px;
+        padding: 10px 0;
+      }
 
       main {
         text-align: center;
       }
 
-      .cart-item {
-        align-items: center;
-      }
-
-      /* ❌ DO NOT CENTER ITEM TEXT */
       .cart-item p {
         text-align: left;
         width: 100%;
@@ -186,10 +216,19 @@
 <body>
 
 <nav>
-      <a href="/myfolder/index.html">Home</a>
-      <a href="/myfolder/template.html">Goals + Progress</a>
-      <a href="/myfolder/workouts.html">Workouts</a>
-      <a href="/myfolder/meal_planner.html">Meal Planner</a>
+  <a href="/myfolder/index.html">Home</a>
+  <a href="/myfolder/template.html">Goals + Progress</a>
+  <a href="/myfolder/workouts.html">Workouts</a>
+  <a href="/myfolder/meal_planner.html">Meal Planner</a>
+
+  <span id="hamburger">&#9776;</span>
+
+  <div id="mobile-menu">
+    <a href="/myfolder/index.html">Home</a>
+    <a href="/myfolder/template.html">Goals + Progress</a>
+    <a href="/myfolder/workouts.html">Workouts</a>
+    <a href="/myfolder/meal_planner.html">Meal Planner</a>
+  </div>
 </nav>
 
 <main>
@@ -209,6 +248,20 @@
 </main>
 
 <script>
+  /* Hamburger toggle – identical to workouts.html */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  hamburger.addEventListener('click', () => {
+    if (mobileMenu.style.display === 'flex') {
+      mobileMenu.style.display = 'none';
+      hamburger.innerHTML = '&#9776;';
+    } else {
+      mobileMenu.style.display = 'flex';
+      hamburger.innerHTML = '&times;';
+    }
+  });
+
   function loadCart() {
     const cartContainer = document.getElementById('cartContainer');
     cartContainer.innerHTML = '';
