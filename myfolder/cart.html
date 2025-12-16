@@ -183,30 +183,27 @@
         text-align: center;
       }
 
-      .cart-item p {
-        text-align: left;
-        width: 100%;
+      /* STATIC WIDTH FOR ALL BLOCKS AND BUTTONS */
+      .add-item input,
+      .add-item button,
+      .cart-item,
+      .btn-group button {
+        width: 250px;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
       }
 
-      /* LEFT-ALIGN BOTTOM BUTTONS */
-      .btn-group {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      button {
-        width: 100%;
-        max-width: 300px;
-      }
-
-      /* ✅ LEFT-ALIGN ADD ITEM BUTTON */
       .add-item {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        gap: 10px;
       }
 
-      .add-item input {
-        width: 100%;
+      .btn-group {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
       }
 
       .section-title {
