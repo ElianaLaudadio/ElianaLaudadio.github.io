@@ -105,7 +105,6 @@
       width: 100%;
     }
 
-    /* Login box styles */
     .login-box {
       background-color: transparent;
       border-radius: 15px;
@@ -221,6 +220,7 @@
   <script>
     const signInBtn = document.getElementById('signInBtn');
     const loginBox = document.getElementById('loginBox');
+    const loginSubmit = document.getElementById('loginSubmit');
 
     signInBtn.addEventListener('click', () => {
       if (loginBox.style.display === 'block') {
@@ -228,6 +228,10 @@
       } else {
         loginBox.style.display = 'block';
       }
+    });
+
+    loginSubmit.addEventListener('click', () => {
+      window.location.href = "/myfolder/template.html";
     });
   </script>
 </body>
