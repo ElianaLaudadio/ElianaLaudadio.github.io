@@ -63,6 +63,31 @@
       width: 100%;
     }
 
+    /* Hamburger Menu (mobile only) */
+    #hamburger {
+      display: none;
+      font-size: 36px;
+      cursor: pointer;
+      color: var(--fg);
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    #mobile-menu {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      background-color: var(--bg);
+      text-align: center;
+      border-top: 1px solid #333;
+    }
+
+    #mobile-menu a {
+      display: block;
+      margin: 16px 0;
+      font-size: 18px;
+    }
+
     main {
       max-width: 960px;
       margin: 30px auto;
@@ -77,10 +102,7 @@
       margin-bottom: 30px;
     }
 
-    /* CENTER ONLY NUTRITION CARD */
-    #nutrition {
-      text-align: center;
-    }
+    #nutrition { text-align: center; }
 
     h2 {
       color: var(--fg);
@@ -137,10 +159,7 @@
       gap: 10px;
     }
 
-    #weight-buttons button {
-      width: 48%;
-      margin-top: 0;
-    }
+    #weight-buttons button { width: 48%; margin-top: 0; }
 
     .progress-circle {
       width: 140px;
@@ -173,10 +192,7 @@
       box-shadow: inset 0 0 6px #000;
     }
 
-    canvas {
-      width: 100% !important;
-      height: 300px !important;
-    }
+    canvas { width: 100% !important; height: 300px !important; }
 
     .message {
       margin-top: 10px;
@@ -186,11 +202,7 @@
       min-height: 24px;
     }
 
-    section p {
-      color: var(--muted);
-      font-size: 16px;
-      margin-top: 10px;
-    }
+    section p { color: var(--muted); font-size: 16px; margin-top: 10px; }
 
     #go-to-cart button {
       display: block;
@@ -205,63 +217,22 @@
       transition: background-color 0.3s ease;
     }
 
-    #go-to-cart button:hover {
-      background-color: #333;
-    }
+    #go-to-cart button:hover { background-color: #333; }
 
     @media (max-width: 600px) {
-      nav a {
-        display: block;
-        margin: 10px 0;
-        font-size: 18px;
-      }
+      nav a { display: none; }
+      #hamburger { display: block; font-size: 40px; padding: 10px 0; }
 
-      main {
-        padding: 0 10px;
-      }
-
-      section {
-        padding: 20px 15px;
-      }
-
-      h2 {
-        font-size: 22px;
-      }
-
-      input[type="number"], input[type="text"] {
-        font-size: 15px;
-      }
-
-      button {
-        width: 100%;
-        font-size: 16px;
-        padding: 12px;
-      }
-
-      #weight-buttons {
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      #weight-buttons button {
-        width: 100%;
-      }
-
-      .progress-circle {
-        width: 120px;
-        height: 120px;
-        font-size: 18px;
-      }
-
-      .goals-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-      }
-
-      #go-to-cart button {
-        width: 100%;
-        font-size: 16px;
-      }
+      main { padding: 0 10px; }
+      section { padding: 20px 15px; }
+      h2 { font-size: 22px; }
+      input[type="number"], input[type="text"] { font-size: 15px; }
+      button { width: 100%; font-size: 16px; padding: 12px; }
+      #weight-buttons { flex-direction: column; gap: 10px; }
+      #weight-buttons button { width: 100%; }
+      .progress-circle { width: 120px; height: 120px; font-size: 18px; }
+      .goals-grid { grid-template-columns: 1fr; gap: 15px; }
+      #go-to-cart button { width: 100%; font-size: 16px; }
     }
   </style>
 </head>
@@ -272,6 +243,15 @@
     <a href="/myfolder/template.html">Goals + Progress</a>
     <a href="/myfolder/workouts.html">Workouts</a>
     <a href="/myfolder/meal_planner.html">Meal Planner</a>
+
+    <!-- Hamburger -->
+    <span id="hamburger">&#9776;</span>
+    <div id="mobile-menu">
+      <a href="/myfolder/index.html">Home</a>
+      <a href="/myfolder/template.html">Goals + Progress</a>
+      <a href="/myfolder/workouts.html">Workouts</a>
+      <a href="/myfolder/meal_planner.html">Meal Planner</a>
+    </div>
   </nav>
 
   <main>
@@ -339,6 +319,7 @@
   <audio id="celebrationSound" src="https://assets.mixkit.co/sfx/preview/mixkit-small-group-cheer-and-applause-518.mp3" preload="auto"></audio>
 
   <script>
+    // All your existing JS remains unchanged
     const ctx = document.getElementById('weightChart').getContext('2d');
     let weightData = JSON.parse(localStorage.getItem('weightEntries') || '[]');
 
@@ -376,10 +357,7 @@
       }
     });
 
-    function getTodayDate() {
-      const today = new Date();
-      return today.toISOString().split('T')[0];
-    }
+    function getTodayDate() { const today = new Date(); return today.toISOString().split('T')[0]; }
 
     function addWeight() {
       const weight = parseFloat(document.getElementById('weight-input').value);
@@ -477,11 +455,21 @@
       } else if (caloriePercent < 100) calorieConfettiFired = false;
     }
 
-    window.onload = () => {
-      displayGoals();
-      updateChart();
-      calculateProgress();
-    }
+    window.onload = () => { displayGoals(); updateChart(); calculateProgress(); }
+
+    // Hamburger toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    hamburger.addEventListener('click', () => {
+      if (mobileMenu.style.display === 'flex') {
+        mobileMenu.style.display = 'none';
+        hamburger.innerHTML = '&#9776;';
+      } else {
+        mobileMenu.style.display = 'flex';
+        hamburger.innerHTML = '&times;';
+      }
+    });
   </script>
 </body>
 </html>
