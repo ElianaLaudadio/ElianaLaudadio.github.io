@@ -259,6 +259,22 @@
     </div>
   </section>
 
+  <!-- Photo Citations Button -->
+  <div style="text-align:center; margin: 20px 0;">
+    <button id="photo-citations-btn" style="
+      background-color: var(--card-bg);
+      color: var(--fg);
+      border: 1px solid #333;
+      padding: 6px 12px;
+      font-size: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    " onclick="showCitations()">
+      Photo Citations
+    </button>
+  </div>
+
   <footer></footer>
 
   <script>
@@ -274,6 +290,20 @@
         hamburger.innerHTML = '&times;';
       }
     });
+
+    // Function to show citations
+    function showCitations() {
+      alert(
+        "Photo Citations:\n\n" +
+        "Shoulders: Wikimedia Commons (public domain)\n" +
+        "Chest: Wikimedia Commons (public domain)\n" +
+        "Back: Wikimedia Commons (public domain)\n" +
+        "Arms: Wikimedia Commons (public domain)\n" +
+        "Abs + Core: Wikimedia Commons (public domain)\n" +
+        "Glutes: Wikimedia Commons (public domain)\n" +
+        "Legs: Wikimedia Commons (public domain)"
+      );
+    }
   </script>
 </body>
 </html>
