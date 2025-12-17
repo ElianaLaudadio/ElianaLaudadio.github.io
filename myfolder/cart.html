@@ -146,10 +146,12 @@
       flex-direction: column;
       align-items: center;
       gap: 10px;
+      position: relative;
+      width: 100%;
     }
 
     .add-item input {
-      padding: 12px;
+      padding: 12px 44px 12px 12px; /* right padding for arrow */
       width: 100%;
       border: 1px solid #333;
       border-radius: 6px;
@@ -157,6 +159,23 @@
       background-color: var(--card-bg);
       color: var(--fg);
       box-sizing: border-box;
+    }
+
+    /* Arrow inside input */
+    .add-item button {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      font-size: 18px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #333;
     }
 
     footer {
@@ -208,7 +227,7 @@
 
   <div class="add-item">
     <input type="text" id="manualItem" placeholder="Enter an ingredient..." />
-    <button onclick="addManualItem()">➕ Add Item</button>
+    <button onclick="addManualItem()">➤</button>
   </div>
 
   <div id="cartContainer"></div>
