@@ -84,18 +84,18 @@
       background: var(--card-bg);
       border: 1px solid #333;
       border-radius: 8px;
-      padding: 14px 16px;
-      margin-bottom: 14px;
+      padding: 15px 20px;
+      margin-bottom: 15px;
       display: flex;
       align-items: center;
       gap: 12px;
       box-shadow: 0 2px 8px rgba(255,255,255,0.05);
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .cart-item input {
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
+      transform: scale(1.2);
     }
 
     .cart-item p {
@@ -115,22 +115,24 @@
     }
 
     .btn-group {
-      margin-top: 24px;
+      text-align: center;
+      margin-top: 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     button {
-      height: 48px;
-      padding: 0 20px;
+      padding: 12px 20px;
       background-color: var(--card-bg);
       color: var(--fg);
       border: 1px solid #333;
       border-radius: 6px;
       font-size: 16px;
       cursor: pointer;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     button:hover {
@@ -139,22 +141,22 @@
 
     .add-item {
       margin-bottom: 30px;
+      text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
     .add-item input {
-      height: 48px;
-      padding: 0 14px;
-      width: 250px;
-      max-width: 100%;
+      padding: 12px;
+      width: 100%;
       border: 1px solid #333;
       border-radius: 6px;
       font-size: 16px;
       background-color: var(--card-bg);
       color: var(--fg);
+      box-sizing: border-box;
     }
 
     footer {
@@ -166,7 +168,6 @@
       margin: 30px auto 0;
     }
 
-    /* ---------- MOBILE ONLY ---------- */
     @media (max-width: 600px) {
       nav a {
         display: none;
@@ -180,16 +181,6 @@
 
       main {
         text-align: center;
-      }
-
-      button,
-      .add-item input {
-        width: 100%;
-        max-width: 320px;
-      }
-
-      .cart-item {
-        width: 100%;
       }
     }
   </style>
