@@ -222,6 +222,7 @@
 <script>
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobile-menu');
+  const manualInput = document.getElementById('manualItem');
 
   hamburger.addEventListener('click', () => {
     if (mobileMenu.style.display === 'flex') {
@@ -230,6 +231,13 @@
     } else {
       mobileMenu.style.display = 'flex';
       hamburger.innerHTML = '&times;';
+    }
+  });
+
+  // Pressing Enter in input triggers addManualItem
+  manualInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      addManualItem();
     }
   });
 
