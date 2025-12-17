@@ -24,7 +24,6 @@
       color: var(--fg);
     }
 
-    /* ---------- NAV ---------- */
     nav {
       position: fixed;
       top: 0;
@@ -45,7 +44,6 @@
       font-weight: 600;
     }
 
-    /* Hamburger Menu */
     #hamburger {
       display: none;
       font-size: 36px;
@@ -86,17 +84,18 @@
       background: var(--card-bg);
       border: 1px solid #333;
       border-radius: 8px;
-      padding: 15px 20px;
-      margin-bottom: 15px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
       display: flex;
       align-items: center;
       gap: 12px;
       box-shadow: 0 2px 8px rgba(255,255,255,0.05);
-      flex-wrap: wrap;
     }
 
     .cart-item input {
-      transform: scale(1.2);
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
     }
 
     .cart-item p {
@@ -116,16 +115,16 @@
     }
 
     .btn-group {
-      text-align: center;
-      margin-top: 20px;
+      margin-top: 24px;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
     }
 
     button {
-      padding: 12px 20px;
+      height: 48px;
+      padding: 0 20px;
       background-color: var(--card-bg);
       color: var(--fg);
       border: 1px solid #333;
@@ -140,15 +139,15 @@
 
     .add-item {
       margin-bottom: 30px;
-      text-align: center;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
     }
 
     .add-item input {
-      padding: 12px;
+      height: 48px;
+      padding: 0 14px;
       width: 250px;
       max-width: 100%;
       border: 1px solid #333;
@@ -183,10 +182,14 @@
         text-align: center;
       }
 
-      /* ONLY BUTTONS ARE WIDER ON MOBILE */
-      button {
-        width: 250px;
-        max-width: 100%;
+      button,
+      .add-item input {
+        width: 100%;
+        max-width: 320px;
+      }
+
+      .cart-item {
+        width: 100%;
       }
     }
   </style>
