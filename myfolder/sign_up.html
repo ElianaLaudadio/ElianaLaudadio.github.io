@@ -23,6 +23,7 @@
     margin: 0;
     padding-top: 0;
     padding-bottom: 40px;
+    overflow-x: hidden;
   }
 
   main {
@@ -97,12 +98,49 @@
     justify-content: space-between;
     margin-top: 35px;
   }
+
+  /* ---------- CONFIRMATION ---------- */
+  #confirmation {
+    text-align: center;
+    padding: 80px 20px;
+  }
+
+  #confirmation h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+
+  #confirmation p {
+    color: var(--muted);
+    font-size: 18px;
+  }
+
+  /* ---------- CONFETTI ---------- */
+  .confetti {
+    position: fixed;
+    top: -10px;
+    width: 10px;
+    height: 10px;
+    background: white;
+    opacity: 0.8;
+    animation: fall linear forwards;
+    z-index: 9999;
+  }
+
+  @keyframes fall {
+    to {
+      transform: translateY(110vh) rotate(720deg);
+      opacity: 0;
+    }
+  }
 </style>
 </head>
 
 <body>
 
 <main>
+
+  <!-- FORM -->
   <section id="form-container">
     <h2>Client Sign-Up</h2>
 
@@ -246,6 +284,14 @@
 
     </form>
   </section>
+
+  <!-- CONFIRMATION PAGE -->
+  <section id="confirmation" class="hidden">
+    <h2>You're All Set 🎉</h2>
+    <p>Your sign-up has been successfully submitted.<br>
+    I’ll be reaching out shortly.</p>
+  </section>
+
 </main>
 
 <script>
@@ -283,9 +329,27 @@
     const scriptURL = "YOUR_GOOGLE_SHEETS_SCRIPT_URL";
 
     fetch(scriptURL, { method: "POST", body: new FormData(this)})
-      .then(() => alert("Form successfully submitted!"))
+      .then(() => {
+        document.getElementById("form-container").classList.add("hidden");
+        document.getElementById("confirmation").classList.remove("hidden");
+        launchConfetti();
+        window.scrollTo(0,0);
+      })
       .catch(err => alert("Error: " + err));
   });
+
+  function launchConfetti() {
+    for (let i = 0; i < 120; i++) {
+      const confetti = document.createElement("div");
+      confetti.className = "confetti";
+      confetti.style.left = Math.random() * 100 + "vw";
+      confetti.style.backgroundColor = ["#fff","#ccc","#999"][Math.floor(Math.random()*3)];
+      confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
+      document.body.appendChild(confetti);
+
+      setTimeout(() => confetti.remove(), 4000);
+    }
+  }
 </script>
 
 </body>
