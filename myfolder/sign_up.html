@@ -99,7 +99,6 @@
     margin-top: 35px;
   }
 
-  /* ---------- CONFIRMATION ---------- */
   #confirmation {
     text-align: center;
     padding: 80px 20px;
@@ -115,7 +114,6 @@
     font-size: 18px;
   }
 
-  /* ---------- CONFETTI ---------- */
   .confetti {
     position: fixed;
     top: -10px;
@@ -140,46 +138,45 @@
 
 <main>
 
-  <!-- FORM -->
   <section id="form-container">
     <h2>Client Sign-Up</h2>
 
-    <form id="signup">
+    <form id="signup" novalidate>
 
-      <!-- -------------------- PAGE 1 -------------------- -->
+      <!-- PAGE 1 -->
       <div class="form-page" id="page1">
         <label>Full Name</label>
-        <input type="text" name="fullName" required>
+        <input type="text" name="fullName">
 
         <label>Email</label>
-        <input type="email" name="email" required>
+        <input type="email" name="email">
 
         <label>Phone Number</label>
-        <input type="tel" name="phone" required>
+        <input type="tel" name="phone">
 
         <label>Date of Birth</label>
-        <input type="date" name="dob" required>
+        <input type="date" name="dob">
 
         <label>Age</label>
-        <input type="number" name="age" min="0" required>
+        <input type="number" name="age" min="0">
 
         <label>Height</label>
-        <input type="text" name="height" required>
+        <input type="text" name="height">
 
         <label>Weight</label>
-        <input type="text" name="weight" required>
+        <input type="text" name="weight">
 
         <div class="buttons">
           <button type="button" onclick="nextPage(2)">Next Page →</button>
         </div>
       </div>
 
-      <!-- -------------------- PAGE 2 -------------------- -->
+      <!-- PAGE 2 -->
       <div class="form-page hidden" id="page2">
         <h3>Goals / Physiological Analysis</h3>
 
         <label>Primary Goal</label>
-        <select id="goalType" name="goalType" required>
+        <select id="goalType" name="goalType">
           <option value="">-- Select --</option>
           <option value="weight">General weight loss / gain</option>
           <option value="powerlifting">Powerlifting</option>
@@ -240,7 +237,7 @@
         </div>
       </div>
 
-      <!-- -------------------- PAGE 3 -------------------- -->
+      <!-- PAGE 3 -->
       <div class="form-page hidden" id="page3">
         <h3>Injury Analysis</h3>
 
@@ -256,7 +253,7 @@
         </div>
       </div>
 
-      <!-- -------------------- PAGE 4 -------------------- -->
+      <!-- PAGE 4 -->
       <div class="form-page hidden" id="page4">
         <h3>Preferences</h3>
 
@@ -285,7 +282,6 @@
     </form>
   </section>
 
-  <!-- CONFIRMATION PAGE -->
   <section id="confirmation" class="hidden">
     <h2>You're All Set 🎉</h2>
     <p>Your sign-up has been successfully submitted.<br>
