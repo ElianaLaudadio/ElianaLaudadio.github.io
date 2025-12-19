@@ -62,7 +62,6 @@
       width: 100%;
     }
 
-    /* Hamburger Menu (mobile only) */
     #hamburger {
       display: none;
       font-size: 36px;
@@ -102,12 +101,6 @@
       color: var(--fg);
       font-weight: 600;
       font-size: 24px;
-    }
-
-    #go-to-cart p {
-      margin-bottom: 15px;
-      color: var(--muted);
-      font-size: 16px;
     }
 
     #go-to-cart button {
@@ -163,17 +156,6 @@
 
     .meal-button:hover {
       background-color: var(--muted);
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      background-color: var(--bg);
-      color: var(--muted);
-      font-size: 14px;
-      border-top: 1px solid #333;
-      max-width: 960px;
-      margin: 0 auto;
     }
 
     #calendar-container {
@@ -277,17 +259,13 @@
     }
 
     @media (max-width: 600px) {
-      nav a {
-        display: none;
-      }
+      nav a { display: none; }
       #hamburger {
         display: block;
         font-size: 40px;
         padding: 10px 0;
       }
-      .meal-button {
-        width: 100%;
-      }
+      .meal-button { width: 100%; }
     }
   </style>
 </head>
@@ -299,7 +277,6 @@
     <a href="/myfolder/workouts.html">Workouts</a>
     <a href="/myfolder/meal_planner.html">Meal Planner</a>
 
-    <!-- Hamburger -->
     <span id="hamburger">&#9776;</span>
     <div id="mobile-menu">
       <a href="/myfolder/index.html">Home</a>
@@ -309,15 +286,24 @@
     </div>
   </nav>
 
-  <section id="calendar">
-    <h2 class="section-title">Meal Planner</h2>
+  <!-- TOP TITLE CARD -->
+  <section id="go-to-cart">
+    <h3>Meal Planner</h3>
+  </section>
+
+  <!-- CALENDAR -->
+  <section>
     <div id="calendar-container"></div>
   </section>
 
+  <!-- GROCERY LIST -->
   <section id="go-to-cart">
-    <button onclick="location.href='/myfolder/cart.html'">Go to Grocery List</button>
+    <button onclick="location.href='/myfolder/cart.html'">
+      Go to Grocery List
+    </button>
   </section>
 
+  <!-- FEATURED MEALS -->
   <section style="background: var(--card-bg); border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(255,255,255,0.05); margin-top: 20px;">
     <h2 class="section-title">Featured Meals</h2>
     <div class="meal-buttons">
@@ -408,7 +394,6 @@
 
     generateCalendar(currentYear, currentMonth);
 
-    // Hamburger toggle
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobile-menu');
 
