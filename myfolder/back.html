@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Workouts</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #000;
+      --fg: #fff;
+      --muted: #ccc;
+      --card-bg: #111;
+      --hover: #222;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--fg);
+      padding-top: 70px;
+      padding-bottom: 40px;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--bg);
+      padding: 18px 0;
+      text-align: center;
+      z-index: 999;
+      border-bottom: 1px solid #333;
+    }
+
+    nav a {
+      color: var(--fg);
+      text-decoration: none;
+      margin: 0 20px;
+      font-size: 16px;
+      font-weight: 600;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      background: var(--fg);
+      bottom: -4px;
+      left: 0;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    #hamburger {
+      display: none;
+      font-size: 36px;
+      cursor: pointer;
+      color: var(--fg);
+      text-align: center;
+    }
+
+    #mobile-menu {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      background-color: var(--bg);
+      text-align: center;
+      border-top: 1px solid #333;
+    }
+
+    #mobile-menu a {
+      display: block;
+      margin: 16px 0;
+      font-size: 18px;
+    }
+
+    section {
+      padding: 0 20px 40px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 28px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .cards {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      border: 1px solid #333;
+      border-radius: 12px;
+      background: var(--card-bg);
+      padding: 20px;
+      cursor: pointer;
+      box-shadow: 0 2px 12px rgba(255,255,255,0.05);
+    }
+
+    .card:hover {
+      background: var(--hover);
+      transform: translateY(-4px);
+    }
+
+    .card h3 {
+      margin: 0 0 6px 0;
+      font-size: 20px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0,0,0,0.8);
+      z-index: 999;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      margin: 10% auto;
+      padding: 24px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 520px;
+    }
+
+    .close {
+      float: right;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    /* Centered + underlined modal title */
+    #modalTitle {
+      text-align: center;
+      text-decoration: underline;
+      margin-bottom: 20px;
+    }
+
+    ul {
+      list-style: disc;
+      padding-left: 20px;
+    }
+
+    ul li {
+      margin: 10px 0;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    /* Video section */
+    .video-section {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #333;
+    }
+
+    .video-section h4 {
+      text-align: center;
+      margin-bottom: 14x;
+      font-size: 18px;
+      color: var(--muted);
+    }
+
+    .video-embed {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: none;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 600px) {
+      nav a { display: none; }
+      #hamburger { display: block; font-size: 40px; padding: 10px 0; }
+      .modal-content { margin: 20% auto; }
+      .section-title { font-size: 24px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<nav>
+  <a href="/myfolder/index.html">Home</a>
+  <a href="/myfolder/template.html">Goals + Progress</a>
+  <a href="/myfolder/workouts.html">Workouts</a>
+  <a href="/myfolder/meal_planner.html">Meal Planner</a>
+
+  <span id="hamburger">&#9776;</span>
+  <div id="mobile-menu">
+    <a href="/myfolder/index.html">Home</a>
+    <a href="/myfolder/template.html">Goals + Progress</a>
+    <a href="/myfolder/workouts.html">Workouts</a>
+    <a href="/myfolder/meal_planner.html">Meal Planner</a>
+  </div>
+</nav>
+
+<section>
+  <h2 class="section-title">Back</h2>
+  <div class="cards" id="cards"></div>
+</section>
+
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h3 id="modalTitle"></h3>
+    <ul id="modalList"></ul>
+
+    <div class="video-section">
+      <h4>Exercise Demo</h4>
+      <iframe class="video-embed"
+        src="https://www.youtube.com/embed/21lYP86dHW4"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+  const workouts = [
+    {
+      title: "Dumbbell Shoulder Press",
+      steps: [
+        "Sit or stand holding dumbbells at shoulder height",
+        "Brace your core and keep chest tall",
+        "Press dumbbells overhead until arms are fully extended",
+        "Lower slowly back to starting position"
+      ]
+    },
+    {
+      title: "Lateral Raises",
+      steps: [
+        "Hold dumbbells at your sides with a slight bend in elbows",
+        "Raise arms out to shoulder height",
+        "Pause briefly at the top",
+        "Lower under control"
+      ]
+    },
+    {
+      title: "Front Raises",
+      steps: [
+        "Hold dumbbells in front of thighs",
+        "Raise arms forward to shoulder height",
+        "Avoid swinging or using momentum",
+        "Lower slowly"
+      ]
+    },
+    {
+      title: "Rear Delt Fly",
+      steps: [
+        "Hinge forward at hips keeping back flat",
+        "Let dumbbells hang down",
+        "Raise arms wide squeezing shoulder blades",
+        "Lower with control"
+      ]
+    },
+    {
+      title: "Arnold Press",
+      steps: [
+        "Start with dumbbells in front of shoulders, palms facing you",
+        "Rotate palms outward as you press overhead",
+        "Fully extend arms at the top",
+        "Reverse the motion on the way down"
+      ]
+    }
+  ];
+
+  const cards = document.getElementById("cards");
+  const modal = document.getElementById("modal");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalList = document.getElementById("modalList");
+
+  workouts.forEach(workout => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <h3>${workout.title}</h3>
+      <p>Click to view instructions</p>
+    `;
+    card.onclick = () => showModal(workout);
+    cards.appendChild(card);
+  });
+
+  function showModal(workout) {
+    modal.style.display = "block";
+    modalTitle.textContent = workout.title;
+    modalList.innerHTML = "";
+
+    workout.steps.forEach(step => {
+      const li = document.createElement("li");
+      li.textContent = step;
+      modalList.appendChild(li);
+    });
+  }
+
+  function closeModal() {
+    modal.style.display = "none";
+  }
+
+  window.onclick = e => {
+    if (e.target === modal) closeModal();
+  };
+
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  hamburger.addEventListener('click', () => {
+    mobileMenu.style.display =
+      mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+  });
+</script>
+
+</body>
+</html>
