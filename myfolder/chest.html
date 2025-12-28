@@ -8,12 +8,12 @@
   <style>
     :root {
       --bg: #ece6df;          /* deeper cream/taupe background */
-      --fg: #111111;          /* near-black text for strong contrast */
-      --muted: #555555;       /* darker gray for secondary text */
-      --card-bg: #f5f3f1;      /* medium-light gray cards */
+      --fg: #111111;          /* near-black text */
+      --muted: #555555;       /* medium gray for secondary text */
+      --card-bg: #f5f3f1;     /* medium-light gray cards */
       --hover: #e0dedb;       /* slightly darker hover */
       --accent: #8b5e3c;      /* rich brown accent */
-      --border: #d1c8bf;      /* darker cream/brown border */
+      --border: #000000;      /* black outline for cards */
     }
 
     body {
@@ -34,7 +34,7 @@
       padding: 18px 0;
       text-align: center;
       z-index: 999;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--muted);
     }
 
     nav a {
@@ -75,7 +75,7 @@
       width: 100%;
       background-color: var(--bg);
       text-align: center;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--muted);
     }
 
     #mobile-menu a {
@@ -104,18 +104,19 @@
     }
 
     .card {
-      border: 1px solid var(--border);
+      border: 2px solid var(--border);  /* black border */
       border-radius: 12px;
       background: var(--card-bg);
       padding: 20px;
       cursor: pointer;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      transition: transform 0.2s, background 0.2s;
+      transition: transform 0.2s, background 0.2s, border-color 0.2s;
     }
 
     .card:hover {
       background: var(--hover);
       transform: translateY(-4px);
+      border-color: var(--fg);  /* slightly stronger on hover */
     }
 
     .card h3 {
@@ -176,7 +177,7 @@
     .video-section {
       margin-top: 30px;
       padding-top: 20px;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--muted);
     }
 
     .video-section h4 {
