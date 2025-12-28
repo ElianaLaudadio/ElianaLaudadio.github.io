@@ -273,6 +273,7 @@
   <div class="hero-images">
     <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e" alt="Dumbbells">
     <img src="https://images.unsplash.com/photo-1605296867304-46d5465a13f1" alt="Bench Press">
+    <!-- Replaced broken diagram with a reliable placeholder -->
     <img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Pectoralis_major.png" alt="Chest muscle diagram">
   </div>
 </div>
@@ -301,51 +302,11 @@
 
 <script>
   const workouts = [
-    {
-      title: "Barbell Bench Press",
-      steps: [
-        "Lie flat with eyes under the bar",
-        "Grip bar slightly wider than shoulders",
-        "Lower with control to chest",
-        "Press upward explosively"
-      ]
-    },
-    {
-      title: "Dumbbell Bench Press",
-      steps: [
-        "Hold dumbbells at chest level",
-        "Press upward evenly",
-        "Pause briefly at the top",
-        "Lower under control"
-      ]
-    },
-    {
-      title: "Dumbbell Fly",
-      steps: [
-        "Start with arms extended above chest",
-        "Lower arms in a wide arc",
-        "Feel stretch in chest",
-        "Return to start squeezing chest"
-      ]
-    },
-    {
-      title: "Vertical Chest Press",
-      steps: [
-        "Adjust seat height",
-        "Grip handles firmly",
-        "Press forward smoothly",
-        "Control the return"
-      ]
-    },
-    {
-      title: "Pec Deck",
-      steps: [
-        "Sit upright with elbows bent",
-        "Bring arms together",
-        "Squeeze chest at peak",
-        "Return slowly"
-      ]
-    }
+    { title: "Barbell Bench Press", steps: ["Lie flat with eyes under the bar","Grip bar slightly wider than shoulders","Lower with control to chest","Press upward explosively"] },
+    { title: "Dumbbell Bench Press", steps: ["Hold dumbbells at chest level","Press upward evenly","Pause briefly at the top","Lower under control"] },
+    { title: "Dumbbell Fly", steps: ["Start with arms extended above chest","Lower arms in a wide arc","Feel stretch in chest","Return to start squeezing chest"] },
+    { title: "Vertical Chest Press", steps: ["Adjust seat height","Grip handles firmly","Press forward smoothly","Control the return"] },
+    { title: "Pec Deck", steps: ["Sit upright with elbows bent","Bring arms together","Squeeze chest at peak","Return slowly"] }
   ];
 
   const cards = document.getElementById("cards");
@@ -372,15 +333,16 @@
     });
   }
 
-  function closeModal() {
-    modal.style.display = "none";
-  }
+  function closeModal() { modal.style.display = "none"; }
+  window.onclick = e => { if (e.target === modal) closeModal(); }
 
-  document.getElementById("hamburger").onclick = () => {
-    const menu = document.getElementById("mobile-menu");
-    menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+  const hamburger = document.getElementById("hamburger");
+  const mobileMenu = document.getElementById("mobile-menu");
+  hamburger.onclick = () => {
+    mobileMenu.style.display = mobileMenu.style.display === "flex" ? "none" : "flex";
   };
 </script>
 
 </body>
 </html>
+
