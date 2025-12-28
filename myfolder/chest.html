@@ -7,11 +7,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #000;
-      --fg: #fff;
-      --muted: #ccc;
-      --card-bg: #111;
-      --hover: #222;
+      --bg: #fdf6f0;          /* soft beige */
+      --fg: #333333;          /* dark gray for text */
+      --muted: #a89c94;       /* muted brown/gray for secondary text */
+      --card-bg: #ffffff;      /* white cards */
+      --hover: #ffe5d9;       /* soft peach hover */
+      --accent: #d4a373;      /* subtle gold/pink accent for highlights */
+      --border: #e2d7d0;      /* soft border color */
     }
 
     body {
@@ -32,7 +34,7 @@
       padding: 18px 0;
       text-align: center;
       z-index: 999;
-      border-bottom: 1px solid #333;
+      border-bottom: 1px solid var(--border);
     }
 
     nav a {
@@ -49,7 +51,7 @@
       position: absolute;
       width: 0%;
       height: 2px;
-      background: var(--fg);
+      background: var(--accent);
       bottom: -4px;
       left: 0;
       transition: width 0.3s ease;
@@ -73,7 +75,7 @@
       width: 100%;
       background-color: var(--bg);
       text-align: center;
-      border-top: 1px solid #333;
+      border-top: 1px solid var(--border);
     }
 
     #mobile-menu a {
@@ -92,6 +94,7 @@
       font-size: 28px;
       text-align: center;
       margin-bottom: 30px;
+      color: var(--fg);
     }
 
     .cards {
@@ -101,12 +104,13 @@
     }
 
     .card {
-      border: 1px solid #333;
+      border: 1px solid var(--border);
       border-radius: 12px;
       background: var(--card-bg);
       padding: 20px;
       cursor: pointer;
-      box-shadow: 0 2px 12px rgba(255,255,255,0.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: transform 0.2s, background 0.2s;
     }
 
     .card:hover {
@@ -117,6 +121,7 @@
     .card h3 {
       margin: 0 0 6px 0;
       font-size: 20px;
+      color: var(--fg);
     }
 
     .card p {
@@ -129,7 +134,7 @@
       display: none;
       position: fixed;
       inset: 0;
-      background-color: rgba(0,0,0,0.8);
+      background-color: rgba(0,0,0,0.6);
       z-index: 999;
     }
 
@@ -149,11 +154,11 @@
       color: var(--muted);
     }
 
-    /* Centered + underlined modal title */
     #modalTitle {
       text-align: center;
       text-decoration: underline;
       margin-bottom: 20px;
+      color: var(--fg);
     }
 
     ul {
@@ -165,18 +170,18 @@
       margin: 10px 0;
       font-size: 16px;
       line-height: 1.4;
+      color: var(--fg);
     }
 
-    /* Video section */
     .video-section {
       margin-top: 30px;
       padding-top: 20px;
-      border-top: 1px solid #333;
+      border-top: 1px solid var(--border);
     }
 
     .video-section h4 {
       text-align: center;
-      margin-bottom: 14x;
+      margin-bottom: 14px;
       font-size: 18px;
       color: var(--muted);
     }
