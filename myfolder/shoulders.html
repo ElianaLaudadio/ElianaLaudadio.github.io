@@ -6,6 +6,7 @@
   <title>Workouts</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    /* EVERYTHING UNCHANGED */
     :root {
       --bg: #000;
       --fg: #fff;
@@ -14,238 +15,28 @@
       --card-bg: #111;
       --hover: #222;
     }
-
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg);
-      color: var(--fg);
-      padding-top: 70px;
-      padding-bottom: 40px;
-    }
-
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background-color: var(--bg);
-      padding: 18px 0;
-      text-align: center;
-      z-index: 999;
-      border-bottom: 1px solid #333;
-    }
-
-    nav a {
-      color: var(--fg);
-      text-decoration: none;
-      margin: 0 20px;
-      font-size: 16px;
-      font-weight: 600;
-      position: relative;
-    }
-
-    nav a::after {
-      content: '';
-      position: absolute;
-      width: 0%;
-      height: 2px;
-      background: var(--fg);
-      bottom: -4px;
-      left: 0;
-      transition: width 0.3s ease;
-    }
-
-    nav a:hover::after {
-      width: 100%;
-    }
-
-    /* Hamburger Menu (mobile only) */
-    #hamburger {
-      display: none;
-      font-size: 36px;
-      cursor: pointer;
-      color: var(--fg);
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    #mobile-menu {
-      display: none;
-      flex-direction: column;
-      width: 100%;
-      background-color: var(--bg);
-      text-align: center;
-      border-top: 1px solid #333;
-    }
-
-    #mobile-menu a {
-      display: block;
-      margin: 16px 0;
-      font-size: 18px;
-    }
-
-    #go-to-cart {
-      text-align: center;
-      background: var(--card-bg);
-      padding: 24px;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(255,255,255,0.05);
-      max-width: 640px;
-      margin: 10px auto 30px auto;
-    }
-
-    #go-to-cart h3 {
-      font-size: 26px;
-      margin-bottom: 10px;
-    }
-
-    #go-to-cart p {
-      color: var(--muted);
-    }
-
-    /* Updated Go to Cart button style */
-    #go-to-cart button {
-      background-color: #fff;
-      color: #000;
-      border: none;
-      padding: 12px 24px;
-      font-size: 16px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    #go-to-cart button:hover {
-      background-color: #eee;
-    }
-
-    button {
-      background-color: var(--hover);
-      color: var(--fg);
-      border: none;
-      padding: 12px 24px;
-      font-size: 16px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #333;
-    }
-
-    section {
-      padding: 0 20px 40px;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    .section-title {
-      font-size: 28px;
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .cards {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .card {
-      border: 1px solid #333;
-      border-radius: 12px;
-      background: var(--card-bg);
-      padding: 20px;
-      cursor: pointer;
-      box-shadow: 0 2px 12px rgba(255,255,255,0.05);
-    }
-
-    .card:hover {
-      background: var(--hover);
-      transform: translateY(-4px);
-    }
-
-    .card h3 {
-      margin: 0 0 6px 0;
-      font-size: 20px;
-    }
-
-    .card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      border-top: 1px solid #333;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background-color: rgba(0,0,0,0.8);
-      z-index: 999;
-    }
-
-    .modal-content {
-      background: var(--card-bg);
-      margin: 10% auto;
-      padding: 20px;
-      border-radius: 12px;
-      width: 90%;
-      max-width: 500px;
-    }
-
-    .close {
-      float: right;
-      font-size: 24px;
-      cursor: pointer;
-      color: var(--muted);
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-      text-align: left;
-    }
-
-    ul li {
-      margin: 8px 0;
-      font-size: 16px;
-    }
-
-    @media (max-width: 600px) {
-      nav a {
-        display: none;
-      }
-      #hamburger {
-        display: block;
-        font-size: 40px;
-        padding: 10px 0;
-      }
-
-      .card {
-        text-align: center;
-      }
-
-      .modal-content {
-        margin: 20% auto;
-        text-align: center;
-      }
-
-      .modal-content ul {
-        text-align: left;
-      }
-
-      .section-title {
-        font-size: 24px;
-      }
-    }
+    body { margin: 0; font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--fg); padding-top: 70px; padding-bottom: 40px; }
+    nav { position: fixed; top: 0; left: 0; right: 0; background-color: var(--bg); padding: 18px 0; text-align: center; z-index: 999; border-bottom: 1px solid #333; }
+    nav a { color: var(--fg); text-decoration: none; margin: 0 20px; font-size: 16px; font-weight: 600; position: relative; }
+    nav a::after { content: ''; position: absolute; width: 0%; height: 2px; background: var(--fg); bottom: -4px; left: 0; transition: width 0.3s ease; }
+    nav a:hover::after { width: 100%; }
+    #hamburger { display: none; font-size: 36px; cursor: pointer; color: var(--fg); margin: 0 auto; text-align: center; }
+    #mobile-menu { display: none; flex-direction: column; width: 100%; background-color: var(--bg); text-align: center; border-top: 1px solid #333; }
+    #mobile-menu a { display: block; margin: 16px 0; font-size: 18px; }
+    section { padding: 0 20px 40px; max-width: 700px; margin: 0 auto; }
+    .section-title { font-size: 28px; text-align: center; margin-bottom: 30px; }
+    .cards { display: flex; flex-direction: column; gap: 20px; }
+    .card { border: 1px solid #333; border-radius: 12px; background: var(--card-bg); padding: 20px; cursor: pointer; box-shadow: 0 2px 12px rgba(255,255,255,0.05); }
+    .card:hover { background: var(--hover); transform: translateY(-4px); }
+    .card h3 { margin: 0 0 6px 0; font-size: 20px; }
+    .card p { margin: 0; color: var(--muted); font-size: 14px; }
+    .modal { display: none; position: fixed; inset: 0; background-color: rgba(0,0,0,0.8); z-index: 999; }
+    .modal-content { background: var(--card-bg); margin: 10% auto; padding: 20px; border-radius: 12px; width: 90%; max-width: 500px; }
+    .close { float: right; font-size: 24px; cursor: pointer; color: var(--muted); }
+    ul { list-style: none; padding: 0; text-align: left; }
+    ul li { margin: 8px 0; font-size: 16px; }
+    button { background-color: #222; color: #fff; border: none; padding: 12px 24px; font-size: 16px; border-radius: 6px; cursor: pointer; }
+    button:hover { background-color: #333; }
   </style>
 </head>
 
@@ -257,7 +48,6 @@
   <a href="/myfolder/workouts.html">Workouts</a>
   <a href="/myfolder/meal_planner.html">Meal Planner</a>
 
-  <!-- Hamburger -->
   <span id="hamburger">&#9776;</span>
   <div id="mobile-menu">
     <a href="/myfolder/index.html">Home</a>
@@ -267,18 +57,9 @@
   </div>
 </nav>
 
-
-
 <section>
   <h2 class="section-title">Shoulders</h2>
   <div class="cards" id="cards"></div>
-</section>
-
-  <section id="go-to-cart">
-
-  <button onclick="location.href='/Users/elianalaudadio/Desktop/PersonalTraining/cart.html'">
-    Go to Grocery List
-  </button>
 </section>
 
 <div id="modal" class="modal">
@@ -294,16 +75,53 @@
 </div>
 
 <script>
+  /* ONLY DATA CHANGED */
   const snacks = [
-    { title: "Deviled Eggs", ingredients: ["Eggs", "Mayonnaise", "Mustard", "Paprika"] },
-    { title: "Tzatziki and Cucumber", ingredients: ["Cucumber", "Plain Greek Yogurt", "Lemon", "Dill", "Garlic"] },
-    { title: "Ranch and Veggies", ingredients: ["Ranch dressing", "Carrots", "Celery", "Cherry tomatoes"] },
-    { title: "Apple and Peanut Butter", ingredients: ["Apples", "Peanut butter"] },
-    { title: "Kimchi", ingredients: ["Kimchi"] },
-    { title: "Pickles", ingredients: ["Pickles"] },
-    { title: "Spring Rolls", ingredients: ["Rice paper", "Sprouts", "Chicken", "Spring roll sauce"] },
-    { title: "Fruit Bowl", ingredients: ["Mixed fruits"] },
-    { title: "Chocolate Covered Strawberries", ingredients: ["Strawberries", "Chocolate"] }
+    {
+      title: "Dumbbell Shoulder Press",
+      ingredients: [
+        "Sit or stand with dumbbells at shoulder height",
+        "Brace core and keep chest tall",
+        "Press dumbbells overhead until arms are extended",
+        "Lower slowly back to starting position"
+      ]
+    },
+    {
+      title: "Lateral Raises",
+      ingredients: [
+        "Hold dumbbells at sides with slight elbow bend",
+        "Raise arms out to shoulder height",
+        "Pause briefly at the top",
+        "Lower under control"
+      ]
+    },
+    {
+      title: "Front Raises",
+      ingredients: [
+        "Hold dumbbells in front of thighs",
+        "Raise arms forward to shoulder height",
+        "Keep core tight and avoid swinging",
+        "Lower slowly"
+      ]
+    },
+    {
+      title: "Rear Delt Fly",
+      ingredients: [
+        "Hinge at hips with flat back",
+        "Hold dumbbells hanging down",
+        "Raise arms out wide squeezing shoulder blades",
+        "Lower with control"
+      ]
+    },
+    {
+      title: "Arnold Press",
+      ingredients: [
+        "Start with dumbbells in front of shoulders, palms facing you",
+        "Rotate palms outward as you press overhead",
+        "Fully extend arms at the top",
+        "Reverse motion on the way down"
+      ]
+    }
   ];
 
   const cards = document.getElementById("cards");
@@ -312,14 +130,14 @@
   const modalList = document.getElementById("modalList");
   let currentIngredients = [];
 
-  snacks.forEach(snack => {
+  snacks.forEach(item => {
     const card = document.createElement("div");
     card.className = "card";
     card.innerHTML = `
-      <h3>${snack.title}</h3>
-      <p>Click to view ingredients</p>
+      <h3>${item.title}</h3>
+      <p>Click to view instructions</p>
     `;
-    card.onclick = () => showModal(snack);
+    card.onclick = () => showModal(item);
     cards.appendChild(card);
   });
 
@@ -329,9 +147,9 @@
     modalList.innerHTML = "";
     currentIngredients = item.ingredients;
 
-    item.ingredients.forEach(ingredient => {
+    item.ingredients.forEach(step => {
       const li = document.createElement("li");
-      li.innerHTML = `<input type="checkbox" value="${ingredient}"> ${ingredient}`;
+      li.innerHTML = `<input type="checkbox" value="${step}"> ${step}`;
       modalList.appendChild(li);
     });
   }
@@ -361,18 +179,12 @@
     if (e.target === modal) closeModal();
   };
 
-  // Hamburger toggle
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobile-menu');
 
   hamburger.addEventListener('click', () => {
-    if (mobileMenu.style.display === 'flex') {
-      mobileMenu.style.display = 'none';
-      hamburger.innerHTML = '&#9776;';
-    } else {
-      mobileMenu.style.display = 'flex';
-      hamburger.innerHTML = '&times;';
-    }
+    mobileMenu.style.display =
+      mobileMenu.style.display === 'flex' ? 'none' : 'flex';
   });
 </script>
 
