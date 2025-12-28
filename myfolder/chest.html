@@ -1,31 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Workouts</title>
-
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #3a2b23;            /* espresso brown */
-      --fg: #111111;            /* near-black */
-      --cream: #f7f4ef;         /* soft cream */
-      --muted: #6f6f6f;         /* muted gray */
-      --hover: #ece7e1;         /* hover cream */
-      --border: #000000;        /* bold black */
+      --bg: #f5f4f2;          /* soft cream page background */
+      --fg: #111111;          /* very dark text for contrast */
+      --muted: #555555;       /* soft gray secondary text */
+      --card-bg: #ffffff;     /* white cards for maximum contrast */
+      --hover: #ece9e6;       /* subtle hover */
+      --border: #111111;      /* dark border for chic contrast */
+      --accent: #d9c7b1;      /* soft brown accent */
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background: var(--bg);
+      background-color: var(--bg);
       color: var(--fg);
       padding-top: 80px;
       padding-bottom: 60px;
@@ -34,30 +31,38 @@
     /* ---------- NAV ---------- */
     nav {
       position: fixed;
-      inset: 0 0 auto 0;
+      top: 0;
+      left: 0;
+      right: 0;
       background: var(--bg);
-      border-bottom: 2px solid var(--border);
+      border-bottom: 1px solid var(--border);
       padding: 20px 0;
       text-align: center;
       z-index: 999;
     }
 
     nav a {
-      color: var(--cream);
+      color: var(--fg);
       text-decoration: none;
-      margin: 0 22px;
+      margin: 0 20px;
       font-weight: 600;
+      font-size: 16px;
       position: relative;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
     }
 
     nav a::after {
       content: '';
       position: absolute;
-      left: 0;
       bottom: -6px;
+      left: 0;
       width: 0%;
       height: 2px;
-      background: var(--cream);
+      background: var(--accent);
       transition: width 0.3s ease;
     }
 
@@ -69,19 +74,18 @@
       display: none;
       font-size: 36px;
       cursor: pointer;
-      color: var(--cream);
+      color: var(--fg);
     }
 
     #mobile-menu {
       display: none;
       flex-direction: column;
-      border-top: 2px solid var(--border);
+      border-top: 1px solid var(--border);
       margin-top: 16px;
     }
 
     #mobile-menu a {
       margin: 14px 0;
-      color: var(--cream);
       font-size: 18px;
     }
 
@@ -89,9 +93,8 @@
     .hero {
       max-width: 900px;
       margin: 0 auto 60px;
-      padding: 0 20px;
       text-align: center;
-      color: var(--cream);
+      color: var(--fg);
     }
 
     .hero h1 {
@@ -101,8 +104,8 @@
     }
 
     .hero p {
-      color: #ddd;
       font-size: 16px;
+      color: var(--muted);
       max-width: 600px;
       margin: 0 auto;
     }
@@ -116,7 +119,7 @@
 
     .hero-images img {
       width: 100%;
-      border-radius: 14px;
+      border-radius: 12px;
       border: 2px solid var(--border);
       object-fit: cover;
     }
@@ -132,8 +135,8 @@
       font-family: 'Playfair Display', serif;
       font-size: 32px;
       text-align: center;
-      color: var(--cream);
       margin-bottom: 40px;
+      color: var(--fg);
     }
 
     /* ---------- CARDS ---------- */
@@ -144,23 +147,26 @@
     }
 
     .card {
-      background: var(--cream);
+      background: var(--card-bg);
       border: 2px solid var(--border);
       border-radius: 16px;
-      padding: 22px;
+      padding: 24px;
       cursor: pointer;
-      transition: transform 0.2s ease, background 0.2s ease;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     }
 
     .card:hover {
       transform: translateY(-6px);
       background: var(--hover);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
     }
 
     .card h3 {
       margin: 0 0 6px;
       font-size: 20px;
+      color: var(--fg);
+      font-family: 'Playfair Display', serif;
     }
 
     .card p {
@@ -174,12 +180,12 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.65);
       z-index: 1000;
     }
 
     .modal-content {
-      background: var(--cream);
+      background: var(--card-bg);
       max-width: 560px;
       width: 90%;
       margin: 10% auto;
@@ -192,12 +198,14 @@
       float: right;
       font-size: 26px;
       cursor: pointer;
+      color: var(--muted);
     }
 
     #modalTitle {
       font-family: 'Playfair Display', serif;
       text-align: center;
       margin-bottom: 20px;
+      color: var(--fg);
     }
 
     ul {
@@ -207,6 +215,7 @@
     ul li {
       margin: 10px 0;
       line-height: 1.4;
+      color: var(--fg);
     }
 
     /* ---------- VIDEO ---------- */
@@ -224,7 +233,7 @@
 
     .video-embed {
       width: 100%;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 16/9;
       border-radius: 12px;
       border: none;
     }
@@ -259,7 +268,7 @@
 <!-- HERO -->
 <div class="hero">
   <h1>Chest Training</h1>
-  <p>Focused movements to build strength, symmetry, and definition across the chest muscles.</p>
+  <p>Focused movements to sculpt, define, and strengthen your chest muscles with precision.</p>
 
   <div class="hero-images">
     <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e" alt="Dumbbells">
@@ -366,10 +375,6 @@
   function closeModal() {
     modal.style.display = "none";
   }
-
-  window.onclick = e => {
-    if (e.target === modal) closeModal();
-  };
 
   document.getElementById("hamburger").onclick = () => {
     const menu = document.getElementById("mobile-menu");
