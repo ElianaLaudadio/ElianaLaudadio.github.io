@@ -7,13 +7,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #ece6df;          /* deeper cream/taupe background */
-      --fg: #111111;          /* near-black text */
-      --muted: #555555;       /* medium gray for secondary text */
-      --card-bg: #f5f3f1;     /* medium-light gray cards */
-      --hover: #e0dedb;       /* slightly darker hover */
-      --accent: #8b5e3c;      /* rich brown accent */
-      --border: #000000;      /* black outline for cards */
+      --bg: #4b3621;          /* rich dark brown background */
+      --fg: #111111;          /* near-black text for contrast */
+      --muted: #bbbbbb;       /* light gray for secondary text */
+      --card-bg: #f5f3f1;     /* light cream cards for contrast */
+      --hover: #e0dedb;       /* slightly darker cream on hover */
+      --accent: #000000;      /* black accent / border */
+      --border: #000000;      /* black border for cards */
     }
 
     body {
@@ -34,7 +34,7 @@
       padding: 18px 0;
       text-align: center;
       z-index: 999;
-      border-bottom: 1px solid var(--muted);
+      border-bottom: 1px solid var(--border);
     }
 
     nav a {
@@ -75,7 +75,7 @@
       width: 100%;
       background-color: var(--bg);
       text-align: center;
-      border-top: 1px solid var(--muted);
+      border-top: 1px solid var(--border);
     }
 
     #mobile-menu a {
@@ -109,14 +109,14 @@
       background: var(--card-bg);
       padding: 20px;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       transition: transform 0.2s, background 0.2s, border-color 0.2s;
     }
 
     .card:hover {
       background: var(--hover);
       transform: translateY(-4px);
-      border-color: var(--fg);  /* slightly stronger on hover */
+      border-color: var(--fg);
     }
 
     .card h3 {
@@ -177,7 +177,7 @@
     .video-section {
       margin-top: 30px;
       padding-top: 20px;
-      border-top: 1px solid var(--muted);
+      border-top: 1px solid var(--border);
     }
 
     .video-section h4 {
