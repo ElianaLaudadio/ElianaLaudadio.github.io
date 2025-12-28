@@ -4,44 +4,48 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Workouts</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --bg: #4b3621;          /* rich dark brown background */
-      --fg: #111111;          /* near-black text for contrast */
-      --muted: #bbbbbb;       /* light gray for secondary text */
-      --card-bg: #f5f3f1;     /* light cream cards for contrast */
-      --hover: #e0dedb;       /* slightly darker cream on hover */
-      --accent: #000000;      /* black accent / border */
-      --border: #000000;      /* black border for cards */
+      --bg: #3a2b23;            /* espresso brown */
+      --fg: #111111;            /* near-black */
+      --cream: #f7f4ef;         /* soft cream */
+      --muted: #6f6f6f;         /* muted gray */
+      --hover: #ece7e1;         /* hover cream */
+      --border: #000000;        /* bold black */
+    }
+
+    * {
+      box-sizing: border-box;
     }
 
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background-color: var(--bg);
+      background: var(--bg);
       color: var(--fg);
-      padding-top: 70px;
-      padding-bottom: 40px;
+      padding-top: 80px;
+      padding-bottom: 60px;
     }
 
+    /* ---------- NAV ---------- */
     nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background-color: var(--bg);
-      padding: 18px 0;
+      inset: 0 0 auto 0;
+      background: var(--bg);
+      border-bottom: 2px solid var(--border);
+      padding: 20px 0;
       text-align: center;
       z-index: 999;
-      border-bottom: 1px solid var(--border);
     }
 
     nav a {
-      color: var(--fg);
+      color: var(--cream);
       text-decoration: none;
-      margin: 0 20px;
-      font-size: 16px;
+      margin: 0 22px;
       font-weight: 600;
       position: relative;
     }
@@ -49,11 +53,11 @@
     nav a::after {
       content: '';
       position: absolute;
+      left: 0;
+      bottom: -6px;
       width: 0%;
       height: 2px;
-      background: var(--accent);
-      bottom: -4px;
-      left: 0;
+      background: var(--cream);
       transition: width 0.3s ease;
     }
 
@@ -65,64 +69,98 @@
       display: none;
       font-size: 36px;
       cursor: pointer;
-      color: var(--fg);
-      text-align: center;
+      color: var(--cream);
     }
 
     #mobile-menu {
       display: none;
       flex-direction: column;
-      width: 100%;
-      background-color: var(--bg);
-      text-align: center;
-      border-top: 1px solid var(--border);
+      border-top: 2px solid var(--border);
+      margin-top: 16px;
     }
 
     #mobile-menu a {
-      display: block;
-      margin: 16px 0;
+      margin: 14px 0;
+      color: var(--cream);
       font-size: 18px;
     }
 
-    section {
-      padding: 0 20px 40px;
-      max-width: 700px;
+    /* ---------- HERO ---------- */
+    .hero {
+      max-width: 900px;
+      margin: 0 auto 60px;
+      padding: 0 20px;
+      text-align: center;
+      color: var(--cream);
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      color: #ddd;
+      font-size: 16px;
+      max-width: 600px;
       margin: 0 auto;
     }
 
-    .section-title {
-      font-size: 28px;
-      text-align: center;
-      margin-bottom: 30px;
-      color: var(--fg);
-    }
-
-    .cards {
-      display: flex;
-      flex-direction: column;
+    .hero-images {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 20px;
     }
 
+    .hero-images img {
+      width: 100%;
+      border-radius: 14px;
+      border: 2px solid var(--border);
+      object-fit: cover;
+    }
+
+    /* ---------- SECTION ---------- */
+    section {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      text-align: center;
+      color: var(--cream);
+      margin-bottom: 40px;
+    }
+
+    /* ---------- CARDS ---------- */
+    .cards {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
     .card {
-      border: 2px solid var(--border);  /* black border */
-      border-radius: 12px;
-      background: var(--card-bg);
-      padding: 20px;
+      background: var(--cream);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      transition: transform 0.2s, background 0.2s, border-color 0.2s;
+      transition: transform 0.2s ease, background 0.2s ease;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.25);
     }
 
     .card:hover {
+      transform: translateY(-6px);
       background: var(--hover);
-      transform: translateY(-4px);
-      border-color: var(--fg);
     }
 
     .card h3 {
-      margin: 0 0 6px 0;
+      margin: 0 0 6px;
       font-size: 20px;
-      color: var(--fg);
     }
 
     .card p {
@@ -131,74 +169,72 @@
       font-size: 14px;
     }
 
+    /* ---------- MODAL ---------- */
     .modal {
       display: none;
       position: fixed;
       inset: 0;
-      background-color: rgba(0,0,0,0.65);
-      z-index: 999;
+      background: rgba(0,0,0,0.7);
+      z-index: 1000;
     }
 
     .modal-content {
-      background: var(--card-bg);
-      margin: 10% auto;
-      padding: 24px;
-      border-radius: 12px;
+      background: var(--cream);
+      max-width: 560px;
       width: 90%;
-      max-width: 520px;
+      margin: 10% auto;
+      padding: 28px;
+      border-radius: 18px;
+      border: 2px solid var(--border);
     }
 
     .close {
       float: right;
-      font-size: 24px;
+      font-size: 26px;
       cursor: pointer;
-      color: var(--muted);
     }
 
     #modalTitle {
+      font-family: 'Playfair Display', serif;
       text-align: center;
-      text-decoration: underline;
       margin-bottom: 20px;
-      color: var(--fg);
     }
 
     ul {
-      list-style: disc;
       padding-left: 20px;
     }
 
     ul li {
       margin: 10px 0;
-      font-size: 16px;
       line-height: 1.4;
-      color: var(--fg);
     }
 
+    /* ---------- VIDEO ---------- */
     .video-section {
       margin-top: 30px;
       padding-top: 20px;
-      border-top: 1px solid var(--border);
+      border-top: 2px solid var(--border);
     }
 
     .video-section h4 {
       text-align: center;
-      margin-bottom: 14px;
-      font-size: 18px;
       color: var(--muted);
+      margin-bottom: 12px;
     }
 
     .video-embed {
       width: 100%;
       aspect-ratio: 16 / 9;
+      border-radius: 12px;
       border: none;
-      border-radius: 8px;
     }
 
+    /* ---------- MOBILE ---------- */
     @media (max-width: 600px) {
       nav a { display: none; }
-      #hamburger { display: block; font-size: 40px; padding: 10px 0; }
+      #hamburger { display: block; }
       .modal-content { margin: 20% auto; }
-      .section-title { font-size: 24px; }
+      .hero h1 { font-size: 34px; }
     }
   </style>
 </head>
@@ -220,11 +256,24 @@
   </div>
 </nav>
 
+<!-- HERO -->
+<div class="hero">
+  <h1>Chest Training</h1>
+  <p>Focused movements to build strength, symmetry, and definition across the chest muscles.</p>
+
+  <div class="hero-images">
+    <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e" alt="Dumbbells">
+    <img src="https://images.unsplash.com/photo-1605296867304-46d5465a13f1" alt="Bench Press">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Pectoralis_major.png" alt="Chest muscle diagram">
+  </div>
+</div>
+
 <section>
-  <h2 class="section-title">Chest</h2>
+  <h2 class="section-title">Workouts</h2>
   <div class="cards" id="cards"></div>
 </section>
 
+<!-- MODAL -->
 <div id="modal" class="modal">
   <div class="modal-content">
     <span class="close" onclick="closeModal()">&times;</span>
@@ -235,7 +284,6 @@
       <h4>Exercise Demo</h4>
       <iframe class="video-embed"
         src="https://www.youtube.com/embed/21lYP86dHW4"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen>
       </iframe>
     </div>
@@ -247,46 +295,46 @@
     {
       title: "Barbell Bench Press",
       steps: [
-        "Sit or stand holding dumbbells at shoulder height",
-        "Brace your core and keep chest tall",
-        "Press dumbbells overhead until arms are fully extended",
-        "Lower slowly back to starting position"
+        "Lie flat with eyes under the bar",
+        "Grip bar slightly wider than shoulders",
+        "Lower with control to chest",
+        "Press upward explosively"
       ]
     },
     {
-      title: "Dumbell Bench Press",
+      title: "Dumbbell Bench Press",
       steps: [
-        "Hold dumbbells at your sides with a slight bend in elbows",
-        "Raise arms out to shoulder height",
+        "Hold dumbbells at chest level",
+        "Press upward evenly",
         "Pause briefly at the top",
         "Lower under control"
       ]
     },
     {
-      title: "Dumbell Fly",
+      title: "Dumbbell Fly",
       steps: [
-        "Hold dumbbells in front of thighs",
-        "Raise arms forward to shoulder height",
-        "Avoid swinging or using momentum",
-        "Lower slowly"
+        "Start with arms extended above chest",
+        "Lower arms in a wide arc",
+        "Feel stretch in chest",
+        "Return to start squeezing chest"
       ]
     },
     {
-      title: "Vertical Chest Press (Machine)",
+      title: "Vertical Chest Press",
       steps: [
-        "Hinge forward at hips keeping back flat",
-        "Let dumbbells hang down",
-        "Raise arms wide squeezing shoulder blades",
-        "Lower with control"
+        "Adjust seat height",
+        "Grip handles firmly",
+        "Press forward smoothly",
+        "Control the return"
       ]
     },
     {
-      title: "Peck Deck (Machine)",
+      title: "Pec Deck",
       steps: [
-        "Start with dumbbells in front of shoulders, palms facing you",
-        "Rotate palms outward as you press overhead",
-        "Fully extend arms at the top",
-        "Reverse the motion on the way down"
+        "Sit upright with elbows bent",
+        "Bring arms together",
+        "Squeeze chest at peak",
+        "Return slowly"
       ]
     }
   ];
@@ -299,10 +347,7 @@
   workouts.forEach(workout => {
     const card = document.createElement("div");
     card.className = "card";
-    card.innerHTML = `
-      <h3>${workout.title}</h3>
-      <p>Click to view instructions</p>
-    `;
+    card.innerHTML = `<h3>${workout.title}</h3><p>Tap to view instructions</p>`;
     card.onclick = () => showModal(workout);
     cards.appendChild(card);
   });
@@ -311,7 +356,6 @@
     modal.style.display = "block";
     modalTitle.textContent = workout.title;
     modalList.innerHTML = "";
-
     workout.steps.forEach(step => {
       const li = document.createElement("li");
       li.textContent = step;
@@ -327,13 +371,10 @@
     if (e.target === modal) closeModal();
   };
 
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobile-menu');
-
-  hamburger.addEventListener('click', () => {
-    mobileMenu.style.display =
-      mobileMenu.style.display === 'flex' ? 'none' : 'flex';
-  });
+  document.getElementById("hamburger").onclick = () => {
+    const menu = document.getElementById("mobile-menu");
+    menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+  };
 </script>
 
 </body>
