@@ -149,7 +149,7 @@
       color: var(--muted);
     }
 
-    /* NEW: Centered + underlined modal title */
+    /* Centered + underlined modal title */
     #modalTitle {
       text-align: center;
       text-decoration: underline;
@@ -167,7 +167,7 @@
       line-height: 1.4;
     }
 
-    /* NEW: Video section */
+    /* Video section */
     .video-section {
       margin-top: 30px;
       padding-top: 20px;
@@ -176,22 +176,16 @@
 
     .video-section h4 {
       text-align: center;
-      margin-bottom: 14px;
+      margin-bottom: 14x;
       font-size: 18px;
       color: var(--muted);
     }
 
-    .video-placeholder {
+    .video-embed {
       width: 100%;
       aspect-ratio: 16 / 9;
-      background-color: #000;
+      border: none;
       border-radius: 8px;
-      border: 1px solid #333;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--muted);
-      font-size: 14px;
     }
 
     @media (max-width: 600px) {
@@ -231,12 +225,13 @@
     <h3 id="modalTitle"></h3>
     <ul id="modalList"></ul>
 
-    <!-- NEW: Video section -->
     <div class="video-section">
       <h4>Exercise Demo</h4>
-      <div class="video-placeholder">
-        Paste YouTube embed here
-      </div>
+      <iframe class="video-embed"
+        src="https://www.youtube.com/embed/21lYP86dHW4"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
     </div>
   </div>
 </div>
