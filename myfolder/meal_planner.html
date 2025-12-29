@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Meal Planner 🍅</title>
+  <title>Meal Planner &#x1F345;</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg: #f5f4f2;
@@ -12,9 +13,14 @@
       --muted: #555555;
       --card-bg: #ffffff;
       --hover: #ece9e6;
+      --border: #111111;
       --accent: #d9c7b1;
-      --note-indicator: #111111;
+      --btn-bg: #333333; 
+      --btn-hover: #555555;
+      --note-indicator: #111111; /* black dot */
     }
+
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -25,35 +31,36 @@
       padding-bottom: 60px;
     }
 
+    /* ---------- NAV ---------- */
     nav {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      background-color: var(--bg);
+      background: var(--bg);
+      border-bottom: 2px solid var(--border);
       padding: 20px 0;
       text-align: center;
-      z-index: 999;
-      border-bottom: 2px solid var(--fg);
+      z-index: 1000;
     }
 
     nav a {
       color: var(--fg);
       text-decoration: none;
       margin: 0 20px;
-      font-size: 16px;
       font-weight: 600;
+      font-size: 16px;
       position: relative;
     }
 
     nav a::after {
       content: '';
       position: absolute;
+      bottom: -6px;
+      left: 0;
       width: 0%;
       height: 2px;
       background: var(--accent);
-      bottom: -6px;
-      left: 0;
       transition: width 0.3s ease;
     }
 
@@ -66,6 +73,7 @@
       font-size: 36px;
       cursor: pointer;
       color: var(--fg);
+      margin: 0 auto;
     }
 
     #mobile-menu {
@@ -74,8 +82,8 @@
       top: 100%;
       left: 0;
       width: 100%;
-      background-color: var(--bg);
-      border-top: 2px solid var(--fg);
+      background: var(--bg);
+      border-top: 2px solid var(--border);
       flex-direction: column;
       padding: 16px 0;
       text-align: center;
@@ -87,49 +95,52 @@
       font-size: 18px;
     }
 
+    /* ---------- TOP CARD ---------- */
     #go-to-cart {
       text-align: center;
       background: var(--card-bg);
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      max-width: 600px;
-      margin: 10px auto 30px auto;
+      padding: 28px;
+      border-radius: 18px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      max-width: 640px;
+      margin: 20px auto 40px auto;
+      border: 2px solid var(--border);
     }
 
     #go-to-cart h3 {
-      margin-bottom: 10px;
-      color: var(--fg);
-      font-weight: 500; /* Less bold */
-      font-size: 24px;
+      margin: 0;
+      font-size: 28px;
+      font-weight: 500; 
+      font-family: 'Playfair Display', serif;
     }
 
     #go-to-cart button {
-      background-color: var(--fg);
+      background-color: var(--btn-bg);
       color: var(--bg);
       border: none;
-      padding: 12px 24px;
+      padding: 14px 28px;
       font-size: 18px;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
       transition: background-color 0.3s ease;
-      font-weight: 500; /* Less bold */
+      margin-top: 12px;
+      font-weight: 500; 
     }
 
     #go-to-cart button:hover {
-      background-color: var(--muted);
+      background-color: var(--btn-hover);
     }
 
+    /* ---------- SECTIONS ---------- */
     section {
-      padding: 0 20px 40px 20px;
-      max-width: 600px;
-      margin: 0 auto;
+      max-width: 720px;
+      margin: 0 auto 40px;
+      padding: 0 20px;
     }
 
     .section-title {
-      font-size: 26px;
-      color: var(--fg);
-      font-weight: 600;
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
       text-align: center;
       margin-bottom: 30px;
     }
@@ -137,36 +148,33 @@
     .meal-buttons {
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 20px;
       align-items: center;
     }
 
     .meal-button {
-      background-color: var(--fg);
+      background-color: var(--btn-bg);
       color: var(--bg);
-      padding: 14px 26px;
+      padding: 16px 28px;
       font-size: 18px;
-      border-radius: 6px;
+      border-radius: 12px;
       text-decoration: none;
-      font-weight: 500; /* Less bold */
+      font-weight: 500;
       display: inline-block;
       width: 80%;
       max-width: 350px;
       text-align: center;
-      transition: background-color 0.3s ease;
+      transition: background 0.3s ease;
     }
 
     .meal-button:hover {
-      background-color: var(--muted);
+      background-color: var(--btn-hover);
     }
 
-    #calendar-container {
-      margin-top: 20px;
-    }
-
+    /* ---------- CALENDAR ---------- */
     #calendar-container .calendar-header {
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     #calendar-container .calendar-grid {
@@ -177,64 +185,67 @@
     }
 
     #calendar-container .calendar-grid div {
-      padding: 10px;
+      padding: 12px;
       background: var(--card-bg);
-      border-radius: 6px;
+      border-radius: 12px;
       cursor: pointer;
       height: 80px;
-      position: relative;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: center;
       overflow: hidden;
+      border: 2px solid var(--border);
+      transition: background 0.2s ease;
+      position: relative;
     }
 
     #calendar-container .calendar-grid div:hover {
       background-color: var(--hover);
     }
 
-    #calendar-container .calendar-grid .day-name {
+    .calendar-grid .day-name {
       font-weight: bold;
       color: var(--muted);
       cursor: default;
     }
 
-    /* Small solid black circle indicator for days with notes */
+    /* Day note indicator (small black circle under number) */
     .calendar-grid .note-indicator {
       width: 8px;
       height: 8px;
       border-radius: 50%;
       background-color: var(--note-indicator);
       margin-top: 4px;
-      flex-shrink: 0;
     }
 
+    /* ---------- MODAL ---------- */
     #note-modal {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.65);
       justify-content: center;
       align-items: center;
-      z-index: 9999;
+      z-index: 2000;
     }
 
     #note-modal .modal-content {
       background: var(--card-bg);
-      padding: 20px;
-      border-radius: 10px;
+      padding: 24px;
+      border-radius: 18px;
       width: 90%;
       max-width: 400px;
       color: var(--fg);
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       align-items: center;
+      border: 2px solid var(--border);
     }
 
     #modal-date-label {
-      font-size: 28px;
+      font-size: 24px;
       font-weight: bold;
     }
 
@@ -243,34 +254,30 @@
       min-height: 100px;
       background: var(--bg);
       color: var(--fg);
-      border: 1px solid #444;
-      border-radius: 6px;
-      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
       font-size: 14px;
     }
 
     #note-modal button {
-      background-color: var(--fg);
+      background-color: var(--btn-bg);
       color: var(--bg);
       border: none;
       padding: 10px 20px;
       font-size: 14px;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
-      font-weight: 500; /* Less bold */
+      font-weight: 500;
     }
 
     #note-modal button:hover {
-      background-color: var(--muted);
+      background-color: var(--btn-hover);
     }
 
     @media (max-width: 600px) {
       nav a { display: none; }
-      #hamburger {
-        display: block;
-        font-size: 40px;
-        padding: 10px 0;
-      }
+      #hamburger { display: block; font-size: 40px; padding: 10px 0; }
       .meal-button { width: 100%; }
     }
   </style>
@@ -292,25 +299,21 @@
     </div>
   </nav>
 
-  <!-- TOP TITLE CARD -->
   <section id="go-to-cart">
     <h3>Meal Planner</h3>
   </section>
 
-  <!-- CALENDAR -->
   <section>
     <div id="calendar-container"></div>
   </section>
 
-  <!-- GROCERY LIST -->
   <section id="go-to-cart">
     <button onclick="location.href='/myfolder/cart.html'">
       Go to Grocery List
     </button>
   </section>
 
-  <!-- FEATURED MEALS -->
-  <section style="background: var(--card-bg); border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-top: 20px;">
+  <section style="background: var(--card-bg); border-radius: 18px; padding: 24px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); margin-top: 20px; border: 2px solid var(--border);">
     <h2 class="section-title">Featured Meals</h2>
     <div class="meal-buttons">
       <a href="breakfast.html" class="meal-button">Breakfast</a>
