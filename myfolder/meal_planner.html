@@ -211,13 +211,15 @@
     }
 
     /* Day note indicator (small black circle under number) */
-    .calendar-grid .note-indicator {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background-color: var(--note-indicator);
-      margin-top: 4px;
-    }
+/* Day note indicator (small solid black circle under number) */
+.calendar-grid .note-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #111111; /* solid black */
+  margin-top: 4px;
+  flex-shrink: 0;
+}
 
     /* ---------- MODAL ---------- */
     #note-modal {
