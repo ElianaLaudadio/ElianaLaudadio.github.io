@@ -115,14 +115,8 @@
     }
 
     .card h3 {
-      margin: 0 0 6px 0;
-      font-size: 20px;
-    }
-
-    .card p {
       margin: 0;
-      color: var(--muted);
-      font-size: 14px;
+      font-size: 20px;
     }
 
     .modal {
@@ -155,8 +149,16 @@
       margin-bottom: 20px;
     }
 
+    .modal-section-title {
+      text-align: center;
+      margin-bottom: 14px;
+      font-size: 18px;
+      color: var(--muted);
+    }
+
     ol {
       padding-left: 20px;
+      margin-bottom: 30px;
     }
 
     ol li {
@@ -166,16 +168,8 @@
     }
 
     .video-section {
-      margin-top: 30px;
       padding-top: 20px;
       border-top: 1px solid #333;
-    }
-
-    .video-section h4 {
-      text-align: center;
-      margin-bottom: 14px;
-      font-size: 18px;
-      color: var(--muted);
     }
 
     .video-embed {
@@ -220,10 +214,12 @@
   <div class="modal-content">
     <span class="close" onclick="closeModal()">&times;</span>
     <h3 id="modalTitle"></h3>
+
+    <h4 class="modal-section-title">How to</h4>
     <ol id="modalList"></ol>
 
     <div class="video-section">
-      <h4>Exercise Demo</h4>
+      <h4 class="modal-section-title">Exercise Demo</h4>
       <iframe class="video-embed"
         src="https://www.youtube.com/embed/21lYP86dHW4"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -290,10 +286,7 @@
   workouts.forEach(workout => {
     const card = document.createElement("div");
     card.className = "card";
-    card.innerHTML = `
-      <h3>${workout.title}</h3>
-      <p>How to</p>
-    `;
+    card.innerHTML = `<h3>${workout.title}</h3>`;
     card.onclick = () => showModal(workout);
     cards.appendChild(card);
   });
@@ -319,13 +312,4 @@
   };
 
   const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobile-menu');
-
-  hamburger.addEventListener('click', () => {
-    mobileMenu.style.display =
-      mobileMenu.style.display === 'flex' ? 'none' : 'flex';
-  });
-</script>
-
-</body>
-</html>
+  const mobileMenu = document.
