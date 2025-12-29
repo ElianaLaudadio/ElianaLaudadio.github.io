@@ -4,38 +4,42 @@
   <meta charset="UTF-8" />
   <title>Training Dashboard &#x1F4AA;</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     :root {
-      --bg: #000;
-      --fg: #fff;
-      --muted: #ccc;
-      --accent: #111;
-      --card-bg: #111;
-      --hover: #222;
+      --bg: #f5f4f2;
+      --fg: #111111;
+      --muted: #555555;
+      --card-bg: #ffffff;
+      --hover: #ece9e6;
+      --border: #111111;
+      --accent: #d9c7b1;
     }
+
+    * { box-sizing: border-box; }
 
     body {
       font-family: 'Inter', sans-serif;
       background-color: var(--bg);
       margin: 0;
-      padding-top: 70px;
-      padding-bottom: 40px;
+      padding-top: 80px;
+      padding-bottom: 60px;
       color: var(--fg);
     }
 
+    /* ---------- NAV ---------- */
     nav {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      background-color: var(--bg);
-      padding: 18px 0;
+      background: var(--bg);
+      border-bottom: 2px solid var(--border);
+      padding: 20px 0;
       text-align: center;
-      z-index: 999;
-      border-bottom: 1px solid #333;
+      z-index: 1000;
     }
 
     nav a {
@@ -44,18 +48,17 @@
       margin: 0 20px;
       font-size: 16px;
       font-weight: 600;
-      transition: color 0.3s ease;
       position: relative;
     }
 
     nav a::after {
       content: '';
       position: absolute;
+      bottom: -6px;
+      left: 0;
       width: 0%;
       height: 2px;
-      background: var(--fg);
-      bottom: -4px;
-      left: 0;
+      background: var(--accent);
       transition: width 0.3s ease;
     }
 
@@ -63,28 +66,29 @@
       width: 100%;
     }
 
-    /* Hamburger Menu (mobile only) */
     #hamburger {
       display: none;
       font-size: 36px;
       cursor: pointer;
       color: var(--fg);
-      margin: 0 auto;
-      text-align: center;
     }
 
     #mobile-menu {
       display: none;
-      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
       width: 100%;
-      background-color: var(--bg);
+      background: var(--bg);
+      border-top: 2px solid var(--border);
+      flex-direction: column;
+      padding: 16px 0;
       text-align: center;
-      border-top: 1px solid #333;
     }
 
     #mobile-menu a {
       display: block;
-      margin: 16px 0;
+      padding: 14px 0;
       font-size: 18px;
     }
 
@@ -97,17 +101,17 @@
     section {
       background: var(--card-bg);
       padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(255,255,255,0.05);
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
       margin-bottom: 30px;
     }
 
-    #nutrition { text-align: center; }
-
     h2 {
-      color: var(--fg);
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
       margin-top: 0;
-      font-weight: 600;
+      font-weight: 500;
+      text-align: center;
     }
 
     label {
@@ -121,34 +125,36 @@
       width: 100%;
       padding: 10px;
       margin-top: 5px;
-      border-radius: 6px;
-      border: 1px solid #333;
+      border-radius: 12px;
+      border: 2px solid var(--border);
       font-size: 16px;
       background-color: var(--card-bg);
       color: var(--fg);
-      transition: border-color 0.3s ease;
+      transition: border-color 0.3s ease, background 0.3s ease;
     }
 
     input[type="number"]:focus, input[type="text"]:focus {
-      border-color: var(--hover);
+      border-color: var(--accent);
       outline: none;
+      background-color: var(--hover);
     }
 
     button {
       background-color: var(--hover);
       color: var(--fg);
-      border: none;
-      padding: 10px 16px;
+      border: 2px solid var(--border);
+      padding: 12px 16px;
       font-size: 16px;
-      border-radius: 6px;
+      border-radius: 12px;
       cursor: pointer;
       margin-top: 15px;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, transform 0.2s ease;
       font-weight: 600;
     }
 
     button:hover {
-      background-color: #333;
+      background-color: var(--accent);
+      transform: translateY(-2px);
     }
 
     #weight-buttons {
@@ -166,7 +172,7 @@
       height: 140px;
       border-radius: 50%;
       margin: 20px auto;
-      background: conic-gradient(#6fe36f 0%, #6fe36f 100%);
+      background: conic-gradient(var(--accent) 0%, var(--accent) 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -186,10 +192,11 @@
     .goal-box {
       background: var(--card-bg);
       padding: 15px;
-      border-radius: 12px;
+      border-radius: 16px;
       text-align: center;
       color: var(--fg);
-      box-shadow: inset 0 0 6px #000;
+      border: 2px solid var(--border);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
     }
 
     canvas { width: 100% !important; height: 300px !important; }
@@ -197,7 +204,7 @@
     .message {
       margin-top: 10px;
       font-weight: bold;
-      color: #6fe36f;
+      color: var(--accent);
       text-align: center;
       min-height: 24px;
     }
@@ -210,19 +217,19 @@
       width: 200px;
       font-size: 18px;
       padding: 12px 0;
-      border-radius: 12px;
+      border-radius: 16px;
       background-color: var(--hover);
       color: var(--fg);
+      border: 2px solid var(--border);
       font-weight: 600;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, transform 0.2s ease;
     }
 
-    #go-to-cart button:hover { background-color: #333; }
+    #go-to-cart button:hover { background-color: var(--accent); transform: translateY(-2px); }
 
     @media (max-width: 600px) {
       nav a { display: none; }
       #hamburger { display: block; font-size: 40px; padding: 10px 0; }
-
       main { padding: 0 10px; }
       section { padding: 20px 15px; }
       h2 { font-size: 22px; }
@@ -319,7 +326,6 @@
   <audio id="celebrationSound" src="https://assets.mixkit.co/sfx/preview/mixkit-small-group-cheer-and-applause-518.mp3" preload="auto"></audio>
 
   <script>
-    // All your existing JS remains unchanged
     const ctx = document.getElementById('weightChart').getContext('2d');
     let weightData = JSON.parse(localStorage.getItem('weightEntries') || '[]');
 
@@ -330,14 +336,14 @@
         datasets: [{
           label: 'Weight (lbs)',
           data: weightData.map(entry => entry.weight),
-          borderColor: '#6fe36f',
-          backgroundColor: 'rgba(111, 227, 111, 0.25)',
+          borderColor: '#d9c7b1',
+          backgroundColor: 'rgba(217,199,177,0.25)',
           borderWidth: 3,
           fill: true,
           tension: 0.3,
           pointRadius: 6,
-          pointBackgroundColor: '#6fe36f',
-          pointBorderColor: '#000',
+          pointBackgroundColor: '#d9c7b1',
+          pointBorderColor: '#111111',
           pointBorderWidth: 2
         }]
       },
@@ -345,15 +351,15 @@
         scales: {
           y: { 
             beginAtZero: false, 
-            ticks: { color: '#fff', font: { weight: '600' } },
-            grid: { color: '#333' }
+            ticks: { color: var(--fg), font: { weight: '600' } },
+            grid: { color: '#ccc' }
           },
           x: { 
-            ticks: { color: '#fff', font: { weight: '600' } },
-            grid: { color: '#333' }
+            ticks: { color: var(--fg), font: { weight: '600' } },
+            grid: { color: '#ccc' }
           }
         },
-        plugins: { legend: { labels: { color: '#6fe36f', font: { weight: '600' } } } }
+        plugins: { legend: { labels: { color: '#d9c7b1', font: { weight: '600' } } } }
       }
     });
 
@@ -427,13 +433,13 @@
       const proteinCircle = document.getElementById('proteinCircle');
       const proteinText = document.getElementById('proteinText');
       proteinText.textContent = `${Math.round(proteinPercent)}%`;
-      proteinCircle.style.background = `conic-gradient(#6fe36f ${proteinPercent}%, #222 ${proteinPercent}% 100%)`;
+      proteinCircle.style.background = `conic-gradient(var(--accent) ${proteinPercent}%, var(--hover) ${proteinPercent}% 100%)`;
 
       const caloriePercent = Math.min(100, (totalCalories / calorieGoal) * 100);
       const calorieCircle = document.getElementById('calorieCircle');
       const calorieText = document.getElementById('calorieText');
       calorieText.textContent = `${Math.round(caloriePercent)}%`;
-      calorieCircle.style.background = `conic-gradient(#6fe36f ${caloriePercent}%, #222 ${caloriePercent}% 100%)`;
+      calorieCircle.style.background = `conic-gradient(var(--accent) ${caloriePercent}%, var(--hover) ${caloriePercent}% 100%)`;
 
       const proteinMessage = document.getElementById('proteinMessage');
       const calorieMessage = document.getElementById('calorieMessage');
@@ -462,13 +468,7 @@
     const mobileMenu = document.getElementById('mobile-menu');
 
     hamburger.addEventListener('click', () => {
-      if (mobileMenu.style.display === 'flex') {
-        mobileMenu.style.display = 'none';
-        hamburger.innerHTML = '&#9776;';
-      } else {
-        mobileMenu.style.display = 'flex';
-        hamburger.innerHTML = '&times;';
-      }
+      mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
     });
   </script>
 </body>
