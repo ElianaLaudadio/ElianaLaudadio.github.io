@@ -17,7 +17,7 @@
       --accent: #d9c7b1;
       --btn-bg: #333333; 
       --btn-hover: #555555;
-      --note-indicator: #d9c7b1;
+      --note-indicator: #111111; /* black dot */
     }
 
     * { box-sizing: border-box; }
@@ -210,15 +210,13 @@
       cursor: default;
     }
 
-    /* Day note indicator (small circle) */
+    /* Day note indicator (small black circle under number) */
     .calendar-grid .note-indicator {
       width: 8px;
       height: 8px;
       border-radius: 50%;
       background-color: var(--note-indicator);
-      position: absolute;
-      bottom: 6px;
-      right: 6px;
+      margin-top: 4px;
     }
 
     /* ---------- MODAL ---------- */
