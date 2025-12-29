@@ -252,25 +252,28 @@
 
   <section id="input">
     <h2>Daily Nutrition Input</h2>
+
     <label for="protein">Protein (grams):</label>
     <input type="number" id="protein" oninput="calculateProgress()" />
+
+    <label for="carbs">Carbs (grams):</label>
+    <input type="number" id="carbs" oninput="calculateProgress()" />
+
+    <label for="fat">Fat (grams):</label>
+    <input type="number" id="fat" oninput="calculateProgress()" />
+
     <div class="progress-circle" id="proteinCircle">
       <div id="proteinText">0%</div>
       <span>Protein</span>
     </div>
-    <div class="message" id="proteinMessage"></div>
-
-    <label for="carbs">Carbs (grams):</label>
-    <label for="fat">Fat (grams):</label>
-    <input type="number" id="carbs" oninput="calculateProgress()" />
-    <input type="number" id="fat" oninput="calculateProgress()" />
 
     <div class="progress-circle" id="calorieCircle">
       <div id="calorieText">0%</div>
       <span>Calories</span>
     </div>
-    <div class="message" id="calorieMessage"></div>
 
+    <div class="message" id="proteinMessage"></div>
+    <div class="message" id="calorieMessage"></div>
     <div class="message" id="totalCalories">Total Calories: 0</div>
   </section>
 
@@ -315,8 +318,8 @@ let chart = new Chart(ctx, {
     datasets:[{
       label:'Weight (lbs)',
       data: weightData.map(e=>e.weight),
-      borderColor:'#111111', // line now black
-      backgroundColor:'rgba(217,199,177,0.25)',
+      borderColor:'#111111',
+      backgroundColor:'rgba(0,0,0,0.1)', // light gray shading
       borderWidth:3,
       fill:true,
       tension:0.3,
