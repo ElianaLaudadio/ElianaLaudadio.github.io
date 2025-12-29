@@ -151,6 +151,7 @@
       object-fit: cover;
       border-radius: 12px;
       flex-shrink: 0;
+      filter: grayscale(100%);
     }
 
     .card h3 {
@@ -158,22 +159,6 @@
       font-size: 20px;
       font-family: 'Playfair Display', serif;
       color: var(--fg);
-    }
-
-    /* ---------- BUTTON ---------- */
-    #photo-citations-btn {
-      background-color: var(--card-bg);
-      color: var(--fg);
-      border: 2px solid var(--border);
-      padding: 6px 12px;
-      font-size: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.2s ease;
-    }
-
-    #photo-citations-btn:hover {
-      background: var(--hover);
     }
 
     footer {
@@ -262,10 +247,6 @@
     </div>
   </section>
 
-  <div style="text-align:center; margin: 20px 0;">
-    <button id="photo-citations-btn" onclick="showCitations()">Photo Citations</button>
-  </div>
-
   <footer></footer>
 
   <script>
@@ -281,35 +262,6 @@
         hamburger.innerHTML = '&times;';
       }
     });
-
-    function showCitations() {
-      alert(
-        "PHOTO CITATIONS\n\n" +
-        "Shoulders:\n" +
-        "Pectoralis major muscle (Gray410.png), Henry Vandyke Carter after Gray’s Anatomy (1918).\n" +
-        "Public domain — Wikimedia Commons\n" +
-        "https://commons.wikimedia.org/wiki/File:Gray410.png\n\n" +
-        "Chest:\n" +
-        "Pectoralis major muscle illustration by DrJanaOfficial.\n" +
-        "Licensed under CC BY-SA 4.0 — Wikimedia Commons\n" +
-        "https://commons.wikimedia.org/wiki/File:Pectoralis-major.png\n\n" +
-        "Back:\n" +
-        "Muscles that Move the Humerus (b) by OpenStax College.\n" +
-        "Licensed under CC BY 3.0 — Wikimedia Commons\n" +
-        "https://commons.wikimedia.org/wiki/File:1119_Muscles_that_Move_the_Humerus_b.png\n\n" +
-        "General Muscle Illustration:\n" +
-        "Muscle Contract and Relax by علی نیاز (Ali Niyaz).\n" +
-        "Licensed under CC BY-SA 4.0 — Wikimedia Commons\n" +
-        "https://commons.wikimedia.org/wiki/File:Relax1contract.jpg\n\n" +
-        "Abs + Core:\n" +
-        "Wikimedia Commons — Public domain\n\n" +
-        "Glutes:\n" +
-        "Wikimedia Commons — Public domain\n\n" +
-        "Legs:\n" +
-        "Wikimedia Commons — Public domain"
-      );
-    }
   </script>
 </body>
 </html>
-
