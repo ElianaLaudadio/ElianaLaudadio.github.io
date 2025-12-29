@@ -15,6 +15,8 @@
       --hover: #ece9e6;
       --border: #111111;
       --accent: #d9c7b1;
+      --btn-bg: #333333; /* slightly lighter button background */
+      --btn-hover: #555555;
     }
 
     * { box-sizing: border-box; }
@@ -107,12 +109,12 @@
     #go-to-cart h3 {
       margin: 0;
       font-size: 28px;
-      font-weight: 600;
+      font-weight: 500; /* lighter than before */
       font-family: 'Playfair Display', serif;
     }
 
     #go-to-cart button {
-      background-color: var(--fg);
+      background-color: var(--btn-bg);
       color: var(--bg);
       border: none;
       padding: 14px 28px;
@@ -121,11 +123,11 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
       margin-top: 12px;
-      font-weight: 600;
+      font-weight: 500; /* lighter than before */
     }
 
     #go-to-cart button:hover {
-      background-color: var(--muted);
+      background-color: var(--btn-hover);
     }
 
     /* ---------- SECTIONS ---------- */
@@ -150,13 +152,13 @@
     }
 
     .meal-button {
-      background-color: var(--fg);
+      background-color: var(--btn-bg);
       color: var(--bg);
       padding: 16px 28px;
       font-size: 18px;
       border-radius: 12px;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 500; /* lighter than before */
       display: inline-block;
       width: 80%;
       max-width: 350px;
@@ -165,7 +167,7 @@
     }
 
     .meal-button:hover {
-      background-color: var(--muted);
+      background-color: var(--btn-hover);
     }
 
     /* ---------- CALENDAR ---------- */
@@ -206,11 +208,15 @@
       cursor: default;
     }
 
+    /* Remove circular styling from note text */
     .calendar-grid .note {
       color: var(--muted);
       font-size: 12px;
       margin-top: 4px;
       word-wrap: break-word;
+      border-radius: 0;
+      padding: 0;
+      background: none;
     }
 
     /* ---------- MODAL ---------- */
@@ -255,18 +261,18 @@
     }
 
     #note-modal button {
-      background-color: var(--fg);
+      background-color: var(--btn-bg);
       color: var(--bg);
       border: none;
       padding: 10px 20px;
       font-size: 14px;
       border-radius: 8px;
       cursor: pointer;
-      font-weight: 600;
+      font-weight: 500;
     }
 
     #note-modal button:hover {
-      background-color: var(--muted);
+      background-color: var(--btn-hover);
     }
 
     @media (max-width: 600px) {
