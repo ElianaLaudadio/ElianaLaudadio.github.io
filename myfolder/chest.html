@@ -4,20 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Workouts</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #f5f4f2;          /* soft cream page background */
-      --fg: #111111;          /* very dark text for contrast */
-      --muted: #555555;       /* soft gray secondary text */
-      --card-bg: #ffffff;     /* white cards for maximum contrast */
-      --hover: #ece9e6;       /* subtle hover */
-      --border: #111111;      /* dark border for chic contrast */
-      --accent: #d9c7b1;      /* soft brown accent */
+      --bg: #f5f4f2;
+      --fg: #111111;
+      --muted: #555555;
+      --card-bg: #ffffff;
+      --hover: #ece9e6;
+      --border: #111111;
+      --accent: #d9c7b1;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -35,10 +38,10 @@
       left: 0;
       right: 0;
       background: var(--bg);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 2px solid var(--border);
       padding: 20px 0;
       text-align: center;
-      z-index: 999;
+      z-index: 1000;
     }
 
     nav a {
@@ -48,11 +51,6 @@
       font-weight: 600;
       font-size: 16px;
       position: relative;
-      transition: color 0.3s;
-    }
-
-    nav a:hover {
-      color: var(--accent);
     }
 
     nav a::after {
@@ -77,15 +75,22 @@
       color: var(--fg);
     }
 
+    /* FIXED MOBILE MENU */
     #mobile-menu {
       display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: var(--bg);
+      border-top: 2px solid var(--border);
       flex-direction: column;
-      border-top: 1px solid var(--border);
-      margin-top: 16px;
+      padding: 16px 0;
     }
 
     #mobile-menu a {
-      margin: 14px 0;
+      display: block;
+      padding: 14px 0;
       font-size: 18px;
     }
 
@@ -94,7 +99,6 @@
       max-width: 900px;
       margin: 0 auto 60px;
       text-align: center;
-      color: var(--fg);
     }
 
     .hero h1 {
@@ -113,7 +117,7 @@
     .hero-images {
       margin-top: 30px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 20px;
     }
 
@@ -136,7 +140,6 @@
       font-size: 32px;
       text-align: center;
       margin-bottom: 40px;
-      color: var(--fg);
     }
 
     /* ---------- CARDS ---------- */
@@ -152,20 +155,18 @@
       border-radius: 16px;
       padding: 24px;
       cursor: pointer;
-      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease, background 0.2s ease;
     }
 
     .card:hover {
       transform: translateY(-6px);
       background: var(--hover);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
     }
 
     .card h3 {
       margin: 0 0 6px;
       font-size: 20px;
-      color: var(--fg);
       font-family: 'Playfair Display', serif;
     }
 
@@ -181,7 +182,7 @@
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.65);
-      z-index: 1000;
+      z-index: 2000;
     }
 
     .modal-content {
@@ -198,14 +199,12 @@
       float: right;
       font-size: 26px;
       cursor: pointer;
-      color: var(--muted);
     }
 
     #modalTitle {
       font-family: 'Playfair Display', serif;
       text-align: center;
       margin-bottom: 20px;
-      color: var(--fg);
     }
 
     ul {
@@ -215,10 +214,8 @@
     ul li {
       margin: 10px 0;
       line-height: 1.4;
-      color: var(--fg);
     }
 
-    /* ---------- VIDEO ---------- */
     .video-section {
       margin-top: 30px;
       padding-top: 20px;
@@ -233,7 +230,7 @@
 
     .video-embed {
       width: 100%;
-      aspect-ratio: 16/9;
+      aspect-ratio: 16 / 9;
       border-radius: 12px;
       border: none;
     }
@@ -242,8 +239,8 @@
     @media (max-width: 600px) {
       nav a { display: none; }
       #hamburger { display: block; }
-      .modal-content { margin: 20% auto; }
       .hero h1 { font-size: 34px; }
+      .modal-content { margin: 20% auto; }
     }
   </style>
 </head>
@@ -257,6 +254,7 @@
   <a href="/myfolder/meal_planner.html">Meal Planner</a>
 
   <span id="hamburger">&#9776;</span>
+
   <div id="mobile-menu">
     <a href="/myfolder/index.html">Home</a>
     <a href="/myfolder/template.html">Goals + Progress</a>
@@ -268,13 +266,11 @@
 <!-- HERO -->
 <div class="hero">
   <h1>Chest Training</h1>
-
+  <p>Focused movements to sculpt, define, and strengthen your chest muscles with precision.</p>
 
   <div class="hero-images">
     <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e" alt="Dumbbells">
     <img src="https://images.unsplash.com/photo-1605296867304-46d5465a13f1" alt="Bench Press">
-    <!-- Replaced broken diagram with a reliable placeholder -->
-    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Pectoralis_major.png" alt="Chest muscle diagram">
   </div>
 </div>
 
@@ -304,9 +300,9 @@
   const workouts = [
     { title: "Barbell Bench Press", steps: ["Lie flat with eyes under the bar","Grip bar slightly wider than shoulders","Lower with control to chest","Press upward explosively"] },
     { title: "Dumbbell Bench Press", steps: ["Hold dumbbells at chest level","Press upward evenly","Pause briefly at the top","Lower under control"] },
-    { title: "Dumbbell Fly", steps: ["Start with arms extended above chest","Lower arms in a wide arc","Feel stretch in chest","Return to start squeezing chest"] },
+    { title: "Dumbbell Fly", steps: ["Start with arms extended above chest","Lower arms in a wide arc","Feel stretch in chest","Return squeezing chest"] },
     { title: "Vertical Chest Press", steps: ["Adjust seat height","Grip handles firmly","Press forward smoothly","Control the return"] },
-    { title: "Pec Deck", steps: ["Sit upright with elbows bent","Bring arms together","Squeeze chest at peak","Return slowly"] }
+    { title: "Pec Deck", steps: ["Sit upright","Bring arms together","Squeeze chest","Return slowly"] }
   ];
 
   const cards = document.getElementById("cards");
@@ -333,16 +329,22 @@
     });
   }
 
-  function closeModal() { modal.style.display = "none"; }
-  window.onclick = e => { if (e.target === modal) closeModal(); }
+  function closeModal() {
+    modal.style.display = "none";
+  }
+
+  window.onclick = e => {
+    if (e.target === modal) closeModal();
+  };
 
   const hamburger = document.getElementById("hamburger");
   const mobileMenu = document.getElementById("mobile-menu");
-  hamburger.onclick = () => {
-    mobileMenu.style.display = mobileMenu.style.display === "flex" ? "none" : "flex";
-  };
+
+  hamburger.addEventListener("click", () => {
+    mobileMenu.style.display =
+      mobileMenu.style.display === "flex" ? "none" : "flex";
+  });
 </script>
 
 </body>
 </html>
-
