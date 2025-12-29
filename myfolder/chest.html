@@ -18,7 +18,9 @@
       --accent: #d9c7b1;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -36,17 +38,16 @@
       left: 0;
       right: 0;
       background: var(--bg);
-      border-bottom: 1px solid var(--border);
-      padding: 16px 0;
+      border-bottom: 2px solid var(--border);
+      padding: 20px 0;
       text-align: center;
       z-index: 1000;
-      font-weight: 500;
     }
 
     nav a {
       color: var(--fg);
       text-decoration: none;
-      margin: 0 24px;
+      margin: 0 20px;
       font-weight: 600;
       font-size: 16px;
       position: relative;
@@ -63,10 +64,18 @@
       transition: width 0.3s ease;
     }
 
-    nav a:hover::after { width: 100%; }
+    nav a:hover::after {
+      width: 100%;
+    }
 
-    #hamburger { display: none; font-size: 32px; cursor: pointer; color: var(--fg); }
+    #hamburger {
+      display: none;
+      font-size: 36px;
+      cursor: pointer;
+      color: var(--fg);
+    }
 
+    /* FIXED MOBILE MENU */
     #mobile-menu {
       display: none;
       position: absolute;
@@ -74,12 +83,16 @@
       left: 0;
       width: 100%;
       background: var(--bg);
-      border-top: 1px solid var(--border);
+      border-top: 2px solid var(--border);
       flex-direction: column;
       padding: 16px 0;
     }
 
-    #mobile-menu a { display: block; padding: 14px 0; font-size: 18px; }
+    #mobile-menu a {
+      display: block;
+      padding: 14px 0;
+      font-size: 18px;
+    }
 
     /* ---------- HERO ---------- */
     .hero {
@@ -91,35 +104,34 @@
     .hero h1 {
       font-family: 'Playfair Display', serif;
       font-size: 42px;
-      margin-bottom: 16px;
-      font-weight: 600;
+      margin-bottom: 10px;
     }
 
     .hero p {
       font-size: 16px;
       color: var(--muted);
       max-width: 600px;
-      margin: 0 auto 32px;
+      margin: 0 auto;
     }
 
     .hero-images {
+      margin-top: 30px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
     }
 
     .hero-images img {
       width: 100%;
-      border-radius: 16px;
+      border-radius: 12px;
       border: 2px solid var(--border);
       object-fit: cover;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
     }
 
     /* ---------- SECTION ---------- */
     section {
       max-width: 720px;
-      margin: 0 auto 60px;
+      margin: 0 auto;
       padding: 0 20px;
     }
 
@@ -128,37 +140,32 @@
       font-size: 32px;
       text-align: center;
       margin-bottom: 40px;
-      font-weight: 500;
     }
 
     /* ---------- CARDS ---------- */
     .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      display: flex;
+      flex-direction: column;
       gap: 24px;
     }
 
     .card {
       background: var(--card-bg);
+      border: 2px solid var(--border);
       border-radius: 16px;
       padding: 24px;
       cursor: pointer;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      border: none;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-start;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease, background 0.2s ease;
     }
 
     .card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+      background: var(--hover);
     }
 
     .card h3 {
-      margin: 0 0 8px;
+      margin: 0 0 6px;
       font-size: 20px;
       font-family: 'Playfair Display', serif;
     }
@@ -170,7 +177,13 @@
     }
 
     /* ---------- MODAL ---------- */
-    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65); z-index: 2000; }
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      z-index: 2000;
+    }
 
     .modal-content {
       background: var(--card-bg);
@@ -179,26 +192,50 @@
       margin: 10% auto;
       padding: 28px;
       border-radius: 18px;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.1);
-      border: none;
+      border: 2px solid var(--border);
     }
 
-    .close { float: right; font-size: 26px; cursor: pointer; }
+    .close {
+      float: right;
+      font-size: 26px;
+      cursor: pointer;
+    }
 
     #modalTitle {
       font-family: 'Playfair Display', serif;
       text-align: center;
       margin-bottom: 20px;
-      font-weight: 500;
     }
 
-    ul { padding-left: 20px; }
-    ul li { margin: 10px 0; line-height: 1.5; }
+    ul {
+      padding-left: 20px;
+    }
 
-    .video-section { margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border); }
-    .video-section h4 { text-align: center; color: var(--muted); margin-bottom: 12px; }
-    .video-embed { width: 100%; aspect-ratio: 16 / 9; border-radius: 12px; border: none; }
+    ul li {
+      margin: 10px 0;
+      line-height: 1.4;
+    }
 
+    .video-section {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 2px solid var(--border);
+    }
+
+    .video-section h4 {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .video-embed {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
+      border: none;
+    }
+
+    /* ---------- MOBILE ---------- */
     @media (max-width: 600px) {
       nav a { display: none; }
       #hamburger { display: block; }
@@ -217,6 +254,7 @@
   <a href="/myfolder/meal_planner.html">Meal Planner</a>
 
   <span id="hamburger">&#9776;</span>
+
   <div id="mobile-menu">
     <a href="/myfolder/index.html">Home</a>
     <a href="/myfolder/template.html">Goals + Progress</a>
@@ -228,6 +266,8 @@
 <!-- HERO -->
 <div class="hero">
   <h1>Chest Training</h1>
+
+
   <div class="hero-images">
     <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e" alt="Dumbbells">
     <img src="https://images.unsplash.com/photo-1605296867304-46d5465a13f1" alt="Bench Press">
@@ -245,9 +285,13 @@
     <span class="close" onclick="closeModal()">&times;</span>
     <h3 id="modalTitle"></h3>
     <ul id="modalList"></ul>
+
     <div class="video-section">
       <h4>Exercise Demo</h4>
-      <iframe class="video-embed" src="https://www.youtube.com/embed/21lYP86dHW4" allowfullscreen></iframe>
+      <iframe class="video-embed"
+        src="https://www.youtube.com/embed/21lYP86dHW4"
+        allowfullscreen>
+      </iframe>
     </div>
   </div>
 </div>
@@ -285,15 +329,23 @@
     });
   }
 
-  function closeModal() { modal.style.display = "none"; }
-  window.onclick = e => { if (e.target === modal) closeModal(); };
+  function closeModal() {
+    modal.style.display = "none";
+  }
+
+  window.onclick = e => {
+    if (e.target === modal) closeModal();
+  };
 
   const hamburger = document.getElementById("hamburger");
   const mobileMenu = document.getElementById("mobile-menu");
+
   hamburger.addEventListener("click", () => {
-    mobileMenu.style.display = mobileMenu.style.display === "flex" ? "none" : "flex";
+    mobileMenu.style.display =
+      mobileMenu.style.display === "flex" ? "none" : "flex";
   });
 </script>
 
 </body>
 </html>
+
