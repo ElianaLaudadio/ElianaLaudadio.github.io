@@ -31,7 +31,6 @@
       padding-bottom: 60px;
     }
 
-    /* ---------- NAV ---------- */
     nav {
       position: fixed;
       top: 0;
@@ -93,7 +92,6 @@
       font-size: 18px;
     }
 
-    /* ---------- TOP CARD ---------- */
     #go-to-cart {
       text-align: center;
       background: var(--card-bg);
@@ -127,7 +125,6 @@
 
     #go-to-cart button:hover { background-color: var(--btn-hover); }
 
-    /* ---------- SECTIONS ---------- */
     section {
       max-width: 720px;
       margin: 0 auto 40px;
@@ -141,7 +138,6 @@
       margin-bottom: 30px;
     }
 
-    /* ---------- FEATURED MEALS TABS ---------- */
     .tabs {
       display: flex;
       justify-content: center;
@@ -199,7 +195,6 @@
       font-size: 14px;
     }
 
-    /* ---------- CALENDAR ---------- */
     #calendar-container .calendar-header {
       text-align: center;
       margin-bottom: 12px;
@@ -246,7 +241,6 @@
       margin-top: 4px;
     }
 
-    /* ---------- MODAL ---------- */
     #note-modal, #meal-modal {
       display: none;
       position: fixed;
@@ -285,6 +279,18 @@
       border-radius: 8px;
       padding: 12px;
       font-size: 14px;
+    }
+
+    #meal-modal-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+    }
+
+    #meal-modal-list li {
+      margin: 8px 0;
+      font-size: 16px;
     }
 
     button {
@@ -336,7 +342,6 @@
   </button>
 </section>
 
-<!-- ---------- FEATURED MEALS TABS ---------- -->
 <section>
   <h2 class="section-title">Featured Meals</h2>
   <div class="tabs">
@@ -349,7 +354,6 @@
   <div class="cards" id="snacks-cards" style="display:none;"></div>
 </section>
 
-<!-- ---------- MODALS ---------- -->
 <div id="note-modal">
   <div class="modal-content">
     <div id="modal-date-label"></div>
@@ -374,7 +378,6 @@
 </div>
 
 <script>
-  // ---------- CALENDAR ----------
   const calendarContainer = document.getElementById("calendar-container");
   let currentDate = new Date();
   let currentMonth = currentDate.getMonth();
@@ -386,7 +389,6 @@
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const startDay = date.getDay();
     const keyPrefix = `${year}-${month+1}`;
-
     let html = `<div class="calendar-header">
                   <button onclick="changeMonth(-1)">←</button>
                   <strong>${date.toLocaleString('default',{month:'long'})} ${year}</strong>
@@ -395,15 +397,12 @@
                 <div class="calendar-grid">
                   ${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>`<div class="day-name">${d}</div>`).join('')}
                 `;
-
     for (let i=0;i<startDay;i++) html+=`<div></div>`;
-
     for(let day=1;day<=daysInMonth;day++){
       const key=`${keyPrefix}-${day}`;
       const note=localStorage.getItem(key) || '';
       html+=`<div onclick="addNote('${key}')">${day}${note?'<div class="note-indicator"></div>':''}</div>`;
     }
-
     html+=`</div>`;
     calendarContainer.innerHTML = html;
   }
@@ -434,14 +433,12 @@
 
   generateCalendar(currentYear,currentMonth);
 
-  // ---------- HAMBURGER ----------
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobile-menu');
   hamburger.addEventListener('click',()=>{
     mobileMenu.style.display = mobileMenu.style.display==='flex'?'none':'flex';
   });
 
-  // ---------- FEATURED MEALS ----------
   const breakfast = [
     {title:"Protein Cereal",ingredients:["Kashi - Go Cereal","Milk"]},
     {title:"Fruit & Yogurt",ingredients:["Greek yogurt","Blueberries","Strawberries","Honey"]},
@@ -491,7 +488,6 @@
     });
   });
 
-  // ---------- MEAL MODAL ----------
   const mealModal=document.getElementById('meal-modal');
   const mealModalTitle=document.getElementById('meal-modal-title');
   const mealModalList=document.getElementById('meal-modal-list');
@@ -529,6 +525,5 @@
     if(e.target===document.getElementById('note-modal')) closeModal();
   };
 </script>
-
 </body>
 </html>
