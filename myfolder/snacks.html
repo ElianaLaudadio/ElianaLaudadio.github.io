@@ -1,229 +1,249 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Meal Planner</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meal Planner 🍅</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
 
-  <style>
-    :root {
-      --bg: #f5f4f2;
-      --fg: #111111;
-      --muted: #555555;
-      --card-bg: #ffffff;
-      --hover: #ece9e6;
-      --border: #111111;
-      --accent: #d9c7b1;
-    }
+<style>
+:root {
+  --bg: #f5f4f2;
+  --fg: #111111;
+  --muted: #555555;
+  --card-bg: #ffffff;
+  --hover: #ece9e6;
+  --border: #111111;
+  --accent: #d9c7b1;
+}
 
-    * { box-sizing: border-box; }
+* { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg);
-      color: var(--fg);
-      padding-top: 80px;
-      padding-bottom: 60px;
-    }
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg);
+  color: var(--fg);
+  padding-top: 100px;
+  padding-bottom: 60px;
+}
 
-    /* ---------- NAV ---------- */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: var(--bg);
-      border-bottom: 2px solid var(--border);
-      padding: 20px 0;
-      text-align: center;
-      z-index: 1000;
-    }
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg);
+  border-bottom: 2px solid var(--border);
+  padding: 20px 0;
+  text-align: center;
+  z-index: 1000;
+}
 
-    nav a {
-      color: var(--fg);
-      text-decoration: none;
-      margin: 0 20px;
-      font-weight: 600;
-      font-size: 16px;
-      position: relative;
-    }
+nav a {
+  color: var(--fg);
+  text-decoration: none;
+  margin: 0 20px;
+  font-weight: 600;
+  font-size: 16px;
+  position: relative;
+}
 
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -6px;
-      left: 0;
-      width: 0%;
-      height: 2px;
-      background: var(--accent);
-      transition: width 0.3s ease;
-    }
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
 
-    nav a:hover::after { width: 100%; }
+nav a:hover::after { width: 100%; }
 
-    #hamburger {
-      display: none;
-      font-size: 36px;
-      cursor: pointer;
-    }
+#hamburger {
+  display: none;
+  font-size: 36px;
+  cursor: pointer;
+}
 
-    #mobile-menu {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
-      background: var(--bg);
-      border-top: 2px solid var(--border);
-      flex-direction: column;
-      padding: 16px 0;
-    }
+#mobile-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: var(--bg);
+  border-top: 2px solid var(--border);
+  flex-direction: column;
+  padding: 16px 0;
+}
 
-    #mobile-menu a {
-      display: block;
-      padding: 14px 0;
-      font-size: 18px;
-    }
+#mobile-menu a {
+  display: block;
+  padding: 14px 0;
+  font-size: 18px;
+}
 
-    /* ---------- SECTION ---------- */
-    section {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 0 20px 40px;
-    }
+/* ---------- TABS ---------- */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 30px;
+}
 
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 32px;
-      text-align: center;
-      margin-bottom: 40px;
-    }
+.tab-button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  cursor: pointer;
+  font-weight: 600;
+}
 
-    /* ---------- CARDS ---------- */
-    .cards {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
+.tab-button.active {
+  background: var(--accent);
+  color: var(--bg);
+}
 
-    .card {
-      background: var(--card-bg);
-      border: 2px solid var(--border);
-      border-radius: 16px;
-      padding: 24px;
-      cursor: pointer;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
+/* ---------- SECTION ---------- */
+section {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
+}
 
-    .card:hover {
-      transform: translateY(-6px);
-      background: var(--hover);
-    }
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 40px;
+}
 
-    .card h3 {
-      margin: 0 0 6px;
-      font-size: 20px;
-      font-family: 'Playfair Display', serif;
-      text-transform: capitalize;
-    }
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
 
-    .card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
+.card {
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
 
-    /* ---------- GO TO CART ---------- */
-    #go-to-cart {
-      max-width: 640px;
-      margin: 0 auto 40px;
-      padding: 24px;
-      border-radius: 16px;
-      background: var(--card-bg);
-      border: 2px solid var(--border);
-      text-align: center;
-    }
+.card:hover {
+  transform: translateY(-6px);
+  background: var(--hover);
+}
 
-    #go-to-cart button {
-      background: var(--fg);
-      color: var(--bg);
-      border: none;
-      padding: 12px 26px;
-      font-size: 16px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+.card h3 {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-family: 'Playfair Display', serif;
+  text-transform: capitalize;
+}
 
-    #go-to-cart button:hover { opacity: 0.85; }
+.card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
 
-    /* ---------- MODAL ---------- */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.65);
-      z-index: 2000;
-    }
+/* ---------- GO TO CART ---------- */
+#go-to-cart {
+  max-width: 640px;
+  margin: 0 auto 40px;
+  padding: 24px;
+  border-radius: 16px;
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  text-align: center;
+}
 
-    .modal-content {
-      background: var(--card-bg);
-      max-width: 560px;
-      width: 90%;
-      margin: 10% auto;
-      padding: 28px;
-      border-radius: 18px;
-      border: 2px solid var(--border);
-    }
+#go-to-cart button {
+  background: var(--fg);
+  color: var(--bg);
+  border: none;
+  padding: 12px 26px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
 
-    .close {
-      float: right;
-      font-size: 26px;
-      cursor: pointer;
-    }
+#go-to-cart button:hover { opacity: 0.85; }
 
-    #modalTitle {
-      font-family: 'Playfair Display', serif;
-      text-align: center;
-      margin-bottom: 20px;
-      text-transform: capitalize;
-    }
+/* ---------- MODAL ---------- */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  z-index: 2000;
+}
 
-    ul {
-      list-style: none;
-      padding-left: 0;
-    }
+.modal-content {
+  background: var(--card-bg);
+  max-width: 560px;
+  width: 90%;
+  margin: 10% auto;
+  padding: 28px;
+  border-radius: 18px;
+  border: 2px solid var(--border);
+}
 
-    ul li {
-      margin: 10px 0;
-      font-size: 16px;
-    }
+.close {
+  float: right;
+  font-size: 26px;
+  cursor: pointer;
+}
 
-    button {
-      background: var(--fg);
-      color: var(--bg);
-      border: none;
-      padding: 10px 18px;
-      margin: 10px 6px 0;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+#modalTitle {
+  font-family: 'Playfair Display', serif;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: capitalize;
+}
 
-    button:hover { opacity: 0.85; }
+ul {
+  list-style: none;
+  padding-left: 0;
+}
 
-    /* ---------- MOBILE ---------- */
-    @media (max-width: 600px) {
-      nav a { display: none; }
-      #hamburger { display: block; }
-      .modal-content { margin: 20% auto; }
-      .section-title { font-size: 24px; }
-    }
-  </style>
+ul li {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+button.modal-btn {
+  background: var(--fg);
+  color: var(--bg);
+  border: none;
+  padding: 10px 18px;
+  margin: 10px 6px 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button.modal-btn:hover { opacity: 0.85; }
+
+/* ---------- MOBILE ---------- */
+@media (max-width: 600px) {
+  nav a { display: none; }
+  #hamburger { display: block; }
+  .modal-content { margin: 20% auto; }
+  .section-title { font-size: 24px; }
+  .tabs { flex-direction: column; gap: 8px; }
+}
+</style>
 </head>
-
 <body>
 
 <nav>
@@ -242,9 +262,27 @@
   </div>
 </nav>
 
-<section>
+<!-- ---------- TABS ---------- -->
+<div class="tabs">
+  <div class="tab-button active" data-tab="breakfast">Breakfast</div>
+  <div class="tab-button" data-tab="lunch">Lunch + Dinner</div>
+  <div class="tab-button" data-tab="snacks">Snacks</div>
+</div>
+
+<!-- ---------- SECTIONS ---------- -->
+<section id="breakfast-section">
+  <h2 class="section-title">Breakfast</h2>
+  <div class="cards" id="breakfast-cards"></div>
+</section>
+
+<section id="lunch-section" style="display:none">
+  <h2 class="section-title">Lunch + Dinner</h2>
+  <div class="cards" id="lunch-cards"></div>
+</section>
+
+<section id="snacks-section" style="display:none">
   <h2 class="section-title">Snacks</h2>
-  <div class="cards" id="cards"></div>
+  <div class="cards" id="snacks-cards"></div>
 </section>
 
 <section id="go-to-cart">
@@ -253,84 +291,126 @@
   </button>
 </section>
 
+<!-- ---------- MODAL ---------- -->
 <div id="modal" class="modal">
   <div class="modal-content">
     <span class="close" onclick="closeModal()">&times;</span>
     <h3 id="modalTitle"></h3>
     <ul id="modalList"></ul>
     <div style="text-align:center">
-      <button onclick="addAllToCart()">Add All</button>
-      <button onclick="addSelectedToCart()">Add Selected</button>
+      <button class="modal-btn" onclick="addAllToCart()">Add All</button>
+      <button class="modal-btn" onclick="addSelectedToCart()">Add Selected</button>
     </div>
   </div>
 </div>
 
 <script>
-  const snacks = [
-    { title: "Deviled Eggs", ingredients: ["Eggs", "Mayonnaise", "Mustard", "Paprika"] },
-    { title: "Tzatziki and Cucumber", ingredients: ["Cucumber", "Plain Greek Yogurt", "Lemon", "Dill", "Garlic"] },
-    { title: "Ranch and Veggies", ingredients: ["Ranch dressing", "Carrots", "Celery", "Cherry tomatoes"] },
-    { title: "Apple and Peanut Butter", ingredients: ["Apples", "Peanut butter"] },
-    { title: "Kimchi", ingredients: ["Kimchi"] },
-    { title: "Pickles", ingredients: ["Pickles"] },
-    { title: "Spring Rolls", ingredients: ["Rice paper", "Sprouts", "Chicken", "Spring roll sauce"] },
-    { title: "Fruit Bowl", ingredients: ["Mixed fruits"] },
-    { title: "Chocolate Covered Strawberries", ingredients: ["Strawberries", "Chocolate"] }
-  ];
+const breakfast = [
+  { title: "Protein Cereal", ingredients: ["Kashi - Go Cereal", "Milk"] },
+  { title: "Fruit & Yogurt", ingredients: ["Greek yogurt", "Blueberries", "Strawberries", "Honey"] },
+  { title: "Chia Bliss", ingredients: ["Chia seeds", "Milk", "Honey", "Strawberries"] },
+  { title: "Cottage Cheese on Sour Dough", ingredients: ["Cottage cheese", "Sourdough bread", "Honey"] },
+  { title: "Eggs + Breakfast Meat", ingredients: ["Eggs", "Breakfast Meat"] },
+  { title: "Protein Waffles", ingredients: ["Protein waffle mix", "Butter", "Maple syrup", "Blueberries"] }
+];
 
-  const cards = document.getElementById("cards");
-  const modal = document.getElementById("modal");
-  const modalTitle = document.getElementById("modalTitle");
-  const modalList = document.getElementById("modalList");
-  let currentIngredients = [];
+const lunch = [
+  { title: "Veggie stir fry", ingredients: ["Ground Beef", "Asian Medley (frozen veggies)", "Stir fry sauce", "Rice"] },
+  { title: "Chicken shawarma", ingredients: ["Trader Joes Chicken Shawarma", "Cucumber", "Plain Greek yogurt", "Lemon", "Garlic", "Dill", "Rice"] },
+  { title: "Kebabs", ingredients: ["Trader Joes Beef Kebabs", "Cucumber", "Roma Tomatoes", "White Onion", "Kens Greek Dressing", "Rice"] },
+  { title: "Pollo asado", ingredients: ["Chicken", "Navel Oranges", "Limes", "Red Onion", "Cilantro", "Garlic", "White Wine Vinegar", "Paprika", "Dried Oregano", "Ground Black Pepper", "Cumin", "Tortillas"] },
+  { title: "Fish bowl", ingredients: ["Morey's Wild Alaskan Salmon", "Fish", "Kens Greek Dressing", "Rice"] },
+  { title: "Fish tacos", ingredients: ["Fish", "Tortillas", "Pickled Onion"] },
+  { title: "Thai lettuce wraps", ingredients: ["Ground Chicken / Turkey", "Lettuce", "Thai Seasoning"] },
+  { title: "Honey garlic chicken", ingredients: ["Chicken", "Honey", "Garlic", "Blackened Seasoning", "Rice"] },
+  { title: "Pineapple teriyaki", ingredients: ["Chicken", "Pineapple", "Teriyaki sauce", "Rice"] }
+];
 
-  snacks.forEach(snack => {
+const snacks = [
+  { title: "Deviled Eggs", ingredients: ["Eggs", "Mayonnaise", "Mustard", "Paprika"] },
+  { title: "Tzatziki and Cucumber", ingredients: ["Cucumber", "Plain Greek Yogurt", "Lemon", "Dill", "Garlic"] },
+  { title: "Ranch and Veggies", ingredients: ["Ranch dressing", "Carrots", "Celery", "Cherry tomatoes"] },
+  { title: "Apple and Peanut Butter", ingredients: ["Apples", "Peanut butter"] },
+  { title: "Kimchi", ingredients: ["Kimchi"] },
+  { title: "Pickles", ingredients: ["Pickles"] },
+  { title: "Spring Rolls", ingredients: ["Rice paper", "Sprouts", "Chicken", "Spring roll sauce"] },
+  { title: "Fruit Bowl", ingredients: ["Mixed fruits"] },
+  { title: "Chocolate Covered Strawberries", ingredients: ["Strawberries", "Chocolate"] }
+];
+
+// ---------- RENDER CARDS ----------
+function renderCards(items, containerId) {
+  const container = document.getElementById(containerId);
+  items.forEach(item => {
     const card = document.createElement("div");
     card.className = "card";
-    card.innerHTML = `<h3>${snack.title}</h3><p>Click to view ingredients</p>`;
-    card.onclick = () => showModal(snack);
-    cards.appendChild(card);
+    card.innerHTML = `<h3>${item.title}</h3><p>Click to view ingredients</p>`;
+    card.onclick = () => showModal(item);
+    container.appendChild(card);
   });
+}
 
-  function showModal(item) {
-    modal.style.display = "block";
-    modalTitle.textContent = item.title;
-    modalList.innerHTML = "";
-    currentIngredients = item.ingredients;
+renderCards(breakfast, "breakfast-cards");
+renderCards(lunch, "lunch-cards");
+renderCards(snacks, "snacks-cards");
 
-    item.ingredients.forEach(ingredient => {
-      const li = document.createElement("li");
-      li.innerHTML = `<input type="checkbox" value="${ingredient}"> ${ingredient}`;
-      modalList.appendChild(li);
-    });
-  }
+// ---------- MODAL ----------
+const modal = document.getElementById("modal");
+const modalTitle = document.getElementById("modalTitle");
+const modalList = document.getElementById("modalList");
+let currentIngredients = [];
 
-  function closeModal() { modal.style.display = "none"; }
-
-  function addToCart(items) {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    cart.push(...items);
-    localStorage.setItem("cart", JSON.stringify(cart));
-    closeModal();
-  }
-
-  function addAllToCart() { addToCart(currentIngredients); }
-
-  function addSelectedToCart() {
-    const selected = Array.from(document.querySelectorAll("#modalList input:checked"))
-      .map(cb => cb.value);
-    addToCart(selected);
-  }
-
-  window.onclick = e => { if (e.target === modal) closeModal(); };
-
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobile-menu');
-
-  hamburger.addEventListener('click', () => {
-    mobileMenu.style.display =
-      mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+function showModal(item) {
+  modal.style.display = "block";
+  modalTitle.textContent = item.title;
+  modalList.innerHTML = "";
+  currentIngredients = item.ingredients;
+  item.ingredients.forEach(ingredient => {
+    const li = document.createElement("li");
+    li.innerHTML = `<input type="checkbox" value="${ingredient}"> ${ingredient}`;
+    modalList.appendChild(li);
   });
+}
+
+function closeModal() { modal.style.display = "none"; }
+
+function addToCart(items) {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  cart.push(...items);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  closeModal();
+}
+
+function addAllToCart() { addToCart(currentIngredients); }
+function addSelectedToCart() {
+  const selected = Array.from(document.querySelectorAll("#modalList input:checked"))
+    .map(cb => cb.value);
+  addToCart(selected);
+}
+
+window.onclick = e => { if (e.target === modal) closeModal(); };
+
+// ---------- TABS ----------
+const tabButtons = document.querySelectorAll(".tab-button");
+tabButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelector(".tab-button.active").classList.remove("active");
+    btn.classList.add("active");
+    document.getElementById("breakfast-section").style.display = "none";
+    document.getElementById("lunch-section").style.display = "none";
+    document.getElementById("snacks-section").style.display = "none";
+    document.getElementById(btn.dataset.tab + "-section").style.display = "block";
+  });
+});
+
+// ---------- HAMBURGER ----------
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+
+hamburger.addEventListener('click', () => {
+  mobileMenu.style.display =
+    mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+});
 </script>
 
 </body>
