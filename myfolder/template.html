@@ -2,11 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Training Dashboard &#x1F4AA;</title>
+  <title>Training Dashboard 💪</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- FONT -->
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <style>
     :root {
       --bg: #f5f4f2;
@@ -15,8 +19,7 @@
       --card-bg: #ffffff;
       --hover: #ece9e6;
       --border: #111111;
-      --accent: #550000; /* Changed from light brown to maroon */
-      --accent-text: #ffffff; /* White text on maroon */
+      --accent: #550000;
     }
 
     * { box-sizing: border-box; }
@@ -114,10 +117,9 @@
       font-size: 16px;
       background-color: var(--card-bg);
       color: var(--fg);
-      transition: border-color 0.3s ease, background 0.3s ease;
     }
 
-    input[type="number"]:focus, input[type="text"]:focus {
+    input:focus {
       border-color: var(--accent);
       outline: none;
       background-color: var(--hover);
@@ -125,28 +127,28 @@
 
     button {
       background-color: var(--accent);
-      color: var(--accent-text);
+      color: #ffffff;
       border: 2px solid var(--border);
       padding: 12px 16px;
       font-size: 16px;
       border-radius: 12px;
       cursor: pointer;
       margin-top: 15px;
-      transition: background-color 0.3s ease, transform 0.2s ease;
       font-weight: 600;
     }
 
-    button:hover { background-color: #770000; transform: translateY(-2px); }
+    button:hover {
+      background-color: #770000;
+      transform: translateY(-2px);
+    }
 
-    #weight-buttons { display: flex; justify-content: space-between; gap: 10px; margin-top: 10px; }
-    #weight-buttons button { width: 48%; }
+    #weight-buttons { display: flex; gap: 10px; }
 
     .progress-circle {
       width: 140px;
       height: 140px;
       border-radius: 50%;
       margin: 20px auto;
-      background: conic-gradient(var(--accent) 0%, var(--accent) 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -154,10 +156,13 @@
       font-size: 22px;
       font-weight: bold;
       color: var(--fg);
-      transition: background 0.3s ease;
     }
 
-    .progress-circle span { margin-top: 6px; font-size: 14px; color: var(--muted); }
+    .progress-circle span {
+      margin-top: 6px;
+      font-size: 14px;
+      color: var(--muted);
+    }
 
     .goals-grid {
       display: grid;
@@ -167,62 +172,92 @@
     }
 
     .goal-box {
-      background: var(--card-bg);
-      padding: 15px;
-      border-radius: 16px;
-      text-align: center;
-      color: var(--fg);
       border: 2px solid var(--border);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      border-radius: 16px;
+      padding: 15px;
+      text-align: center;
     }
-
-    canvas { width: 100% !important; height: 300px !important; }
 
     .message {
       margin-top: 10px;
       font-weight: bold;
       color: var(--accent);
       text-align: center;
-      min-height: 24px;
     }
 
-    section p { color: var(--muted); font-size: 16px; margin-top: 10px; }
-
-    #go-to-cart button {
-      display: block;
-      margin: 15px auto 0 auto;
-      width: 200px;
-      font-size: 18px;
-      padding: 12px 0;
-      border-radius: 16px;
-      background-color: var(--accent);
-      color: var(--accent-text);
-      border: 2px solid var(--border);
-      font-weight: 600;
-    }
-
-    #go-to-cart button:hover { background-color: #770000; transform: translateY(-2px); }
-
-    @media (max-width: 600px) {
-      nav a { display: none; }
-      #hamburger { display: block; font-size: 40px; padding: 10px 0; }
-      main { padding: 0 10px; }
-      section { padding: 20px 15px; }
-      h2 { font-size: 22px; }
-      input[type="number"], input[type="text"] { font-size: 15px; }
-      button { width: 100%; font-size: 16px; padding: 12px; }
-      #weight-buttons { flex-direction: column; gap: 10px; }
-      #weight-buttons button { width: 100%; }
-      .progress-circle { width: 120px; height: 120px; font-size: 18px; }
-      .progress-circle span { font-size: 12px; }
-      .goals-grid { grid-template-columns: 1fr; gap: 15px; }
-      #go-to-cart button { width: 100%; font-size: 16px; }
-    }
+    canvas { width: 100% !important; height: 300px !important; }
   </style>
 </head>
+
 <body>
 
-<!-- The rest of your HTML (nav, main, sections, canvas, script) stays 100% the same -->
+<nav>
+  <a href="/myfolder/index.html">Home</a>
+  <a href="/myfolder/template.html">Goals + Progress</a>
+  <a href="/myfolder/workouts.html">Workouts</a>
+  <a href="/myfolder/meal_planner.html">Meal Planner</a>
+  <span id="hamburger">&#9776;</span>
+  <div id="mobile-menu">
+    <a href="/myfolder/index.html">Home</a>
+    <a href="/myfolder/template.html">Goals + Progress</a>
+    <a href="/myfolder/workouts.html">Workouts</a>
+    <a href="/myfolder/meal_planner.html">Meal Planner</a>
+  </div>
+</nav>
+
+<main>
+  <section id="weight">
+    <h2>Weight Tracking</h2>
+    <input type="number" id="weight-input" step="0.1" />
+    <div id="weight-buttons">
+      <button onclick="addWeight()">Add Entry</button>
+      <button onclick="deleteLastEntry()">Delete Last Entry</button>
+    </div>
+    <canvas id="weightChart"></canvas>
+  </section>
+</main>
+
+<script>
+const ctx = document.getElementById('weightChart').getContext('2d');
+let weightData = JSON.parse(localStorage.getItem('weightEntries')||'[]');
+
+let chart = new Chart(ctx,{
+  type:'line',
+  data:{
+    labels: weightData.map(e=>e.date),
+    datasets:[{
+      label:'Weight (lbs)',
+      data: weightData.map(e=>e.weight),
+      borderColor:'#111',
+      backgroundColor:'rgba(85,0,0,0.1)',
+      borderWidth:3,
+      fill:true,
+      tension:0.3,
+      pointRadius:6,
+      pointBackgroundColor:'#550000',
+      pointBorderColor:'#111',
+      pointBorderWidth:2
+    }]
+  }
+});
+
+function addWeight(){
+  const w=document.getElementById('weight-input').value;
+  if(!w) return;
+  weightData.push({date:new Date().toISOString().split('T')[0],weight:w});
+  localStorage.setItem('weightEntries',JSON.stringify(weightData));
+  chart.data.labels=weightData.map(e=>e.date);
+  chart.data.datasets[0].data=weightData.map(e=>e.weight);
+  chart.update();
+}
+function deleteLastEntry(){
+  weightData.pop();
+  localStorage.setItem('weightEntries',JSON.stringify(weightData));
+  chart.data.labels=weightData.map(e=>e.date);
+  chart.data.datasets[0].data=weightData.map(e=>e.weight);
+  chart.update();
+}
+</script>
 
 </body>
 </html>
