@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Workouts</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Atkinson Hyperlegible -->
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg: #000;
@@ -16,7 +19,7 @@
 
     body {
       margin: 0;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Atkinson Hyperlegible', sans-serif;
       background-color: var(--bg);
       color: var(--fg);
       padding-top: 70px;
@@ -40,7 +43,7 @@
       text-decoration: none;
       margin: 0 20px;
       font-size: 16px;
-      font-weight: 600;
+      font-weight: 700;
       position: relative;
     }
 
@@ -80,6 +83,7 @@
       display: block;
       margin: 16px 0;
       font-size: 18px;
+      font-weight: 700;
     }
 
     section {
@@ -92,6 +96,7 @@
       font-size: 28px;
       text-align: center;
       margin-bottom: 30px;
+      font-weight: 700;
     }
 
     .cards {
@@ -115,14 +120,9 @@
     }
 
     .card h3 {
-      margin: 0 0 6px 0;
-      font-size: 20px;
-    }
-
-    .card p {
       margin: 0;
-      color: var(--muted);
-      font-size: 14px;
+      font-size: 20px;
+      font-weight: 700;
     }
 
     .modal {
@@ -153,6 +153,7 @@
       text-align: center;
       text-decoration: underline;
       margin-bottom: 20px;
+      font-weight: 700;
     }
 
     ol {
@@ -176,6 +177,7 @@
       margin-bottom: 14px;
       font-size: 18px;
       color: var(--muted);
+      font-weight: 700;
     }
 
     .video-embed {
@@ -226,7 +228,6 @@
       <h4>Exercise Demo</h4>
       <iframe class="video-embed"
         src="https://www.youtube.com/embed/21lYP86dHW4"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen>
       </iframe>
     </div>
@@ -235,96 +236,9 @@
 
 <script>
   const workouts = [
-    {
-      title: "Plank",
-      steps: [
-        "Sit or stand holding dumbbells at shoulder height",
-        "Brace your core and keep chest tall",
-        "Press dumbbells overhead until arms are fully extended",
-        "Lower slowly back to starting position"
-      ]
-    },
-    {
-      title: "Side Plank",
-      steps: [
-        "Hold dumbbells at your sides with a slight bend in elbows",
-        "Raise arms out to shoulder height",
-        "Pause briefly at the top",
-        "Lower under control"
-      ]
-    },
-    {
-      title: "Curl-up",
-      steps: [
-        "Hold dumbbells in front of thighs",
-        "Raise arms forward to shoulder height",
-        "Avoid swinging or using momentum",
-        "Lower slowly"
-      ]
-    },
-    {
-      title: "Bird-Dog",
-      steps: [
-        "Hinge forward at hips keeping back flat",
-        "Let dumbbells hang down",
-        "Raise arms wide squeezing shoulder blades",
-        "Lower with control"
-      ]
-    },
-    {
-      title: "Abdominal Curl",
-      steps: [
-        "Start with dumbbells in front of shoulders, palms facing you",
-        "Rotate palms outward as you press overhead",
-        "Fully extend arms at the top",
-        "Reverse the motion on the way down"
-      ]
-    },
-        {
-      title: "Leg Raises",
-      steps: [
-        "Hinge forward at hips keeping back flat",
-        "Let dumbbells hang down",
-        "Raise arms wide squeezing shoulder blades",
-        "Lower with control"
-      ]
-    },
-        {
-      title: "Bicycle Crunches",
-      steps: [
-        "Hinge forward at hips keeping back flat",
-        "Let dumbbells hang down",
-        "Raise arms wide squeezing shoulder blades",
-        "Lower with control"
-      ]
-    },
-        {
-      title: "Elevated Leg Crunches",
-      steps: [
-        "Hinge forward at hips keeping back flat",
-        "Let dumbbells hang down",
-        "Raise arms wide squeezing shoulder blades",
-        "Lower with control"
-      ]
-    },
-        {
-      title: "Russian Twists",
-      steps: [
-        "Hinge forward at hips keeping back flat",
-        "Let dumbbells hang down",
-        "Raise arms wide squeezing shoulder blades",
-        "Lower with control"
-      ]
-    },
-            {
-      title: "Plank Hip Dips",
-      steps: [
-        "Hinge forward at hips keeping back flat",
-        "Let dumbbells hang down",
-        "Raise arms wide squeezing shoulder blades",
-        "Lower with control"
-      ]
-    }
+    { title: "Plank", steps: ["Sit or stand holding dumbbells at shoulder height","Brace your core and keep chest tall","Press dumbbells overhead until arms are fully extended","Lower slowly back to starting position"] },
+    { title: "Side Plank", steps: ["Hold dumbbells at your sides with a slight bend in elbows","Raise arms out to shoulder height","Pause briefly at the top","Lower under control"] },
+    { title: "Curl-up", steps: ["Hold dumbbells in front of thighs","Raise arms forward to shoulder height","Avoid swinging or using momentum","Lower slowly"] }
   ];
 
   const cards = document.getElementById("cards");
@@ -335,10 +249,7 @@
   workouts.forEach(workout => {
     const card = document.createElement("div");
     card.className = "card";
-    card.innerHTML = `
-      <h3>${workout.title}</h3>
-      
-    `;
+    card.innerHTML = `<h3>${workout.title}</h3>`;
     card.onclick = () => showModal(workout);
     cards.appendChild(card);
   });
@@ -347,7 +258,6 @@
     modal.style.display = "block";
     modalTitle.textContent = workout.title;
     modalList.innerHTML = "";
-
     workout.steps.forEach(step => {
       const li = document.createElement("li");
       li.textContent = step;
