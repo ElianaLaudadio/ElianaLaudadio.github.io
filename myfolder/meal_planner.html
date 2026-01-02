@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Workouts</title>
-
+  <title>Meal Planner 🍅</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
@@ -16,6 +15,9 @@
       --hover: #ece9e6;
       --border: #111111;
       --accent: #d9c7b1;
+      --btn-bg: #333333; 
+      --btn-hover: #555555;
+      --note-indicator: #111111;
     }
 
     * { box-sizing: border-box; }
@@ -29,7 +31,6 @@
       padding-bottom: 60px;
     }
 
-    /* ---------- NAV ---------- */
     nav {
       position: fixed;
       top: 0;
@@ -46,9 +47,10 @@
       color: var(--fg);
       text-decoration: none;
       margin: 0 20px;
-      font-weight: 700;
+      font-weight: 600;
       font-size: 16px;
       position: relative;
+      font-family: 'Atkinson Hyperlegible', sans-serif;
     }
 
     nav a::after {
@@ -62,15 +64,14 @@
       transition: width 0.3s ease;
     }
 
-    nav a:hover::after {
-      width: 100%;
-    }
+    nav a:hover::after { width: 100%; }
 
     #hamburger {
       display: none;
       font-size: 36px;
       cursor: pointer;
       color: var(--fg);
+      margin: 0 auto;
     }
 
     #mobile-menu {
@@ -83,6 +84,7 @@
       border-top: 2px solid var(--border);
       flex-direction: column;
       padding: 16px 0;
+      text-align: center;
     }
 
     #mobile-menu a {
@@ -91,21 +93,61 @@
       font-size: 18px;
     }
 
-    /* ---------- SECTION ---------- */
+    #go-to-cart {
+      text-align: center;
+      background: var(--card-bg);
+      padding: 28px;
+      border-radius: 18px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      max-width: 640px;
+      margin: 20px auto 40px auto;
+      border: 2px solid var(--border);
+    }
+
+    #go-to-cart h3 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 500;
+      font-family: 'Atkinson Hyperlegible', sans-serif;
+    }
+
     section {
       max-width: 720px;
-      margin: 0 auto;
-      padding: 0 20px 40px;
+      margin: 0 auto 40px;
+      padding: 0 20px;
     }
 
     .section-title {
+      font-family: 'Atkinson Hyperlegible', sans-serif;
       font-size: 32px;
       text-align: center;
-      margin-bottom: 40px;
-      font-weight: 700;
+      margin-bottom: 30px;
     }
 
-    /* ---------- CARDS ---------- */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .tab-button {
+      padding: 10px 20px;
+      border-radius: 8px;
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s ease;
+      font-family: 'Atkinson Hyperlegible', sans-serif;
+    }
+
+    .tab-button.active {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
     .cards {
       display: flex;
       flex-direction: column;
@@ -122,15 +164,11 @@
       transition: transform 0.2s ease, background 0.2s ease;
     }
 
-    .card:hover {
-      transform: translateY(-6px);
-      background: var(--hover);
-    }
-
     .card h3 {
       margin: 0 0 6px;
       font-size: 20px;
-      font-weight: 700;
+      font-family: 'Atkinson Hyperlegible', sans-serif;
+      text-transform: capitalize;
     }
 
     .card p {
@@ -139,76 +177,27 @@
       font-size: 14px;
     }
 
-    /* ---------- MODAL ---------- */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.65);
-      z-index: 2000;
-    }
-
-    .modal-content {
-      background: var(--card-bg);
-      max-width: 560px;
-      width: 90%;
-      margin: 10% auto;
-      padding: 28px;
-      border-radius: 18px;
-      border: 2px solid var(--border);
-    }
-
-    .close {
-      float: right;
-      font-size: 26px;
-      cursor: pointer;
-    }
-
-    #modalTitle {
-      text-align: center;
-      margin-bottom: 20px;
-      font-weight: 700;
-    }
-
-    ol {
-      padding-left: 20px;
-    }
-
-    ol li {
-      margin: 10px 0;
-      line-height: 1.4;
-    }
-
-    .video-section {
-      margin-top: 30px;
-      padding-top: 20px;
-      border-top: 2px solid var(--border);
-    }
-
-    .video-section h4 {
-      text-align: center;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-
-    .video-embed {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      border-radius: 12px;
+    button {
+      background-color: var(--btn-bg);
+      color: var(--bg);
       border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      font-family: 'Atkinson Hyperlegible', sans-serif;
     }
 
-    /* ---------- MOBILE ---------- */
     @media (max-width: 600px) {
       nav a { display: none; }
-      #hamburger { display: block; }
-      .modal-content { margin: 20% auto; }
+      #hamburger { display: block; font-size: 40px; padding: 10px 0; }
+      .tab-button { flex: 1 1 100%; text-align: center; }
     }
   </style>
 </head>
 
 <body>
-
 <nav>
   <a href="/myfolder/index.html">Home</a>
   <a href="/myfolder/template.html">Goals + Progress</a>
@@ -216,7 +205,6 @@
   <a href="/myfolder/meal_planner.html">Meal Planner</a>
 
   <span id="hamburger">&#9776;</span>
-
   <div id="mobile-menu">
     <a href="/myfolder/index.html">Home</a>
     <a href="/myfolder/template.html">Goals + Progress</a>
@@ -225,108 +213,201 @@
   </div>
 </nav>
 
-<section>
-  <h2 class="section-title">ARMS</h2>
-  <div class="cards" id="cards"></div>
+<section id="go-to-cart">
+  <h3>Meal Planner</h3>
 </section>
 
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <h3 id="modalTitle"></h3>
-    <ol id="modalList"></ol>
+<section id="calendar-container"></section>
 
-    <div class="video-section">
-      <h4>Exercise Demo</h4>
-      <iframe
-        class="video-embed"
-        src="https://www.youtube.com/embed/21lYP86dHW4"
-        allowfullscreen>
-      </iframe>
+<section id="go-to-cart">
+  <button onclick="location.href='/myfolder/cart.html'">
+    Go to Grocery List
+  </button>
+</section>
+
+<section>
+  <h2 class="section-title">Featured Meals</h2>
+  <div class="tabs">
+    <div class="tab-button active" data-tab="breakfast">Breakfast</div>
+    <div class="tab-button" data-tab="lunch">Lunch + Dinner</div>
+    <div class="tab-button" data-tab="snacks">Snacks</div>
+  </div>
+  <div class="cards" id="breakfast-cards"></div>
+  <div class="cards" id="lunch-cards" style="display:none;"></div>
+  <div class="cards" id="snacks-cards" style="display:none;"></div>
+</section>
+
+<div id="note-modal">
+  <div class="modal-content">
+    <div id="modal-date-label"></div>
+    <textarea id="note-text"></textarea>
+    <div style="display:flex; gap:10px;">
+      <button onclick="saveNote()">Save</button>
+      <button onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div id="meal-modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeMealModal()">&times;</span>
+    <h3 id="meal-modal-title"></h3>
+    <ul id="meal-modal-list"></ul>
+    <div style="text-align:center;">
+      <button onclick="addAllToCart()">Add All</button>
+      <button onclick="addSelectedToCart()">Add Selected</button>
     </div>
   </div>
 </div>
 
 <script>
-  const workouts = [
-    {
-      title: "Biceps Curls",
-      steps: [
-        "Sit or stand holding dumbbells at shoulder height",
-        "Brace your core and keep chest tall",
-        "Press dumbbells overhead until arms are fully extended",
-        "Lower slowly back to starting position"
-      ]
-    },
-    {
-      title: "Hammer Curls",
-      steps: [
-        "Hold dumbbells at your sides with a slight bend in elbows",
-        "Raise arms out to shoulder height",
-        "Pause briefly at the top",
-        "Lower under control"
-      ]
-    },
-    {
-      title: "Preacher Curls",
-      steps: [
-        "Hold dumbbells in front of thighs",
-        "Raise arms forward to shoulder height",
-        "Avoid swinging or using momentum",
-        "Lower slowly"
-      ]
-    },
-    {
-      title: "Chin Ups",
-      steps: [
-        "Hinge forward at hips keeping back flat",
-        "Let dumbbells hang down",
-        "Raise arms wide squeezing shoulder blades",
-        "Lower with control"
-      ]
+  const calendarContainer = document.getElementById("calendar-container");
+  let currentDate = new Date();
+  let currentMonth = currentDate.getMonth();
+  let currentYear = currentDate.getFullYear();
+  let activeKey = '';
+
+  function generateCalendar(year, month) {
+    const date = new Date(year, month, 1);
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const startDay = date.getDay();
+    const keyPrefix = `${year}-${month+1}`;
+    let html = `<div class="calendar-header">
+                  <button onclick="changeMonth(-1)">←</button>
+                  <strong>${date.toLocaleString('default',{month:'long'})} ${year}</strong>
+                  <button onclick="changeMonth(1)">→</button>
+                </div>
+                <div class="calendar-grid">
+                  ${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>`<div class="day-name">${d}</div>`).join('')}
+                `;
+    for (let i=0;i<startDay;i++) html+=`<div></div>`;
+    for(let day=1;day<=daysInMonth;day++){
+      const key=`${keyPrefix}-${day}`;
+      const note=localStorage.getItem(key) || '';
+      html+=`<div onclick="addNote('${key}')">${day}${note?'<div class="note-indicator"></div>':''}</div>`;
     }
-  ];
+    html+=`</div>`;
+    calendarContainer.innerHTML = html;
+  }
 
-  const cards = document.getElementById("cards");
-  const modal = document.getElementById("modal");
-  const modalTitle = document.getElementById("modalTitle");
-  const modalList = document.getElementById("modalList");
+  function changeMonth(offset){
+    currentMonth+=offset;
+    if(currentMonth>11){currentMonth=0; currentYear++;}
+    else if(currentMonth<0){currentMonth=11; currentYear--;}
+    generateCalendar(currentYear,currentMonth);
+  }
 
-  workouts.forEach(workout => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `<h3>${workout.title}</h3><p>Tap to view instructions</p>`;
-    card.onclick = () => showModal(workout);
-    cards.appendChild(card);
+  function addNote(key){
+    activeKey=key;
+    const existing=localStorage.getItem(key)||'';
+    document.getElementById("modal-date-label").innerText=key.split('-')[2];
+    document.getElementById("note-text").value=existing;
+    document.getElementById("note-modal").style.display="flex";
+  }
+
+  function closeModal(){ document.getElementById("note-modal").style.display="none"; }
+  function saveNote(){
+    const text=document.getElementById("note-text").value.trim();
+    if(text) localStorage.setItem(activeKey,text);
+    else localStorage.removeItem(activeKey);
+    closeModal();
+    generateCalendar(currentYear,currentMonth);
+  }
+
+  generateCalendar(currentYear,currentMonth);
+
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click',()=>{
+    mobileMenu.style.display = mobileMenu.style.display==='flex'?'none':'flex';
   });
 
-  function showModal(workout) {
-    modal.style.display = "block";
-    modalTitle.textContent = workout.title;
-    modalList.innerHTML = "";
-    workout.steps.forEach(step => {
-      const li = document.createElement("li");
-      li.textContent = step;
-      modalList.appendChild(li);
+  const breakfast = [
+    {title:"Protein Cereal",ingredients:["Kashi - Go Cereal","Milk"]},
+    {title:"Fruit & Yogurt",ingredients:["Greek yogurt","Blueberries","Strawberries","Honey"]},
+    {title:"Chia Bliss",ingredients:["Chia seeds","Milk","Honey","Strawberries"]},
+    {title:"Cottage Cheese on Sour Dough",ingredients:["Cottage cheese","Sourdough bread","Honey"]},
+    {title:"Eggs + Breakfast Meat",ingredients:["Eggs","Breakfast Meat"]},
+    {title:"Protein Waffles",ingredients:["Protein waffle mix","Butter","Maple syrup","Blueberries"]}
+  ];
+
+  const lunch = [
+    {title:"Veggie stir fry",ingredients:["Ground Beef","Asian Medley (frozen veggies)","Stir fry sauce","Rice"]},
+    {title:"Chicken shawarma",ingredients:["Trader Joes Chicken Shawarma","Cucumber","Plain Greek yogurt","Lemon","Garlic","Dill","Rice"]},
+    {title:"Kebabs",ingredients:["Trader Joes Beef Kebabs","Cucumber","Roma Tomatoes","White Onion","Kens Greek Dressing","Rice"]}
+  ];
+
+  const snacks = [
+    {title:"Deviled Eggs",ingredients:["Eggs","Mayonnaise","Mustard","Paprika"]},
+    {title:"Tzatziki and Cucumber",ingredients:["Cucumber","Plain Greek Yogurt","Lemon","Dill","Garlic"]},
+    {title:"Ranch and Veggies",ingredients:["Ranch dressing","Carrots","Celery","Cherry tomatoes"]}
+  ];
+
+  function renderCards(items,containerId){
+    const container=document.getElementById(containerId);
+    container.innerHTML='';
+    items.forEach(item=>{
+      const card=document.createElement('div');
+      card.className='card';
+      card.innerHTML=`<h3>${item.title}</h3><p>Click to view ingredients</p>`;
+      card.onclick=()=>showMealModal(item);
+      container.appendChild(card);
     });
   }
 
-  function closeModal() {
-    modal.style.display = "none";
+  renderCards(breakfast,'breakfast-cards');
+  renderCards(lunch,'lunch-cards');
+  renderCards(snacks,'snacks-cards');
+
+  const tabButtons=document.querySelectorAll('.tab-button');
+  tabButtons.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelector('.tab-button.active').classList.remove('active');
+      btn.classList.add('active');
+      document.getElementById('breakfast-cards').style.display='none';
+      document.getElementById('lunch-cards').style.display='none';
+      document.getElementById('snacks-cards').style.display='none';
+      document.getElementById(btn.dataset.tab+'-cards').style.display='flex';
+    });
+  });
+
+  const mealModal=document.getElementById('meal-modal');
+  const mealModalTitle=document.getElementById('meal-modal-title');
+  const mealModalList=document.getElementById('meal-modal-list');
+  let currentIngredients=[];
+
+  function showMealModal(item){
+    mealModal.style.display='flex';
+    mealModalTitle.textContent=item.title;
+    mealModalList.innerHTML='';
+    currentIngredients=item.ingredients;
+    item.ingredients.forEach(ing=>{
+      const li=document.createElement('li');
+      li.innerHTML=`<input type="checkbox" value="${ing}"> ${ing}`;
+      mealModalList.appendChild(li);
+    });
   }
 
-  window.onclick = e => {
-    if (e.target === modal) closeModal();
+  function closeMealModal(){ mealModal.style.display='none'; }
+
+  function addToCart(items){
+    const cart=JSON.parse(localStorage.getItem('cart'))||[];
+    cart.push(...items);
+    localStorage.setItem('cart',JSON.stringify(cart));
+    closeMealModal();
+  }
+
+  function addAllToCart(){ addToCart(currentIngredients); }
+  function addSelectedToCart(){
+    const selected=Array.from(mealModalList.querySelectorAll('input:checked')).map(cb=>cb.value);
+    addToCart(selected);
+  }
+
+  window.onclick=e=>{
+    if(e.target===mealModal) closeMealModal();
+    if(e.target===document.getElementById('note-modal')) closeModal();
   };
-
-  const hamburger = document.getElementById("hamburger");
-  const mobileMenu = document.getElementById("mobile-menu");
-
-  hamburger.addEventListener("click", () => {
-    mobileMenu.style.display =
-      mobileMenu.style.display === "flex" ? "none" : "flex";
-  });
 </script>
-
 </body>
 </html>
+
