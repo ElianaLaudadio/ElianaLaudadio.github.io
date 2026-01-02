@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Meal Planner 🍅</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Workouts</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 
@@ -16,9 +16,6 @@
       --hover: #ece9e6;
       --border: #111111;
       --accent: #d9c7b1;
-      --btn-bg: #333333; 
-      --btn-hover: #555555;
-      --note-indicator: #111111;
     }
 
     * { box-sizing: border-box; }
@@ -32,6 +29,7 @@
       padding-bottom: 60px;
     }
 
+    /* ---------- NAV ---------- */
     nav {
       position: fixed;
       top: 0;
@@ -51,7 +49,6 @@
       font-weight: 700;
       font-size: 16px;
       position: relative;
-      font-family: 'Atkinson Hyperlegible', sans-serif;
     }
 
     nav a::after {
@@ -65,14 +62,15 @@
       transition: width 0.3s ease;
     }
 
-    nav a:hover { width: 100%; }
+    nav a:hover::after {
+      width: 100%;
+    }
 
     #hamburger {
       display: none;
       font-size: 36px;
       cursor: pointer;
       color: var(--fg);
-      margin: 0 auto;
     }
 
     #mobile-menu {
@@ -85,88 +83,29 @@
       border-top: 2px solid var(--border);
       flex-direction: column;
       padding: 16px 0;
-      text-align: center;
     }
 
     #mobile-menu a {
       display: block;
       padding: 14px 0;
       font-size: 18px;
-      font-family: 'Atkinson Hyperlegible', sans-serif;
     }
 
-    #go-to-cart {
-      text-align: center;
-      background: var(--card-bg);
-      padding: 28px;
-      border-radius: 18px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      max-width: 640px;
-      margin: 20px auto 40px auto;
-      border: 2px solid var(--border);
-    }
-
-    #go-to-cart h3 {
-      margin: 0;
-      font-size: 28px;
-      font-weight: 700;
-      font-family: 'Atkinson Hyperlegible', sans-serif;
-    }
-
-    #go-to-cart button {
-      background-color: var(--btn-bg);
-      color: var(--bg);
-      border: none;
-      padding: 14px 28px;
-      font-size: 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      margin-top: 12px;
-      font-weight: 700;
-      font-family: 'Atkinson Hyperlegible', sans-serif;
-    }
-
-    #go-to-cart button:hover { background-color: var(--btn-hover); }
-
+    /* ---------- SECTION ---------- */
     section {
       max-width: 720px;
-      margin: 0 auto 40px;
-      padding: 0 20px;
+      margin: 0 auto;
+      padding: 0 20px 40px;
     }
 
     .section-title {
-      font-family: 'Atkinson Hyperlegible', sans-serif;
       font-size: 32px;
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
       font-weight: 700;
     }
 
-    .tabs {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 30px;
-      flex-wrap: wrap;
-    }
-
-    .tab-button {
-      padding: 10px 20px;
-      border-radius: 8px;
-      background: var(--card-bg);
-      border: 2px solid var(--border);
-      cursor: pointer;
-      font-weight: 700;
-      transition: background 0.3s ease;
-      font-family: 'Atkinson Hyperlegible', sans-serif;
-    }
-
-    .tab-button.active {
-      background: var(--accent);
-      color: var(--bg);
-    }
-
+    /* ---------- CARDS ---------- */
     .cards {
       display: flex;
       flex-direction: column;
@@ -191,8 +130,6 @@
     .card h3 {
       margin: 0 0 6px;
       font-size: 20px;
-      font-family: 'Atkinson Hyperlegible', sans-serif;
-      text-transform: capitalize;
       font-weight: 700;
     }
 
@@ -200,73 +137,196 @@
       margin: 0;
       color: var(--muted);
       font-size: 14px;
-      font-family: 'Atkinson Hyperlegible', sans-serif;
     }
 
-    #calendar-container .calendar-header {
-      text-align: center;
-      margin-bottom: 12px;
-      font-family: 'Atkinson Hyperlegible', sans-serif;
-    }
-
-    .calendar-grid .day-name {
-      font-weight: bold;
-      color: var(--muted);
-    }
-
-    #note-modal, #meal-modal {
+    /* ---------- MODAL ---------- */
+    .modal {
       display: none;
       position: fixed;
       inset: 0;
       background: rgba(0,0,0,0.65);
-      justify-content: center;
-      align-items: center;
       z-index: 2000;
     }
 
-    #note-modal .modal-content, #meal-modal .modal-content {
+    .modal-content {
       background: var(--card-bg);
-      padding: 24px;
-      border-radius: 18px;
+      max-width: 560px;
       width: 90%;
-      max-width: 400px;
-      color: var(--fg);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      align-items: center;
+      margin: 10% auto;
+      padding: 28px;
+      border-radius: 18px;
       border: 2px solid var(--border);
-      font-family: 'Atkinson Hyperlegible', sans-serif;
     }
 
-    #modal-date-label {
-      font-size: 24px;
-      font-weight: 700;
-    }
-
-    button {
-      background-color: var(--btn-bg);
-      color: var(--bg);
-      border: none;
-      padding: 10px 20px;
-      font-size: 14px;
-      border-radius: 8px;
+    .close {
+      float: right;
+      font-size: 26px;
       cursor: pointer;
-      font-weight: 700;
-      font-family: 'Atkinson Hyperlegible', sans-serif;
     }
 
-    button:hover { background-color: var(--btn-hover); }
+    #modalTitle {
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
 
+    ol {
+      padding-left: 20px;
+    }
+
+    ol li {
+      margin: 10px 0;
+      line-height: 1.4;
+    }
+
+    .video-section {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 2px solid var(--border);
+    }
+
+    .video-section h4 {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .video-embed {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
+      border: none;
+    }
+
+    /* ---------- MOBILE ---------- */
     @media (max-width: 600px) {
       nav a { display: none; }
-      #hamburger { display: block; font-size: 40px; padding: 10px 0; }
-      .tab-button { flex: 1 1 100%; text-align: center; }
+      #hamburger { display: block; }
+      .modal-content { margin: 20% auto; }
     }
   </style>
 </head>
 
 <body>
-<!-- BODY CONTENT UNCHANGED -->
+
+<nav>
+  <a href="/myfolder/index.html">Home</a>
+  <a href="/myfolder/template.html">Goals + Progress</a>
+  <a href="/myfolder/workouts.html">Workouts</a>
+  <a href="/myfolder/meal_planner.html">Meal Planner</a>
+
+  <span id="hamburger">&#9776;</span>
+
+  <div id="mobile-menu">
+    <a href="/myfolder/index.html">Home</a>
+    <a href="/myfolder/template.html">Goals + Progress</a>
+    <a href="/myfolder/workouts.html">Workouts</a>
+    <a href="/myfolder/meal_planner.html">Meal Planner</a>
+  </div>
+</nav>
+
+<section>
+  <h2 class="section-title">ARMS</h2>
+  <div class="cards" id="cards"></div>
+</section>
+
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h3 id="modalTitle"></h3>
+    <ol id="modalList"></ol>
+
+    <div class="video-section">
+      <h4>Exercise Demo</h4>
+      <iframe
+        class="video-embed"
+        src="https://www.youtube.com/embed/21lYP86dHW4"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+  const workouts = [
+    {
+      title: "Biceps Curls",
+      steps: [
+        "Sit or stand holding dumbbells at shoulder height",
+        "Brace your core and keep chest tall",
+        "Press dumbbells overhead until arms are fully extended",
+        "Lower slowly back to starting position"
+      ]
+    },
+    {
+      title: "Hammer Curls",
+      steps: [
+        "Hold dumbbells at your sides with a slight bend in elbows",
+        "Raise arms out to shoulder height",
+        "Pause briefly at the top",
+        "Lower under control"
+      ]
+    },
+    {
+      title: "Preacher Curls",
+      steps: [
+        "Hold dumbbells in front of thighs",
+        "Raise arms forward to shoulder height",
+        "Avoid swinging or using momentum",
+        "Lower slowly"
+      ]
+    },
+    {
+      title: "Chin Ups",
+      steps: [
+        "Hinge forward at hips keeping back flat",
+        "Let dumbbells hang down",
+        "Raise arms wide squeezing shoulder blades",
+        "Lower with control"
+      ]
+    }
+  ];
+
+  const cards = document.getElementById("cards");
+  const modal = document.getElementById("modal");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalList = document.getElementById("modalList");
+
+  workouts.forEach(workout => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `<h3>${workout.title}</h3><p>Tap to view instructions</p>`;
+    card.onclick = () => showModal(workout);
+    cards.appendChild(card);
+  });
+
+  function showModal(workout) {
+    modal.style.display = "block";
+    modalTitle.textContent = workout.title;
+    modalList.innerHTML = "";
+    workout.steps.forEach(step => {
+      const li = document.createElement("li");
+      li.textContent = step;
+      modalList.appendChild(li);
+    });
+  }
+
+  function closeModal() {
+    modal.style.display = "none";
+  }
+
+  window.onclick = e => {
+    if (e.target === modal) closeModal();
+  };
+
+  const hamburger = document.getElementById("hamburger");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  hamburger.addEventListener("click", () => {
+    mobileMenu.style.display =
+      mobileMenu.style.display === "flex" ? "none" : "flex";
+  });
+</script>
+
 </body>
 </html>
