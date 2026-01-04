@@ -456,45 +456,47 @@
 
   const breakfast = [
     {title:"Protein Cereal",ingredients:["Kashi - Go Cereal","Milk"]},
-    {title:"Yogurt Bowl",ingredients:["Greek yogurt","Blueberries","Strawberries","Honey"]},
+    {title:"Yogurt Bowl",ingredients:["Greek Yogurt","Blueberries","Strawberries","Honey"]},
     {title:"Chia Seed Pudding",ingredients:["Chia seeds","Milk","Honey","Strawberries"]},
-    {title:"Cottage Cheese on Sour Dough",ingredients:["Cottage cheese","Sourdough bread","Honey"]},
+    {title:"Cottage Cheese on Sour Dough",ingredients:["Cottage Cheese","Sourdough Bread","Honey"]},
     {title:"Eggs + Breakfast Meat",ingredients:["Eggs","Breakfast Meat"]},
-    {title:"Protein Waffles",ingredients:["Protein waffle mix","Butter","Maple syrup","Blueberries"]}
+    {title:"Protein Waffles",ingredients:["Protein Waffle Mix","Butter","Maple Syrup","Blueberries"]}
   ];
 
-  const lunch = [
-    {title:"Veggie stir fry",ingredients:["Ground Beef","Asian Medley (frozen veggies)","Stir fry sauce","Rice"]},
-    {title:"Chicken shawarma",ingredients:["Trader Joes Chicken Shawarma","Cucumber","Plain Greek yogurt","Lemon","Garlic","Dill","Rice"]},
-    {title:"Veggie stir fry",ingredients:["Ground Beef","Asian Medley (frozen veggies)","Stir fry sauce","Rice"]},
-    {title:"Sausage + Potatos",ingredients:["High Protein Chicken Sausage","Russet Potatos","Veggies"]},
-    {title:"Teriyaki Chicken",ingredients:["Chicken","Teriyaki Sauce","Honey","Rice", "Veggies", "Pineapple"]},
-    {title:"Tuna + Crackers",ingredients:["Canned Tuna","Mayo","Relish","Canned Corn","Crackers"]},
-    {title:"Chicken Tenders",ingredients:["Chicken Tenders","Choice of Carb"]},
-    {title:"Chicken Quesadilla",ingredients:["Shredded Chicken","Cheese","Tortillas", "Salsa", "Sour Cream", "Guacamole"]},
-    {title:"Burrito Bowl",ingredients:["Chicken","Ground Beef","Beans","Rice", "Veggies", "Salsa", "Sour Cream", "Guacamole"]},
-    {title:"Tuna + Crackers",ingredients:["Canned Tuna","Mayo","Relish","Canned Corn","Crackers"]},
-    {title:"Thai Lettuce Wraps",ingredients:["Ground Turkey","Thai Seasoning Paste","Romaine Lettuce"]},
-    {title:"Chicken Chili",ingredients:["Chicken","2 Cans of Black Beans","1 White Onion","1 can of Creamed Corn", "2 Jalapenos", "Ranch", "Heavy Cream", "Cream Cheese"]},
-    {title:"Pollo Asado",ingredients:["Chicken Thighs","Garlic","Two Oranges","Fajita Seasoning","Olive Oil", "Vinigar", "Cilantro", "Paprika", "Dried Oregano", "Ground Cumin", "Rice", "Tortillas"]},
-    {title:"Kebabs",ingredients:["Trader Joes Beef Kebabs","Cucumber","Roma Tomatos", "White Onion", "Greek Dressing", "Rice"]},
-    {title:"Greek Dressing Bowl",ingredients:["Choice of Protein","Rice","Ken's Greek Dressing"]},
-    {title:"Hamburger + Fries",ingredients:["Hamburger Patties","Hamburger Buns","Frozen Potatos", "Letttuce", "Tomato", "Onion", "Fry Sauce", "Ketchup"]},
+const lunch = [
+  // ---------------- CHICKEN ----------------
+  { title: "Chicken Shawarma", ingredients: ["Trader Joe’s Chicken Shawarma", "Cucumber", "Plain Greek Yogurt", "Lemon", "Garlic", "Dill", "Rice"] },
+  { title: "Teriyaki Chicken", ingredients: ["Chicken", "Teriyaki Sauce", "Honey", "Rice", "Veggies", "Pineapple"] },
+  { title: "Chicken Tenders", ingredients: ["Chicken Tenders", "Choice Of Carb"] },
+  { title: "Chicken Quesadilla", ingredients: ["Shredded Chicken", "Cheese", "Tortillas", "Salsa", "Sour Cream", "Guacamole"] },
+  { title: "Chicken Chili", ingredients: ["Chicken", "2 Cans Of Black Beans", "1 White Onion", "1 Can Of Creamed Corn", "2 Jalapeños", "Ranch", "Heavy Cream", "Cream Cheese"] },
+  { title: "Pollo Asado", ingredients: ["Chicken Thighs", "Garlic", "Two Oranges", "Fajita Seasoning", "Olive Oil", "Vinegar", "Cilantro", "Paprika", "Dried Oregano", "Ground Cumin", "Rice", "Tortillas"] },
+  { title: "Black Pepper Chicken", ingredients: ["Chicken", "Soy Sauce", "Oyster Sauce", "Shaoxing Wine", "Black Pepper", "Garlic", "Ginger", "Onions", "Bell Peppers", "Cornstarch"] },
+  { title: "Chicken Caesar Salad", ingredients: ["Chicken", "Iceberg Lettuce", "Caesar Dressing", "Croutons", "Parmesan Cheese", "Wrap Tortilla"] },
+  { title: "Honey Garlic Chicken", ingredients: ["Chicken", "Garlic", "Soy Sauce", "Honey", "Seasonings", "Parmesan Cheese"] },
+  { title: "General Tso Meatballs", ingredients: ["Sweet Chicken Meatballs", "General Tso Sauce"] },
+  { title: "Sausage + Potatoes", ingredients: ["High Protein Chicken Sausage", "Russet Potatoes", "Veggies"] },
 
-    {title:"Bulgolgi Beef",ingredients:["Shreded Beef", "Soy Sauce", "Sesame Oil", "Brown Sugar", "Onion", "Garlic", "Rice"]},
-    {title:"Back Pepper Chicken",ingredients:["Chicken", "Soy Sauce", "Oyster Sauce", "Shaoxing Wine", "Black Pepper", "Garlic", "Ginger", "Onions", "Bell Peppers", "Corn Starch"]},
-    {title:"Steak + Potatos",ingredients:["Steak","Russet Potatos"]},
-    {title:"Chicekn Ceasar Salad",ingredients:["Chicken", "Iceburg Lettuce", "Ceasar Dressing", "Crutons", "Parmasean Cheese", "Wrap Tortilla"]},
+    // ---------------- TURKEY ----------------
+  { title: "Thai Lettuce Wraps", ingredients: ["Ground Turkey", "Thai Seasoning Paste", "Romaine Lettuce"] },
 
-    {title:"Rice Bowl",ingredients:["Choice of Protein","Rice", "Choice of Sauce"]},
-    {title:"Chicekn Ceasar Salad",ingredients:["Chicken"]},
+  // ---------------- BEEF ----------------
+  { title: "Veggie Stir Fry", ingredients: ["Ground Beef", "Asian Medley (Frozen Veggies)", "Stir Fry Sauce", "Rice"] },
+  { title: "Bulgogi Beef", ingredients: ["Shredded Beef", "Soy Sauce", "Sesame Oil", "Brown Sugar", "Onion", "Garlic", "Rice"] },
+  { title: "Hamburger + Fries", ingredients: ["Hamburger Patties", "Hamburger Buns", "Frozen Potatoes", "Lettuce", "Tomato", "Onion", "Fry Sauce", "Ketchup"] },
+  { title: "Steak + Potatoes", ingredients: ["Steak", "Russet Potatoes"] },
+  { title: "Kebabs", ingredients: ["Trader Joe’s Beef Kebabs", "Cucumber", "Roma Tomatoes", "White Onion", "Greek Dressing", "Rice"] },
 
-    {title:"Honey Garlic Chicken",ingredients:["Chicken", "Garlic", "Soy Sauce", "Honey", "Seasonings", "Parmasean Cheese"]},
-    {title:"General Tso Meatballs",ingredients:["Sweet Chicken Meatballs", "General Tso Sauce"]},
-    
-    {title:"Fish Tacos",ingredients:["Fish of Choice","Pickled Onions","Tortillas"]}
-    
-  ];
+  // ---------------- SEAFOOD ----------------
+  { title: "Tuna + Crackers", ingredients: ["Canned Tuna", "Mayo", "Relish", "Canned Corn", "Crackers"] },
+  { title: "Fish Tacos", ingredients: ["Fish Of Choice", "Pickled Onions", "Tortillas"] },
+
+  // ---------------- MIXED / FLEXIBLE ----------------
+  { title: "Burrito Bowl", ingredients: ["Choice of Protein", "Beans", "Rice", "Veggies", "Salsa", "Sour Cream", "Guacamole"] },
+  { title: "Greek Dressing Bowl", ingredients: ["Choice Of Protein", "Rice", "Ken’s Greek Dressing"] },
+  { title: "Rice Bowl", ingredients: ["Choice Of Protein", "Rice", "Choice Of Sauce"] }
+];
+
 
   const snacks = [
     {title:"Deviled Eggs",ingredients:["Eggs","Mayonnaise","Mustard","Paprika"]},
