@@ -4,73 +4,140 @@
 <meta charset="UTF-8" />
 <title>Client Sign-Up</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet" />
 
 <style>
   :root {
-    --bg: #000;
-    --fg: #fff;
-    --muted: #ccc;
-    --accent: #111;
-    --card-bg: #111;
-    --hover: #222;
+    --bg: #f5f4f2;
+    --fg: #111111;
+    --muted: #555555;
+    --card-bg: #ffffff;
+    --hover: #ece9e6;
+    --border: #111111;
+    --accent: #d9c7b1;
   }
+
+  * { box-sizing: border-box; }
 
   body {
-    font-family: 'Inter', sans-serif;
+    margin: 0;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
     background-color: var(--bg);
     color: var(--fg);
-    margin: 0;
-    padding-top: 0;
-    padding-bottom: 40px;
-    overflow-x: hidden;
+    padding-top: 80px;
+    padding-bottom: 60px;
   }
 
-  main {
-    max-width: 960px;
-    margin: 30px auto;
-    padding: 0 20px;
+  /* ---------- NAV ---------- */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-bottom: 2px solid var(--border);
+    padding: 20px 0;
+    text-align: center;
+    z-index: 1000;
   }
 
+  nav a {
+    color: var(--fg);
+    text-decoration: none;
+    margin: 0 20px;
+    font-weight: 700;
+    font-size: 16px;
+    position: relative;
+  }
+
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  nav a:hover::after {
+    width: 100%;
+  }
+
+  #hamburger {
+    display: none;
+    font-size: 36px;
+    cursor: pointer;
+    color: var(--fg);
+  }
+
+  #mobile-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--bg);
+    border-top: 2px solid var(--border);
+    flex-direction: column;
+    padding: 16px 0;
+  }
+
+  #mobile-menu a {
+    display: block;
+    padding: 14px 0;
+    font-size: 18px;
+  }
+
+  /* ---------- SECTION ---------- */
   section {
-    background: var(--card-bg);
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(255,255,255,0.05);
-    margin-bottom: 30px;
+    max-width: 720px;
+    margin: 0 auto 30px;
+    padding: 0 20px;
   }
 
   h2, h3 {
     text-align: center;
+    font-weight: 700;
   }
 
-  form {
-    max-width: 600px;
-    margin: auto;
+  /* ---------- FORM CARDS ---------- */
+  .form-page {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
   }
 
   label {
     display: block;
     margin-top: 18px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--muted);
   }
 
   input, select, textarea {
     width: 100%;
-    max-width: 100%;
     padding: 12px;
     margin-top: 5px;
-    border-radius: 6px;
+    border-radius: 8px;
     background-color: var(--hover);
-    border: 1px solid #333;
+    border: 2px solid var(--border);
     color: var(--fg);
     font-size: 16px;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
     box-sizing: border-box;
   }
 
-  textarea {
-    resize: vertical;
+  textarea { resize: vertical; }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 35px;
   }
 
   button {
@@ -79,9 +146,8 @@
     border: none;
     padding: 12px 18px;
     font-size: 16px;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
-    margin-top: 20px;
     transition: background-color 0.3s ease;
   }
 
@@ -89,37 +155,21 @@
     background-color: var(--muted);
   }
 
-  .hidden {
-    display: none;
-  }
-
-  .buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 35px;
-  }
+  .hidden { display: none; }
 
   #confirmation {
     text-align: center;
     padding: 80px 20px;
   }
 
-  #confirmation h2 {
-    font-size: 32px;
-    margin-bottom: 10px;
-  }
-
-  #confirmation p {
-    color: var(--muted);
-    font-size: 18px;
-  }
+  #confirmation h2 { font-size: 32px; margin-bottom: 10px; }
+  #confirmation p { color: var(--muted); font-size: 18px; }
 
   .confetti {
     position: fixed;
     top: -10px;
     width: 10px;
     height: 10px;
-    background: white;
     opacity: 0.8;
     animation: fall linear forwards;
     z-index: 9999;
@@ -131,10 +181,30 @@
       opacity: 0;
     }
   }
+
+  @media (max-width: 600px) {
+    nav a { display: none; }
+    #hamburger { display: block; }
+  }
 </style>
 </head>
 
 <body>
+
+<nav>
+  <a href="/myfolder/index.html">Home</a>
+  <a href="/myfolder/template.html">Goals + Progress</a>
+  <a href="/myfolder/workouts.html">Workouts</a>
+  <a href="/myfolder/meal_planner.html">Meal Planner</a>
+
+  <span id="hamburger">&#9776;</span>
+  <div id="mobile-menu">
+    <a href="/myfolder/index.html">Home</a>
+    <a href="/myfolder/template.html">Goals + Progress</a>
+    <a href="/myfolder/workouts.html">Workouts</a>
+    <a href="/myfolder/meal_planner.html">Meal Planner</a>
+  </div>
+</nav>
 
 <main>
 
@@ -339,13 +409,21 @@
       const confetti = document.createElement("div");
       confetti.className = "confetti";
       confetti.style.left = Math.random() * 100 + "vw";
-      confetti.style.backgroundColor = ["#fff","#ccc","#999"][Math.floor(Math.random()*3)];
+      confetti.style.backgroundColor = ["#d9c7b1","#ece9e6","#555555"][Math.floor(Math.random()*3)];
       confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
       document.body.appendChild(confetti);
 
       setTimeout(() => confetti.remove(), 4000);
     }
   }
+
+  const hamburger = document.getElementById("hamburger");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  hamburger.addEventListener("click", () => {
+    mobileMenu.style.display =
+      mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+  });
 </script>
 
 </body>
