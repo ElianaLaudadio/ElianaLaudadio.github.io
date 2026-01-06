@@ -92,7 +92,6 @@
       display: block;
       padding: 14px 0;
       font-size: 18px;
-      font-weight: 700;
     }
 
     /* ---------- SECTION ---------- */
@@ -132,15 +131,9 @@
     }
 
     .card h3 {
-      margin: 0 0 6px 0;
+      margin: 0;
       font-size: 20px;
       font-weight: 700;
-    }
-
-    .card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
     }
 
     /* ---------- MODAL ---------- */
@@ -150,14 +143,15 @@
       inset: 0;
       background: rgba(0,0,0,0.65);
       z-index: 2000;
+      overflow-y: auto;
     }
 
     .modal-content {
       background: var(--card-bg);
-      max-width: 560px;
-      width: 90%;
-      margin: 10% auto;
-      padding: 28px;
+      max-width: 90%;
+      width: 560px;
+      margin: 5% auto;
+      padding: 0;
       border-radius: 18px;
       border: 2px solid var(--border);
     }
@@ -166,40 +160,28 @@
       float: right;
       font-size: 26px;
       cursor: pointer;
+      padding: 10px;
     }
 
     #modalTitle {
       text-align: center;
-      margin-bottom: 20px;
-      font-weight: 700;
-    }
-
-    ol {
-      padding-left: 20px;
-    }
-
-    ol li {
       margin: 10px 0;
-      line-height: 1.5;
+      font-weight: 700;
     }
 
     .video-section {
-      margin-top: 30px;
-      padding-top: 20px;
-      border-top: 2px solid var(--border);
+      width: 100%;
     }
 
     .video-section h4 {
-      text-align: center;
-      color: var(--muted);
-      margin-bottom: 12px;
-      font-weight: 700;
+      display: none; /* hide title since instructions removed */
     }
 
     .video-embed {
       width: 100%;
-      aspect-ratio: 16 / 9;
-      border-radius: 12px;
+      height: auto;
+      display: block;
+      border-radius: 0;
       border: none;
     }
 
@@ -207,7 +189,7 @@
     @media (max-width: 600px) {
       nav a { display: none; }
       #hamburger { display: block; }
-      .modal-content { margin: 20% auto; }
+      .modal-content { margin: 10% auto; }
       .section-title { font-size: 28px; }
     }
   </style>
@@ -239,15 +221,14 @@
   <div class="modal-content">
     <span class="close" onclick="closeModal()">&times;</span>
     <h3 id="modalTitle"></h3>
-    <ol id="modalList"></ol>
 
     <div class="video-section">
-      <h4>Exercise Demo</h4>
-      <iframe class="video-embed"
-        src="https://www.youtube.com/embed/21lYP86dHW4"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
+      <img
+        id="modalImage"
+        class="video-embed"
+        src=""
+        alt="Exercise demonstration image"
+      />
     </div>
   </div>
 </div>
@@ -256,15 +237,12 @@
   const workouts = [
     {
       title: "Goblet Squats",
-      steps: [
-        "Sit or stand holding dumbbells at shoulder height",
-        "Brace your core and keep chest tall",
-        "Press dumbbells overhead until arms are fully extended",
-        "Lower slowly back to starting position"
-      ]
+      image: "/myfolder/photos/ShoulderPress.png",
+
     },
     {
       title: "Lunges",
+      image: "/myfolder/photos/LateralRaise.png",
       steps: [
         "Hold dumbbells at your sides with a slight bend in elbows",
         "Raise arms out to shoulder height",
@@ -274,6 +252,7 @@
     },
     {
       title: "Leg Press",
+      image: "/myfolder/photos/FrontRaise.png",
       steps: [
         "Hold dumbbells in front of thighs",
         "Raise arms forward to shoulder height",
@@ -283,6 +262,7 @@
     },
     {
       title: "Front Squats",
+      image: "/myfolder/photos/RearDeltFlys.png",
       steps: [
         "Hinge forward at hips keeping back flat",
         "Let dumbbells hang down",
@@ -292,6 +272,7 @@
     },
     {
       title: "Leg Extensions",
+      image: "/myfolder/photos/ArnoldPress.png",
       steps: [
         "Start with dumbbells in front of shoulders, palms facing you",
         "Rotate palms outward as you press overhead",
@@ -299,31 +280,34 @@
         "Reverse the motion on the way down"
       ]
     },
-    {
+        {
       title: "Romanian Deadlifts",
+      image: "/myfolder/photos/ArnoldPress.png",
       steps: [
-        "Hinge forward at hips keeping back flat",
-        "Let dumbbells hang down",
-        "Raise arms wide squeezing shoulder blades",
-        "Lower with control"
+        "Start with dumbbells in front of shoulders, palms facing you",
+        "Rotate palms outward as you press overhead",
+        "Fully extend arms at the top",
+        "Reverse the motion on the way down"
       ]
     },
-    {
+        {
       title: "Leg Curls",
+      image: "/myfolder/photos/ArnoldPress.png",
       steps: [
-        "Hinge forward at hips keeping back flat",
-        "Let dumbbells hang down",
-        "Raise arms wide squeezing shoulder blades",
-        "Lower with control"
+        "Start with dumbbells in front of shoulders, palms facing you",
+        "Rotate palms outward as you press overhead",
+        "Fully extend arms at the top",
+        "Reverse the motion on the way down"
       ]
     },
-    {
+            {
       title: "Glute Bridges",
+      image: "/myfolder/photos/ArnoldPress.png",
       steps: [
-        "Hinge forward at hips keeping back flat",
-        "Let dumbbells hang down",
-        "Raise arms wide squeezing shoulder blades",
-        "Lower with control"
+        "Start with dumbbells in front of shoulders, palms facing you",
+        "Rotate palms outward as you press overhead",
+        "Fully extend arms at the top",
+        "Reverse the motion on the way down"
       ]
     }
   ];
@@ -331,7 +315,7 @@
   const cards = document.getElementById("cards");
   const modal = document.getElementById("modal");
   const modalTitle = document.getElementById("modalTitle");
-  const modalList = document.getElementById("modalList");
+  const modalImage = document.getElementById("modalImage");
 
   workouts.forEach(workout => {
     const card = document.createElement("div");
@@ -344,12 +328,7 @@
   function showModal(workout) {
     modal.style.display = "block";
     modalTitle.textContent = workout.title;
-    modalList.innerHTML = "";
-    workout.steps.forEach(step => {
-      const li = document.createElement("li");
-      li.textContent = step;
-      modalList.appendChild(li);
-    });
+    modalImage.src = workout.image;
   }
 
   function closeModal() {
@@ -360,12 +339,12 @@
     if (e.target === modal) closeModal();
   };
 
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobile-menu');
+  const hamburger = document.getElementById("hamburger");
+  const mobileMenu = document.getElementById("mobile-menu");
 
-  hamburger.addEventListener('click', () => {
+  hamburger.addEventListener("click", () => {
     mobileMenu.style.display =
-      mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+      mobileMenu.style.display === "flex" ? "none" : "flex";
   });
 </script>
 
