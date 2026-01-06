@@ -132,11 +132,16 @@
       border-radius: 12px;
       cursor: pointer;
       margin-top: 15px;
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
       font-weight: 600;
     }
 
-    button:hover {  background-color: var(--accent); color: #ffffff;  transform: translateY(-2px);}
+    /* Updated so button text becomes white when background turns red */
+    button:hover {  
+      background-color: var(--accent); 
+      color: #ffffff; 
+      transform: translateY(-2px);
+    }
 
     #weight-buttons { display: flex; justify-content: space-between; gap: 10px; margin-top: 10px; }
     #weight-buttons button { width: 48%; }
@@ -201,7 +206,12 @@
       font-weight: 600;
     }
 
-    #go-to-cart button:hover { background-color: var(--accent); transform: translateY(-2px); }
+    /* hover fix for go-to-cart button as well */
+    #go-to-cart button:hover { 
+      background-color: var(--accent); 
+      color: #ffffff; 
+      transform: translateY(-2px); 
+    }
 
     @media (max-width: 600px) {
       nav a { display: none; }
