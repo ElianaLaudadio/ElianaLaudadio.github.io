@@ -281,7 +281,7 @@
     const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
 
     if (cartItems.length === 0) {
-      cartContainer.innerHTML = '<p class="empty">Your cart is empty. Go add some items!</p>';
+      cartContainer.innerHTML = '<p class="empty">Your cart is empty.</p>';
       return;
     }
 
