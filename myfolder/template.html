@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>Training Dashboard &#x1F4AA;</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- Changed font to Atkinson Hyperlegible -->
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -158,7 +157,7 @@
       justify-content: center;
       font-size: 22px;
       font-weight: bold;
-      color: #ffffff; /* text is white */
+      color: #ffffff; /* percentage text white */
       -webkit-text-stroke: 1px #111111; /* outline black */
       transition: background 0.3s ease;
     }
@@ -166,8 +165,8 @@
     .progress-circle span { 
       margin-top: 6px; 
       font-size: 14px; 
-      color: var(--muted); 
-      -webkit-text-stroke: 0; /* keep span normal */
+      color: #ffffff; /* label text white */
+      -webkit-text-stroke: 1px #111111; /* label outline black */
     }
 
     .goals-grid {
