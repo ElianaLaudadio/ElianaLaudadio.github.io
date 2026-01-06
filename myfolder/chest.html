@@ -51,7 +51,6 @@
       font-weight: 700;
       font-size: 16px;
       position: relative;
-      font-family: 'Atkinson Hyperlegible', sans-serif;
     }
 
     nav a::after {
@@ -76,7 +75,6 @@
       color: var(--fg);
     }
 
-    /* FIXED MOBILE MENU */
     #mobile-menu {
       display: none;
       position: absolute;
@@ -93,43 +91,6 @@
       display: block;
       padding: 14px 0;
       font-size: 18px;
-      font-family: 'Atkinson Hyperlegible', sans-serif;
-    }
-
-    /* ---------- HERO ---------- */
-    .hero {
-      max-width: 900px;
-      margin: 0 auto 60px;
-      text-align: center;
-    }
-
-    .hero h1 {
-      font-family: 'Atkinson Hyperlegible', sans-serif;
-      font-size: 42px;
-      margin-bottom: 10px;
-      font-weight: 700;
-    }
-
-    .hero p {
-      font-size: 16px;
-      color: var(--muted);
-      max-width: 600px;
-      margin: 0 auto;
-      font-family: 'Atkinson Hyperlegible', sans-serif;
-    }
-
-    .hero-images {
-      margin-top: 30px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-    }
-
-    .hero-images img {
-      width: 100%;
-      border-radius: 12px;
-      border: 2px solid var(--border);
-      object-fit: cover;
     }
 
     /* ---------- SECTION ---------- */
@@ -140,7 +101,6 @@
     }
 
     .section-title {
-      font-family: 'Atkinson Hyperlegible', sans-serif;
       font-size: 32px;
       text-align: center;
       margin-bottom: 40px;
@@ -170,17 +130,9 @@
     }
 
     .card h3 {
-      margin: 0 0 6px;
-      font-size: 20px;
-      font-family: 'Atkinson Hyperlegible', sans-serif;
-      font-weight: 700;
-    }
-
-    .card p {
       margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-      font-family: 'Atkinson Hyperlegible', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
     }
 
     /* ---------- MODAL ---------- */
@@ -190,68 +142,53 @@
       inset: 0;
       background: rgba(0,0,0,0.65);
       z-index: 2000;
+      overflow-y: auto;
     }
 
     .modal-content {
       background: var(--card-bg);
-      max-width: 560px;
-      width: 90%;
-      margin: 10% auto;
-      padding: 28px;
+      max-width: 90%;
+      width: 560px;
+      margin: 5% auto;
+      padding: 0;
       border-radius: 18px;
       border: 2px solid var(--border);
-      font-family: 'Atkinson Hyperlegible', sans-serif;
     }
 
     .close {
       float: right;
       font-size: 26px;
       cursor: pointer;
+      padding: 10px;
     }
 
     #modalTitle {
-      font-family: 'Atkinson Hyperlegible', sans-serif;
       text-align: center;
-      margin-bottom: 20px;
+      margin: 10px 0;
       font-weight: 700;
     }
 
-    ul {
-      padding-left: 20px;
-    }
-
-    ul li {
-      margin: 10px 0;
-      line-height: 1.4;
-      font-family: 'Atkinson Hyperlegible', sans-serif;
-    }
-
     .video-section {
-      margin-top: 30px;
-      padding-top: 20px;
-      border-top: 2px solid var(--border);
+      width: 100%;
     }
 
     .video-section h4 {
-      text-align: center;
-      color: var(--muted);
-      margin-bottom: 12px;
-      font-family: 'Atkinson Hyperlegible', sans-serif;
+      display: none;
     }
 
     .video-embed {
       width: 100%;
-      aspect-ratio: 16 / 9;
-      border-radius: 12px;
+      height: auto;
+      display: block;
+      border-radius: 0;
       border: none;
     }
 
-    /* ---------- MOBILE ---------- */
     @media (max-width: 600px) {
       nav a { display: none; }
       #hamburger { display: block; }
-      .hero h1 { font-size: 34px; }
-      .modal-content { margin: 20% auto; }
+      .modal-content { margin: 10% auto; }
+      .section-title { font-size: 28px; }
     }
   </style>
 </head>
@@ -265,7 +202,6 @@
   <a href="/myfolder/meal_planner.html">Meal Planner</a>
 
   <span id="hamburger">&#9776;</span>
-
   <div id="mobile-menu">
     <a href="/myfolder/index.html">Home</a>
     <a href="/myfolder/template.html">Goals + Progress</a>
@@ -274,56 +210,45 @@
   </div>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <h1>Chest Training</h1>
-
-  <div class="hero-images">
-    <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e" alt="Dumbbells">
-    <img src="https://images.unsplash.com/photo-1605296867304-46d5465a13f1" alt="Bench Press">
-  </div>
-</div>
-
 <section>
-  <h2 class="section-title">Workouts</h2>
+  <h2 class="section-title">Shoulders</h2>
   <div class="cards" id="cards"></div>
 </section>
 
-<!-- MODAL -->
 <div id="modal" class="modal">
   <div class="modal-content">
     <span class="close" onclick="closeModal()">&times;</span>
     <h3 id="modalTitle"></h3>
-    <ul id="modalList"></ul>
 
     <div class="video-section">
-      <h4>Exercise Demo</h4>
-      <iframe class="video-embed"
-        src="https://www.youtube.com/embed/21lYP86dHW4"
-        allowfullscreen>
-      </iframe>
+      <img
+        id="modalImage"
+        class="video-embed"
+        src=""
+        alt="Exercise demonstration image"
+      />
     </div>
   </div>
 </div>
 
 <script>
   const workouts = [
-    { title: "Barbell Bench Press", steps: ["Lie flat with eyes under the bar","Grip bar slightly wider than shoulders","Lower with control to chest","Press upward explosively"] },
-    { title: "Dumbbell Bench Press", steps: ["Hold dumbbells at chest level","Press upward evenly","Pause briefly at the top","Lower under control"] },
-    { title: "Dumbbell Fly", steps: ["Start with arms extended above chest","Lower arms in a wide arc","Feel stretch in chest","Return squeezing chest"] },
-    { title: "Vertical Chest Press", steps: ["Adjust seat height","Grip handles firmly","Press forward smoothly","Control the return"] },
-    { title: "Pec Deck", steps: ["Sit upright","Bring arms together","Squeeze chest","Return slowly"] }
+    { title: "Dumbbell Shoulder Press", image: "/myfolder/photos/ShoulderPress.png" },
+    { title: "Lateral Raises", image: "/myfolder/photos/LateralRaise.png" },
+    { title: "Front Raises", image: "/myfolder/photos/FrontRaise.png" },
+    { title: "Rear Delt Fly", image: "/myfolder/photos/RearDeltFlys.png" },
+    { title: "Arnold Press", image: "/myfolder/photos/ArnoldPress.png" }
   ];
 
   const cards = document.getElementById("cards");
   const modal = document.getElementById("modal");
   const modalTitle = document.getElementById("modalTitle");
-  const modalList = document.getElementById("modalList");
+  const modalImage = document.getElementById("modalImage");
 
   workouts.forEach(workout => {
     const card = document.createElement("div");
     card.className = "card";
-    card.innerHTML = `<h3>${workout.title}</h3><p>Tap to view instructions</p>`;
+    card.innerHTML = `<h3>${workout.title}</h3>`;
     card.onclick = () => showModal(workout);
     cards.appendChild(card);
   });
@@ -331,12 +256,7 @@
   function showModal(workout) {
     modal.style.display = "block";
     modalTitle.textContent = workout.title;
-    modalList.innerHTML = "";
-    workout.steps.forEach(step => {
-      const li = document.createElement("li");
-      li.textContent = step;
-      modalList.appendChild(li);
-    });
+    modalImage.src = workout.image;
   }
 
   function closeModal() {
