@@ -191,10 +191,12 @@
 
     .video-embed {
       width: 100%;
-      aspect-ratio: 16 / 9;
+      max-height: 300px;
+      overflow-y: auto;
       border-radius: 12px;
       border: none;
       object-fit: cover;
+      display: block;
     }
 
     /* ---------- MOBILE ---------- */
@@ -251,7 +253,7 @@
   const workouts = [
     {
       title: "Dumbbell Shoulder Press",
-      image: "/myfolder/photos/ShoulderPress.png",
+      image: "images/dumbbell-shoulder-press.jpg",
       steps: [
         "Sit or stand holding dumbbells at shoulder height",
         "Brace your core and keep chest tall",
