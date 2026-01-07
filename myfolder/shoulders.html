@@ -154,7 +154,6 @@
       padding: 0;
       border-radius: 18px;
       border: 2px solid var(--border);
-      overflow: hidden;
     }
 
     .close {
@@ -175,7 +174,7 @@
     }
 
     .video-section h4 {
-      display: none; /* keep hidden */
+      display: none; /* hide title since instructions removed */
     }
 
     .video-embed {
@@ -186,10 +185,9 @@
       border: none;
     }
 
-    /* ---------- NEW: INSTRUCTIONS + LINK (modal) ---------- */
+    /* ---------- NEW: INSTRUCTIONS + DIVIDER + YOUTUBE EMBED ---------- */
     .modal-body {
       padding: 18px 22px 22px;
-      border-top: 2px solid var(--border);
     }
 
     .instructions-title {
@@ -209,34 +207,18 @@
       line-height: 1.35;
     }
 
-    .video-link {
-      display: inline-block;
-      margin-top: 6px;
-      font-weight: 700;
-      color: var(--fg);
-      text-decoration: none;
-      position: relative;
+    .divider {
+      border: none;
+      border-top: 2px solid var(--border);
+      margin: 16px 0;
     }
 
-    .video-link::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0%;
-      height: 2px;
-      background: var(--accent);
-      transition: width 0.3s ease;
-    }
-
-    .video-link:hover::after {
+    .youtube-embed {
       width: 100%;
-    }
-
-    .muted-note {
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 14px;
+      aspect-ratio: 16 / 9;
+      border: none;
+      display: block;
+      border-radius: 0;
     }
 
     /* ---------- MOBILE ---------- */
@@ -276,27 +258,32 @@
     <span class="close" onclick="closeModal()">&times;</span>
     <h3 id="modalTitle"></h3>
 
-    <div class="video-section">
+    <!-- NEW: instructions on top -->
+    <div class="modal-body">
+      <div class="instructions-title">Instructions</div>
+      <ol class="steps-list" id="modalSteps"></ol>
+
+      <hr class="divider" />
+
+      <!-- NEW: embedded youtube video -->
+      <iframe
+        id="modalYoutube"
+        class="youtube-embed"
+        src=""
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+    </div>
+
+    <!-- keep this section in DOM but unused to avoid changing structure more than needed -->
+    <div class="video-section" style="display:none;">
       <img
         id="modalImage"
         class="video-embed"
         src=""
         alt="Exercise demonstration image"
       />
-    </div>
-
-    <!-- NEW: instructions + youtube link -->
-    <div class="modal-body" id="modalBody">
-      <div class="instructions-title">Instructions</div>
-      <ol class="steps-list" id="modalSteps"></ol>
-
-      <a id="modalYoutubeLink" class="video-link" href="#" target="_blank" rel="noopener noreferrer" style="display:none;">
-        Watch a quick demo on YouTube
-      </a>
-
-      <div class="muted-note" id="modalNote" style="display:none;">
-        (Tip: If the link doesn’t open in your app, long-press and open in browser.)
-      </div>
     </div>
   </div>
 </div>
@@ -308,55 +295,55 @@
       image: "/myfolder/photos/ShoulderPress.png",
       steps: [
         "Sit tall with feet flat and core braced.",
-        "Start with weights at shoulder height, elbows slightly in front of your body.",
-        "Press the weights overhead until arms are extended (keep a slight bend in elbows).",
+        "Start with dumbbells at shoulder height, elbows slightly in front of your body.",
+        "Press the dumbbells overhead until arms are fully extended (keep a slight bend in the elbow).",
         "Lower back to shoulder height with control."
       ],
-      youtube: "https://www.youtube.com/results?search_query=dumbbell+shoulder+press+proper+form"
+      youtube: "https://www.youtube.com/watch?v=21lYP86dHW4"
     },
     {
       title: "Lateral Raises",
       image: "/myfolder/photos/LateralRaise.png",
       steps: [
-        "Hold weights at your sides with a slight bend in elbows.",
-        "Raise arms out to shoulder height (don’t shrug).",
+        "Hold dumbbells at your sides with a slight bend in elbows.",
+        "Raise arms out to shoulder height.",
         "Pause briefly at the top.",
         "Lower under control."
       ],
-      youtube: "https://www.youtube.com/results?search_query=dumbbell+lateral+raise+proper+form"
+      youtube: "https://www.youtube.com/watch?v=3VcKaXpzqRo"
     },
     {
       title: "Front Raises",
       image: "/myfolder/photos/FrontRaise.png",
       steps: [
-        "Hold weights in front of thighs.",
+        "Hold dumbbells in front of thighs.",
         "Raise arms forward to shoulder height.",
         "Avoid swinging or using momentum.",
         "Lower slowly."
       ],
-      youtube: "https://www.youtube.com/results?search_query=dumbbell+front+raise+proper+form"
+      youtube: "https://www.youtube.com/watch?v=-t7fuZ0KhDA"
     },
     {
       title: "Rear Delt Flies",
       image: "/myfolder/photos/RearDeltFlys.png",
       steps: [
         "Hinge forward at hips keeping back flat.",
-        "Let weights hang down.",
-        "Raise arms wide, squeezing shoulder blades.",
+        "Let dumbbells hang down.",
+        "Raise arms wide squeezing shoulder blades.",
         "Lower with control."
       ],
-      youtube: "https://www.youtube.com/results?search_query=rear+delt+fly+proper+form"
+      youtube: "https://www.youtube.com/watch?v=EA7u4Q_8HQ0"
     },
     {
       title: "Arnold Press",
       image: "/myfolder/photos/ArnoldPress.png",
       steps: [
-        "Start with weights in front of shoulders, palms facing you.",
+        "Start with dumbbells in front of shoulders, palms facing you.",
         "Rotate palms outward as you press overhead.",
-        "Reach the top under control without arching your back.",
+        "Fully extend arms at the top.",
         "Reverse the motion on the way down."
       ],
-      youtube: "https://www.youtube.com/results?search_query=arnold+press+proper+form"
+      youtube: "https://www.youtube.com/watch?v=6Z15_WdXmVw"
     }
   ];
 
@@ -365,8 +352,7 @@
   const modalTitle = document.getElementById("modalTitle");
   const modalImage = document.getElementById("modalImage");
   const modalSteps = document.getElementById("modalSteps");
-  const modalYoutubeLink = document.getElementById("modalYoutubeLink");
-  const modalNote = document.getElementById("modalNote");
+  const modalYoutube = document.getElementById("modalYoutube");
 
   workouts.forEach(workout => {
     const card = document.createElement("div");
@@ -376,9 +362,43 @@
     cards.appendChild(card);
   });
 
+  function toYoutubeEmbedUrl(url) {
+    try {
+      const u = new URL(url);
+
+      // youtu.be/<id>
+      if (u.hostname.includes("youtu.be")) {
+        const id = u.pathname.replace("/", "");
+        return id ? `https://www.youtube.com/embed/${id}` : "";
+      }
+
+      // youtube.com/watch?v=<id>
+      if (u.hostname.includes("youtube.com")) {
+        const id = u.searchParams.get("v");
+        if (id) return `https://www.youtube.com/embed/${id}`;
+
+        // youtube.com/shorts/<id>
+        const parts = u.pathname.split("/").filter(Boolean);
+        const shortsIndex = parts.indexOf("shorts");
+        if (shortsIndex !== -1 && parts[shortsIndex + 1]) {
+          return `https://www.youtube.com/embed/${parts[shortsIndex + 1]}`;
+        }
+
+        // youtube.com/embed/<id>
+        const embedIndex = parts.indexOf("embed");
+        if (embedIndex !== -1 && parts[embedIndex + 1]) {
+          return `https://www.youtube.com/embed/${parts[embedIndex + 1]}`;
+        }
+      }
+    } catch (e) {}
+    return "";
+  }
+
   function showModal(workout) {
     modal.style.display = "block";
     modalTitle.textContent = workout.title;
+
+    // keep image assignment for compatibility (even though hidden)
     modalImage.src = workout.image;
 
     // instructions
@@ -391,19 +411,14 @@
       });
     }
 
-    // youtube link
-    if (workout.youtube && typeof workout.youtube === "string") {
-      modalYoutubeLink.href = workout.youtube;
-      modalYoutubeLink.style.display = "inline-block";
-      modalNote.style.display = "block";
-    } else {
-      modalYoutubeLink.style.display = "none";
-      modalNote.style.display = "none";
-    }
+    // youtube embed
+    const embedUrl = workout.youtube ? toYoutubeEmbedUrl(workout.youtube) : "";
+    modalYoutube.src = embedUrl || "";
   }
 
   function closeModal() {
     modal.style.display = "none";
+    modalYoutube.src = ""; // stop playback
   }
 
   window.onclick = e => {
