@@ -233,7 +233,14 @@
       <div class="instructions-title">Instructions</div>
       <ol class="steps-list" id="modalSteps"></ol>
       <hr class="divider" />
-      <iframe id="modalYoutube" class="youtube-embed"></iframe>
+      <iframe
+        id="modalYoutube"
+        class="youtube-embed"
+        src=""
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
     </div>
   </div>
 </div>
@@ -260,7 +267,7 @@
         "Squeeze your chest at the top without locking your elbows or shrugging your shoulders.",
         "Slowly return the weights back to the starting position with control."
       ],
-      youtube: "https://www.youtube.com/shorts/r7MricwWJMc
+      youtube: "https://www.youtube.com/shorts/r7MricwWJMc"
     },
     {
       title: "Push-Ups",
@@ -314,31 +321,66 @@
   function toYoutubeEmbedUrl(url) {
     try {
       const u = new URL(url);
-      if (u.hostname.includes("shorts")) {
-        const id = u.pathname.split("/").pop();
-        return `https://www.youtube.com/embed/${id}`;
+
+      // youtu.be/<id>
+      if (u.hostname.includes("youtu.be")) {
+        const id = u.pathname.replace("/", "");
+        return id ? `https://www.youtube.com/embed/${id}` : "";
       }
-      const id = u.searchParams.get("v");
-      return id ? `https://www.youtube.com/embed/${id}` : "";
-    } catch { return ""; }
+
+      // youtube.com/watch?v=<id> OR /shorts/<id> OR /embed/<id>
+      if (u.hostname.includes("youtube.com")) {
+        const id = u.searchParams.get("v");
+        if (id) return `https://www.youtube.com/embed/${id}`;
+
+        const parts = u.pathname.split("/").filter(Boolean);
+        const shortsIndex = parts.indexOf("shorts");
+        if (shortsIndex !== -1 && parts[shortsIndex + 1]) {
+          return `https://www.youtube.com/embed/${parts[shortsIndex + 1]}`;
+        }
+
+        const embedIndex = parts.indexOf("embed");
+        if (embedIndex !== -1 && parts[embedIndex + 1]) {
+          return `https://www.youtube.com/embed/${parts[embedIndex + 1]}`;
+        }
+      }
+    } catch (e) {}
+    return "";
   }
 
   function showModal(workout) {
     modal.style.display = "block";
     modalTitle.textContent = workout.title;
+
     modalSteps.innerHTML = "";
-    workout.steps.forEach(step => {
-      const li = document.createElement("li");
-      li.textContent = step;
-      modalSteps.appendChild(li);
-    });
-    modalYoutube.src = toYoutubeEmbedUrl(workout.youtube);
+    if (Array.isArray(workout.steps) && workout.steps.length) {
+      workout.steps.forEach(step => {
+        const li = document.createElement("li");
+        li.textContent = step;
+        modalSteps.appendChild(li);
+      });
+    }
+
+    const embedUrl = workout.youtube ? toYoutubeEmbedUrl(workout.youtube) : "";
+    modalYoutube.src = embedUrl || "";
   }
 
   function closeModal() {
     modal.style.display = "none";
-    modalYoutube.src = "";
+    modalYoutube.src = ""; // stop playback
   }
+
+  window.onclick = e => {
+    if (e.target === modal) closeModal();
+  };
+
+  const hamburger = document.getElementById("hamburger");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  hamburger.addEventListener("click", () => {
+    mobileMenu.style.display =
+      mobileMenu.style.display === "flex" ? "none" : "flex";
+  });
 </script>
 
 </body>
