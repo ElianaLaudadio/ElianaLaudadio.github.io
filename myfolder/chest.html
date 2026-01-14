@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Training Dashboard 💪</title>
 
+  <!-- ATKINSON HYPERLEGIBLE -->
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
@@ -220,6 +221,7 @@
       border-radius: 0;
     }
 
+    /* ---------- MOBILE ---------- */
     @media (max-width: 600px) {
       nav a { display: none; }
       #hamburger { display: block; }
@@ -247,7 +249,7 @@
 </nav>
 
 <section>
-  <h2 class="section-title">Chest</h2>
+  <h2 class="section-title">Shoulders</h2>
   <div class="cards" id="cards"></div>
 </section>
 
@@ -288,11 +290,61 @@
 
 <script>
   const workouts = [
-    { title: "Bench Press", image: "/myfolder/photos/ShoulderPress.png" },
-    { title: "Flies", image: "/myfolder/photos/LateralRaise.png" },
-    { title: "Push-Ups", image: "/myfolder/photos/FrontRaise.png" },
-    { title: "Incline Press", image: "/myfolder/photos/InclinePress.png" },
-    { title: "Floor Press", image: "/myfolder/photos/ArnoldPress.png" }
+    {
+      title: "Bench Press",
+      image: "/myfolder/photos/ShoulderPress.png",
+      steps: [
+        "Sit or stand with feet flat and core braced.",
+        "Start with dumbbells at shoulder height, elbows slightly in front of your body.",
+        "Press the dumbbells overhead until arms are fully extended (keep a slight bend in the elbow).",
+        "Lower back to shoulder height with control."
+      ],
+      youtube: "https://www.youtube.com/shorts/hWbUlkb5Ms4"
+    },
+    {
+      title: "Flies",
+      image: "/myfolder/photos/LateralRaise.png",
+      steps: [
+        "Hold dumbbells at your sides with a slight bend in elbows.",
+        "Raise arms out to shoulder height.",
+        "Pause briefly at the top.",
+        "Lower under control."
+      ],
+      youtube: "https://www.youtube.com/shorts/xyK8UiC-BUw"
+    },
+    {
+      title: "Push-Ups",
+      image: "/myfolder/photos/FrontRaise.png",
+      steps: [
+        "Hold dumbbells in front of thighs.",
+        "Raise arms forward to shoulder height.",
+        "Avoid swinging or using momentum.",
+        "Lower slowly."
+      ],
+      youtube: "https://www.youtube.com/shorts/h9xfpTrAvkE"
+    },
+    {
+      title: "Incline Press",
+      image: "/myfolder/photos/RearDeltFlys.png",
+      steps: [
+        "Hinge forward at hips keeping back flat.",
+        "Let dumbbells hang down.",
+        "Raise arms wide squeezing shoulder blades.",
+        "Lower with control."
+      ],
+      youtube: "https://www.youtube.com/shorts/LsT-bR_zxLo"
+    },
+    {
+      title: "Floor Press",
+      image: "/myfolder/photos/ArnoldPress.png",
+      steps: [
+        "Start with dumbbells in front of shoulders, palms facing you.",
+        "Rotate palms outward as you press overhead.",
+        "Fully extend arms at the top.",
+        "Reverse the motion on the way down."
+      ],
+      youtube: "https://www.youtube.com/shorts/Kg8JD8l6ezw"
+    }
   ];
 
   const cards = document.getElementById("cards");
@@ -349,49 +401,17 @@
     // keep image assignment for compatibility (even though hidden)
     modalImage.src = workout.image;
 
-    // basic default instructions per movement (keeps your chest workouts exactly as-is)
-    const defaultStepsMap = {
-      "Bench Press": [
-        "Lie on the bench with feet planted and shoulder blades pulled back.",
-        "Grip the bar just outside shoulder width and unrack over mid-chest.",
-        "Lower the bar to your mid-chest with control.",
-        "Press up to lockout while keeping wrists stacked over elbows."
-      ],
-      "Flies": [
-        "Lie back with dumbbells above your chest, palms facing each other.",
-        "Keep a soft bend in your elbows as you lower arms out wide.",
-        "Lower until you feel a stretch across the chest (don’t overextend shoulders).",
-        "Bring dumbbells back together over the chest with control."
-      ],
-      "Push-Ups": [
-        "Start in a strong plank with hands under or slightly wider than shoulders.",
-        "Lower your chest toward the floor while keeping your body in a straight line.",
-        "Press the floor away to return to the top.",
-        "Keep core tight and elbows at a comfortable angle (not flared excessively)."
-      ],
-      "Incline Press": [
-        "Set the bench to a slight incline and sit back with feet planted.",
-        "Start the weights at upper-chest height with elbows slightly in front of the body.",
-        "Press up and slightly back until arms are extended.",
-        "Lower back down with control to upper-chest level."
-      ],
-      "Floor Press": [
-        "Lie on the floor with knees bent and feet flat.",
-        "Start the dumbbells or bar over your chest with elbows tucked slightly.",
-        "Lower until upper arms gently touch the floor.",
-        "Press back up to lockout with control."
-      ]
-    };
-
+    // instructions
     modalSteps.innerHTML = "";
-    const steps = defaultStepsMap[workout.title] || [];
-    steps.forEach(step => {
-      const li = document.createElement("li");
-      li.textContent = step;
-      modalSteps.appendChild(li);
-    });
+    if (Array.isArray(workout.steps) && workout.steps.length) {
+      workout.steps.forEach(step => {
+        const li = document.createElement("li");
+        li.textContent = step;
+        modalSteps.appendChild(li);
+      });
+    }
 
-    // youtube embed (blank for now unless you add workout.youtube later)
+    // youtube embed
     const embedUrl = workout.youtube ? toYoutubeEmbedUrl(workout.youtube) : "";
     modalYoutube.src = embedUrl || "";
   }
