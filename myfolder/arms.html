@@ -129,6 +129,16 @@
       font-weight: 700;
     }
 
+    /* NEW: SIMPLE GROUP LABELS (matches existing typography) */
+    .group-label {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 6px 0 -8px;
+      color: var(--fg);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
     .modal {
       display: none;
       position: fixed;
@@ -249,6 +259,7 @@
   const workouts = [
     {
       title: "Biceps Curls",
+      group: "Biceps",
       image: "/myfolder/photos/ShoulderPress.png",
       steps: [
         "Stand tall with your core braced and elbows tucked close to your sides.",
@@ -260,6 +271,7 @@
     },
     {
       title: "Hammer Curls",
+      group: "Biceps",
       image: "/myfolder/photos/LateralRaise.png",
       steps: [
         "Stand tall holding weights at your sides with palms facing each other (neutral grip).",
@@ -271,6 +283,7 @@
     },
     {
       title: "Preacher Curls",
+      group: "Biceps",
       image: "/myfolder/photos/FrontRaise.png",
       steps: [
         "Set the preacher pad so your upper arms rest on it and your chest stays against the pad.",
@@ -281,51 +294,8 @@
       youtube: "https://www.youtube.com/shorts/WkFX6_GxAs8"
     },
     {
-      title: "Chin-Ups",
-      image: "/myfolder/photos/RearDeltFlys.png",
-      steps: [
-        "Grab the bar with an underhand grip about shoulder width and start from a dead hang.",
-        "Pull your shoulders down and back, then drive elbows down as you pull your chest toward the bar.",
-        "Bring your chin over the bar while keeping your body tight (avoid excessive swinging).",
-        "Lower slowly back to a full hang with control."
-      ],
-      youtube: "https://www.youtube.com/watch?v=6gvmcqr226U"
-    },
-    {
-      title: "Triceps Pushdowns",
-      image: "/myfolder/photos/ArnoldPress.png",
-      steps: [
-        "Set a cable at high position and grip the bar/rope with elbows tucked at your sides.",
-        "Start with forearms angled up, then press the handle down by extending your elbows.",
-        "Finish with arms straight and triceps squeezed (don’t let elbows drift forward).",
-        "Return slowly until forearms are back to the start position."
-      ],
-      youtube: "https://www.youtube.com/shorts/2-LAMcpzODU"
-    },
-    {
-      title: "Overhead Triceps Extensions",
-      image: "/myfolder/photos/ArnoldPress.png",
-      steps: [
-        "Hold a weight overhead with elbows pointing forward and close to your head.",
-        "Lower the weight behind your head by bending at the elbows (keep upper arms still).",
-        "Stop when you feel a stretch in the triceps.",
-        "Extend your elbows to press the weight back overhead without flaring elbows out."
-      ],
-      youtube: "https://www.youtube.com/shorts/TbH7B4q8G6U"
-    },
-    {
-      title: "Skull Crushers",
-      image: "/myfolder/photos/ArnoldPress.png",
-      steps: [
-        "Lie on a bench holding weights above your chest with arms straight.",
-        "Keep upper arms still and bend elbows to lower the weights toward your forehead.",
-        "Stop just above your head/forehead with control (don’t let elbows flare).",
-        "Extend elbows to return to the start, squeezing triceps at the top."
-      ],
-      youtube: "https://www.youtube.com/shorts/8v7n3bq1JgE"
-    },
-    {
       title: "Cable Curls",
+      group: "Biceps",
       image: "/myfolder/photos/ArnoldPress.png",
       steps: [
         "Set a cable at low position and grip the handle with palms facing up.",
@@ -337,6 +307,7 @@
     },
     {
       title: "Concentration Curls",
+      group: "Biceps",
       image: "/myfolder/photos/ArnoldPress.png",
       steps: [
         "Sit and brace your elbow against the inside of your thigh, letting the weight hang down.",
@@ -345,6 +316,54 @@
         "Lower slowly to a full stretch and repeat."
       ],
       youtube: "https://www.youtube.com/shorts/2q3E6Jk8xgQ"
+    },
+    {
+      title: "Chin-Ups",
+      group: "Biceps",
+      image: "/myfolder/photos/RearDeltFlys.png",
+      steps: [
+        "Grab the bar with an underhand grip about shoulder width and start from a dead hang.",
+        "Pull your shoulders down and back, then drive elbows down as you pull your chest toward the bar.",
+        "Bring your chin over the bar while keeping your body tight (avoid excessive swinging).",
+        "Lower slowly back to a full hang with control."
+      ],
+      youtube: "https://www.youtube.com/watch?v=6gvmcqr226U"
+    },
+    {
+      title: "Triceps Pushdowns",
+      group: "Triceps",
+      image: "/myfolder/photos/ArnoldPress.png",
+      steps: [
+        "Set a cable at high position and grip the bar/rope with elbows tucked at your sides.",
+        "Start with forearms angled up, then press the handle down by extending your elbows.",
+        "Finish with arms straight and triceps squeezed (don’t let elbows drift forward).",
+        "Return slowly until forearms are back to the start position."
+      ],
+      youtube: "https://www.youtube.com/shorts/2-LAMcpzODU"
+    },
+    {
+      title: "Overhead Triceps Extensions",
+      group: "Triceps",
+      image: "/myfolder/photos/ArnoldPress.png",
+      steps: [
+        "Hold a weight overhead with elbows pointing forward and close to your head.",
+        "Lower the weight behind your head by bending at the elbows (keep upper arms still).",
+        "Stop when you feel a stretch in the triceps.",
+        "Extend your elbows to press the weight back overhead without flaring elbows out."
+      ],
+      youtube: "https://www.youtube.com/shorts/TbH7B4q8G6U"
+    },
+    {
+      title: "Skull Crushers",
+      group: "Triceps",
+      image: "/myfolder/photos/ArnoldPress.png",
+      steps: [
+        "Lie on a bench holding weights above your chest with arms straight.",
+        "Keep upper arms still and bend elbows to lower the weights toward your forehead.",
+        "Stop just above your head/forehead with control (don’t let elbows flare).",
+        "Extend elbows to return to the start, squeezing triceps at the top."
+      ],
+      youtube: "https://www.youtube.com/shorts/8v7n3bq1JgE"
     }
   ];
 
@@ -354,13 +373,43 @@
   const modalSteps = document.getElementById("modalSteps");
   const modalYoutube = document.getElementById("modalYoutube");
 
-  workouts.forEach(workout => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML = `<h3>${workout.title}</h3>`;
-    card.onclick = () => showModal(workout);
-    cards.appendChild(card);
+  // NEW: group display order + simple labels
+  const groupOrder = ["Biceps", "Triceps"];
+
+  groupOrder.forEach(groupName => {
+    const groupItems = workouts.filter(w => (w.group || "Other") === groupName);
+    if (!groupItems.length) return;
+
+    const label = document.createElement("div");
+    label.className = "group-label";
+    label.textContent = groupName;
+    cards.appendChild(label);
+
+    groupItems.forEach(workout => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `<h3>${workout.title}</h3>`;
+      card.onclick = () => showModal(workout);
+      cards.appendChild(card);
+    });
   });
+
+  // If anything isn't tagged, it will still render after groups (keeps page from "losing" items)
+  const ungrouped = workouts.filter(w => !groupOrder.includes(w.group));
+  if (ungrouped.length) {
+    const label = document.createElement("div");
+    label.className = "group-label";
+    label.textContent = "Other";
+    cards.appendChild(label);
+
+    ungrouped.forEach(workout => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `<h3>${workout.title}</h3>`;
+      card.onclick = () => showModal(workout);
+      cards.appendChild(card);
+    });
+  }
 
   function toYoutubeEmbedUrl(url) {
     try {
