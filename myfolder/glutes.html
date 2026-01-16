@@ -129,16 +129,6 @@
       font-weight: 700;
     }
 
-    /* NEW: SIMPLE GROUP LABELS (matches existing typography) */
-    .group-label {
-      font-size: 18px;
-      font-weight: 700;
-      margin: 6px 0 -8px;
-      color: var(--fg);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
     .modal {
       display: none;
       position: fixed;
@@ -258,112 +248,125 @@
 <script>
   const workouts = [
     {
-      title: "Biceps Curls",
-      group: "Biceps",
+      title: "Barbell Hip Thrust",
       image: "/myfolder/photos/ShoulderPress.png",
       steps: [
-        "Stand tall with your core braced and elbows tucked close to your sides.",
-        "Start with the weight at your thighs, palms facing forward.",
-        "Curl the weight up by bending at the elbow (avoid swinging your torso).",
-        "Lower slowly back to the start until your arms are straight."
+        "Sit on the floor with your upper back against a bench and feet flat, about shoulder-width apart.",
+        "Place the weight across your hips and brace your core, keeping ribs down.",
+        "Drive through your heels to lift hips until your torso is parallel to the floor, squeezing glutes hard at the top.",
+        "Lower with control until hips are just above the floor and repeat."
       ],
-      youtube: "https://www.youtube.com/shorts/j1FjaWu5Am4"
+      youtube: "https://www.youtube.com/shorts/hnSqbBk15tw"
     },
     {
-      title: "Hammer Curls",
-      group: "Biceps",
+      title: "Glute Bridge",
       image: "/myfolder/photos/LateralRaise.png",
       steps: [
-        "Stand tall holding weights at your sides with palms facing each other (neutral grip).",
-        "Keep elbows close to your ribs and curl the weights up without rotating your wrists.",
-        "Pause briefly at the top while keeping shoulders down.",
-        "Lower the weights under control back to your sides."
+        "Lie on your back with knees bent and feet flat about hip-width apart.",
+        "Brace your core and tuck your pelvis slightly so your low back stays neutral.",
+        "Drive through your heels to lift hips up, squeezing glutes at the top.",
+        "Lower slowly back down and repeat without bouncing."
       ],
-      youtube: "https://www.youtube.com/shorts/kl_jpIYbKo4"
+      youtube: "https://www.youtube.com/shorts/Kh2WA2Y1M0k"
     },
     {
-      title: "Preacher Curls",
-      group: "Biceps",
+      title: "Romanian Deadlift",
       image: "/myfolder/photos/FrontRaise.png",
       steps: [
-        "Set the preacher pad so your upper arms rest on it and your chest stays against the pad.",
-        "Start with the weight lowered and elbows extended, keeping your upper arms pinned to the pad.",
-        "Curl the weight up until you feel your biceps fully contract (don’t lift your upper arms).",
-        "Lower slowly back down to a full stretch with control."
+        "Stand tall holding the weight in front of your thighs, knees slightly bent.",
+        "Hinge at the hips by pushing them back while keeping a flat back and shoulders down.",
+        "Lower the weight along your legs until you feel a stretch in hamstrings/glutes (don’t round your back).",
+        "Drive hips forward to stand tall and squeeze glutes at the top."
       ],
-      youtube: "https://www.youtube.com/shorts/P13VQDU1q9c"
+      youtube: "https://www.youtube.com/shorts/WkFX6_GxAs8"
     },
     {
-      title: "Cable Curls",
-      group: "Biceps",
-      image: "/myfolder/photos/ArnoldPress.png",
-      steps: [
-        "Set a cable at low position and grip the handle with palms facing up.",
-        "Stand tall with elbows pinned to your sides and start with arms straight.",
-        "Curl the handle up toward your shoulders without leaning back.",
-        "Lower slowly until arms are fully extended again."
-      ],
-      youtube: "https://www.youtube.com/shorts/4XQLqBelbPw"
-    },
-    {
-      title: "Concentration Curls",
-      group: "Biceps",
-      image: "/myfolder/photos/ArnoldPress.png",
-      steps: [
-        "Sit and brace your elbow against the inside of your thigh, letting the weight hang down.",
-        "Curl the weight up while keeping your upper arm still and shoulder relaxed.",
-        "Squeeze the biceps at the top without swinging.",
-        "Lower slowly to a full stretch and repeat."
-      ],
-      youtube: "https://www.youtube.com/shorts/I_bKCYL2nL8"
-    },
-    {
-      title: "Chin-Ups",
-      group: "Biceps",
+      title: "Bulgarian Split Squat (Glute Focus)",
       image: "/myfolder/photos/RearDeltFlys.png",
       steps: [
-        "Grab the bar with an underhand grip about shoulder width and start from a dead hang.",
-        "Pull your shoulders down and back, then drive elbows down as you pull your chest toward the bar.",
-        "Bring your chin over the bar while keeping your body tight (avoid excessive swinging).",
-        "Lower slowly back to a full hang with control."
+        "Stand a step or two in front of a bench and place your back foot on the bench.",
+        "Lean your torso slightly forward and keep most of your weight through the front heel.",
+        "Lower until your front thigh is near parallel, keeping knee tracking over toes.",
+        "Drive through the front heel to stand and squeeze the glute at the top."
       ],
-      youtube: "https://www.youtube.com/shorts/jIvbJzs1V4I"
+      youtube: "https://www.youtube.com/watch?v=6gvmcqr226U"
     },
     {
-      title: "Triceps Pushdowns",
-      group: "Triceps",
+      title: "Step-Ups",
       image: "/myfolder/photos/ArnoldPress.png",
       steps: [
-        "Set a cable at high position and grip the bar/rope with elbows tucked at your sides.",
-        "Start with forearms angled up, then press the handle down by extending your elbows.",
-        "Finish with arms straight and triceps squeezed (don’t let elbows drift forward).",
-        "Return slowly until forearms are back to the start position."
+        "Stand facing a sturdy box/bench and place one foot fully on top.",
+        "Lean slightly forward and drive through the top heel to stand up on the box.",
+        "Bring the other foot up to meet it without pushing off hard from the floor.",
+        "Step down with control and repeat all reps on one side before switching."
       ],
-      youtube: "https://www.youtube.com/shorts/4NWWB0f0vzQ"
+      youtube: "https://www.youtube.com/shorts/OEXosPwzFdc"
     },
     {
-      title: "Overhead Triceps Extensions",
-      group: "Triceps",
+      title: "Cable Kickbacks",
       image: "/myfolder/photos/ArnoldPress.png",
       steps: [
-        "Hold a weight overhead with elbows pointing forward and close to your head.",
-        "Lower the weight behind your head by bending at the elbows (keep upper arms still).",
-        "Stop when you feel a stretch in the triceps.",
-        "Extend your elbows to press the weight back overhead without flaring elbows out."
+        "Attach an ankle strap to a low cable and stand facing the machine holding for balance.",
+        "Brace your core and keep a slight bend in the working knee.",
+        "Kick your leg back and slightly up by squeezing the glute (don’t arch your low back).",
+        "Return slowly to the start without letting the stack slam, then repeat."
       ],
-      youtube: "https://www.youtube.com/shorts/b_r_LW4HEcM"
+      youtube: "https://www.youtube.com/shorts/T4tUwAoPlwE"
     },
     {
-      title: "Skull Crushers",
-      group: "Triceps",
+      title: "Frog Pumps",
       image: "/myfolder/photos/ArnoldPress.png",
       steps: [
-        "Lie on a bench holding weights above your chest with arms straight.",
-        "Keep upper arms still and bend elbows to lower the weights toward your forehead.",
-        "Stop just above your head/forehead with control (don’t let elbows flare).",
-        "Extend elbows to return to the start, squeezing triceps at the top."
+        "Lie on your back and bring the soles of your feet together, knees out wide.",
+        "Scoot your feet closer so your heels are near your glutes.",
+        "Drive through your heels to lift hips and squeeze glutes at the top.",
+        "Lower with control and repeat for higher reps."
       ],
-      youtube: "https://www.youtube.com/shorts/HurmGkvE5s0"
+      youtube: "https://www.youtube.com/shorts/lnec6DdscJU"
+    },
+    {
+      title: "Banded Lateral Walks",
+      image: "/myfolder/photos/ArnoldPress.png",
+      steps: [
+        "Place a band around your legs (above knees or at ankles) and stand with knees slightly bent.",
+        "Brace your core and keep hips level (no swaying).",
+        "Step sideways with control, keeping constant band tension.",
+        "Take several steps one direction, then return the other way."
+      ],
+      youtube: "https://www.youtube.com/shorts/3cR8rElT5sY"
+    },
+    {
+      title: "Single-Leg Glute Bridge",
+      image: "/myfolder/photos/ArnoldPress.png",
+      steps: [
+        "Lie on your back with one knee bent and the other leg extended.",
+        "Brace your core and keep hips square.",
+        "Drive through the planted heel to lift hips, squeezing the working glute at the top.",
+        "Lower slowly and repeat before switching sides."
+      ],
+      youtube: "https://www.youtube.com/shorts/DVxfKB0BnlY"
+    },
+    {
+      title: "Sumo Squat",
+      image: "/myfolder/photos/ArnoldPress.png",
+      steps: [
+        "Stand with a wide stance and toes turned slightly out, holding a weight at chest level or between legs.",
+        "Brace your core and sit hips down and back while keeping knees tracking over toes.",
+        "Lower until you feel a strong stretch through inner thighs/glutes without rounding your back.",
+        "Drive through your heels to stand tall and squeeze glutes at the top."
+      ],
+      youtube: "https://www.youtube.com/shorts/hnSqbBk15tw"
+    },
+    {
+      title: "Reverse Lunge (Glute Focus)",
+      image: "/myfolder/photos/ArnoldPress.png",
+      steps: [
+        "Stand tall and step one foot back into a reverse lunge.",
+        "Keep a slight forward torso lean and most of your weight through the front heel.",
+        "Lower until front thigh is near parallel, keeping knee tracking over toes.",
+        "Drive through the front heel to return to standing and squeeze glute at the top."
+      ],
+      youtube: "https://www.youtube.com/shorts/Kh2WA2Y1M0k"
     }
   ];
 
@@ -373,43 +376,13 @@
   const modalSteps = document.getElementById("modalSteps");
   const modalYoutube = document.getElementById("modalYoutube");
 
-  // NEW: group display order + simple labels
-  const groupOrder = ["Biceps", "Triceps"];
-
-  groupOrder.forEach(groupName => {
-    const groupItems = workouts.filter(w => (w.group || "Other") === groupName);
-    if (!groupItems.length) return;
-
-    const label = document.createElement("div");
-    label.className = "group-label";
-    label.textContent = groupName;
-    cards.appendChild(label);
-
-    groupItems.forEach(workout => {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `<h3>${workout.title}</h3>`;
-      card.onclick = () => showModal(workout);
-      cards.appendChild(card);
-    });
+  workouts.forEach(workout => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `<h3>${workout.title}</h3>`;
+    card.onclick = () => showModal(workout);
+    cards.appendChild(card);
   });
-
-  // If anything isn't tagged, it will still render after groups (keeps page from "losing" items)
-  const ungrouped = workouts.filter(w => !groupOrder.includes(w.group));
-  if (ungrouped.length) {
-    const label = document.createElement("div");
-    label.className = "group-label";
-    label.textContent = "Other";
-    cards.appendChild(label);
-
-    ungrouped.forEach(workout => {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `<h3>${workout.title}</h3>`;
-      card.onclick = () => showModal(workout);
-      cards.appendChild(card);
-    });
-  }
 
   function toYoutubeEmbedUrl(url) {
     try {
