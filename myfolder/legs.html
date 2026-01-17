@@ -251,6 +251,16 @@
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen
       ></iframe>
+
+      <iframe
+        id="modalYoutube2"
+        class="youtube-embed"
+        src=""
+        title="YouTube video player 2"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        style="display:none; margin-top: 16px;"
+      ></iframe>
     </div>
   </div>
 </div>
@@ -378,6 +388,7 @@
   const modalTitle = document.getElementById("modalTitle");
   const modalSteps = document.getElementById("modalSteps");
   const modalYoutube = document.getElementById("modalYoutube");
+  const modalYoutube2 = document.getElementById("modalYoutube2");
 
   // NEW: group display order + simple labels
   const groupOrder = ["Quads", "Hamstrings"];
@@ -463,17 +474,21 @@
     const embedUrl = workout.youtube ? toYoutubeEmbedUrl(workout.youtube) : "";
     const embedUrl2 = workout.youtube2 ? toYoutubeEmbedUrl(workout.youtube2) : "";
 
-    if (embedUrl && embedUrl2) {
-      const id2 = embedUrl2.split("/").pop().split("?")[0];
-      modalYoutube.src = embedUrl + (embedUrl.includes("?") ? "&" : "?") + "playlist=" + id2;
+    modalYoutube.src = embedUrl || "";
+    if (embedUrl2) {
+      modalYoutube2.style.display = "block";
+      modalYoutube2.src = embedUrl2;
     } else {
-      modalYoutube.src = embedUrl || embedUrl2 || "";
+      modalYoutube2.style.display = "none";
+      modalYoutube2.src = "";
     }
   }
 
   function closeModal() {
     modal.style.display = "none";
     modalYoutube.src = ""; // stop playback
+    modalYoutube2.src = ""; // stop playback
+    modalYoutube2.style.display = "none";
   }
 
   window.onclick = e => {
