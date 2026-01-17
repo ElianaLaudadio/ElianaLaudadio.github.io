@@ -280,7 +280,8 @@
         "Keep your chest tall as you drive through your whole foot to stand.",
         "Control the descent and repeat."
       ],
-      youtube: "https://www.youtube.com/shorts/7-80HiXX1K8"
+      youtube: "https://www.youtube.com/shorts/7-80HiXX1K8",
+      youtube2: "https://www.youtube.com/watch?v=MeIiIdhvXT4"
     },
     {
       title: "Front Squats",
@@ -460,7 +461,14 @@
     }
 
     const embedUrl = workout.youtube ? toYoutubeEmbedUrl(workout.youtube) : "";
-    modalYoutube.src = embedUrl || "";
+    const embedUrl2 = workout.youtube2 ? toYoutubeEmbedUrl(workout.youtube2) : "";
+
+    if (embedUrl && embedUrl2) {
+      const id2 = embedUrl2.split("/").pop().split("?")[0];
+      modalYoutube.src = embedUrl + (embedUrl.includes("?") ? "&" : "?") + "playlist=" + id2;
+    } else {
+      modalYoutube.src = embedUrl || embedUrl2 || "";
+    }
   }
 
   function closeModal() {
