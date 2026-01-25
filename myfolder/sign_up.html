@@ -28,6 +28,7 @@
     padding-bottom: 60px;
   }
 
+  /* ---------- SECTION ---------- */
   section {
     max-width: 720px;
     margin: 0 auto 30px;
@@ -39,6 +40,7 @@
     font-weight: 700;
   }
 
+  /* ---------- FORM CARDS ---------- */
   .form-page {
     background: var(--card-bg);
     border: 2px solid var(--border);
@@ -129,6 +131,7 @@
 
     <form id="signup" novalidate>
 
+      <!-- PAGE 1 -->
       <div class="form-page" id="page1">
         <label>Full Name</label>
         <input type="text" name="fullName">
@@ -156,6 +159,7 @@
         </div>
       </div>
 
+      <!-- PAGE 2 -->
       <div class="form-page hidden" id="page2">
         <h3>Goals / Physiological Analysis</h3>
 
@@ -167,6 +171,13 @@
         </select>
 
         <div id="weightGoals" class="hidden">
+          <label>Which package would you like to sign up for?</label>
+          <select name="packageType">
+            <option value="">-- Select --</option>
+            <option value="accountability">Accountability</option>
+            <option value="personal_training">Personal Training</option>
+          </select>
+
           <label>Tell me about your goals</label>
           <textarea name="weightGoalDesc" rows="3"></textarea>
 
@@ -221,6 +232,7 @@
         </div>
       </div>
 
+      <!-- PAGE 3 -->
       <div class="form-page hidden" id="page3">
         <h3>Injury Analysis</h3>
 
@@ -236,6 +248,7 @@
         </div>
       </div>
 
+      <!-- PAGE 4 -->
       <div class="form-page hidden" id="page4">
         <h3>Preferences</h3>
 
