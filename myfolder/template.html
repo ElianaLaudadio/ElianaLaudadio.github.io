@@ -311,7 +311,7 @@
   </section>
 
   <section id="go-to-cart">
-    <button onclick="location.href='/Users/elianalaudadio/Desktop/Portfolio/cart.html'">Submit</button>
+    <button id="submitBtn" type="button">Submit</button>
   </section>
 </main>
 
@@ -387,7 +387,24 @@ if(proteinPercent>=100&&!proteinConfettiFired){confetti({particleCount:200,sprea
 if(caloriePercent>=100&&!calorieConfettiFired){confetti({particleCount:200,spread:100,origin:{y:0.6}});confettiSound.play();calorieConfettiFired=true;}else if(caloriePercent<100)calorieConfettiFired=false;
 }
 
+function submitCelebrate(){
+  const confettiSound = document.getElementById('celebrationSound');
+  confetti({
+    particleCount: 260,
+    spread: 140,
+    origin: { y: 0.6 }
+  });
+  confetti({
+    particleCount: 180,
+    spread: 90,
+    origin: { y: 0.65 }
+  });
+  confettiSound.play();
+}
+
 window.onload=()=>{displayGoals();updateChart();calculateProgress();}
+
+document.getElementById('submitBtn').addEventListener('click', submitCelebrate);
 
 const hamburger=document.getElementById('hamburger');
 const mobileMenu=document.getElementById('mobile-menu');
