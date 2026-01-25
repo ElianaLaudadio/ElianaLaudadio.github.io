@@ -28,7 +28,6 @@
     padding-bottom: 60px;
   }
 
-  /* ---------- SECTION ---------- */
   section {
     max-width: 720px;
     margin: 0 auto 30px;
@@ -40,7 +39,6 @@
     font-weight: 700;
   }
 
-  /* ---------- FORM CARDS ---------- */
   .form-page {
     background: var(--card-bg);
     border: 2px solid var(--border);
@@ -131,7 +129,6 @@
 
     <form id="signup" novalidate>
 
-      <!-- PAGE 1 -->
       <div class="form-page" id="page1">
         <label>Full Name</label>
         <input type="text" name="fullName">
@@ -159,7 +156,6 @@
         </div>
       </div>
 
-      <!-- PAGE 2 -->
       <div class="form-page hidden" id="page2">
         <h3>Goals / Physiological Analysis</h3>
 
@@ -225,7 +221,6 @@
         </div>
       </div>
 
-      <!-- PAGE 3 -->
       <div class="form-page hidden" id="page3">
         <h3>Injury Analysis</h3>
 
@@ -241,7 +236,6 @@
         </div>
       </div>
 
-      <!-- PAGE 4 -->
       <div class="form-page hidden" id="page4">
         <h3>Preferences</h3>
 
@@ -323,11 +317,17 @@
   });
 
   function launchConfetti() {
+
+    const colors = [
+      "#A50021","#FF3B30","#FF9500","#FFCC00",
+      "#34C759","#00C7BE","#007AFF","#5856D6","#FF2D55"
+    ];
+
     for (let i = 0; i < 120; i++) {
       const confetti = document.createElement("div");
       confetti.className = "confetti";
       confetti.style.left = Math.random() * 100 + "vw";
-      confetti.style.backgroundColor = ["#d9c7b1","#ece9e6","#555555"][Math.floor(Math.random()*3)];
+      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
       confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
       document.body.appendChild(confetti);
 
