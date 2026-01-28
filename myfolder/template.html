@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
       --bg: #f5f4f2;
@@ -318,6 +319,65 @@
 <audio id="celebrationSound" src="https://assets.mixkit.co/sfx/preview/mixkit-small-group-cheer-and-applause-518.mp3" preload="auto"></audio>
 
 <script>
+const SUPABASE_URL = "YOUR_SUPABASE_URL";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+const supabase = (SUPABASE_URL !== "YOUR_SUPABASE_URL" && SUPABASE_ANON_KEY !== "YOUR_SUPABASE_ANON_KEY")
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  : null;
+
+async function getUserId() {
+  if (!supabase) return null;
+  const { data } = await supabase.auth.getUser();
+  return data?.user?.id || null;
+}
+
+async function loadUserData(key) {
+  const userId = await getUserId();
+  if (!userId) return null;
+
+  const { data, error } = await supabase
+    .from("user_data")
+    .select("data")
+    .eq("user_id", userId)
+    .eq("key", key)
+    .maybeSingle();
+
+  if (error) return null;
+  return data?.data ?? null;
+}
+
+async function saveUserData(key, obj) {
+  const userId = await getUserId();
+  if (!userId) return;
+
+  await supabase
+    .from("user_data")
+    .upsert({
+      user_id: userId,
+      key,
+      data: obj,
+      updated_at: new Date().toISOString()
+    });
+}
+
+function debounce(fn, wait = 500) {
+  let t;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), wait);
+  };
+}
+
+const saveDailyInputsDebounced = debounce(async () => {
+  const daily = {
+    protein: document.getElementById('protein').value || "",
+    carbs: document.getElementById('carbs').value || "",
+    fat: document.getElementById('fat').value || ""
+  };
+  localStorage.setItem('dailyInputs', JSON.stringify(daily));
+  await saveUserData('dailyInputs', daily);
+}, 600);
+
 const ctx = document.getElementById('weightChart').getContext('2d');
 let weightData = JSON.parse(localStorage.getItem('weightEntries')||'[]');
 
@@ -349,11 +409,11 @@ let chart = new Chart(ctx, {
 });
 
 function getTodayDate(){const t=new Date();return t.toISOString().split('T')[0];}
-function addWeight(){const w=parseFloat(document.getElementById('weight-input').value);if(isNaN(w))return alert('Please enter a valid weight.');const d=getTodayDate();weightData.push({date:d,weight:w});localStorage.setItem('weightEntries',JSON.stringify(weightData));updateChart();document.getElementById('weight-input').value='';}
-function deleteLastEntry(){if(weightData.length===0){alert('No entries to delete.');return;}weightData.pop();localStorage.setItem('weightEntries',JSON.stringify(weightData));updateChart();}
+async function addWeight(){const w=parseFloat(document.getElementById('weight-input').value);if(isNaN(w))return alert('Please enter a valid weight.');const d=getTodayDate();weightData.push({date:d,weight:w});localStorage.setItem('weightEntries',JSON.stringify(weightData));await saveUserData('weightEntries', weightData);updateChart();document.getElementById('weight-input').value='';}
+async function deleteLastEntry(){if(weightData.length===0){alert('No entries to delete.');return;}weightData.pop();localStorage.setItem('weightEntries',JSON.stringify(weightData));await saveUserData('weightEntries', weightData);updateChart();}
 function updateChart(){chart.data.labels=weightData.map(e=>e.date);chart.data.datasets[0].data=weightData.map(e=>e.weight);chart.update();}
 
-function saveGoals(){const g={weight:document.getElementById('goal-weight').value,calories:document.getElementById('calories-goal').value,protein:document.getElementById('protein-goal').value,carbs:document.getElementById('carbs-goal').value,fats:document.getElementById('fats-goal').value};localStorage.setItem('macroGoals',JSON.stringify(g));displayGoals();calculateProgress();}
+async function saveGoals(){const g={weight:document.getElementById('goal-weight').value,calories:document.getElementById('calories-goal').value,protein:document.getElementById('protein-goal').value,carbs:document.getElementById('carbs-goal').value,fats:document.getElementById('fats-goal').value};localStorage.setItem('macroGoals',JSON.stringify(g));await saveUserData('macroGoals', g);displayGoals();calculateProgress();}
 function displayGoals(){const g=JSON.parse(localStorage.getItem('macroGoals'));if(!g)return;document.getElementById('display-weight').textContent=g.weight?g.weight+' lbs':'–';document.getElementById('display-calories').textContent=g.calories?g.calories+' kcal':'–';document.getElementById('display-protein').textContent=g.protein?g.protein+' g':'–';document.getElementById('display-carbs').textContent=g.carbs?g.carbs+' g':'–';document.getElementById('display-fats').textContent=g.fats?g.fats+' g':'–';}
 
 let proteinConfettiFired=false;let calorieConfettiFired=false;
@@ -385,6 +445,8 @@ document.getElementById('calorieMessage').textContent=caloriePercent>=100?'Calor
 const confettiSound=document.getElementById('celebrationSound');
 if(proteinPercent>=100&&!proteinConfettiFired){confetti({particleCount:200,spread:100,origin:{y:0.6}});confettiSound.play();proteinConfettiFired=true;}else if(proteinPercent<100)proteinConfettiFired=false;
 if(caloriePercent>=100&&!calorieConfettiFired){confetti({particleCount:200,spread:100,origin:{y:0.6}});confettiSound.play();calorieConfettiFired=true;}else if(caloriePercent<100)calorieConfettiFired=false;
+
+saveDailyInputsDebounced();
 }
 
 function submitCelebrate(){
@@ -402,7 +464,34 @@ function submitCelebrate(){
   confettiSound.play();
 }
 
-window.onload=()=>{displayGoals();updateChart();calculateProgress();}
+window.onload = async () => {
+  if (supabase) {
+    const remoteGoals = await loadUserData('macroGoals');
+    if (remoteGoals) localStorage.setItem('macroGoals', JSON.stringify(remoteGoals));
+
+    const remoteWeights = await loadUserData('weightEntries');
+    if (Array.isArray(remoteWeights)) {
+      weightData = remoteWeights;
+      localStorage.setItem('weightEntries', JSON.stringify(weightData));
+    }
+
+    const remoteDaily = await loadUserData('dailyInputs');
+    if (remoteDaily && typeof remoteDaily === 'object') {
+      localStorage.setItem('dailyInputs', JSON.stringify(remoteDaily));
+    }
+  }
+
+  const dailyLocal = JSON.parse(localStorage.getItem('dailyInputs') || 'null');
+  if (dailyLocal) {
+    document.getElementById('protein').value = dailyLocal.protein ?? "";
+    document.getElementById('carbs').value = dailyLocal.carbs ?? "";
+    document.getElementById('fat').value = dailyLocal.fat ?? "";
+  }
+
+  displayGoals();
+  updateChart();
+  calculateProgress();
+};
 
 document.getElementById('submitBtn').addEventListener('click', submitCelebrate);
 
