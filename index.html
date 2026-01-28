@@ -231,7 +231,14 @@
     });
 
     loginSubmit.addEventListener('click', () => {
-      window.location.href = "/myfolder/template.html";
+      const email = (document.getElementById('email').value || '').trim().toLowerCase();
+      const password = document.getElementById('password').value || '';
+
+      if (email === 'laudadioreliana@gmail.com' && password === 'Passw0rd') {
+        window.location.href = "/myfolder/template.html";
+      } else {
+        alert('Incorrect email or password.');
+      }
     });
   </script>
 </body>
