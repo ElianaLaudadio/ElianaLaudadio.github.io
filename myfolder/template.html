@@ -329,7 +329,7 @@ let weightData = JSON.parse(localStorage.getItem('weightEntries')||'[]');
 let chart = new Chart(ctx, {
   type:'line',
   data:{
-    labels: weightData.map(e=>e.label || e.date),
+    labels: weightData.map(e=>e.date),
     datasets:[{
       label:'Weight (lbs)',
       data: weightData.map(e=>e.weight),
@@ -360,19 +360,7 @@ function getTodayDate(){
   return d.toISOString().split('T')[0];
 }
 
-/* ✅ nice label when there are multiple same-day entries */
-function formatTimeLabel(isoString){
-  try{
-    const d = new Date(isoString);
-    const hh = String(d.getHours()).padStart(2,'0');
-    const mm = String(d.getMinutes()).padStart(2,'0');
-    return `${hh}:${mm}`;
-  } catch(e){
-    return '';
-  }
-}
-
-/* -------------------- SUPABASE HELPERS (NEW) -------------------- */
+/* -------------------- SUPABASE HELPERS -------------------- */
 function getSupabaseClientSafe(){
   const a = window.auth;
   const client = a && (a.supabase || a.client);
@@ -381,12 +369,12 @@ function getSupabaseClientSafe(){
   }
   return client || null;
 }
-/* ------------------ END SUPABASE HELPERS (NEW) ------------------ */
+/* ------------------ END SUPABASE HELPERS ------------------ */
 
-/* -------------------- SUPABASE WEIGHT LOGS (UPDATED) -------------------- */
-/* NEW behavior:
-   - Each Add Entry => INSERT a new row (history)
-   - Load all rows ordered by created_at
+/* -------------------- SUPABASE WEIGHT LOGS (CHANGED TO UPSERT) -------------------- */
+/* Behavior:
+   - One row per user per day (matches your UNIQUE(user_id, date))
+   - Chart loads ALL days for that user (history over time)
 */
 async function loadWeightsFromDB(){
   try {
@@ -401,9 +389,9 @@ async function loadWeightsFromDB(){
 
     const { data, error } = await sb
       .from("weight_logs")
-      .select("id, date, weight, created_at")
+      .select("date, weight")
       .eq("user_id", user.id)
-      .order("created_at", { ascending: true });
+      .order("date", { ascending: true });
 
     if (error) {
       console.warn("Could not load weights from DB:", error.message || error);
@@ -411,19 +399,10 @@ async function loadWeightsFromDB(){
     }
 
     const rows = data || [];
-    if (rows.length === 0) return;
-
-    weightData = rows.map(r => {
-      const day = r.date || '';
-      const t = r.created_at ? formatTimeLabel(r.created_at) : '';
-      return {
-        id: r.id ?? null,
-        date: day,
-        label: t ? `${day} ${t}` : day,
-        weight: Number(r.weight),
-        created_at: r.created_at ?? null
-      };
-    });
+    weightData = rows.map(r => ({
+      date: r.date,
+      weight: Number(r.weight)
+    }));
 
     localStorage.setItem('weightEntries', JSON.stringify(weightData));
     updateChart();
@@ -432,42 +411,7 @@ async function loadWeightsFromDB(){
   }
 }
 
-async function insertWeightToDB(dateStr, weightVal){
-  try {
-    const a = window.auth;
-    if (!a || !a.getUser) return null;
-
-    const user = await a.getUser();
-    if (!user) return null;
-
-    const sb = getSupabaseClientSafe();
-    if (!sb) return null;
-
-    const payload = {
-      user_id: user.id,
-      date: dateStr,
-      weight: weightVal
-    };
-
-    const { data, error } = await sb
-      .from("weight_logs")
-      .insert(payload)
-      .select("id, date, weight, created_at")
-      .single();
-
-    if (error) {
-      console.warn("Could not insert weight to DB:", error.message || error);
-      return null;
-    }
-
-    return data || null;
-  } catch (e) {
-    console.warn("insertWeightToDB failed:", e);
-    return null;
-  }
-}
-
-async function deleteWeightRowFromDB(row){
+async function upsertWeightToDB(dateStr, weightVal){
   try {
     const a = window.auth;
     if (!a || !a.getUser) return;
@@ -478,89 +422,70 @@ async function deleteWeightRowFromDB(row){
     const sb = getSupabaseClientSafe();
     if (!sb) return;
 
-    // Best: delete by id if available
-    if (row && row.id) {
-      const { error } = await sb
-        .from("weight_logs")
-        .delete()
-        .eq("id", row.id)
-        .eq("user_id", user.id);
+    const payload = {
+      user_id: user.id,
+      date: dateStr,
+      weight: weightVal
+    };
 
-      if (error) console.warn("Could not delete weight row by id:", error.message || error);
-      return;
-    }
+    const { error } = await sb
+      .from("weight_logs")
+      .upsert(payload, { onConflict: "user_id,date" });
 
-    // Fallback: delete latest matching row (date+weight) by created_at
-    if (row && row.date != null && row.weight != null) {
-      const { data, error: findErr } = await sb
-        .from("weight_logs")
-        .select("id, created_at")
-        .eq("user_id", user.id)
-        .eq("date", row.date)
-        .eq("weight", row.weight)
-        .order("created_at", { ascending: false })
-        .limit(1);
-
-      if (findErr) {
-        console.warn("Could not find row to delete:", findErr.message || findErr);
-        return;
-      }
-
-      const found = (data && data[0]) ? data[0] : null;
-      if (!found) return;
-
-      const { error: delErr } = await sb
-        .from("weight_logs")
-        .delete()
-        .eq("id", found.id)
-        .eq("user_id", user.id);
-
-      if (delErr) console.warn("Could not delete found row:", delErr.message || delErr);
+    if (error) {
+      console.warn("Could not upsert weight to DB:", error.message || error);
     }
   } catch (e) {
-    console.warn("deleteWeightRowFromDB failed:", e);
+    console.warn("upsertWeightToDB failed:", e);
   }
 }
-/* ------------------ END SUPABASE WEIGHT LOGS (UPDATED) ------------------ */
+
+async function deleteWeightFromDB(dateStr){
+  try {
+    const a = window.auth;
+    if (!a || !a.getUser) return;
+
+    const user = await a.getUser();
+    if (!user) return;
+
+    const sb = getSupabaseClientSafe();
+    if (!sb) return;
+
+    const { error } = await sb
+      .from("weight_logs")
+      .delete()
+      .eq("user_id", user.id)
+      .eq("date", dateStr);
+
+    if (error) {
+      console.warn("Could not delete weight from DB:", error.message || error);
+    }
+  } catch (e) {
+    console.warn("deleteWeightFromDB failed:", e);
+  }
+}
+/* ------------------ END SUPABASE WEIGHT LOGS ------------------ */
 
 async function addWeight(){
   const w=parseFloat(document.getElementById('weight-input').value);
   if(isNaN(w)) return alert('Please enter a valid weight.');
 
-  const day = getTodayDate();
+  const d=getTodayDate();
 
-  // Keep your existing behavior (localStorage) BUT now we allow multiple per day:
-  const nowIso = new Date().toISOString();
-  const timeLabel = formatTimeLabel(nowIso);
-  const localRow = {
-    id: null,
-    date: day,
-    label: timeLabel ? `${day} ${timeLabel}` : day,
-    weight: w,
-    created_at: nowIso
-  };
+  // ✅ If today's date already exists locally, update it; else add it
+  const idx = weightData.findIndex(e => e.date === d);
+  if (idx >= 0) {
+    weightData[idx].weight = w;
+  } else {
+    weightData.push({ date: d, weight: w });
+  }
 
-  weightData.push(localRow);
   localStorage.setItem('weightEntries',JSON.stringify(weightData));
   updateChart();
   document.getElementById('weight-input').value='';
 
-  // NEW: insert into Supabase as a NEW row (history)
-  const inserted = await insertWeightToDB(day, w);
-  if (inserted) {
-    // replace the last local row with the DB row (so delete works cleanly)
-    const lastIdx = weightData.length - 1;
-    const t = inserted.created_at ? formatTimeLabel(inserted.created_at) : '';
-    weightData[lastIdx] = {
-      id: inserted.id ?? null,
-      date: inserted.date || day,
-      label: t ? `${(inserted.date || day)} ${t}` : (inserted.date || day),
-      weight: Number(inserted.weight),
-      created_at: inserted.created_at ?? null
-    };
-    localStorage.setItem('weightEntries', JSON.stringify(weightData));
-    updateChart();
-  }
+  // ✅ DB save: one row per day per user
+  await upsertWeightToDB(d, w);
 }
 
 async function deleteLastEntry(){
@@ -569,15 +494,23 @@ async function deleteLastEntry(){
     return;
   }
 
+  // last point in time (by date order in array)
   const removed = weightData.pop();
+
   localStorage.setItem('weightEntries',JSON.stringify(weightData));
   updateChart();
 
-  await deleteWeightRowFromDB(removed);
+  if (removed && removed.date) {
+    await deleteWeightFromDB(removed.date);
+  }
 }
 
 function updateChart(){
-  chart.data.labels = weightData.map(e => e.label || e.date);
+  // Make sure chart always shows in date order
+  const sorted = [...weightData].sort((a,b) => String(a.date).localeCompare(String(b.date)));
+  weightData = sorted;
+
+  chart.data.labels = weightData.map(e => e.date);
   chart.data.datasets[0].data = weightData.map(e => e.weight);
   chart.update();
 }
