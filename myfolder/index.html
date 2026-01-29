@@ -217,17 +217,11 @@
     </div>
   </div>
 
-  <!-- SUPABASE -->
+  <!-- SUPABASE + SHARED AUTH -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/auth.js"></script>
 
   <script>
-    // =========================
-    // SUPABASE CONFIG (FILL IN)
-    // =========================
-    const SUPABASE_URL = "https://srilbkwgeizbgsbegdwy.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNyaWxia3dnZWl6YmdzYmVnZHd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk2NzI5OTIsImV4cCI6MjA4NTI0ODk5Mn0.7pNmXY_rjz-QO1RGM9H-gB4pM39TUA7N_cpYB6iK35g";
-    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
     const signInBtn = document.getElementById('signInBtn');
     const loginBox = document.getElementById('loginBox');
     const loginSubmit = document.getElementById('loginSubmit');
@@ -235,11 +229,7 @@
     // If already logged in, skip login page
     (async () => {
       try {
-        const { data, error } = await supabaseClient.auth.getUser();
-        if (error) return;
-        if (data && data.user) {
-          window.location.href = "/myfolder/template.html";
-        }
+        await auth.redirectIfAuthed("/myfolder/template.html");
       } catch (e) {
         // do nothing
       }
@@ -265,15 +255,7 @@
       }
 
       try {
-        const { data, error } = await supabaseClient.auth.signInWithPassword({
-          email,
-          password
-        });
-
-        if (error) {
-          alert(error.message);
-          return;
-        }
+        const data = await auth.signIn(email, password);
 
         if (data && data.session) {
           window.location.href = "/myfolder/template.html";
