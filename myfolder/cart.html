@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;500;700&display=swap" rel="stylesheet">
 
-  <!-- ✅ SUPABASE -->
+  <!-- ✅ SUPABASE + AUTH -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/myfolder/js/auth.js?v=5"></script>
 
@@ -231,7 +231,6 @@
     }
   </style>
 </head>
-
 <body>
 
 <nav>
@@ -269,12 +268,6 @@
 <footer></footer>
 
 <script>
-  /* ✅ REQUIRE LOGIN */
-  window.addEventListener("DOMContentLoaded", async () => {
-    await window.auth.requireAuth();
-  });
-
-
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobile-menu');
   const manualInput = document.getElementById('manualItem');
@@ -287,12 +280,56 @@
     if (e.key === 'Enter') addManualItem();
   });
 
-  function loadCart() {
+  // ---------------------------
+  // ✅ SUPABASE PER-USER CART
+  // ---------------------------
+  let currentUser = null;
+  let cartItems = [];
+
+  async function requireAndSetUser() {
+    currentUser = await window.auth.requireAuth();
+    return currentUser;
+  }
+
+  async function fetchCartFromSupabase() {
+    if (!currentUser) return [];
+
+    const { data, error } = await window.auth.supabase
+      .from('grocery_lists')
+      .select('items')
+      .eq('user_id', currentUser.id)
+      .single();
+
+    // If no row yet, treat as empty (Supabase returns an error for .single() when 0 rows)
+    if (error && (error.code === 'PGRST116' || error.details?.includes('0 rows'))) {
+      return [];
+    }
+    if (error) {
+      console.error("Error loading grocery list:", error);
+      return [];
+    }
+
+    return Array.isArray(data?.items) ? data.items : [];
+  }
+
+  async function saveCartToSupabase(items) {
+    if (!currentUser) return;
+
+    const { error } = await window.auth.supabase
+      .from('grocery_lists')
+      .upsert(
+        { user_id: currentUser.id, items: items },
+        { onConflict: 'user_id' }
+      );
+
+    if (error) console.error("Error saving grocery list:", error);
+  }
+
+  function renderCart() {
     const cartContainer = document.getElementById('cartContainer');
     cartContainer.innerHTML = '';
-    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
 
-    if (cartItems.length === 0) {
+    if (!cartItems || cartItems.length === 0) {
       cartContainer.innerHTML = '<p class="empty">Your cart is empty.</p>';
       return;
     }
@@ -305,39 +342,44 @@
     });
   }
 
-  function removeSelected() {
+  async function loadCart() {
+    cartItems = await fetchCartFromSupabase();
+    renderCart();
+  }
+
+  async function removeSelected() {
     const checked = document.querySelectorAll('input[type="checkbox"]:checked');
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const indices = [...checked].map(cb => Number(cb.dataset.index)).sort((a,b) => b-a);
 
-    [...checked]
-      .map(cb => cb.dataset.index)
-      .sort((a,b) => b-a)
-      .forEach(i => cart.splice(i,1));
+    indices.forEach(i => cartItems.splice(i, 1));
 
-    localStorage.setItem('cart', JSON.stringify(cart));
-    loadCart();
+    await saveCartToSupabase(cartItems);
+    renderCart();
   }
 
-  function clearCart() {
-    localStorage.removeItem('cart');
-    loadCart();
+  async function clearCart() {
+    cartItems = [];
+    await saveCartToSupabase(cartItems);
+    renderCart();
   }
 
-  function addManualItem() {
+  async function addManualItem() {
     const input = document.getElementById('manualItem');
-    if (!input.value.trim()) return;
+    const value = input.value.trim();
+    if (!value) return;
 
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cartItems.push(value);
 
-    cart.push(input.value.trim());
-
-    localStorage.setItem('cart', JSON.stringify(cart));
-
+    await saveCartToSupabase(cartItems);
     input.value = '';
-    loadCart();
+    renderCart();
   }
 
-  loadCart();
+  // ✅ start
+  window.addEventListener('DOMContentLoaded', async () => {
+    await requireAndSetUser();
+    await loadCart();
+  });
 </script>
 
 </body>
