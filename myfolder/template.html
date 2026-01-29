@@ -8,20 +8,10 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
+  <!-- SUPABASE + SHARED AUTH (keeps your existing functionality intact) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/auth.js"></script>
 
-  
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-  const SUPABASE_URL = "https://srilbkwgeizbgsbegdwy.supabase.com";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNyaWxia3dnZWl6YmdzYmVnZHd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk2NzI5OTIsImV4cCI6MjA4NTI0ODk5Mn0.7pNmXY_rjz-QO1RGM9H-gB4pM39TUA7N_cpYB6iK35g";
-
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-</script>
-
-
-
-  
-  
   <style>
     :root {
       --bg: #f5f4f2;
@@ -426,6 +416,16 @@ const mobileMenu=document.getElementById('mobile-menu');
 hamburger.addEventListener('click',()=>{mobileMenu.style.display=mobileMenu.style.display==='flex'?'none':'flex';});
 </script>
 
+<!-- AUTH GUARD: runs after everything is defined so it won't break your page -->
+<script>
+  (async () => {
+    try {
+      await auth.requireAuth("/myfolder/index.html");
+    } catch (e) {
+      window.location.href = "/myfolder/index.html";
+    }
+  })();
+</script>
+
 </body>
 </html>
-
