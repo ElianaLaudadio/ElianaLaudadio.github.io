@@ -217,10 +217,33 @@
     </div>
   </div>
 
+  <!-- SUPABASE -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script>
+    // =========================
+    // SUPABASE CONFIG (FILL IN)
+    // =========================
+    const SUPABASE_URL = "https://YOUR_PROJECT_ID.supabase.co";
+    const SUPABASE_ANON_KEY = "YOUR_ANON_PUBLIC_KEY";
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
     const signInBtn = document.getElementById('signInBtn');
     const loginBox = document.getElementById('loginBox');
     const loginSubmit = document.getElementById('loginSubmit');
+
+    // If already logged in, skip login page
+    (async () => {
+      try {
+        const { data, error } = await supabaseClient.auth.getUser();
+        if (error) return;
+        if (data && data.user) {
+          window.location.href = "/myfolder/template.html";
+        }
+      } catch (e) {
+        // do nothing
+      }
+    })();
 
     signInBtn.addEventListener('click', () => {
       if (loginBox.style.display === 'block') {
@@ -230,8 +253,36 @@
       }
     });
 
-    loginSubmit.addEventListener('click', () => {
-      window.location.href = "/myfolder/template.html";
+    loginSubmit.addEventListener('click', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        alert("Please enter your email and password.");
+        return;
+      }
+
+      try {
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+          email,
+          password
+        });
+
+        if (error) {
+          alert(error.message);
+          return;
+        }
+
+        if (data && data.session) {
+          window.location.href = "/myfolder/template.html";
+        } else {
+          alert("Signed in, but no session was created. Please try again.");
+        }
+      } catch (err) {
+        alert(err.message || "Login failed. Please try again.");
+      }
     });
   </script>
 </body>
