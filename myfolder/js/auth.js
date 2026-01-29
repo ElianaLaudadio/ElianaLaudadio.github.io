@@ -3,7 +3,7 @@
 //
 // Usage (in ANY html file):
 // <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-// <script src="/js/auth.js"></script>
+// <script src="/myfolder/js/auth.js"></script>
 //
 // Then call:
 //   await auth.signIn(email, password)
@@ -12,12 +12,32 @@
 //   const user = await auth.getUser()
 
 // --- Supabase setup ---
-const SUPABASE_URL = "https://srilbkwgeizbgsbegdwy.supabase.co"; // <-- NOTE: must end with .co
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNyaWxia3dnZWl6YmdzYmVnZHd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk2NzI5OTIsImV4cCI6MjA4NTI0ODk5Mn0.7pNmXY_rjz-QO1RGM9H-gB4pM39TUA7N_cpYB6iK35g";
+const SUPABASE_URL = "https://srilbkwgeizbgsbegdwy.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmVzZSIsInJlZiI6InNyaWxia3dnZWl6YmdzYmVnZHd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk2NzI5OTIsImV4cCI6MjA4NTI0ODk5Mn0.7pNmXY_rjz-QO1RGM9H-gB4pM39TUA7N_cpYB6iK35g";
 
 // Guard: make sure supabase-js is loaded
 if (!window.supabase || !window.supabase.createClient) {
-  console.error("Supabase JS not found. Include https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2 before /js/auth.js");
+  console.error(
+    "Supabase JS not found. Include https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2 BEFORE /myfolder/js/auth.js"
+  );
+
+  // Prevent crashes and make auth calls fail loudly but safely
+  window.auth = {
+    supabase: null,
+    signUp: async () => { throw new Error("Supabase JS not loaded."); },
+    signIn: async () => { throw new Error("Supabase JS not loaded."); },
+    signOut: async () => { throw new Error("Supabase JS not loaded."); },
+    getUser: async () => null,
+    onAuthStateChange: () => ({ data: { subscription: { unsubscribe() {} } } }),
+    requireAuth: async (redirectTo = "/myfolder/index.html") => {
+      window.location.href = redirectTo;
+      return null;
+    },
+    redirectIfAuthed: async () => null
+  };
+
+  // Stop here so we don't throw and kill the script
+  throw new Error("Supabase JS not loaded.");
 }
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -49,7 +69,6 @@ async function getUser() {
 }
 
 function onAuthStateChange(callback) {
-  // callback(event, session)
   return supabase.auth.onAuthStateChange((event, session) => {
     try {
       callback(event, session);
@@ -62,8 +81,6 @@ function onAuthStateChange(callback) {
 // --- Convenience helpers for your multi-page site ---
 
 async function requireAuth(redirectTo = "/myfolder/index.html") {
-  // Call at top of protected pages (template.html, etc.)
-  // Redirects to login page if not authenticated.
   try {
     const user = await getUser();
     if (!user) window.location.href = redirectTo;
@@ -75,7 +92,6 @@ async function requireAuth(redirectTo = "/myfolder/index.html") {
 }
 
 async function redirectIfAuthed(redirectTo = "/myfolder/template.html") {
-  // Call on login page; if already logged in, skip it.
   try {
     const user = await getUser();
     if (user) window.location.href = redirectTo;
@@ -87,15 +103,12 @@ async function redirectIfAuthed(redirectTo = "/myfolder/template.html") {
 
 // Make available globally
 window.auth = {
-  // core
   supabase,
   signUp,
   signIn,
   signOut,
   getUser,
   onAuthStateChange,
-
-  // page helpers
   requireAuth,
   redirectIfAuthed
 };
