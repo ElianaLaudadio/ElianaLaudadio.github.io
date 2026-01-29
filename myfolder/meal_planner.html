@@ -333,7 +333,7 @@
     }
   </style>
 
-  <!-- ✅ Supabase + shared auth helpers -->
+  <!-- Supabase + shared auth helpers -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/myfolder/js/auth.js?v=5"></script>
 </head>
@@ -402,28 +402,62 @@
   </div>
 </div>
 
-<!-- ✅ Auth gate for this page (keeps everything else unchanged) -->
 <script>
-  (async () => {
-    // If auth.js loaded, enforce login; otherwise do nothing (so page doesn't hard-crash)
-    if (window.auth && typeof window.auth.requireAuth === "function") {
-      await window.auth.requireAuth("/myfolder/index.html");
-    }
-  })();
-</script>
-
-<script>
+  // --------------------------
+  // AUTH + USER NOTES (SUPABASE)
+  // --------------------------
   const calendarContainer = document.getElementById("calendar-container");
+
   let currentDate = new Date();
   let currentMonth = currentDate.getMonth();
   let currentYear = currentDate.getFullYear();
-  let activeKey = '';
+
+  let activeKey = ''; // will store YYYY-M-D key like before
+  let activeISODate = ''; // YYYY-MM-DD for Supabase
+  let notesMap = {}; // { "YYYY-MM-DD": "note text" }
+
+  let currentUser = null;
+
+  function pad2(n) { return String(n).padStart(2, '0'); }
+
+  function monthRangeISO(year, monthIndex) {
+    // monthIndex 0-11
+    const start = new Date(year, monthIndex, 1);
+    const end = new Date(year, monthIndex + 1, 1);
+    const startISO = `${start.getFullYear()}-${pad2(start.getMonth() + 1)}-${pad2(start.getDate())}`;
+    const endISO = `${end.getFullYear()}-${pad2(end.getMonth() + 1)}-${pad2(end.getDate())}`;
+    return { startISO, endISO };
+  }
+
+  async function loadMonthNotes(year, monthIndex) {
+    notesMap = {};
+    if (!window.auth || !window.auth.supabase || !currentUser) return;
+
+    const { startISO, endISO } = monthRangeISO(year, monthIndex);
+
+    const { data, error } = await window.auth.supabase
+      .from('calendar_notes')
+      .select('note_date, note_text')
+      .eq('user_id', currentUser.id)
+      .gte('note_date', startISO)
+      .lt('note_date', endISO);
+
+    if (error) {
+      console.error("Error loading notes:", error);
+      return;
+    }
+
+    (data || []).forEach(row => {
+      notesMap[row.note_date] = row.note_text || '';
+    });
+  }
 
   function generateCalendar(year, month) {
     const date = new Date(year, month, 1);
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const startDay = date.getDay();
     const keyPrefix = `${year}-${month+1}`;
+
     let html = `<div class="calendar-header">
       <button onclick="changeMonth(-1)">←</button>
       <strong>${date.toLocaleString('default',{month:'long'})} ${year}</strong>
@@ -436,27 +470,33 @@
     for (let i=0;i<startDay;i++) html+=`<div></div>`;
 
     for (let day=1;day<=daysInMonth;day++){
-      const key=`${keyPrefix}-${day}`;
-      const note=localStorage.getItem(key) || '';
-      html+=`<div onclick="addNote('${key}')">${day}${note?'<div class="note-indicator"></div>':''}</div>`;
+      const key = `${keyPrefix}-${day}`; // keep your original key style
+      const iso = `${year}-${pad2(month+1)}-${pad2(day)}`; // for Supabase
+      const note = notesMap[iso] || '';
+
+      html += `<div onclick="addNote('${key}','${iso}')">${day}${note?'<div class="note-indicator"></div>':''}</div>`;
     }
 
-    html+=`</div>`;
+    html += `</div>`;
     calendarContainer.innerHTML = html;
   }
 
-  function changeMonth(offset){
-    currentMonth+=offset;
-    if(currentMonth>11){currentMonth=0; currentYear++;}
-    else if(currentMonth<0){currentMonth=11; currentYear--;}
-    generateCalendar(currentYear,currentMonth);
+  async function changeMonth(offset){
+    currentMonth += offset;
+    if(currentMonth>11){ currentMonth=0; currentYear++; }
+    else if(currentMonth<0){ currentMonth=11; currentYear--; }
+
+    await loadMonthNotes(currentYear, currentMonth);
+    generateCalendar(currentYear, currentMonth);
   }
 
-  function addNote(key){
-    activeKey=key;
-    const existing=localStorage.getItem(key)||'';
-    document.getElementById("modal-date-label").innerText=key.split('-')[2];
-    document.getElementById("note-text").value=existing;
+  function addNote(key, isoDate){
+    activeKey = key;
+    activeISODate = isoDate;
+
+    const existing = notesMap[isoDate] || '';
+    document.getElementById("modal-date-label").innerText = key.split('-')[2];
+    document.getElementById("note-text").value = existing;
     document.getElementById("note-modal").style.display="flex";
   }
 
@@ -464,16 +504,65 @@
     document.getElementById("note-modal").style.display="none";
   }
 
-  function saveNote(){
-    const text=document.getElementById("note-text").value.trim();
-    if(text) localStorage.setItem(activeKey,text);
-    else localStorage.removeItem(activeKey);
+  async function saveNote(){
+    const text = document.getElementById("note-text").value.trim();
+
+    // no auth? just bail (prevents crash)
+    if (!window.auth || !window.auth.supabase || !currentUser) {
+      closeModal();
+      return;
+    }
+
+    if (text) {
+      // upsert (insert or update)
+      const { error } = await window.auth.supabase
+        .from('calendar_notes')
+        .upsert({
+          user_id: currentUser.id,
+          note_date: activeISODate,
+          note_text: text,
+          updated_at: new Date().toISOString()
+        }, { onConflict: 'user_id,note_date' });
+
+      if (error) console.error("Error saving note:", error);
+      notesMap[activeISODate] = text;
+    } else {
+      // delete
+      const { error } = await window.auth.supabase
+        .from('calendar_notes')
+        .delete()
+        .eq('user_id', currentUser.id)
+        .eq('note_date', activeISODate);
+
+      if (error) console.error("Error deleting note:", error);
+      delete notesMap[activeISODate];
+    }
+
     closeModal();
-    generateCalendar(currentYear,currentMonth);
+    generateCalendar(currentYear, currentMonth);
   }
 
-  generateCalendar(currentYear,currentMonth);
+  // expose functions used by onclick=""
+  window.changeMonth = changeMonth;
+  window.addNote = addNote;
+  window.closeModal = closeModal;
+  window.saveNote = saveNote;
 
+  // --------------------------
+  // INIT (require auth, then calendar)
+  // --------------------------
+  (async () => {
+    if (window.auth && typeof window.auth.requireAuth === "function") {
+      await window.auth.requireAuth("/myfolder/index.html");
+      currentUser = await window.auth.getUser();
+    }
+
+    await loadMonthNotes(currentYear, currentMonth);
+    generateCalendar(currentYear, currentMonth);
+  })();
+</script>
+
+<script>
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobile-menu');
   hamburger.addEventListener('click',()=>{
@@ -605,6 +694,10 @@
     ).map(cb=>cb.value);
     addToCart(selected);
   }
+
+  window.closeMealModal = closeMealModal;
+  window.addAllToCart = addAllToCart;
+  window.addSelectedToCart = addSelectedToCart;
 
   window.onclick=e=>{
     if(e.target===mealModal) closeMealModal();
