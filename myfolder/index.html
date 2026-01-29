@@ -229,7 +229,7 @@
     // If already logged in, skip login page
     (async () => {
       try {
-        await auth.redirectIfAuthed("/myfolder/template.html");
+        await window.auth.redirectIfAuthed("/myfolder/template.html");
       } catch (e) {
         // do nothing
       }
@@ -255,7 +255,7 @@
       }
 
       try {
-        const data = await auth.signIn(email, password);
+        const data = await window.auth.signIn(email, password);
 
         if (data && data.session) {
           window.location.href = "/myfolder/template.html";
