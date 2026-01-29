@@ -407,9 +407,89 @@ function submitCelebrate(){
   confettiSound.play();
 }
 
-window.onload=()=>{displayGoals();updateChart();calculateProgress();}
+/* ================================
+   SUPABASE: DAILY LOGS (per user)
+   Table: daily_logs (user_id, date, calories, protein, carbs, fat, created_at)
+   ================================ */
 
-document.getElementById('submitBtn').addEventListener('click', submitCelebrate);
+async function loadTodayDailyLog(){
+  try {
+    if (!window.auth || !window.auth.supabase) return;
+
+    const user = await window.auth.getUser();
+    if (!user) return;
+
+    const today = getTodayDate();
+
+    const { data, error } = await window.auth.supabase
+      .from("daily_logs")
+      .select("calories, protein, carbs, fat, date")
+      .eq("user_id", user.id)
+      .eq("date", today)
+      .maybeSingle();
+
+    if (error) {
+      console.warn("Load daily log error:", error.message || error);
+      return;
+    }
+
+    if (!data) return;
+
+    // Fill inputs ONLY if we have saved values
+    if (typeof data.protein !== "undefined" && data.protein !== null) document.getElementById("protein").value = data.protein;
+    if (typeof data.carbs !== "undefined" && data.carbs !== null) document.getElementById("carbs").value = data.carbs;
+    if (typeof data.fat !== "undefined" && data.fat !== null) document.getElementById("fat").value = data.fat;
+
+  } catch (e) {
+    console.warn("Load today daily log failed:", e);
+  }
+}
+
+async function saveTodayDailyLog(){
+  try {
+    if (!window.auth || !window.auth.supabase) return;
+
+    const user = await window.auth.getUser();
+    if (!user) return;
+
+    const today = getTodayDate();
+
+    const p = parseFloat(document.getElementById('protein').value) || 0;
+    const c = parseFloat(document.getElementById('carbs').value) || 0;
+    const f = parseFloat(document.getElementById('fat').value) || 0;
+    const total = Math.round(p*4 + c*4 + f*9);
+
+    const payload = {
+      user_id: user.id,
+      date: today,
+      calories: total,
+      protein: p,
+      carbs: c,
+      fat: f
+    };
+
+    // Best practice: unique constraint on (user_id, date)
+    // If you have it, this will "insert or update" the row for today.
+    const { error } = await window.auth.supabase
+      .from("daily_logs")
+      .upsert(payload, { onConflict: "user_id,date" });
+
+    if (error) {
+      console.warn("Save daily log error:", error.message || error);
+    }
+  } catch (e) {
+    console.warn("Save today daily log failed:", e);
+  }
+}
+
+async function handleSubmit(){
+  await saveTodayDailyLog();
+  submitCelebrate();
+}
+
+window.onload=async()=>{displayGoals();updateChart();await loadTodayDailyLog();calculateProgress();}
+
+document.getElementById('submitBtn').addEventListener('click', handleSubmit);
 
 const hamburger=document.getElementById('hamburger');
 const mobileMenu=document.getElementById('mobile-menu');
