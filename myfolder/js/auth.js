@@ -28,6 +28,7 @@
     window.auth = {
       __initialized: true,
       client: null,
+      supabase: null, // ✅ added for compatibility
       signUp: async () => { throw new Error("Supabase JS not loaded."); },
       signIn: async () => { throw new Error("Supabase JS not loaded."); },
       signOut: async () => { throw new Error("Supabase JS not loaded."); },
@@ -99,6 +100,7 @@
   window.auth = {
     __initialized: true,
     client,               // exposed if you ever want it
+    supabase: client,     // ✅ added: so code can do window.auth.supabase.from(...)
     signUp,
     signIn,
     signOut,
