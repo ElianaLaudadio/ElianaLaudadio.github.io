@@ -353,11 +353,15 @@ let chart = new Chart(ctx, {
   }
 });
 
-function getTodayDate(){const t=new Date();return t.toISOString().split('T')[0];}
+/* ✅ FIX: local date (NOT UTC) so each day is truly a new point */
+function getTodayDate(){
+  const d = new Date();
+  d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); // convert to local date safely
+  return d.toISOString().split('T')[0];
+}
 
 /* -------------------- SUPABASE HELPERS (NEW) -------------------- */
 function getSupabaseClientSafe(){
-  // Your auth.js might expose the client as auth.supabase OR auth.client.
   const a = window.auth;
   const client = a && (a.supabase || a.client);
   if (!client) {
@@ -396,7 +400,6 @@ async function loadWeightsFromDB(){
       weight: Number(r.weight)
     }));
 
-    // keep your existing localStorage behavior in sync (fallback)
     localStorage.setItem('weightEntries', JSON.stringify(weightData));
     updateChart();
   } catch (e) {
@@ -464,8 +467,15 @@ async function addWeight(){
   if(isNaN(w)) return alert('Please enter a valid weight.');
   const d=getTodayDate();
 
+  // ✅ If today's date already exists, update it (instead of duplicating)
+  const idx = weightData.findIndex(e => e.date === d);
+  if (idx >= 0) {
+    weightData[idx].weight = w;
+  } else {
+    weightData.push({date:d,weight:w});
+  }
+
   // keep your existing behavior
-  weightData.push({date:d,weight:w});
   localStorage.setItem('weightEntries',JSON.stringify(weightData));
   updateChart();
   document.getElementById('weight-input').value='';
@@ -480,12 +490,10 @@ async function deleteLastEntry(){
     return;
   }
 
-  // keep your existing behavior
   const removed = weightData.pop();
   localStorage.setItem('weightEntries',JSON.stringify(weightData));
   updateChart();
 
-  // NEW: also delete from Supabase
   if (removed && removed.date) {
     await deleteWeightFromDB(removed.date);
   }
@@ -640,7 +648,6 @@ function submitCelebrate(){
 }
 
 window.onload = async () => {
-  // load DB data first (then your existing local behavior stays in sync)
   await loadGoalsFromDB();
   await loadWeightsFromDB();
 
