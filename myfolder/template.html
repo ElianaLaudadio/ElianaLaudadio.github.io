@@ -420,7 +420,7 @@ hamburger.addEventListener('click',()=>{mobileMenu.style.display=mobileMenu.styl
 <script>
   (async () => {
     try {
-      await auth.requireAuth("/myfolder/index.html");
+      await window.auth.requireAuth("/myfolder/index.html");
     } catch (e) {
       window.location.href = "/myfolder/index.html";
     }
