@@ -8,7 +8,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-  <!-- SUPABASE + SHARED AUTH (keeps your existing functionality intact) -->
+  <!-- SUPABASE + SHARED AUTH -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/myfolder/js/auth.js?v=5"></script>
 
@@ -109,7 +109,7 @@
 
     label { display: block; margin-top: 10px; color: var(--muted); font-weight: 500; }
 
-    input[type="number"], input[type="text"] {
+    input[type="number"], input[type="text"], input[type="date"] {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
@@ -121,7 +121,7 @@
       transition: border-color 0.3s ease, background 0.3s ease;
     }
 
-    input[type="number"]:focus, input[type="text"]:focus {
+    input[type="number"]:focus, input[type="text"]:focus, input[type="date"]:focus {
       border-color: var(--accent);
       outline: none;
       background-color: var(--hover);
@@ -199,7 +199,6 @@
       color: var(--accent);
       text-align: center;
       min-height: 24px;
-      white-space: pre-wrap;
     }
 
     section p { color: var(--muted); font-size: 16px; margin-top: 10px; }
@@ -225,7 +224,7 @@
       main { padding: 0 10px; }
       section { padding: 20px 15px; }
       h2 { font-size: 22px; }
-      input[type="number"], input[type="text"] { font-size: 15px; }
+      input[type="number"], input[type="text"], input[type="date"] { font-size: 15px; }
       button { width: 100%; font-size: 16px; padding: 12px; }
       #weight-buttons { flex-direction: column; gap: 10px; }
       #weight-buttons button { width: 100%; }
@@ -257,15 +256,19 @@
 
   <section id="weight">
     <h2>Weight Tracking</h2>
-    <label for="weight-input">Today's Weight (lbs):</label>
+
+    <!-- ✅ NEW: date picker so you can create multiple rows (and test “yesterday” vs “today”) -->
+    <label for="weight-date">Entry Date:</label>
+    <input type="date" id="weight-date" />
+
+    <label for="weight-input">Weight (lbs):</label>
     <input type="number" id="weight-input" step="0.1" />
+
     <div id="weight-buttons">
       <button onclick="addWeight()">Add Entry</button>
       <button onclick="deleteLastEntry()">Delete Last Entry</button>
     </div>
     <canvas id="weightChart"></canvas>
-    <!-- ✅ NEW: tiny debug status so we can see what Supabase is doing -->
-    <div class="message" id="weightDbStatus"></div>
   </section>
 
   <section id="input">
@@ -356,16 +359,17 @@ let chart = new Chart(ctx, {
   }
 });
 
-function setWeightStatus(msg){
-  const el = document.getElementById('weightDbStatus');
-  if (el) el.textContent = msg || '';
-}
-
 /* ✅ local date (NOT UTC) */
 function getTodayDate(){
   const d = new Date();
   d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
   return d.toISOString().split('T')[0];
+}
+
+/* ✅ default the date picker to today */
+function setDefaultWeightDate(){
+  const el = document.getElementById('weight-date');
+  if (el && !el.value) el.value = getTodayDate();
 }
 
 /* -------------------- SUPABASE HELPERS -------------------- */
@@ -375,20 +379,18 @@ function getSupabaseClientSafe(){
   if (!client) console.warn("Supabase client not found on window.auth (expected auth.supabase or auth.client).");
   return client || null;
 }
-/* ------------------ END SUPABASE HELPERS ------------------ */
 
-/* -------------------- SUPABASE WEIGHT LOGS (DEBUGGED) -------------------- */
+/* -------------------- SUPABASE WEIGHT LOGS (ONE PER DAY) -------------------- */
 async function loadWeightsFromDB(){
   try {
-    setWeightStatus("Loading weights from DB...");
     const a = window.auth;
-    if (!a || !a.getUser) { setWeightStatus("Auth helper missing (window.auth.getUser)"); return; }
+    if (!a || !a.getUser) return;
 
     const user = await a.getUser();
-    if (!user) { setWeightStatus("No user session found."); return; }
+    if (!user) return;
 
     const sb = getSupabaseClientSafe();
-    if (!sb) { setWeightStatus("Supabase client missing."); return; }
+    if (!sb) return;
 
     const { data, error } = await sb
       .from("weight_logs")
@@ -397,63 +399,55 @@ async function loadWeightsFromDB(){
       .order("date", { ascending: true });
 
     if (error) {
-      console.warn("Could not load weights from DB:", error);
-      setWeightStatus("DB load FAILED: " + (error.message || JSON.stringify(error)));
+      console.warn("Could not load weights from DB:", error.message || error);
       return;
     }
 
     const rows = data || [];
-    weightData = rows.map(r => ({ date: r.date, weight: Number(r.weight) }));
+    console.log(`Loaded ${rows.length} point(s) from DB for this user.`);
+
+    weightData = rows.map(r => ({
+      date: r.date,
+      weight: Number(r.weight)
+    }));
 
     localStorage.setItem('weightEntries', JSON.stringify(weightData));
     updateChart();
-
-    setWeightStatus(`Loaded ${rows.length} point(s) from DB for this user.`);
-    console.log("DB weights loaded:", rows);
   } catch (e) {
     console.warn("loadWeightsFromDB failed:", e);
-    setWeightStatus("DB load crashed: " + (e.message || String(e)));
   }
 }
 
 async function upsertWeightToDB(dateStr, weightVal){
   try {
-    setWeightStatus(`Saving ${weightVal} on ${dateStr}...`);
     const a = window.auth;
-    if (!a || !a.getUser) { setWeightStatus("Auth helper missing (window.auth.getUser)"); return; }
+    if (!a || !a.getUser) return;
 
     const user = await a.getUser();
-    if (!user) { setWeightStatus("No user session found."); return; }
+    if (!user) return;
 
     const sb = getSupabaseClientSafe();
-    if (!sb) { setWeightStatus("Supabase client missing."); return; }
+    if (!sb) return;
 
-    const payload = { user_id: user.id, date: dateStr, weight: weightVal };
+    const payload = {
+      user_id: user.id,
+      date: dateStr,
+      weight: weightVal
+    };
 
-    // ✅ KEY CHANGE: use select() so we can see if Supabase actually saved/returned something
-    const { data, error } = await sb
+    // ✅ This belongs in template.html (your page logic), not Supabase UI.
+    const { error } = await sb
       .from("weight_logs")
-      .upsert(payload, { onConflict: "user_id,date" })
-      .select("date, weight")
-      .maybeSingle();
+      .upsert(payload, { onConflict: "user_id,date" });
 
-    if (error) {
-      console.warn("Could not upsert weight to DB:", error);
-      setWeightStatus("DB save FAILED: " + (error.message || JSON.stringify(error)));
-      return;
-    }
-
-    setWeightStatus("Saved to DB ✅");
-    console.log("DB upsert returned:", data);
+    if (error) console.warn("Could not save weight to DB:", error.message || error);
   } catch (e) {
     console.warn("upsertWeightToDB failed:", e);
-    setWeightStatus("DB save crashed: " + (e.message || String(e)));
   }
 }
 
 async function deleteWeightFromDB(dateStr){
   try {
-    setWeightStatus(`Deleting ${dateStr}...`);
     const a = window.auth;
     if (!a || !a.getUser) return;
 
@@ -469,65 +463,58 @@ async function deleteWeightFromDB(dateStr){
       .eq("user_id", user.id)
       .eq("date", dateStr);
 
-    if (error) {
-      console.warn("Could not delete weight from DB:", error);
-      setWeightStatus("DB delete FAILED: " + (error.message || JSON.stringify(error)));
-      return;
-    }
-
-    setWeightStatus("Deleted from DB ✅");
+    if (error) console.warn("Could not delete weight from DB:", error.message || error);
   } catch (e) {
     console.warn("deleteWeightFromDB failed:", e);
-    setWeightStatus("DB delete crashed: " + (e.message || String(e)));
   }
 }
-/* ------------------ END SUPABASE WEIGHT LOGS ------------------ */
 
 async function addWeight(){
-  const w=parseFloat(document.getElementById('weight-input').value);
-  if(isNaN(w)) return alert('Please enter a valid weight.');
+  const w = parseFloat(document.getElementById('weight-input').value);
+  if (isNaN(w)) return alert('Please enter a valid weight.');
 
-  const d=getTodayDate();
+  // ✅ NEW: use the date picker value (so you can create multiple rows over time)
+  const pickedDate = document.getElementById('weight-date').value || getTodayDate();
+  const d = pickedDate;
 
+  // localStorage behavior: one entry per date (matches DB)
   const idx = weightData.findIndex(e => e.date === d);
   if (idx >= 0) weightData[idx].weight = w;
   else weightData.push({ date: d, weight: w });
 
-  localStorage.setItem('weightEntries',JSON.stringify(weightData));
+  // keep sorted by date
+  weightData.sort((a,b) => (a.date > b.date ? 1 : -1));
+
+  localStorage.setItem('weightEntries', JSON.stringify(weightData));
   updateChart();
-  document.getElementById('weight-input').value='';
+  document.getElementById('weight-input').value = '';
 
   await upsertWeightToDB(d, w);
-
-  // ✅ reload from DB right after save, so we prove the history is coming back
-  await loadWeightsFromDB();
 }
 
 async function deleteLastEntry(){
-  if(weightData.length===0){
+  if (weightData.length === 0) {
     alert('No entries to delete.');
     return;
   }
 
+  // remove last by date (latest)
+  weightData.sort((a,b) => (a.date > b.date ? 1 : -1));
   const removed = weightData.pop();
-  localStorage.setItem('weightEntries',JSON.stringify(weightData));
+
+  localStorage.setItem('weightEntries', JSON.stringify(weightData));
   updateChart();
 
-  if (removed && removed.date) {
-    await deleteWeightFromDB(removed.date);
-    await loadWeightsFromDB();
-  }
+  if (removed && removed.date) await deleteWeightFromDB(removed.date);
 }
 
 function updateChart(){
-  const sorted = [...weightData].sort((a,b) => String(a.date).localeCompare(String(b.date)));
-  weightData = sorted;
-
   chart.data.labels = weightData.map(e => e.date);
   chart.data.datasets[0].data = weightData.map(e => e.weight);
   chart.update();
 }
 
+/* --------- YOUR EXISTING GOALS (unchanged) --------- */
 function displayGoals(){
   const g=JSON.parse(localStorage.getItem('macroGoals'));
   if(!g)return;
@@ -538,7 +525,6 @@ function displayGoals(){
   document.getElementById('display-fats').textContent=g.fats?g.fats+' g':'–';
 }
 
-/* -------------------- SUPABASE GOALS (EXISTING) -------------------- */
 async function loadGoalsFromDB(){
   try {
     const a = window.auth;
@@ -556,10 +542,7 @@ async function loadGoalsFromDB(){
       .eq("user_id", user.id)
       .maybeSingle();
 
-    if (error) {
-      console.warn("Could not load goals from DB:", error.message || error);
-      return;
-    }
+    if (error) return;
 
     if (!data) return;
 
@@ -577,9 +560,7 @@ async function loadGoalsFromDB(){
       fats: data.fats_goal ?? ''
     };
     localStorage.setItem('macroGoals', JSON.stringify(g));
-  } catch (e) {
-    console.warn("loadGoalsFromDB failed:", e);
-  }
+  } catch (e) {}
 }
 
 async function saveGoalsToDB(payload){
@@ -603,18 +584,9 @@ async function saveGoalsToDB(payload){
       updated_at: new Date().toISOString()
     };
 
-    const { error } = await sb
-      .from("macro_goals")
-      .upsert(row, { onConflict: "user_id" });
-
-    if (error) {
-      console.warn("Could not save goals to DB:", error.message || error);
-    }
-  } catch (e) {
-    console.warn("saveGoalsToDB failed:", e);
-  }
+    await sb.from("macro_goals").upsert(row, { onConflict: "user_id" });
+  } catch (e) {}
 }
-/* ------------------ END SUPABASE GOALS (EXISTING) ------------------ */
 
 async function saveGoals(){
   const g={
@@ -671,9 +643,7 @@ function submitCelebrate(){
 }
 
 window.onload = async () => {
-  // ✅ Ensure user is loaded first (prevents "sometimes user is null" race)
-  try { await window.auth.requireAuth("/myfolder/index.html"); } catch(e) {}
-
+  setDefaultWeightDate();
   await loadGoalsFromDB();
   await loadWeightsFromDB();
 
@@ -689,7 +659,7 @@ const mobileMenu=document.getElementById('mobile-menu');
 hamburger.addEventListener('click',()=>{mobileMenu.style.display=mobileMenu.style.display==='flex'?'none':'flex';});
 </script>
 
-<!-- AUTH GUARD: runs after everything is defined so it won't break your page -->
+<!-- AUTH GUARD -->
 <script>
   (async () => {
     try {
