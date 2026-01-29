@@ -354,9 +354,148 @@ let chart = new Chart(ctx, {
 });
 
 function getTodayDate(){const t=new Date();return t.toISOString().split('T')[0];}
-function addWeight(){const w=parseFloat(document.getElementById('weight-input').value);if(isNaN(w))return alert('Please enter a valid weight.');const d=getTodayDate();weightData.push({date:d,weight:w});localStorage.setItem('weightEntries',JSON.stringify(weightData));updateChart();document.getElementById('weight-input').value='';}
-function deleteLastEntry(){if(weightData.length===0){alert('No entries to delete.');return;}weightData.pop();localStorage.setItem('weightEntries',JSON.stringify(weightData));updateChart();}
-function updateChart(){chart.data.labels=weightData.map(e=>e.date);chart.data.datasets[0].data=weightData.map(e=>e.weight);chart.update();}
+
+/* -------------------- SUPABASE HELPERS (NEW) -------------------- */
+function getSupabaseClientSafe(){
+  // Your auth.js might expose the client as auth.supabase OR auth.client.
+  const a = window.auth;
+  const client = a && (a.supabase || a.client);
+  if (!client) {
+    console.warn("Supabase client not found on window.auth (expected auth.supabase or auth.client). DB syncing will be skipped.");
+  }
+  return client || null;
+}
+/* ------------------ END SUPABASE HELPERS (NEW) ------------------ */
+
+/* -------------------- SUPABASE WEIGHT LOGS (NEW) -------------------- */
+async function loadWeightsFromDB(){
+  try {
+    const a = window.auth;
+    if (!a || !a.getUser) return;
+
+    const user = await a.getUser();
+    if (!user) return;
+
+    const sb = getSupabaseClientSafe();
+    if (!sb) return;
+
+    const { data, error } = await sb
+      .from("weight_logs")
+      .select("date, weight")
+      .eq("user_id", user.id)
+      .order("date", { ascending: true });
+
+    if (error) {
+      console.warn("Could not load weights from DB:", error.message || error);
+      return;
+    }
+
+    const rows = data || [];
+    weightData = rows.map(r => ({
+      date: r.date,
+      weight: Number(r.weight)
+    }));
+
+    // keep your existing localStorage behavior in sync (fallback)
+    localStorage.setItem('weightEntries', JSON.stringify(weightData));
+    updateChart();
+  } catch (e) {
+    console.warn("loadWeightsFromDB failed:", e);
+  }
+}
+
+async function upsertWeightToDB(dateStr, weightVal){
+  try {
+    const a = window.auth;
+    if (!a || !a.getUser) return;
+
+    const user = await a.getUser();
+    if (!user) return;
+
+    const sb = getSupabaseClientSafe();
+    if (!sb) return;
+
+    const payload = {
+      user_id: user.id,
+      date: dateStr,
+      weight: weightVal
+    };
+
+    const { error } = await sb
+      .from("weight_logs")
+      .upsert(payload, { onConflict: "user_id,date" });
+
+    if (error) {
+      console.warn("Could not save weight to DB:", error.message || error);
+    }
+  } catch (e) {
+    console.warn("upsertWeightToDB failed:", e);
+  }
+}
+
+async function deleteWeightFromDB(dateStr){
+  try {
+    const a = window.auth;
+    if (!a || !a.getUser) return;
+
+    const user = await a.getUser();
+    if (!user) return;
+
+    const sb = getSupabaseClientSafe();
+    if (!sb) return;
+
+    const { error } = await sb
+      .from("weight_logs")
+      .delete()
+      .eq("user_id", user.id)
+      .eq("date", dateStr);
+
+    if (error) {
+      console.warn("Could not delete weight from DB:", error.message || error);
+    }
+  } catch (e) {
+    console.warn("deleteWeightFromDB failed:", e);
+  }
+}
+/* ------------------ END SUPABASE WEIGHT LOGS (NEW) ------------------ */
+
+async function addWeight(){
+  const w=parseFloat(document.getElementById('weight-input').value);
+  if(isNaN(w)) return alert('Please enter a valid weight.');
+  const d=getTodayDate();
+
+  // keep your existing behavior
+  weightData.push({date:d,weight:w});
+  localStorage.setItem('weightEntries',JSON.stringify(weightData));
+  updateChart();
+  document.getElementById('weight-input').value='';
+
+  // NEW: also save to Supabase (per user, one per day)
+  await upsertWeightToDB(d, w);
+}
+
+async function deleteLastEntry(){
+  if(weightData.length===0){
+    alert('No entries to delete.');
+    return;
+  }
+
+  // keep your existing behavior
+  const removed = weightData.pop();
+  localStorage.setItem('weightEntries',JSON.stringify(weightData));
+  updateChart();
+
+  // NEW: also delete from Supabase
+  if (removed && removed.date) {
+    await deleteWeightFromDB(removed.date);
+  }
+}
+
+function updateChart(){
+  chart.data.labels=weightData.map(e=>e.date);
+  chart.data.datasets[0].data=weightData.map(e=>e.weight);
+  chart.update();
+}
 
 function displayGoals(){
   const g=JSON.parse(localStorage.getItem('macroGoals'));
@@ -368,17 +507,7 @@ function displayGoals(){
   document.getElementById('display-fats').textContent=g.fats?g.fats+' g':'–';
 }
 
-/* -------------------- SUPABASE GOALS (NEW) -------------------- */
-function getSupabaseClientSafe(){
-  // Your auth.js might expose the client as auth.supabase OR auth.client.
-  const a = window.auth;
-  const client = a && (a.supabase || a.client);
-  if (!client) {
-    console.warn("Supabase client not found on window.auth (expected auth.supabase or auth.client). Goals will still save to localStorage.");
-  }
-  return client || null;
-}
-
+/* -------------------- SUPABASE GOALS (EXISTING) -------------------- */
 async function loadGoalsFromDB(){
   try {
     const a = window.auth;
@@ -403,14 +532,12 @@ async function loadGoalsFromDB(){
 
     if (!data) return;
 
-    // Populate inputs
     document.getElementById('goal-weight').value   = data.goal_weight ?? '';
     document.getElementById('calories-goal').value = data.calories_goal ?? '';
     document.getElementById('protein-goal').value  = data.protein_goal ?? '';
     document.getElementById('carbs-goal').value    = data.carbs_goal ?? '';
     document.getElementById('fats-goal').value     = data.fats_goal ?? '';
 
-    // Also keep your existing localStorage behavior in sync
     const g = {
       weight: data.goal_weight ?? '',
       calories: data.calories_goal ?? '',
@@ -456,7 +583,7 @@ async function saveGoalsToDB(payload){
     console.warn("saveGoalsToDB failed:", e);
   }
 }
-/* ------------------ END SUPABASE GOALS (NEW) ------------------ */
+/* ------------------ END SUPABASE GOALS (EXISTING) ------------------ */
 
 async function saveGoals(){
   const g={
@@ -467,12 +594,10 @@ async function saveGoals(){
     fats:document.getElementById('fats-goal').value
   };
 
-  // keep your existing behavior
   localStorage.setItem('macroGoals',JSON.stringify(g));
   displayGoals();
   calculateProgress();
 
-  // NEW: also save to Supabase (per user)
   await saveGoalsToDB(g);
 }
 
@@ -515,8 +640,9 @@ function submitCelebrate(){
 }
 
 window.onload = async () => {
-  // NEW: load goals from DB first (then your existing localStorage display)
+  // load DB data first (then your existing local behavior stays in sync)
   await loadGoalsFromDB();
+  await loadWeightsFromDB();
 
   displayGoals();
   updateChart();
