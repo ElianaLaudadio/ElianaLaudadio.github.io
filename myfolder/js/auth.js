@@ -6,10 +6,10 @@
 // <script src="/myfolder/js/auth.js"></script>
 //
 // Then call:
-//   await auth.signIn(email, password)
-//   await auth.signUp(email, password)
-//   await auth.signOut()
-//   const user = await auth.getUser()
+//   await window.auth.signIn(email, password)
+//   await window.auth.signUp(email, password)
+//   await window.auth.signOut()
+//   const user = await window.auth.getUser()
 
 // --- Supabase setup ---
 const SUPABASE_URL = "https://srilbkwgeizbgsbegdwy.supabase.co";
