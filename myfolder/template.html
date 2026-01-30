@@ -380,18 +380,8 @@ function getSupabaseClientSafe(){
   return client || null;
 }
 
-function makeLabel(entryDate, createdAt){
-  // For multiple entries in same date, include time so labels don't all look identical.
-  // createdAt is ISO string from DB. If missing, fall back to date only.
-  try {
-    if (!createdAt) return entryDate;
-    const t = new Date(createdAt);
-    const hh = String(t.getHours()).padStart(2,'0');
-    const mm = String(t.getMinutes()).padStart(2,'0');
-    return `${entryDate} ${hh}:${mm}`;
-  } catch(e) {
-    return entryDate;
-  }
+function makeLabel(entryDate){
+  return entryDate;
 }
 
 /* -------------------- SUPABASE WEIGHT ENTRIES (UNLIMITED ROWS) -------------------- */
