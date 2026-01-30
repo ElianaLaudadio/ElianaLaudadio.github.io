@@ -210,17 +210,30 @@
         </div>
 
         <button id="signInBtn" class="header-button">Sign in</button>
-        <a href="/myfolder/sign_up.html">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfG6nu0C1fHe2GxsC_tnjnUVbVL6bY9GDli3aOAqTcAzUjxZg/viewform?usp=header">
           <button class="header-button">Sign up</button>
         </a>
       </div>
     </div>
   </div>
 
+  <!-- SUPABASE + SHARED AUTH -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/myfolder/js/auth.js?v=5"></script>
+
   <script>
     const signInBtn = document.getElementById('signInBtn');
     const loginBox = document.getElementById('loginBox');
     const loginSubmit = document.getElementById('loginSubmit');
+
+    // If already logged in, skip login page
+    (async () => {
+      try {
+        await window.auth.redirectIfAuthed("/myfolder/template.html");
+      } catch (e) {
+        // do nothing
+      }
+    })();
 
     signInBtn.addEventListener('click', () => {
       if (loginBox.style.display === 'block') {
@@ -230,10 +243,29 @@
       }
     });
 
-    loginSubmit.addEventListener('click', () => {
-      window.location.href = "/myfolder/template.html";
+    loginSubmit.addEventListener('click', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        alert("Please enter your email and password.");
+        return;
+      }
+
+      try {
+        const data = await window.auth.signIn(email, password);
+
+        if (data && data.session) {
+          window.location.href = "/myfolder/template.html";
+        } else {
+          alert("Signed in, but no session was created. Please try again.");
+        }
+      } catch (err) {
+        alert(err.message || "Login failed. Please try again.");
+      }
     });
   </script>
 </body>
 </html>
-
