@@ -33,12 +33,21 @@
       signIn: async () => { throw new Error("Supabase JS not loaded."); },
       signOut: async () => { throw new Error("Supabase JS not loaded."); },
       getUser: async () => null,
+      getUserId: async () => null,
       onAuthStateChange: () => ({ data: { subscription: { unsubscribe() {} } } }),
       requireAuth: async (redirectTo = "/myfolder/index.html") => {
         window.location.href = redirectTo;
         return null;
       },
-      redirectIfAuthed: async () => null
+      redirectIfAuthed: async () => null,
+
+      // DB helpers (no-op fallbacks)
+      db: {
+        select: async () => { throw new Error("Supabase JS not loaded."); },
+        insert: async () => { throw new Error("Supabase JS not loaded."); },
+        update: async () => { throw new Error("Supabase JS not loaded."); },
+        remove: async () => { throw new Error("Supabase JS not loaded."); }
+      }
     };
     return;
   }
@@ -70,6 +79,12 @@
     return data.user; // null if not logged in
   }
 
+  // ✅ NEW: convenient helper (keeps pages cleaner)
+  async function getUserId() {
+    const user = await getUser();
+    return user ? user.id : null;
+  }
+
   function onAuthStateChange(callback) {
     return client.auth.onAuthStateChange((event, session) => {
       try { callback(event, session); } catch (e) { console.error("Auth state callback error:", e); }
@@ -97,16 +112,56 @@
     }
   }
 
+  // ✅ NEW: small DB wrappers (optional convenience)
+  // These do NOT change existing behavior—just gives you a consistent place to call from.
+  const db = {
+    // Example:
+    // await window.auth.db.select('weight_entries', 'id, entry_date, weight, created_at', q => q.order('created_at'))
+    select: async (table, columns = "*", build = null) => {
+      let q = client.from(table).select(columns);
+      if (typeof build === "function") q = build(q);
+      const { data, error } = await q;
+      if (error) throw error;
+      return data;
+    },
+
+    // Example:
+    // await window.auth.db.insert('weight_entries', [{ user_id, entry_date, weight }])
+    insert: async (table, rows) => {
+      const { data, error } = await client.from(table).insert(rows).select();
+      if (error) throw error;
+      return data;
+    },
+
+    update: async (table, values, build = null) => {
+      let q = client.from(table).update(values);
+      if (typeof build === "function") q = build(q);
+      const { data, error } = await q.select();
+      if (error) throw error;
+      return data;
+    },
+
+    remove: async (table, build = null) => {
+      let q = client.from(table).delete();
+      if (typeof build === "function") q = build(q);
+      const { data, error } = await q.select();
+      if (error) throw error;
+      return data;
+    }
+  };
+
   window.auth = {
     __initialized: true,
     client,               // exposed if you ever want it
-    supabase: client,     // ✅ added: so code can do window.auth.supabase.from(...)
+    supabase: client,     // ✅ so code can do window.auth.supabase.from(...)
     signUp,
     signIn,
     signOut,
     getUser,
+    getUserId,            // ✅ added
     onAuthStateChange,
     requireAuth,
-    redirectIfAuthed
+    redirectIfAuthed,
+    db                    // ✅ added
   };
 })();
