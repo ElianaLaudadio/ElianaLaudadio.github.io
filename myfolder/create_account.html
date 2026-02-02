@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -207,11 +206,10 @@
         <div id="loginBox" class="login-box">
           <input type="email" id="email" placeholder="Email" required />
           <input type="password" id="password" placeholder="Password" required />
-          <button id="loginSubmit">Create</button>
+          <button id="loginSubmit" type="button">Create</button>
         </div>
 
-        <button id="signInBtn" class="header-button">Create Account</button>
-
+        <button id="signInBtn" class="header-button" type="button">Create Account</button>
       </div>
     </div>
   </div>
@@ -225,7 +223,7 @@
     const loginBox = document.getElementById('loginBox');
     const loginSubmit = document.getElementById('loginSubmit');
 
-    // If already logged in, skip login page
+    // If already logged in, skip this page
     (async () => {
       try {
         await window.auth.redirectIfAuthed("/myfolder/template.html");
@@ -235,12 +233,16 @@
     })();
 
     signInBtn.addEventListener('click', () => {
-      if (loginBox.style.display === 'block') {
-        loginBox.style.display = 'none';
-      } else {
-        loginBox.style.display = 'block';
-      }
+      loginBox.style.display = (loginBox.style.display === 'block') ? 'none' : 'block';
     });
+
+    // Helper: show a nicer error message when possible
+    function showAuthError(err) {
+      const msg =
+        (err && (err.message || err.error_description)) ||
+        "Something went wrong. Please try again.";
+      alert(msg);
+    }
 
     loginSubmit.addEventListener('click', async (e) => {
       e.preventDefault();
@@ -253,16 +255,54 @@
         return;
       }
 
-      try {
-        const data = await window.auth.signIn(email, password);
+      loginSubmit.disabled = true;
+      const originalText = loginSubmit.textContent;
+      loginSubmit.textContent = "Creating...";
 
-        if (data && data.session) {
-          window.location.href = "/myfolder/template.html";
-        } else {
-          alert("Signed in, but no session was created. Please try again.");
+      try {
+        // Prefer your shared auth wrapper if it supports signUp
+        if (window.auth && typeof window.auth.signUp === "function") {
+          const data = await window.auth.signUp(email, password);
+
+          // If email confirmation is OFF, you usually get a session immediately
+          if (data && data.session) {
+            window.location.href = "/myfolder/template.html";
+            return;
+          }
+
+          // If email confirmation is ON, session may be null until they confirm
+          alert("Account created! Please check your email to confirm, then sign in.");
+          loginBox.style.display = 'none';
+          return;
         }
+
+        // Fallback: direct Supabase signUp (requires your auth.js to expose client keys,
+        // so this only works if window.auth.supabase exists)
+        if (window.auth && window.auth.supabase) {
+          const { data, error } = await window.auth.supabase.auth.signUp({
+            email,
+            password
+          });
+
+          if (error) throw error;
+
+          if (data && data.session) {
+            window.location.href = "/myfolder/template.html";
+            return;
+          }
+
+          alert("Account created! Please check your email to confirm, then sign in.");
+          loginBox.style.display = 'none';
+          return;
+        }
+
+        // If we get here, we don't have a way to call Supabase from this page
+        alert("Auth is not configured on this page. Make sure auth.js exposes window.auth.signUp(...) or window.auth.supabase.");
       } catch (err) {
-        alert(err.message || "Login failed. Please try again.");
+        showAuthError(err);
+      } finally {
+        loginSubmit.disabled = false;
+        loginSubmit.textContent = originalText;
       }
     });
   </script>
