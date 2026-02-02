@@ -1,1 +1,270 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Online Coaching</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #FCFBF4;
+    }
+
+    .image-wrapper {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .image-wrapper::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+
+    .profile-photo {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    .name-overlay {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      color: #fff;
+      text-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    .subheading {
+      font-family: 'Roboto', sans-serif;
+      font-size: 20px;
+      color: #fff;
+      letter-spacing: 1.5px;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+      font-weight: 400;
+      margin-bottom: 40px;
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .header-button {
+      background-color: #fff;
+      color: black;
+      border: 2px solid #fff;
+      font-size: 20px;
+      padding: 12px 32px;
+      border-radius: 999px;
+      width: 100%;
+      cursor: pointer;
+      text-align: center;
+      transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    .header-button:hover {
+      background-color: #121212;
+      border: 2px solid #121212;
+      color: #fff;
+      transform: scale(1.03);
+    }
+
+    a {
+      text-decoration: none;
+      width: 100%;
+    }
+
+    .login-box {
+      background-color: transparent;
+      border-radius: 15px;
+      padding: 20px 25px;
+      margin-bottom: 12px;
+      border: 1.5px solid rgba(255, 255, 255, 0.7);
+      width: 100%;
+      max-width: 400px;
+      box-sizing: border-box;
+      display: none;
+      color: white;
+    }
+
+    .login-box input {
+      background-color: rgba(255 255 255 / 0.15);
+      border: none;
+      color: white;
+      width: 100%;
+      font-size: 16px;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-sizing: border-box;
+    }
+
+    .login-box input::placeholder {
+      color: rgba(255 255 255 / 0.7);
+    }
+
+    .login-box input:focus {
+      background-color: rgba(255 255 255 / 0.3);
+      outline: none;
+    }
+
+    .login-box button {
+      background-color: #121212;
+      border: none;
+      color: white;
+      padding: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+
+    .login-box button:hover {
+      background-color: #0a0a0a;
+    }
+
+    .desktop-photo {
+      display: block;
+    }
+
+    .mobile-photo {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .desktop-photo {
+        display: none;
+      }
+
+      .mobile-photo {
+        display: block;
+      }
+
+      .name-overlay {
+        font-size: 32px;
+      }
+
+      .subheading {
+        font-size: 16px;
+        margin-bottom: 32px;
+      }
+
+      .header-button {
+        font-size: 16px;
+        padding: 10px 20px;
+      }
+
+      .button-container {
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="image-wrapper">
+    <img src="/myfolder/photos/cover2.png" alt="Main background" class="profile-photo desktop-photo" />
+    <img src="/myfolder/photos/cover2.png" alt="Mobile background" class="profile-photo mobile-photo" />
+
+    <div class="content">
+      <div class="name-overlay">OUTLIERS TRAINING CLUB</div>
+      <div class="subheading">ONLINE COACHING</div>
+
+      <div class="button-container">
+        <div id="loginBox" class="login-box">
+          <input type="email" id="email" placeholder="Email" required />
+          <input type="password" id="password" placeholder="Password" required />
+          <button id="loginSubmit">Log In</button>
+        </div>
+
+        <button id="signInBtn" class="header-button">Create Account</button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SUPABASE + SHARED AUTH -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/myfolder/js/auth.js?v=5"></script>
+
+  <script>
+    const signInBtn = document.getElementById('signInBtn');
+    const loginBox = document.getElementById('loginBox');
+    const loginSubmit = document.getElementById('loginSubmit');
+
+    // If already logged in, skip login page
+    (async () => {
+      try {
+        await window.auth.redirectIfAuthed("/myfolder/template.html");
+      } catch (e) {
+        // do nothing
+      }
+    })();
+
+    signInBtn.addEventListener('click', () => {
+      if (loginBox.style.display === 'block') {
+        loginBox.style.display = 'none';
+      } else {
+        loginBox.style.display = 'block';
+      }
+    });
+
+    loginSubmit.addEventListener('click', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        alert("Please enter your email and password.");
+        return;
+      }
+
+      try {
+        const data = await window.auth.signIn(email, password);
+
+        if (data && data.session) {
+          window.location.href = "/myfolder/template.html";
+        } else {
+          alert("Signed in, but no session was created. Please try again.");
+        }
+      } catch (err) {
+        alert(err.message || "Login failed. Please try again.");
+      }
+    });
+  </script>
+</body>
+</html>
