@@ -100,6 +100,11 @@
       transform: scale(1.03);
     }
 
+    a {
+      text-decoration: none;
+      width: 100%;
+    }
+
     .login-box {
       background-color: transparent;
       border-radius: 15px;
@@ -134,31 +139,60 @@
       outline: none;
     }
 
-    /* Password wrapper */
-    .password-wrapper {
-      position: relative;
+    /* Password row with subtle icon to the RIGHT of the input (outside the field) */
+    .password-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       width: 100%;
+      margin-bottom: 15px; /* matches other inputs spacing */
     }
 
-    .password-wrapper input {
-      padding-right: 40px;
+    .password-row input {
+      margin-bottom: 0; /* spacing handled by .password-row */
+      flex: 1 1 auto;
     }
 
-    .eye-btn {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: rgba(255,255,255,0.8);
-      font-size: 18px;
+    .toggle-visibility {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      border: 1.5px solid rgba(255, 255, 255, 0.55);
+      background: rgba(255, 255, 255, 0.10);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
       padding: 0;
+      user-select: none;
+      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+      flex: 0 0 auto;
     }
 
-    .eye-btn:hover {
-      color: white;
+    .toggle-visibility:hover {
+      background: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.75);
+      transform: translateY(-1px);
+    }
+
+    .toggle-visibility:active {
+      transform: translateY(0px);
+    }
+
+    .toggle-visibility svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+
+    .toggle-visibility svg path,
+    .toggle-visibility svg circle {
+      stroke: rgba(255, 255, 255, 0.85);
+    }
+
+    .toggle-visibility.is-on svg path,
+    .toggle-visibility.is-on svg circle {
+      stroke: rgba(255, 255, 255, 1);
     }
 
     .login-box button {
@@ -228,10 +262,15 @@
         <div id="loginBox" class="login-box">
           <input type="email" id="email" placeholder="Email" required />
 
-          <!-- Password with Eye -->
-          <div class="password-wrapper">
+          <div class="password-row">
             <input type="password" id="password" placeholder="Password" required />
-            <button type="button" id="togglePassword" class="eye-btn">👁️</button>
+            <button id="togglePassword" class="toggle-visibility" type="button" aria-label="Show password">
+              <!-- subtle outline icon (eye-style but not emoji) -->
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="12" r="2.8" stroke-width="1.8"/>
+              </svg>
+            </button>
           </div>
 
           <button id="loginSubmit" type="button">Create</button>
@@ -257,25 +296,26 @@
     (async () => {
       try {
         await window.auth.redirectIfAuthed("/myfolder/template.html");
-      } catch (e) {}
+      } catch (e) {
+        // do nothing
+      }
     })();
 
     signInBtn.addEventListener('click', () => {
-      loginBox.style.display =
-        (loginBox.style.display === 'block') ? 'none' : 'block';
+      loginBox.style.display = (loginBox.style.display === 'block') ? 'none' : 'block';
     });
 
     // Toggle password visibility
     togglePassword.addEventListener('click', () => {
-      if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-        togglePassword.textContent = "🙈";
-      } else {
-        passwordInput.type = "password";
-        togglePassword.textContent = "👁️";
-      }
+      const isHidden = passwordInput.type === "password";
+      passwordInput.type = isHidden ? "text" : "password";
+
+      // subtle state change + accessibility label
+      togglePassword.classList.toggle('is-on', isHidden);
+      togglePassword.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
     });
 
+    // Helper: show a nicer error message when possible
     function showAuthError(err) {
       const msg =
         (err && (err.message || err.error_description)) ||
@@ -287,7 +327,7 @@
       e.preventDefault();
 
       const email = document.getElementById('email').value.trim();
-      const password = passwordInput.value;
+      const password = document.getElementById('password').value;
 
       if (!email || !password) {
         alert("Please enter your email and password.");
@@ -299,19 +339,24 @@
       loginSubmit.textContent = "Creating...";
 
       try {
+        // Prefer your shared auth wrapper if it supports signUp
         if (window.auth && typeof window.auth.signUp === "function") {
           const data = await window.auth.signUp(email, password);
 
+          // If email confirmation is OFF, you usually get a session immediately
           if (data && data.session) {
             window.location.href = "/myfolder/template.html";
             return;
           }
 
+          // If email confirmation is ON, session may be null until they confirm
           alert("Account created! Please check your email to confirm, then sign in.");
           loginBox.style.display = 'none';
           return;
         }
 
+        // Fallback: direct Supabase signUp (requires your auth.js to expose client keys,
+        // so this only works if window.auth.supabase exists)
         if (window.auth && window.auth.supabase) {
           const { data, error } = await window.auth.supabase.auth.signUp({
             email,
@@ -330,7 +375,8 @@
           return;
         }
 
-        alert("Auth is not configured on this page.");
+        // If we get here, we don't have a way to call Supabase from this page
+        alert("Auth is not configured on this page. Make sure auth.js exposes window.auth.signUp(...) or window.auth.supabase.");
       } catch (err) {
         showAuthError(err);
       } finally {
