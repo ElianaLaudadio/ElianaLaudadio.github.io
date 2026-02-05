@@ -100,11 +100,6 @@
       transform: scale(1.03);
     }
 
-    a {
-      text-decoration: none;
-      width: 100%;
-    }
-
     .login-box {
       background-color: transparent;
       border-radius: 15px;
@@ -137,6 +132,33 @@
     .login-box input:focus {
       background-color: rgba(255 255 255 / 0.3);
       outline: none;
+    }
+
+    /* Password wrapper */
+    .password-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .password-wrapper input {
+      padding-right: 40px;
+    }
+
+    .eye-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.8);
+      font-size: 18px;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .eye-btn:hover {
+      color: white;
     }
 
     .login-box button {
@@ -205,7 +227,13 @@
       <div class="button-container">
         <div id="loginBox" class="login-box">
           <input type="email" id="email" placeholder="Email" required />
-          <input type="password" id="password" placeholder="Password" required />
+
+          <!-- Password with Eye -->
+          <div class="password-wrapper">
+            <input type="password" id="password" placeholder="Password" required />
+            <button type="button" id="togglePassword" class="eye-btn">👁️</button>
+          </div>
+
           <button id="loginSubmit" type="button">Create</button>
         </div>
 
@@ -222,21 +250,32 @@
     const signInBtn = document.getElementById('signInBtn');
     const loginBox = document.getElementById('loginBox');
     const loginSubmit = document.getElementById('loginSubmit');
+    const passwordInput = document.getElementById('password');
+    const togglePassword = document.getElementById('togglePassword');
 
     // If already logged in, skip this page
     (async () => {
       try {
         await window.auth.redirectIfAuthed("/myfolder/template.html");
-      } catch (e) {
-        // do nothing
-      }
+      } catch (e) {}
     })();
 
     signInBtn.addEventListener('click', () => {
-      loginBox.style.display = (loginBox.style.display === 'block') ? 'none' : 'block';
+      loginBox.style.display =
+        (loginBox.style.display === 'block') ? 'none' : 'block';
     });
 
-    // Helper: show a nicer error message when possible
+    // Toggle password visibility
+    togglePassword.addEventListener('click', () => {
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        togglePassword.textContent = "🙈";
+      } else {
+        passwordInput.type = "password";
+        togglePassword.textContent = "👁️";
+      }
+    });
+
     function showAuthError(err) {
       const msg =
         (err && (err.message || err.error_description)) ||
@@ -248,7 +287,7 @@
       e.preventDefault();
 
       const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
+      const password = passwordInput.value;
 
       if (!email || !password) {
         alert("Please enter your email and password.");
@@ -260,24 +299,19 @@
       loginSubmit.textContent = "Creating...";
 
       try {
-        // Prefer your shared auth wrapper if it supports signUp
         if (window.auth && typeof window.auth.signUp === "function") {
           const data = await window.auth.signUp(email, password);
 
-          // If email confirmation is OFF, you usually get a session immediately
           if (data && data.session) {
             window.location.href = "/myfolder/template.html";
             return;
           }
 
-          // If email confirmation is ON, session may be null until they confirm
           alert("Account created! Please check your email to confirm, then sign in.");
           loginBox.style.display = 'none';
           return;
         }
 
-        // Fallback: direct Supabase signUp (requires your auth.js to expose client keys,
-        // so this only works if window.auth.supabase exists)
         if (window.auth && window.auth.supabase) {
           const { data, error } = await window.auth.supabase.auth.signUp({
             email,
@@ -296,8 +330,7 @@
           return;
         }
 
-        // If we get here, we don't have a way to call Supabase from this page
-        alert("Auth is not configured on this page. Make sure auth.js exposes window.auth.signUp(...) or window.auth.supabase.");
+        alert("Auth is not configured on this page.");
       } catch (err) {
         showAuthError(err);
       } finally {
