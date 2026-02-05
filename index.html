@@ -226,14 +226,7 @@
     const loginBox = document.getElementById('loginBox');
     const loginSubmit = document.getElementById('loginSubmit');
 
-    // If already logged in, skip login page
-    (async () => {
-      try {
-        await window.auth.redirectIfAuthed("/myfolder/template.html");
-      } catch (e) {
-        // do nothing
-      }
-    })();
+    // (Removed) auto-redirect if already logged in
 
     signInBtn.addEventListener('click', () => {
       if (loginBox.style.display === 'block') {
