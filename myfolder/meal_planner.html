@@ -686,18 +686,26 @@
 
     const tabButtons = document.querySelectorAll('.tab-button');
     tabButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelector('.tab-button.active').classList.remove('active');
-        btn.classList.add('active');
+    btn.addEventListener('click', () => {
+    document.querySelector('.tab-button.active').classList.remove('active');
+    btn.classList.add('active');
 
-        document.getElementById('breakfast-cards').style.display = 'none';
-        document.getElementById('lunch-cards').style.display = 'none';
-        document.getElementById('snacks-cards').style.display = 'none';
-        document.getElementById('mymeals-cards').style.display = 'none';
+    document.getElementById('breakfast-cards').style.display = 'none';
+    document.getElementById('lunch-cards').style.display = 'none';
+    document.getElementById('snacks-cards').style.display = 'none';
+    document.getElementById('mymeals-cards').style.display = 'none';
 
-        document.getElementById(btn.dataset.tab + '-cards').style.display = 'flex';
-      });
-    });
+    document.getElementById(btn.dataset.tab + '-cards').style.display = 'flex';
+
+    // 🔥 Show Add Meal button ONLY on My Meals tab
+    const addMealContainer = document.getElementById('add-meal-container');
+    if (btn.dataset.tab === 'mymeals') {
+      addMealContainer.style.display = 'block';
+    } else {
+      addMealContainer.style.display = 'none';
+    }
+  });
+});
 
     const mealModal = document.getElementById('meal-modal');
     const mealModalTitle = document.getElementById('meal-modal-title');
