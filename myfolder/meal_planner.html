@@ -693,6 +693,32 @@
     
     const mymeals = [];
 
+    // --------------------------
+// LOAD USER MEALS FROM SUPABASE
+// --------------------------
+
+async function loadUserMeals() {
+  const user = await window.auth.getUser();
+  if (!user) return;
+
+  const { data, error } = await window.auth.supabase
+    .from('user_meals')
+    .select('*')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: true });
+
+  if (!error && data) {
+    data.forEach(meal => {
+      mymeals.push({
+        title: meal.title,
+        ingredients: meal.ingredients
+      });
+    });
+
+    renderCards(mymeals, 'mymeals-cards');
+  }
+}
+
     function renderCards(items, containerId) {
       const container = document.getElementById(containerId);
       container.innerHTML = '';
@@ -709,7 +735,7 @@
     renderCards(breakfast, 'breakfast-cards');
     renderCards(lunch, 'lunch-cards');
     renderCards(snacks, 'snacks-cards');
-    renderCards(mymeals, 'mymeals-cards');
+    loadUserMeals();
 
     const tabButtons = document.querySelectorAll('.tab-button');
     tabButtons.forEach(btn => {
@@ -851,20 +877,30 @@ function addIngredientToList() {
 }
 
 // Create meal and add to mymeals array
-function createMeal() {
+async function createMeal() {
   const name = document.getElementById('new-meal-name').value.trim();
   if (!name || newIngredients.length === 0) return;
 
-  const newMeal = {
-    title: name,
-    ingredients: [...newIngredients]
-  };
+  const user = await window.auth.getUser();
+  if (!user) return;
 
-  mymeals.push(newMeal);
+  const { error } = await window.auth.supabase
+    .from('user_meals')
+    .insert({
+      user_id: user.id,
+      title: name,
+      ingredients: newIngredients
+    });
 
-  renderCards(mymeals, 'mymeals-cards');
+  if (!error) {
+    mymeals.push({
+      title: name,
+      ingredients: [...newIngredients]
+    });
 
-  closeMealModal();
+    renderCards(mymeals, 'mymeals-cards');
+    closeMealModal();
+  }
 }
 
 // Override close to reset mode properly
