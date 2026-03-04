@@ -410,12 +410,41 @@
   <div id="meal-modal">
     <div class="modal-content">
       <span class="close" onclick="closeMealModal()">&times;</span>
-      <h3 id="meal-modal-title"></h3>
-      <ul id="meal-modal-list"></ul>
-      <div style="text-align:center;">
-        <button onclick="addAllToCart()">Add All</button>
-        <button onclick="addSelectedToCart()">Add Selected</button>
-      </div>
+<h3 id="meal-modal-title"></h3>
+
+<!-- VIEW MODE (existing meals) -->
+<ul id="meal-modal-list"></ul>
+
+<!-- CREATE MODE -->
+<div id="create-meal-fields" style="display:none; width:100%;">
+  <input 
+    type="text" 
+    id="new-meal-name" 
+    placeholder="Meal Name"
+    style="width:100%; padding:8px; margin-bottom:10px;"
+  />
+
+  <div style="display:flex; gap:6px; margin-bottom:10px;">
+    <input 
+      type="text" 
+      id="new-ingredient-input" 
+      placeholder="Add Ingredient"
+      style="flex:1; padding:8px;"
+    />
+    <button onclick="addIngredientToList()">Add</button>
+  </div>
+
+  <ul id="new-ingredient-list" style="list-style:none; padding:0; margin:0;"></ul>
+</div>
+
+<div id="meal-modal-buttons" style="text-align:center;">
+  <button onclick="addAllToCart()">Add All</button>
+  <button onclick="addSelectedToCart()">Add Selected</button>
+</div>
+
+<div id="create-meal-button-wrapper" style="display:none; text-align:center;">
+  <button onclick="createMeal()">Create Meal</button>
+</div>
     </div>
   </div>
 
@@ -779,6 +808,76 @@ async function addToCart(items) {
       if (e.target === mealModal) closeMealModal();
       if (e.target === document.getElementById('note-modal')) closeModal();
     };
+
+// --------------------------
+// ADD MEAL BUTTON LOGIC
+// --------------------------
+
+const addMealBtn = document.getElementById('add-meal-btn');
+const createFields = document.getElementById('create-meal-fields');
+const createButtonWrapper = document.getElementById('create-meal-button-wrapper');
+const mealButtons = document.getElementById('meal-modal-buttons');
+
+let newIngredients = [];
+
+addMealBtn.addEventListener('click', () => {
+  mealModal.style.display = 'flex';
+
+  // Switch modal to CREATE MODE
+  mealModalTitle.textContent = "Create New Meal";
+
+  document.getElementById('meal-modal-list').innerHTML = '';
+  createFields.style.display = 'block';
+  createButtonWrapper.style.display = 'block';
+  mealButtons.style.display = 'none';
+
+  document.getElementById('new-meal-name').value = '';
+  document.getElementById('new-ingredient-input').value = '';
+  document.getElementById('new-ingredient-list').innerHTML = '';
+  newIngredients = [];
+});
+
+// Add ingredient to temporary list
+function addIngredientToList() {
+  const input = document.getElementById('new-ingredient-input');
+  const value = input.value.trim();
+  if (!value) return;
+
+  newIngredients.push(value);
+
+  const li = document.createElement('li');
+  li.textContent = value;
+  document.getElementById('new-ingredient-list').appendChild(li);
+
+  input.value = '';
+}
+
+// Create meal and add to mymeals array
+function createMeal() {
+  const name = document.getElementById('new-meal-name').value.trim();
+  if (!name || newIngredients.length === 0) return;
+
+  const newMeal = {
+    title: name,
+    ingredients: [...newIngredients]
+  };
+
+  mymeals.push(newMeal);
+
+  renderCards(mymeals, 'mymeals-cards');
+
+  closeMealModal();
+}
+
+// Override close to reset mode properly
+const originalClose = closeMealModal;
+window.closeMealModal = function() {
+  createFields.style.display = 'none';
+  createButtonWrapper.style.display = 'none';
+  mealButtons.style.display = 'block';
+  originalClose();
+};
+    
   </script>
 </body>
 </html>
