@@ -438,10 +438,11 @@
   <ul id="new-ingredient-list" style="list-style:none; padding:0; margin:0;"></ul>
 </div>
 
-<div id="meal-modal-buttons" style="text-align:center;">
+  <div id="meal-modal-buttons" style="text-align:center;">
   <button onclick="addAllToCart()">Add All</button>
   <button onclick="addSelectedToCart()">Add Selected</button>
-</div>
+  <button id="delete-meal-btn" style="display:none;" onclick="deleteMeal()">Delete Meal</button>
+  </div>
 
 <div id="create-meal-button-wrapper" style="display:none; text-align:center;">
   <button onclick="createMeal()">Create Meal</button>
@@ -767,13 +768,24 @@ async function loadUserMeals() {
 
     let currentIngredients = [];
 
+    let currentMealTitle = null;
+    let isMyMeal = false;
+
     function showMealModal(item) {
       mealModal.style.display = 'flex';
       mealModalTitle.textContent = item.title;
       mealModalList.innerHTML = '';
       currentIngredients = item.ingredients;
 
-      item.ingredients.forEach(ing => {
+      currentMealTitle = item.title;
+
+      // Check if this meal exists in mymeals array
+      isMyMeal = mymeals.some(m => m.title === item.title);
+
+      const deleteBtn = document.getElementById('delete-meal-btn');
+      deleteBtn.style.display = isMyMeal ? 'inline-block' : 'none';
+
+        item.ingredients.forEach(ing => {
         const li = document.createElement('li');
         li.innerHTML = `<input type="checkbox" value="${ing}"> ${ing}`;
         mealModalList.appendChild(li);
@@ -912,6 +924,30 @@ window.closeMealModal = function() {
   mealButtons.style.display = 'block';
   originalClose();
 };
+
+async function deleteMeal() {
+  if (!isMyMeal) return;
+
+  const user = await window.auth.getUser();
+  if (!user) return;
+
+  const { error } = await window.auth.supabase
+    .from('user_meals')
+    .delete()
+    .eq('user_id', user.id)
+    .eq('title', currentMealTitle);
+
+  if (!error) {
+    // Remove from local array
+    const index = mymeals.findIndex(m => m.title === currentMealTitle);
+    if (index !== -1) {
+      mymeals.splice(index, 1);
+    }
+
+    renderCards(mymeals, 'mymeals-cards');
+    closeMealModal();
+  }
+}
     
   </script>
 </body>
