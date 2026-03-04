@@ -713,12 +713,36 @@
       mealModal.style.display = 'none';
     }
 
-    function addToCart(items) {
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      cart.push(...items);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      closeMealModal();
-    }
+async function addToCart(items) {
+  if (!window.auth || !window.auth.supabase) return;
+
+  const user = await window.auth.getUser();
+  if (!user) return;
+
+  // Get existing cart
+  const { data, error } = await window.auth.supabase
+    .from('grocery_lists')
+    .select('items')
+    .eq('user_id', user.id)
+    .single();
+
+  let currentItems = [];
+
+  if (!error && data?.items) {
+    currentItems = data.items;
+  }
+
+  const updatedItems = [...currentItems, ...items];
+
+  await window.auth.supabase
+    .from('grocery_lists')
+    .upsert(
+      { user_id: user.id, items: updatedItems },
+      { onConflict: 'user_id' }
+    );
+
+  closeMealModal();
+}
 
     function addAllToCart() {
       addToCart(currentIngredients);
