@@ -48,35 +48,57 @@ const keys = {
 
 /* ---------------- MOBILE CONTROLS ---------------- */
 
-if (leftBtn) {
-  leftBtn.addEventListener("touchstart", () => {
-    keys.left = true;
-  });
-
-  leftBtn.addEventListener("touchend", () => {
-    keys.left = false;
-  });
+function holdLeft() {
+  keys.left = true;
 }
 
-if (rightBtn) {
-  rightBtn.addEventListener("touchstart", () => {
-    keys.right = true;
-  });
-
-  rightBtn.addEventListener("touchend", () => {
-    keys.right = false;
-  });
+function releaseLeft() {
+  keys.left = false;
 }
 
-if (jumpBtn) {
-  jumpBtn.addEventListener("touchstart", () => {
-    keys.jump = true;
-  });
-
-  jumpBtn.addEventListener("touchend", () => {
-    keys.jump = false;
-  });
+function holdRight() {
+  keys.right = true;
 }
+
+function releaseRight() {
+  keys.right = false;
+}
+
+function holdJump() {
+  keys.jump = true;
+}
+
+function releaseJump() {
+  keys.jump = false;
+}
+
+leftBtn?.addEventListener("touchstart", holdLeft);
+leftBtn?.addEventListener("touchend", releaseLeft);
+leftBtn?.addEventListener("mousedown", holdLeft);
+leftBtn?.addEventListener("mouseup", releaseLeft);
+
+rightBtn?.addEventListener("touchstart", holdRight);
+rightBtn?.addEventListener("touchend", releaseRight);
+rightBtn?.addEventListener("mousedown", holdRight);
+rightBtn?.addEventListener("mouseup", releaseRight);
+
+jumpBtn?.addEventListener("touchstart", holdJump);
+jumpBtn?.addEventListener("touchend", releaseJump);
+jumpBtn?.addEventListener("mousedown", holdJump);
+jumpBtn?.addEventListener("mouseup", releaseJump);
+
+/* ---------------- GAME DATA ---------------- */
+
+const completedLogs = {
+  food: false,
+  activity: false,
+  weight: false,
+  workout: false,
+  protein: false,
+  bonus: false,
+  carbs: false,
+  fat: false
+};
 
 const completedLogs = {
   food: false,
