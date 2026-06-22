@@ -2,702 +2,530 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Training Dashboard &#x1F4AA;</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <!-- SUPABASE + SHARED AUTH -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/myfolder/js/auth.js?v=5"></script>
+  <title>Outliers Training Club</title>
 
-  <style>
-    :root {
-      --bg: #f5f4f2;
-      --fg: #111111;
-      --muted: #555555;
-      --card-bg: #ffffff;
-      --hover: #ece9e6;
-      --border: #111111;
-      --accent: #000000;
-    }
+  <!-- FONT -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    * { box-sizing: border-box; }
+  <link
+    href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
+    rel="stylesheet"
+  >
 
-    body {
-      font-family: 'Atkinson Hyperlegible', sans-serif;
-      background-color: var(--bg);
-      margin: 0;
-      padding-top: 80px;
-      padding-bottom: 60px;
-      color: var(--fg);
-    }
-
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: var(--bg);
-      border-bottom: 2px solid var(--border);
-      padding: 20px 0;
-      text-align: center;
-      z-index: 1000;
-    }
-
-    nav a {
-      color: var(--fg);
-      text-decoration: none;
-      margin: 0 20px;
-      font-size: 16px;
-      font-weight: 600;
-      position: relative;
-    }
-
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -6px;
-      left: 0;
-      width: 0%;
-      height: 2px;
-      background: var(--accent);
-      transition: width 0.3s ease;
-    }
-
-    nav a:hover::after { width: 100%; }
-
-    #hamburger {
-      display: none;
-      font-size: 36px;
-      cursor: pointer;
-      color: var(--fg);
-    }
-
-    #mobile-menu {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
-      background: var(--bg);
-      border-top: 2px solid var(--border);
-      flex-direction: column;
-      padding: 16px 0;
-      text-align: center;
-    }
-
-    #mobile-menu a { display: block; padding: 14px 0; font-size: 18px; }
-
-    main { max-width: 960px; margin: 30px auto; padding: 0 20px; }
-
-    section {
-      background: var(--card-bg);
-      padding: 25px;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      margin-bottom: 30px;
-    }
-
-    h2 {
-      font-size: 28px;
-      margin-top: 0;
-      font-weight: 500;
-      text-align: center;
-    }
-
-    label { display: block; margin-top: 10px; color: var(--muted); font-weight: 500; }
-
-    input[type="number"], input[type="text"], input[type="date"] {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 12px;
-      border: 2px solid var(--border);
-      font-size: 16px;
-      background-color: var(--card-bg);
-      color: var(--fg);
-      transition: border-color 0.3s ease, background 0.3s ease;
-    }
-
-    input[type="number"]:focus, input[type="text"]:focus, input[type="date"]:focus {
-      border-color: var(--accent);
-      outline: none;
-      background-color: var(--hover);
-    }
-
-    button {
-      background-color: var(--hover);
-      color: var(--fg);
-      border: 2px solid var(--border);
-      padding: 12px 16px;
-      font-size: 16px;
-      border-radius: 12px;
-      cursor: pointer;
-      margin-top: 15px;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      font-weight: 600;
-    }
-
-    button:hover {
-      background-color: var(--accent);
-      color: #ffffff;
-      transform: translateY(-2px);
-    }
-
-    #weight-buttons { display: flex; justify-content: space-between; gap: 10px; margin-top: 10px; }
-    #weight-buttons button { width: 48%; }
-
-    /* Progress Circle */
-    .progress-circle {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      margin: 20px auto;
-      background: conic-gradient(var(--accent) 0%, var(--accent) 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      font-weight: bold;
-      color: #ffffff;
-      -webkit-text-stroke: 1px #111111;
-      transition: background 0.3s ease;
-    }
-
-    .progress-circle span {
-      margin-top: 6px;
-      font-size: 14px;
-      color: #ffffff;
-      -webkit-text-stroke: 1px #111111;
-    }
-
-    .goals-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 20px;
-      margin-top: 20px;
-    }
-
-    .goal-box {
-      background: var(--card-bg);
-      padding: 15px;
-      border-radius: 16px;
-      text-align: center;
-      color: var(--fg);
-      border: 2px solid var(--border);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-    }
-
-    canvas { width: 100% !important; height: 300px !important; }
-
-    .message {
-      margin-top: 10px;
-      font-weight: bold;
-      color: var(--accent);
-      text-align: center;
-      min-height: 24px;
-    }
-
-    section p { color: var(--muted); font-size: 16px; margin-top: 10px; }
-
-    #go-to-cart button {
-      display: block;
-      margin: 15px auto 0 auto;
-      width: 200px;
-      font-size: 18px;
-      padding: 12px 0;
-      border-radius: 16px;
-      background-color: var(--hover);
-      color: var(--fg);
-      border: 2px solid var(--border);
-      font-weight: 600;
-    }
-
-    #go-to-cart button:hover { background-color: var(--accent); color: #ffffff; transform: translateY(-2px); }
-
-    @media (max-width: 600px) {
-      nav a { display: none; }
-      #hamburger { display: block; font-size: 40px; padding: 10px 0; }
-      main { padding: 0 10px; }
-      section { padding: 20px 15px; }
-      h2 { font-size: 22px; }
-      input[type="number"], input[type="text"], input[type="date"] { font-size: 15px; }
-      button { width: 100%; font-size: 16px; padding: 12px; }
-      #weight-buttons { flex-direction: column; gap: 10px; }
-      #weight-buttons button { width: 100%; }
-      .progress-circle { width: 120px; height: 120px; font-size: 18px; }
-      .progress-circle span { font-size: 12px; }
-      .goals-grid { grid-template-columns: 1fr; gap: 15px; }
-      #go-to-cart button { width: 100%; font-size: 16px; }
-    }
-  </style>
+  <link rel="stylesheet" href="/Users/elianalaudadio/Desktop/video_game/styles.css">
 </head>
+
 <body>
 
-<nav>
-  <a href="/myfolder/index.html">Home</a>
-  <a href="/myfolder/template.html">Goals + Progress</a>
-  <a href="/myfolder/workouts.html">Workouts</a>
-  <a href="/myfolder/meal_planner.html">Meal Planner</a>
-  <a href="/myfolder/cart.html">Grocery List</a>
-  
-  <span id="hamburger">&#9776;</span>
-  <div id="mobile-menu">
-    
-    <a href="/myfolder/index.html">Home</a>
-    <a href="/myfolder/template.html">Goals + Progress</a>
-    <a href="/myfolder/workouts.html">Workouts</a>
-    <a href="/myfolder/meal_planner.html">Meal Planner</a>
-    <a href="/myfolder/cart.html">Grocery List</a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="index.html">Goals + Progress</a>
+    <a href="workouts.html">Workouts</a>
+    <a href="mealplanner.html">Meal Planner</a>
+    <a href="pet.html">Grocery List</a>
+
+    <span id="hamburger">&#9776;</span>
+
+    <div id="mobile-menu">
+      <a href="index.html">Home</a>
+      <a href="progress.html">Goals + Progress</a>
+      <a href="workouts.html">Workouts</a>
+      <a href="academy.html">Meal Planner</a>
+      <a href="pet.html">Grocery List</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <section class="dashboard-grid">
+
+      <div class="card xp-card">
+        <div class="xp-header">
+          <h2 id="xpTitle">Baseline XP</h2>
+
+          <div class="xp-stats" id="levelStatus">
+            Level 0: Baseline
+          </div>
+        </div>
+
+        <div class="xp-bar-container">
+          <div class="xp-bar-fill" id="xpBarFill"></div>
+        </div>
+
+        <div class="xp-text" id="xpText">
+          0 / 300 XP
+        </div>
+      </div>
+
+      <div class="start-log-wrapper">
+        <a
+          href="/Users/elianalaudadio/Desktop/video_game/game.html"
+          class="start-log-button"
+          id="startLogButton"
+        >
+          <img
+            src="/Users/elianalaudadio/Desktop/video_game/start_today.png"
+            alt="Start Today's Log"
+            class="start-log-img"
+          >
+        </a>
+      </div>
+
+      <div class="card">
+        <h2>Today's Quest</h2>
+
+        <div class="quest-list" id="questList"></div>
+      </div>
+
+      <a href="/Users/elianalaudadio/Desktop/video_game/side_quests.html" class="card-link">
+        <div class="card pet-card">
+          <h2>Side Quests</h2>
+
+          <img
+            src="/Users/elianalaudadio/Desktop/video_game/shadow.png"
+            alt="Pixel Sheep"
+            class="pixel-pet"
+          >
+        </div>
+      </a>
+
+      <div class="card">
+        <h2>
+          <span>Goals</span>
+
+          <button class="set-goals-button" id="openGoalsBtn">
+            Set Goals
+          </button>
+        </h2>
+
+        <div class="goals-list" id="goalsList"></div>
+
+        <div class="placeholder"></div>
+      </div>
+
+      <div class="card xp-card">
+        <div class="xp-header">
+          <h2>Level Progress</h2>
+
+          <div class="xp-stats" id="flowStatus">
+            Level 0: Baseline
+          </div>
+        </div>
+
+        <div class="level-flow">
+          <div class="flow-step" id="level0">
+            <div class="flow-step-number">Level 0</div>
+            <div class="flow-step-name">Baseline</div>
+          </div>
+
+          <div class="flow-step" id="level1">
+            <div class="flow-step-number">Level 1</div>
+            <div class="flow-step-name">Consistency</div>
+          </div>
+
+          <div class="flow-step" id="level2">
+            <div class="flow-step-number">Level 2</div>
+            <div class="flow-step-name">Explore</div>
+          </div>
+
+          <div class="flow-step" id="level3">
+            <div class="flow-step-number">Level 3</div>
+            <div class="flow-step-name">Program</div>
+          </div>
+
+          <div class="flow-step" id="level4">
+            <div class="flow-step-number">Level 4</div>
+            <div class="flow-step-name">Nutrition</div>
+          </div>
+
+          <div class="flow-step" id="level5">
+            <div class="flow-step-number">Level 5</div>
+            <div class="flow-step-name">Discipline</div>
+          </div>
+
+          <div class="flow-step" id="level6">
+            <div class="flow-step-number">Level 6</div>
+            <div class="flow-step-name">Mastery</div>
+          </div>
+
+          <div class="flow-step" id="level7">
+            <div class="flow-step-number">Level 7</div>
+            <div class="flow-step-name">Outlier</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="start-log-wrapper">
+        <a href="/Users/elianalaudadio/Desktop/video_game/progress.html" class="start-log-button">
+          <img
+            src="/Users/elianalaudadio/Desktop/video_game/view_progress.png"
+            alt="View Progress"
+            class="start-log-img"
+          >
+        </a>
+      </div>
+
+    </section>
+
+  </main>
+
+  <div class="goal-modal" id="goalModal">
+    <div class="goal-modal-content">
+      <h2>Set Goals</h2>
+
+      <label>
+        Goal Weight
+        <input type="number" id="goalWeightInput" placeholder="Example: 125" step="0.1">
+      </label>
+
+      <label>
+        Protein Goal
+        <input type="number" id="proteinInput" placeholder="Example: 130">
+      </label>
+
+      <label>
+        Carbohydrate Goal
+        <input type="number" id="carbsInput" placeholder="Example: 220">
+      </label>
+
+      <label>
+        Fats Goal
+        <input type="number" id="fatsInput" placeholder="Example: 60">
+      </label>
+
+      <label>
+        Daily Calorie Goal
+        <input type="number" id="calorieInput" placeholder="Example: 2200">
+      </label>
+
+      <button class="save-goals-button" id="saveGoalsBtn">
+        Save Goals
+      </button>
+    </div>
   </div>
-</nav>
 
-<main>
-  <section id="nutrition"><h2>Nutrition Tracker & Goals</h2></section>
+  <footer>
+    OUTLIERS TRAINING CLUB © 2026
+  </footer>
 
-  <section id="weight">
-    <h2>Weight Tracking</h2>
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
 
-    <!-- keep this date picker (nice UX) but it will NOT restrict rows -->
-    <label for="weight-date">Entry Date:</label>
-    <input type="date" id="weight-date" />
+    hamburger.addEventListener('click', () => {
+      mobileMenu.style.display =
+        mobileMenu.style.display === 'flex'
+          ? 'none'
+          : 'flex';
+    });
 
-    <label for="weight-input">Weight (lbs):</label>
-    <input type="number" id="weight-input" step="0.1" />
+    const levels = [
+      {
+        number: 0,
+        name: 'Baseline',
+        xpKey: 'baselineXp',
+        requiredXp: 300,
+        quests: [
+          { name: 'Log Food', xp: 30, storageKey: 'foodLogs' },
+          { name: 'Log Activity', xp: 30, storageKey: 'activityLogs' }
+        ]
+      },
+      {
+        number: 1,
+        name: 'Consistency',
+        xpKey: 'consistencyXp',
+        requiredXp: 300,
+        quests: [
+          { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
+          { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
+          { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' }
+        ]
+      },
+      {
+        number: 2,
+        name: 'Explore',
+        xpKey: 'exploreXp',
+        requiredXp: 300,
+        quests: [
+          { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
+          { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
+          { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' },
+  
+        ]
+      },
+{
+  number: 3,
+  name: 'Program',
+  xpKey: 'programXp',
+  requiredXp: 300,
+  quests: [
+    { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
+    { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
+    { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' },
 
-    <div id="weight-buttons">
-      <button onclick="addWeight()">Add Entry</button>
-      <button onclick="deleteLastEntry()">Delete Last Entry</button>
-    </div>
-    <canvas id="weightChart"></canvas>
-  </section>
+  ]
+},
+     {
+  number: 4,
+  name: 'Nutrition',
+  xpKey: 'nutritionXp',
+  requiredXp: 300,
+  quests: [
 
-  <section id="input">
-    <h2>Daily Nutrition Input</h2>
+    { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
+    { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
+    { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' },
+    { name: 'Log Carbs', xp: 30, storageKey: 'carbsLogs' },
+    { name: 'Log Fat', xp: 30, storageKey: 'fatLogs' }
+  ]
+},
+{
+  number: 5,
+  name: 'Discipline',
+  xpKey: 'disciplineXp',
+  requiredXp: 300,
+  quests: [
 
-    <label for="protein">Protein (grams):</label>
-    <input type="number" id="protein" oninput="calculateProgress()" />
+    { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
+    { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
+    { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' },
+    { name: 'Log Carbs', xp: 30, storageKey: 'carbsLogs' },
+    { name: 'Log Fat', xp: 30, storageKey: 'fatLogs' },
 
-    <label for="carbs">Carbs (grams):</label>
-    <input type="number" id="carbs" oninput="calculateProgress()" />
+  ]
+},
 
-    <label for="fat">Fat (grams):</label>
-    <input type="number" id="fat" oninput="calculateProgress()" />
+{
+  number: 6,
+  name: 'Mastery',
+  xpKey: 'masteryXp',
+  requiredXp: 300,
+  quests: [
 
-    <div class="progress-circle" id="proteinCircle">
-      <div id="proteinText">0%</div>
-      <span>Protein</span>
-    </div>
+    { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
+    { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
+    { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' },
+    { name: 'Log Carbs', xp: 30, storageKey: 'carbsLogs' },
+    { name: 'Log Fat', xp: 30, storageKey: 'fatLogs' },
 
-    <div class="progress-circle" id="calorieCircle">
-      <div id="calorieText">0%</div>
-      <span>Calories</span>
-    </div>
+  ]
+},
+{
+  number: 7,
+  name: 'Outlier',
+  xpKey: 'outlierXp',
+  requiredXp: 300,
+  quests: [
 
-    <div class="message" id="proteinMessage"></div>
-    <div class="message" id="calorieMessage"></div>
-    <div class="message" id="totalCalories">Total Calories: 0</div>
-  </section>
+    { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
+    { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
+    { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' },
+    { name: 'Log Carbs', xp: 30, storageKey: 'carbsLogs' },
+    { name: 'Log Fat', xp: 30, storageKey: 'fatLogs' },
 
-  <section id="goals">
-    <h2>Set Your Goals</h2>
-    <label for="goal-weight">Goal Weight (lbs):</label>
-    <input type="number" id="goal-weight" placeholder="e.g. 150" />
-    <label for="calories-goal">Daily Calorie Goal:</label>
-    <input type="number" id="calories-goal" placeholder="e.g. 2000" />
-    <label for="protein-goal">Protein Goal (g):</label>
-    <input type="number" id="protein-goal" placeholder="e.g. 150" />
-    <label for="carbs-goal">Carbs (g):</label>
-    <input type="number" id="carbs-goal" placeholder="e.g. 250" />
-    <label for="fats-goal">Fats (g):</label>
-    <input type="number" id="fats-goal" placeholder="e.g. 70" />
-    <button onclick="saveGoals()">Save Goals</button>
-
-    <div class="goals-grid">
-      <div class="goal-box"><strong>Goal Weight:</strong><br /><span id="display-weight">–</span></div>
-      <div class="goal-box"><strong>Calories:</strong><br /><span id="display-calories">–</span></div>
-      <div class="goal-box"><strong>Protein:</strong><br /><span id="display-protein">–</span></div>
-      <div class="goal-box"><strong>Carbs:</strong><br /><span id="display-carbs">–</span></div>
-      <div class="goal-box"><strong>Fats:</strong><br /><span id="display-fats">–</span></div>
-    </div>
-  </section>
-
-
-</main>
-
-<audio id="celebrationSound" src="https://assets.mixkit.co/sfx/preview/mixkit-small-group-cheer-and-applause-518.mp3" preload="auto"></audio>
-
-<script>
-const ctx = document.getElementById('weightChart').getContext('2d');
-let weightData = JSON.parse(localStorage.getItem('weightEntries')||'[]');
-
-let chart = new Chart(ctx, {
-  type:'line',
-  data:{
-    labels: weightData.map(e=>e.label),
-    datasets:[{
-      label:'Weight (lbs)',
-      data: weightData.map(e=>e.weight),
-      borderColor:'#000000',
-      backgroundColor:'rgba(0,0,0,0.2)',
-      borderWidth:3,
-      fill:true,
-      tension:0.3,
-      pointRadius:6,
-      pointBackgroundColor:'#000000',
-      pointBorderColor:'#111111',
-      pointBorderWidth:2
-    }]
-  },
-  options:{
-    scales:{
-      y:{beginAtZero:false, ticks:{color:'#111',font:{weight:'600'}}, grid:{color:'#ccc'}},
-      x:{ticks:{color:'#111',font:{weight:'600'}}, grid:{color:'#ccc'}}
-    },
-    plugins:{legend:{labels:{color:'#d9c7b1',font:{weight:'600'}}}}
-  }
-});
-
-/* ✅ local date (NOT UTC) */
-function getTodayDate(){
-  const d = new Date();
-  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
-  return d.toISOString().split('T')[0];
+  ]
 }
+    ];
 
-/* ✅ default the date picker to today */
-function setDefaultWeightDate(){
-  const el = document.getElementById('weight-date');
-  if (el && !el.value) el.value = getTodayDate();
-}
+    const xpTitle = document.getElementById('xpTitle');
+    const levelStatus = document.getElementById('levelStatus');
+    const flowStatus = document.getElementById('flowStatus');
+    const xpBarFill = document.getElementById('xpBarFill');
+    const xpText = document.getElementById('xpText');
+    const questList = document.getElementById('questList');
+    const startLogButton = document.getElementById('startLogButton');
 
-/* -------------------- SUPABASE HELPERS -------------------- */
-function getSupabaseClientSafe(){
-  const a = window.auth;
-  const client = a && (a.supabase || a.client);
-  if (!client) console.warn("Supabase client not found on window.auth (expected auth.supabase or auth.client).");
-  return client || null;
-}
-
-function makeLabel(entryDate){
-  return entryDate;
-}
-
-/* -------------------- SUPABASE WEIGHT ENTRIES (UNLIMITED ROWS) -------------------- */
-async function loadWeightsFromDB(){
-  try {
-    const a = window.auth;
-    if (!a || !a.getUser) return;
-
-    const user = await a.getUser();
-    if (!user) return;
-
-    const sb = getSupabaseClientSafe();
-    if (!sb) return;
-
-    // ✅ This expects the table: public.weight_entries
-    // columns: id, user_id, entry_date, weight, created_at
-    const { data, error } = await sb
-      .from("weight_entries")
-      .select("id, entry_date, weight, created_at")
-      .eq("user_id", user.id)
-      .order("created_at", { ascending: true });
-
-    if (error) {
-      console.warn("Could not load weights from DB:", error.message || error);
-      return;
+    function getTodayDate() {
+      const date = new Date();
+      date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+      return date.toISOString().split('T')[0];
     }
 
-    const rows = data || [];
-    console.log(`Loaded ${rows.length} weight point(s) from DB for this user.`);
+    function hasCompletedToday(storageKey) {
+      const today = getTodayDate();
+      const logs = JSON.parse(localStorage.getItem(storageKey) || '[]');
 
-    // Store id so we can delete the last entry reliably
-    weightData = rows.map(r => ({
-      id: r.id,
-      date: r.entry_date,
-      created_at: r.created_at,
-      label: makeLabel(r.entry_date, r.created_at),
-      weight: Number(r.weight)
-    }));
-
-    localStorage.setItem('weightEntries', JSON.stringify(weightData));
-    updateChart();
-  } catch (e) {
-    console.warn("loadWeightsFromDB failed:", e);
-  }
-}
-
-async function insertWeightToDB(entryDate, weightVal){
-  try {
-    const a = window.auth;
-    if (!a || !a.getUser) return;
-
-    const user = await a.getUser();
-    if (!user) return;
-
-    const sb = getSupabaseClientSafe();
-    if (!sb) return;
-
-    const payload = {
-      user_id: user.id,
-      entry_date: entryDate,
-      weight: weightVal
-    };
-
-    const { error } = await sb
-      .from("weight_entries")
-      .insert([payload]);
-
-    if (error) console.warn("Could not insert weight to DB:", error.message || error);
-  } catch (e) {
-    console.warn("insertWeightToDB failed:", e);
-  }
-}
-
-async function deleteLastWeightFromDB(){
-  try {
-    const a = window.auth;
-    if (!a || !a.getUser) return;
-
-    const user = await a.getUser();
-    if (!user) return;
-
-    const sb = getSupabaseClientSafe();
-    if (!sb) return;
-
-    // Find the most recent row
-    const { data: lastRow, error: selErr } = await sb
-      .from("weight_entries")
-      .select("id")
-      .eq("user_id", user.id)
-      .order("created_at", { ascending: false })
-      .limit(1)
-      .maybeSingle();
-
-    if (selErr) {
-      console.warn("Could not find last weight entry:", selErr.message || selErr);
-      return;
+      return logs.some(log => log.date === today);
     }
-    if (!lastRow) return;
 
-    const { error: delErr } = await sb
-      .from("weight_entries")
-      .delete()
-      .eq("id", lastRow.id);
+    function getCurrentLevelNumber() {
+      const baselineXp = Number(localStorage.getItem('baselineXp') || 0);
+      const consistencyXp = Number(localStorage.getItem('consistencyXp') || 0);
+      const exploreXp = Number(localStorage.getItem('exploreXp') || 0);
+      const programXp = Number(localStorage.getItem('programXp') || 0);
+      const nutritionXp = Number(localStorage.getItem('nutritionXp') || 0);
+      const disciplineXp = Number(localStorage.getItem('disciplineXp') || 0);
+      const masteryXp = Number(localStorage.getItem('masteryXp') || 0);
+      const outlierXp = Number(localStorage.getItem('outlierXp') || 0);
 
-    if (delErr) console.warn("Could not delete last weight entry:", delErr.message || delErr);
-  } catch (e) {
-    console.warn("deleteLastWeightFromDB failed:", e);
-  }
+      if (outlierXp >= 300) {
+  localStorage.setItem('currentLevel', '7');
+  return 7;
 }
 
-async function addWeight(){
-  const w = parseFloat(document.getElementById('weight-input').value);
-  if (isNaN(w)) return alert('Please enter a valid weight.');
-
-  const pickedDate = document.getElementById('weight-date').value || getTodayDate();
-  const d = pickedDate;
-
-  // ✅ Unlimited local points: always push a new row
-  const nowIso = new Date().toISOString();
-  weightData.push({
-    id: null,
-    date: d,
-    created_at: nowIso,
-    label: makeLabel(d, nowIso),
-    weight: w
-  });
-
-  localStorage.setItem('weightEntries', JSON.stringify(weightData));
-  updateChart();
-  document.getElementById('weight-input').value = '';
-
-  // Save to DB (then reload so IDs/timestamps are accurate)
-  await insertWeightToDB(d, w);
-  await loadWeightsFromDB();
+      if (masteryXp >= 300) {
+  localStorage.setItem('currentLevel', '7');
+  return 7;
+}
+ 
+      if (disciplineXp >= 300) {
+  localStorage.setItem('currentLevel', '6');
+  return 6;
+}
+  
+      if (nutritionXp >= 300) {
+  localStorage.setItem('currentLevel', '5');
+  return 5;
 }
 
-async function deleteLastEntry(){
-  if (weightData.length === 0) {
-    alert('No entries to delete.');
-    return;
-  }
 
-  // Remove last point locally (based on created_at)
-  weightData.sort((a,b) => (a.created_at > b.created_at ? 1 : -1));
-  weightData.pop();
-
-  localStorage.setItem('weightEntries', JSON.stringify(weightData));
-  updateChart();
-
-  // Remove last point from DB (true source of truth)
-  await deleteLastWeightFromDB();
-  await loadWeightsFromDB();
+  
+      if (programXp >= 300) {
+  localStorage.setItem('currentLevel', '4');
+  return 4;
 }
 
-function updateChart(){
-  chart.data.labels = weightData.map(e => e.label || e.date);
-  chart.data.datasets[0].data = weightData.map(e => e.weight);
-  chart.update();
-}
+      if (exploreXp >= 300) {
+        localStorage.setItem('currentLevel', '3');
+        return 3;
+      }
 
-/* --------- YOUR EXISTING GOALS (unchanged) --------- */
-function displayGoals(){
-  const g=JSON.parse(localStorage.getItem('macroGoals'));
-  if(!g)return;
-  document.getElementById('display-weight').textContent=g.weight?g.weight+' lbs':'–';
-  document.getElementById('display-calories').textContent=g.calories?g.calories+' kcal':'–';
-  document.getElementById('display-protein').textContent=g.protein?g.protein+' g':'–';
-  document.getElementById('display-carbs').textContent=g.carbs?g.carbs+' g':'–';
-  document.getElementById('display-fats').textContent=g.fats?g.fats+' g':'–';
-}
+      if (consistencyXp >= 300) {
+        localStorage.setItem('currentLevel', '2');
+        return 2;
+      }
 
-async function loadGoalsFromDB(){
-  try {
-    const a = window.auth;
-    if (!a || !a.getUser) return;
+      if (baselineXp >= 300) {
+        localStorage.setItem('currentLevel', '1');
+        return 1;
+      }
 
-    const user = await a.getUser();
-    if (!user) return;
-
-    const sb = getSupabaseClientSafe();
-    if (!sb) return;
-
-    const { data, error } = await sb
-      .from("macro_goals")
-      .select("goal_weight, calories_goal, protein_goal, carbs_goal, fats_goal")
-      .eq("user_id", user.id)
-      .maybeSingle();
-
-    if (error) return;
-    if (!data) return;
-
-    document.getElementById('goal-weight').value   = data.goal_weight ?? '';
-    document.getElementById('calories-goal').value = data.calories_goal ?? '';
-    document.getElementById('protein-goal').value  = data.protein_goal ?? '';
-    document.getElementById('carbs-goal').value    = data.carbs_goal ?? '';
-    document.getElementById('fats-goal').value     = data.fats_goal ?? '';
-
-    const g = {
-      weight: data.goal_weight ?? '',
-      calories: data.calories_goal ?? '',
-      protein: data.protein_goal ?? '',
-      carbs: data.carbs_goal ?? '',
-      fats: data.fats_goal ?? ''
-    };
-    localStorage.setItem('macroGoals', JSON.stringify(g));
-  } catch (e) {}
-}
-
-async function saveGoalsToDB(payload){
-  try {
-    const a = window.auth;
-    if (!a || !a.getUser) return;
-
-    const user = await a.getUser();
-    if (!user) return;
-
-    const sb = getSupabaseClientSafe();
-    if (!sb) return;
-
-    const row = {
-      user_id: user.id,
-      goal_weight: payload.weight === '' ? null : Number(payload.weight),
-      calories_goal: payload.calories === '' ? null : Number(payload.calories),
-      protein_goal: payload.protein === '' ? null : Number(payload.protein),
-      carbs_goal: payload.carbs === '' ? null : Number(payload.carbs),
-      fats_goal: payload.fats === '' ? null : Number(payload.fats),
-      updated_at: new Date().toISOString()
-    };
-
-    await sb.from("macro_goals").upsert(row, { onConflict: "user_id" });
-  } catch (e) {}
-}
-
-async function saveGoals(){
-  const g={
-    weight:document.getElementById('goal-weight').value,
-    calories:document.getElementById('calories-goal').value,
-    protein:document.getElementById('protein-goal').value,
-    carbs:document.getElementById('carbs-goal').value,
-    fats:document.getElementById('fats-goal').value
-  };
-
-  localStorage.setItem('macroGoals',JSON.stringify(g));
-  displayGoals();
-  calculateProgress();
-
-  await saveGoalsToDB(g);
-}
-
-let proteinConfettiFired=false;let calorieConfettiFired=false;
-function calculateProgress(){
-  const p=parseFloat(document.getElementById('protein').value)||0;
-  const c=parseFloat(document.getElementById('carbs').value)||0;
-  const f=parseFloat(document.getElementById('fat').value)||0;
-  const total=Math.round(p*4+c*4+f*9);
-  document.getElementById('totalCalories').textContent=`Total Calories: ${total}`;
-  const goals=JSON.parse(localStorage.getItem('macroGoals'))||{};
-  const proteinGoal=parseFloat(goals.protein)||1;
-  const calorieGoal=parseFloat(goals.calories)||1;
-
-  const proteinPercent=Math.min(100,(p/proteinGoal)*100);
-  const proteinCircle=document.getElementById('proteinCircle');
-  const proteinText=document.getElementById('proteinText');
-  proteinText.textContent=`${Math.round(proteinPercent)}%`;
-  proteinCircle.style.background=`conic-gradient(var(--accent) ${proteinPercent}%, var(--hover) ${proteinPercent}% 100%)`;
-
-  const caloriePercent=Math.min(100,(total/calorieGoal)*100);
-  const calorieCircle=document.getElementById('calorieCircle');
-  const calorieText=document.getElementById('calorieText');
-  calorieText.textContent=`${Math.round(caloriePercent)}%`;
-  calorieCircle.style.background=`conic-gradient(var(--accent) ${caloriePercent}%, var(--hover) ${caloriePercent}% 100%)`;
-
-  document.getElementById('proteinMessage').textContent=proteinPercent>=100?'Protein Goal Achieved!':'';
-  document.getElementById('calorieMessage').textContent=caloriePercent>=100?'Calorie Goal Achieved!':'';
-
-  const confettiSound=document.getElementById('celebrationSound');
-  if(proteinPercent>=100&&!proteinConfettiFired){confetti({particleCount:200,spread:100,origin:{y:0.6}});confettiSound.play();proteinConfettiFired=true;}else if(proteinPercent<100)proteinConfettiFired=false;
-  if(caloriePercent>=100&&!calorieConfettiFired){confetti({particleCount:200,spread:100,origin:{y:0.6}});confettiSound.play();calorieConfettiFired=true;}else if(caloriePercent<100)calorieConfettiFired=false;
-}
-
-function submitCelebrate(){
-  const confettiSound = document.getElementById('celebrationSound');
-  confetti({ particleCount: 260, spread: 140, origin: { y: 0.6 } });
-  confetti({ particleCount: 180, spread: 90, origin: { y: 0.65 } });
-  confettiSound.play();
-}
-
-window.onload = async () => {
-  setDefaultWeightDate();
-  await loadGoalsFromDB();
-  await loadWeightsFromDB();
-
-  displayGoals();
-  updateChart();
-  calculateProgress();
-};
-
-
-
-const hamburger=document.getElementById('hamburger');
-const mobileMenu=document.getElementById('mobile-menu');
-hamburger.addEventListener('click',()=>{mobileMenu.style.display=mobileMenu.style.display==='flex'?'none':'flex';});
-</script>
-
-<!-- AUTH GUARD -->
-<script>
-  (async () => {
-    try {
-      await window.auth.requireAuth("/myfolder/index.html");
-    } catch (e) {
-      window.location.href = "/myfolder/index.html";
+      localStorage.setItem('currentLevel', '0');
+      return 0;
     }
-  })();
-</script>
+
+    function updateStartLogButton(currentLevelNumber) {
+      startLogButton.href =
+        "/Users/elianalaudadio/Desktop/video_game/game.html?level=" + currentLevelNumber;
+    }
+
+    function updateDashboard() {
+      const currentLevelNumber = getCurrentLevelNumber();
+      const currentLevel = levels[currentLevelNumber];
+
+      updateStartLogButton(currentLevelNumber);
+
+      const currentXp = Number(localStorage.getItem(currentLevel.xpKey) || 0);
+      const xpPercent = Math.min((currentXp / currentLevel.requiredXp) * 100, 100);
+
+      xpTitle.textContent = currentLevel.name + ' XP';
+      levelStatus.textContent = 'Level ' + currentLevel.number + ': ' + currentLevel.name;
+      flowStatus.textContent = 'Level ' + currentLevel.number + ': ' + currentLevel.name;
+
+      xpBarFill.style.width = xpPercent + '%';
+      xpText.textContent = currentXp + ' / ' + currentLevel.requiredXp + ' XP';
+
+      questList.innerHTML = '';
+
+      currentLevel.quests.forEach(quest => {
+        const questItem = document.createElement('div');
+        questItem.classList.add('quest-item');
+
+        if (hasCompletedToday(quest.storageKey)) {
+          questItem.classList.add('complete');
+        }
+
+        questItem.innerHTML = `
+          <span>${quest.name}</span>
+          <span>+${quest.xp} XP</span>
+        `;
+
+        questList.appendChild(questItem);
+      });
+
+      levels.forEach(level => {
+        const levelElement = document.getElementById('level' + level.number);
+
+        levelElement.classList.remove('current', 'complete', 'locked');
+
+        if (level.number < currentLevelNumber) {
+          levelElement.classList.add('complete');
+        } else if (level.number === currentLevelNumber) {
+          levelElement.classList.add('current');
+        } else {
+          levelElement.classList.add('locked');
+        }
+      });
+    }
+
+    updateDashboard();
+
+    const openGoalsBtn = document.getElementById('openGoalsBtn');
+    const goalModal = document.getElementById('goalModal');
+    const saveGoalsBtn = document.getElementById('saveGoalsBtn');
+    const goalsList = document.getElementById('goalsList');
+
+    const goalWeightInput = document.getElementById('goalWeightInput');
+    const proteinInput = document.getElementById('proteinInput');
+    const carbsInput = document.getElementById('carbsInput');
+    const fatsInput = document.getElementById('fatsInput');
+    const calorieInput = document.getElementById('calorieInput');
+
+    function displayGoals(goals) {
+      if (!goals) return;
+
+      goalsList.innerHTML = `
+        <div>Goal Weight: ${goals.goalWeight ? goals.goalWeight + ' lbs' : '--'}</div>
+        <div>Protein: ${goals.protein ? goals.protein + 'g' : '--'}</div>
+        <div>Carbs: ${goals.carbs ? goals.carbs + 'g' : '--'}</div>
+        <div>Fats: ${goals.fats ? goals.fats + 'g' : '--'}</div>
+        <div>Calories: ${goals.calories ? goals.calories : '--'}</div>
+      `;
+    }
+
+    const savedGoals = JSON.parse(localStorage.getItem('clientGoals'));
+
+    if (savedGoals) {
+      displayGoals(savedGoals);
+    }
+
+    openGoalsBtn.addEventListener('click', () => {
+      goalModal.classList.add('active');
+
+      const savedGoals = JSON.parse(localStorage.getItem('clientGoals'));
+
+      if (savedGoals) {
+        goalWeightInput.value = savedGoals.goalWeight;
+        proteinInput.value = savedGoals.protein;
+        carbsInput.value = savedGoals.carbs;
+        fatsInput.value = savedGoals.fats;
+        calorieInput.value = savedGoals.calories;
+      }
+    });
+
+    goalModal.addEventListener('click', (e) => {
+      if (e.target === goalModal) {
+        goalModal.classList.remove('active');
+      }
+    });
+
+    saveGoalsBtn.addEventListener('click', () => {
+      const goals = {
+        goalWeight: goalWeightInput.value,
+        protein: proteinInput.value,
+        carbs: carbsInput.value,
+        fats: fatsInput.value,
+        calories: calorieInput.value
+      };
+
+      localStorage.setItem('clientGoals', JSON.stringify(goals));
+      displayGoals(goals);
+      goalModal.classList.remove('active');
+    });
+  </script>
 
 </body>
 </html>
