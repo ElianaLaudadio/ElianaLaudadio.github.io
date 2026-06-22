@@ -34,7 +34,7 @@ const saveFatBtn = document.getElementById("saveFatBtn");
 const gameTitle = document.querySelector(".game-title");
 
 const sheepImg = new Image();
-sheepImg.src = "/Users/elianalaudadio/Desktop/video_game/shadow.png";
+sheepImg.src = "/myfolder/gamePhotos/shadow.png";
 
 const keys = {
   left: false,
