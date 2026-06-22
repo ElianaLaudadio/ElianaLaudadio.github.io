@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Outliers Game</title>
+
+  <link rel="stylesheet" href="/Users/elianalaudadio/Desktop/video_game/styles.css">
+</head>
+
+<body class="game-page">
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="progress.html">Goals + Progress</a>
+    <a href="workouts.html">Workouts</a>
+    <a href="academy.html">Academy</a>
+    <a href="pet.html">My Pet</a>
+  </nav>
+
+  <main>
+    <h1 class="game-title">Level 0: Baseline</h1>
+
+    <canvas id="game" width="900" height="500"></canvas>
+
+    <div class="game-actions">
+      <a href="index.html" class="exit-button">
+        Exit Game
+      </a>
+    </div>
+
+    <div class="controls">
+      ← → Move &nbsp; | &nbsp; Space Jump
+    </div>
+  </main>
+
+
+
+  <div class="log-panel" id="activityLogPanel">
+    <h2>Track Activity</h2>
+    <textarea id="activityInput" placeholder="What activity did you do today?" rows="5"></textarea>
+    <button id="saveActivityBtn">Enter</button>
+  </div>
+
+  <div class="log-panel" id="weightLogPanel">
+    <h2>Log Weight</h2>
+    <input
+      type="number"
+      id="weightInput"
+      placeholder="Weight in lbs"
+      step="0.1"
+    >
+    <button id="saveWeightBtn">Enter</button>
+  </div>
+
+  <div class="log-panel" id="workoutLogPanel">
+    <h2>Log Workout</h2>
+    <textarea
+      id="workoutInput"
+      placeholder="What workout did you do today? What did you try that was new?"
+      rows="5"
+    ></textarea>
+    <button id="saveWorkoutBtn">Enter</button>
+  </div>
+
+  <div class="log-panel" id="proteinLogPanel">
+    <h2>Log Protein</h2>
+    <input
+      type="number"
+      id="proteinInput"
+      placeholder="Protein in grams"
+    >
+    <button id="saveProteinBtn">Enter</button>
+  </div>
+
+  <div class="log-panel" id="carbsLogPanel">
+  <h2>Log Carbohydrates</h2>
+  <input
+    type="number"
+    id="carbsInput"
+    placeholder="Carbs in grams"
+  >
+  <button id="saveCarbsBtn">Enter</button>
+</div>
+
+<div class="log-panel" id="fatLogPanel">
+  <h2>Log Fat</h2>
+  <input
+    type="number"
+    id="fatInput"
+    placeholder="Fat in grams"
+  >
+  <button id="saveFatBtn">Enter</button>
+</div>
+
+  <div class="log-panel" id="bonusLogPanel">
+    <h2>Bonus Leverage Point</h2>
+    <textarea
+      id="bonusInput"
+      placeholder="What extra leverage point did you work on today?"
+      rows="5"
+    ></textarea>
+    <button id="saveBonusBtn">Enter</button>
+  </div>
+
+
+
+  <script src="/Users/elianalaudadio/Desktop/video_game/game.js"></script>
+
+</body>
+</html>
