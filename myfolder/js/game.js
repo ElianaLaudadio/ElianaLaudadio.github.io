@@ -46,6 +46,38 @@ const keys = {
   jump: false
 };
 
+/* ---------------- MOBILE CONTROLS ---------------- */
+
+if (leftBtn) {
+  leftBtn.addEventListener("touchstart", () => {
+    keys.left = true;
+  });
+
+  leftBtn.addEventListener("touchend", () => {
+    keys.left = false;
+  });
+}
+
+if (rightBtn) {
+  rightBtn.addEventListener("touchstart", () => {
+    keys.right = true;
+  });
+
+  rightBtn.addEventListener("touchend", () => {
+    keys.right = false;
+  });
+}
+
+if (jumpBtn) {
+  jumpBtn.addEventListener("touchstart", () => {
+    keys.jump = true;
+  });
+
+  jumpBtn.addEventListener("touchend", () => {
+    keys.jump = false;
+  });
+}
+
 const completedLogs = {
   food: false,
   activity: false,
