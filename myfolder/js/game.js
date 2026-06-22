@@ -1,6 +1,10 @@
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
+const leftBtn = document.getElementById("leftBtn");
+const rightBtn = document.getElementById("rightBtn");
+const jumpBtn = document.getElementById("jumpBtn");
+
 const foodLogPanel = document.getElementById("foodLogPanel");
 const activityLogPanel = document.getElementById("activityLogPanel");
 const weightLogPanel = document.getElementById("weightLogPanel");
