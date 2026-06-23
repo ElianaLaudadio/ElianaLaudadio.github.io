@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eliana Laudadio</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0a0f1f;
+      --card: #111827;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #98FBCB;
+      --secondary: #60a5fa;
+      --border: #1f2937;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1.7;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(10, 15, 31, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-container {
+      width: min(1100px, 90%);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+    }
+
+    .logo {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .container {
+      width: min(1100px, 90%);
+      margin: 0 auto;
+      padding: 60px 0;
+    }
+
+    .hero {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .prompt {
+      color: var(--accent);
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 8vw, 5.5rem);
+      line-height: 1;
+      margin: 0 0 20px;
+    }
+
+    .name {
+      color: var(--accent);
+    }
+
+    .hero p {
+      max-width: 800px;
+      font-size: 1.1rem;
+      color: var(--muted);
+    }
+
+    section {
+      padding: 70px 0;
+      border-bottom: 1px solid var(--border);
+      scroll-margin-top: 100px;
+    }
+
+    h2 {
+      color: var(--secondary);
+      font-size: 1.3rem;
+      margin-bottom: 25px;
+    }
+
+    h3 {
+      margin-top: 0;
+      color: var(--accent);
+    }
+
+    p {
+      max-width: 850px;
+    }
+
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .tech-stack span {
+      background: var(--card);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+      margin-top: 25px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 22px;
+      border-radius: 10px;
+    }
+
+    .card p {
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    .tag {
+      color: var(--secondary);
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+    }
+
+    footer {
+      padding: 50px 0;
+      color: var(--muted);
+    }
+
+    .cursor {
+      color: var(--accent);
+      animation: blink 1s infinite;
+    }
+
+    .typing-cursor {
+  color: var(--accent);
+  animation: blink 1s infinite;
+}
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-container {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        width: 92%;
+        padding: 40px 0;
+      }
+
+      .hero {
+        min-height: 70vh;
+      }
+
+      section {
+        padding: 50px 0;
+      }
+      
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="nav-container">
+
+      <div class="nav-links">
+        <a href="#about">about</a>
+        <a href="#experience">experience</a>
+        <a href="#software">software</a>
+        <a href="#hardware">hardware</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <section class="hero">
+      <div class="prompt">$ whoami</div>
+
+<h1>
+  hi, <span class="name">eliana</span> here.<span class="typing-cursor">|</span>
+</h1>
+
+      <p>
+        software engineer, infrastructure analyst, and personal trainer in huntsville,
+        alabama. i build software systems by day and create sustainable habits for
+        lifestyle and powerlifting clients by night. occasionally, both happen at the
+        same time.
+      </p>
+    </section>
+
+    <section id="about">
+      <h2>$ cat about.txt</h2>
+
+      <p>
+        i am currently an infrastructure analyst at summit 7 systems, where i support
+        secure cloud environments, troubleshoot technical issues, and work with systems
+        that help organizations stay aligned with cybersecurity and compliance standards.
+      </p>
+
+
+
+      <p>here are some technologies i have been working with:</p>
+
+      <div class="tech-stack">
+        <span>Python</span>
+        <span>PowerShell</span>
+        <span>React.js</span>
+        <span>Java</span>
+        <span>C++</span>
+        <span>JavaScript</span>
+        <span>HTML</span>
+        <span>CSS</span>
+        <span>Azure</span>
+        <span>Intune</span>
+      </div>
+
+      <p>
+in my free time, i am a competitive powerlifter, a designer, and a horror fanatic. i am an INFJ - an advocate, if you beleive in that kind of stuff. Which means that once I find something I am passionate about, I will push to create an entire army of people to love what I love. You are at my mercy. 
+      </p>
+    </section>
+
+    <section id="experience">
+      <h2>$ ls experience</h2>
+
+      <div class="grid">
+        <div class="card">
+          <div class="tag">current role</div>
+          <h3>Infrastructure Analyst</h3>
+          <p>Summit 7 Systems</p>
+          <p>
+            Supporting secure client environments, troubleshooting technical systems,
+            and working with cloud, endpoint, and compliance-focused technologies.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="tag">previous role</div>
+          <h3>Junior NOC Analyst</h3>
+          <p>Summit 7 Systems</p>
+          <p>
+            Monitored network systems, supported incident response workflows, and gained
+            hands-on experience with operational technology environments.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="tag">education</div>
+          <h3>B.S. Computer Science</h3>
+          <p>Colorado State University</p>
+          <p>
+            Studied programming, software development, systems, algorithms, and computer
+            science fundamentals.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="software">
+      <h2>$ ls software</h2>
+
+      <div class="grid">
+        <div class="card">
+          <div class="tag">featured project</div>
+          <h3>Black Sheep Video Game</h3>
+          <p>
+            A gamified fitness platform built with HTML, CSS, JavaScript, Supabase,
+            authentication, database persistence, and progress tracking.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="tag">web app</div>
+          <h3>Personal Training Website</h3>
+          <p>
+            A coaching-focused web platform for organizing client habits, fitness goals,
+            progress, and accountability tools.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="tag">frontend</div>
+          <h3>World Brewery Tour</h3>
+          <p>
+  A team react.js project that provided hands-on experience with Agile and
+  Scrum methodologies, including sprint planning, team collaboration,
+  and delivering features through iterative development cycles.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="hardware">
+      <h2>$ ls hardware</h2>
+
+      <div class="grid">
+        <div class="card">
+
+          <h3>Custom Build PC</h3>
+          <p>
+            Built and configured a personal desktop setup for development, gaming,
+            productivity, and creative work.
+          </p>
+        </div>
+
+        <div class="card">
+
+          <h3>Imaging Stick</h3>
+          <p>
+            Created and used bootable media for operating system imaging, troubleshooting,
+            and system recovery workflows.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>$ status</p>
+      <p>
+        currently learning system design, APIs, cloud infrastructure, and software
+        engineering.
+      </p>
+      <p class="cursor">></p>
+    </footer>
+
+  </main>
+</body>
+</html>
