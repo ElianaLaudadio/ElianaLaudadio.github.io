@@ -10,45 +10,70 @@
 
 <body class="game-page">
 
-  <nav>
-      <a href="/myfolder/index.html">Home</a>
-      <a href="/myfolder/template.html">Goals + Progress</a>
-      <a href="/myfolder/workouts.html">Workouts</a>
-      <a href="/myfolder/meal_planner.html">Meal Planner</a>
-      <a href="/myfolder/cart.html">Grocery List</a>
-  </nav>
-
   <main>
+
+    <div class="game-mode-container">
+      <label class="switch">
+        <input type="checkbox" id="gameModeToggle" checked>
+        <span class="slider">
+          <span class="toggle-text on">GAME MODE</span>
+          <span class="toggle-text off">GAME MODE</span>
+        </span>
+      </label>
+    </div>
+
     <h1 class="game-title">Level 0: Baseline</h1>
 
-    <canvas id="game" width="900" height="500"></canvas>
+    <div id="gameModeContent">
+      <canvas id="game" width="900" height="500"></canvas>
 
-    <div class="mobile-controls">
+      <div class="mobile-controls">
+        <button id="leftBtn">←</button>
+        <button id="jumpBtn">⭡</button>
+        <button id="rightBtn">→</button>
+      </div>
 
-  <button id="leftBtn">◀</button>
+      <div class="controls">
+        ← → Move &nbsp; | &nbsp; Space Jump
+      </div>
+    </div>
 
-  <button id="jumpBtn">▲</button>
+    <div id="quickLogMode" class="quick-log-mode">
+      <h2>Quick Log</h2>
 
-  <button id="rightBtn">▶</button>
 
-</div>
+      <div class="quick-log-grid" id="quickLogGrid"></div>
+    </div>
 
     <div class="game-actions">
-      <a href="/myfolder/template.html" class="exit-button">
-        Exit Game
+      <a href="index.html" class="exit-button">
+        Exit 
       </a>
+
+
+
+      
     </div>
 
-    <div class="controls">
-      ← → Move &nbsp; | &nbsp; Space Jump
-    </div>
   </main>
 
-
+  <div class="log-panel" id="foodLogPanel">
+    <h2>Track Food</h2>
+    <textarea
+      id="foodInput"
+      placeholder="What did you eat today?"
+      rows="5"
+    ></textarea>
+    <button id="saveFoodBtn">Enter</button>
+  </div>
 
   <div class="log-panel" id="activityLogPanel">
     <h2>Track Activity</h2>
-    <textarea id="activityInput" placeholder="What activity did you do today?" rows="5"></textarea>
+    <textarea
+      id="activityInput"
+      placeholder="What activity did you do today?"
+      rows="5"
+    ></textarea>
     <button id="saveActivityBtn">Enter</button>
   </div>
 
@@ -84,24 +109,24 @@
   </div>
 
   <div class="log-panel" id="carbsLogPanel">
-  <h2>Log Carbohydrates</h2>
-  <input
-    type="number"
-    id="carbsInput"
-    placeholder="Carbs in grams"
-  >
-  <button id="saveCarbsBtn">Enter</button>
-</div>
+    <h2>Log Carbohydrates</h2>
+    <input
+      type="number"
+      id="carbsInput"
+      placeholder="Carbs in grams"
+    >
+    <button id="saveCarbsBtn">Enter</button>
+  </div>
 
-<div class="log-panel" id="fatLogPanel">
-  <h2>Log Fat</h2>
-  <input
-    type="number"
-    id="fatInput"
-    placeholder="Fat in grams"
-  >
-  <button id="saveFatBtn">Enter</button>
-</div>
+  <div class="log-panel" id="fatLogPanel">
+    <h2>Log Fat</h2>
+    <input
+      type="number"
+      id="fatInput"
+      placeholder="Fat in grams"
+    >
+    <button id="saveFatBtn">Enter</button>
+  </div>
 
   <div class="log-panel" id="bonusLogPanel">
     <h2>Bonus Leverage Point</h2>
@@ -112,8 +137,6 @@
     ></textarea>
     <button id="saveBonusBtn">Enter</button>
   </div>
-
-
 
   <script src="/myfolder/js/game.js"></script>
 
