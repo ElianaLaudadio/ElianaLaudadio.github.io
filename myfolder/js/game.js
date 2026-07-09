@@ -46,59 +46,62 @@ const keys = {
   jump: false
 };
 
-/* ---------------- MOBILE CONTROLS ---------------- */
-
-function holdLeft() {
+function pressLeft(e) {
+  if (e) e.preventDefault();
   keys.left = true;
 }
 
-function releaseLeft() {
+function releaseLeft(e) {
+  if (e) e.preventDefault();
   keys.left = false;
 }
 
-function holdRight() {
+function pressRight(e) {
+  if (e) e.preventDefault();
   keys.right = true;
 }
 
-function releaseRight() {
+function releaseRight(e) {
+  if (e) e.preventDefault();
   keys.right = false;
 }
 
-function holdJump() {
+function pressJump(e) {
+  if (e) e.preventDefault();
   keys.jump = true;
 }
 
-function releaseJump() {
+function releaseJump(e) {
+  if (e) e.preventDefault();
   keys.jump = false;
 }
 
-leftBtn?.addEventListener("touchstart", holdLeft);
-leftBtn?.addEventListener("touchend", releaseLeft);
-leftBtn?.addEventListener("mousedown", holdLeft);
-leftBtn?.addEventListener("mouseup", releaseLeft);
+if (leftBtn) {
+  leftBtn.addEventListener("touchstart", pressLeft, { passive: false });
+  leftBtn.addEventListener("touchend", releaseLeft, { passive: false });
+  leftBtn.addEventListener("touchcancel", releaseLeft, { passive: false });
+  leftBtn.addEventListener("mousedown", pressLeft);
+  leftBtn.addEventListener("mouseup", releaseLeft);
+  leftBtn.addEventListener("mouseleave", releaseLeft);
+}
 
-rightBtn?.addEventListener("touchstart", holdRight);
-rightBtn?.addEventListener("touchend", releaseRight);
-rightBtn?.addEventListener("mousedown", holdRight);
-rightBtn?.addEventListener("mouseup", releaseRight);
+if (rightBtn) {
+  rightBtn.addEventListener("touchstart", pressRight, { passive: false });
+  rightBtn.addEventListener("touchend", releaseRight, { passive: false });
+  rightBtn.addEventListener("touchcancel", releaseRight, { passive: false });
+  rightBtn.addEventListener("mousedown", pressRight);
+  rightBtn.addEventListener("mouseup", releaseRight);
+  rightBtn.addEventListener("mouseleave", releaseRight);
+}
 
-jumpBtn?.addEventListener("touchstart", holdJump);
-jumpBtn?.addEventListener("touchend", releaseJump);
-jumpBtn?.addEventListener("mousedown", holdJump);
-jumpBtn?.addEventListener("mouseup", releaseJump);
-
-/* ---------------- GAME DATA ---------------- */
-
-const completedLogs = {
-  food: false,
-  activity: false,
-  weight: false,
-  workout: false,
-  protein: false,
-  bonus: false,
-  carbs: false,
-  fat: false
-};
+if (jumpBtn) {
+  jumpBtn.addEventListener("touchstart", pressJump, { passive: false });
+  jumpBtn.addEventListener("touchend", releaseJump, { passive: false });
+  jumpBtn.addEventListener("touchcancel", releaseJump, { passive: false });
+  jumpBtn.addEventListener("mousedown", pressJump);
+  jumpBtn.addEventListener("mouseup", releaseJump);
+  jumpBtn.addEventListener("mouseleave", releaseJump);
+}
 
 const completedLogs = {
   food: false,
@@ -149,9 +152,9 @@ const levels = {
       { x: 40, y: 420, width: 150, height: 22, label: "" },
       { x: 245, y: 370, width: 145, height: 22, label: "WEIGHT", logType: "weight" },
       { x: 470, y: 310, width: 160, height: 22, label: "WORKOUT", logType: "workout" },
-      { x: 690, y: 250, width: 145, height: 22, label: "PROTEIN", logType: "protein" },
-      { x: 500, y: 175, width: 145, height: 22, label: "" },
-      { x: 170, y: 230, width: 145, height: 22, label: "" }
+      { x: 690, y: 250, width: 145, height: 22, label: ""},
+      { x: 500, y: 175, width: 145, height: 22, label: "PROTEIN", logType: "protein" },
+      { x: 170, y: 230, width: 145, height: 22, label:  "" }
     ]
   },
 
@@ -159,7 +162,7 @@ const levels = {
     title: "Level 2: Explore",
     hudTitle: "LEVEL 2: EXPLORE",
     xpKey: "exploreXp",
-    requiredXp: 300,
+    requiredXp: 600,
     startX: 60,
     startY: 370,
     totalLogs: 3,
@@ -170,7 +173,8 @@ const levels = {
       { x: 325, y: 220, width: 160, height: 22, label: "WORKOUT", logType: "workout" },
       { x: 565, y: 285, width: 145, height: 22, label: "PROTEIN", logType: "protein" },
       { x: 720, y: 190, width: 145, height: 22, label: "" },
-      { x: 510, y: 125, width: 165, height: 22, label: "BONUS", logType: "bonus" }
+      { x: 510, y: 125, width: 165, height: 22, label: "" },
+      { x: 720, y: 50, width: 145, height: 22, label: "BONUS", logType: "bonus" }
     ]
   },
 
@@ -178,15 +182,16 @@ const levels = {
   title: "Level 3: Program",
   hudTitle: "LEVEL 3: PROGRAM",
   xpKey: "programXp",
-  requiredXp: 300,
+  requiredXp: 900,
   startX: 760,
   startY: 365,
   totalLogs: 3,
   platforms: [
     { x: 715, y: 420, width: 150, height: 22, label: "" },
     { x: 505, y: 365, width: 145, height: 22, label: "WEIGHT", logType: "weight" },
-    { x: 300, y: 310, width: 160, height: 22, label: "WORKOUT", logType: "workout" },
+    { x: 300, y: 310, width: 160, height: 22, label: "" },
     { x: 95, y: 255, width: 145, height: 22, label: "PROTEIN", logType: "protein" },
+    { x: 150, y: 370, width: 145, height: 22, label: "WORKOUT", logType: "workout" },
     { x: 320, y: 185, width: 145, height: 22, label: "" },
     { x: 565, y: 145, width: 165, height: 22, label: "BONUS", logType: "bonus" },
     { x: 730, y: 245, width: 130, height: 22, label: "" }
@@ -197,16 +202,16 @@ const levels = {
   title: "Level 4: Nutrition",
   hudTitle: "LEVEL 4: NUTRITION",
   xpKey: "nutritionXp",
-  requiredXp: 300,
+  requiredXp: 900,
   startX: 70,
   startY: 380,
-  totalLogs: 6,
+  totalLogs: 5,
   platforms: [
     { x: 35, y: 435, width: 150, height: 22, label: "" },
     { x: 210, y: 375, width: 145, height: 22, label: ""},
     { x: 410, y: 330, width: 145, height: 22, label: "WEIGHT", logType: "weight" },
     { x: 620, y: 375, width: 160, height: 22, label: "WORKOUT", logType: "workout" },
-    { x: 700, y: 255, width: 145, height: 22, label: "PROTEIN", logType: "protein" },
+    { x: 690, y: 255, width: 145, height: 22, label: "PROTEIN", logType: "protein" },
     { x: 470, y: 205, width: 145, height: 22, label: "CARBS", logType: "carbs" },
     { x: 230, y: 155, width: 145, height: 22, label: "FAT", logType: "fat" },
     { x: 55, y: 245, width: 145, height: 22, label: "" }
@@ -217,7 +222,7 @@ const levels = {
   title: "Level 5: Discipline",
   hudTitle: "LEVEL 5: DISCIPLINE",
   xpKey: "disciplineXp",
-  requiredXp: 300,
+  requiredXp: 600,
   startX: 735,
   startY: 380,
   totalLogs: 6,
@@ -229,7 +234,7 @@ const levels = {
     { x: 300, y: 190, width: 145, height: 22, label: "PROTEIN", logType: "protein" },
     { x: 510, y: 145, width: 145, height: 22, label: "CARBS", logType: "carbs" },
     { x: 710, y: 220, width: 145, height: 22, label: "FAT", logType: "fat" },
-    { x: 470, y: 260, width: 165, height: 22, label: "BONUS", logType: "bonus" }
+    { x: 710, y: 70, width: 145, height: 22, label: "BONUS", logType: "bonus" }
   ]
 },
 
@@ -237,23 +242,30 @@ const levels = {
   title: "Level 6: Mastery",
   hudTitle: "LEVEL 6: MASTERY",
   xpKey: "masteryXp",
-  requiredXp: 300,
+  requiredXp: 600,
   startX: 415,
   startY: 390,
   totalLogs: 6,
   platforms: [
+
+    // Start
     { x: 375, y: 445, width: 150, height: 22, label: "" },
 
+    // First tier
+    { x: 190, y: 355, width: 145, height: 22, label: "WEIGHT", logType: "weight" },
+    { x: 565, y: 355, width: 145, height: 22, label: "WORKOUT", logType: "workout" },
 
-    { x: 660, y: 385, width: 145, height: 22, label: "WEIGHT", logType: "weight" },
+    // Second tier
+    { x: 120, y: 255, width: 145, height: 22, label: "CARBS", logType: "carbs" },
+    { x: 645, y: 255, width: 145, height: 22, label: "FAT", logType: "fat" },
 
-    { x: 280, y: 305, width: 160, height: 22, label: "WORKOUT", logType: "workout" },
-    { x: 505, y: 305, width: 145, height: 22, label: "PROTEIN", logType: "protein" },
+    // Middle platform
+    { x: 375, y: 260, width: 145, height: 22, label: "PROTEIN", logType: "protein" },
 
-    { x: 120, y: 220, width: 145, height: 22, label: "CARBS", logType: "carbs" },
-    { x: 645, y: 220, width: 145, height: 22, label: "FAT", logType: "fat" },
+    // Peak
 
-    { x: 360, y: 140, width: 165, height: 22, label: "BONUS", logType: "bonus" }
+    { x: 250, y: 150, width: 165, height: 22, label: "" },
+    { x: 360, y: 50, width: 165, height: 22, label: "BONUS", logType: "bonus" }
   ]
 },
 
@@ -262,21 +274,34 @@ const levels = {
   hudTitle: "LEVEL 7: OUTLIER",
   xpKey: "outlierXp",
   requiredXp: 300,
-  startX: 70,
+  startX: 60,
   startY: 390,
   totalLogs: 6,
   platforms: [
+    // Start
     { x: 35, y: 445, width: 150, height: 22, label: "" },
 
-    { x: 250, y: 385, width: 145, height: 22, label: "WEIGHT", logType: "weight" },
-    { x: 470, y: 385, width: 145, height: 22, label: "FAT", logType: "fat" },
+    // Lower route
+    { x: 230, y: 395, width: 130, height: 22, label: "" },
+    { x: 420, y: 430, width: 145, height: 22, label: "WEIGHT", logType: "weight" },
+    { x: 625, y: 390, width: 130, height: 22, label: "" },
 
+    // Right climb
+    { x: 735, y: 305, width: 145, height: 22, label: "WORKOUT", logType: "workout" },
+    { x: 575, y: 250, width: 145, height: 22, label: "FAT", logType: "fat" },
 
-    { x: 590, y: 285, width: 160, height: 22, label: "WORKOUT", logType: "workout" },
-    { x: 350, y: 250, width: 145, height: 22, label: "CARBS", logType: "carbs" },
-    { x: 120, y: 285, width: 145, height: 22, label: "PROTEIN", logType: "protein" },
+    // Middle path
+    { x: 355, y: 295, width: 145, height: 22, label: "CARBS", logType: "carbs" },
+    { x: 150, y: 250, width: 145, height: 22, label: "PROTEIN", logType: "protein" },
 
-    { x: 365, y: 135, width: 175, height: 22, label: "OUTLIER", logType: "bonus" }
+    // Empty challenge jumps
+
+    { x: 245, y: 140, width: 120, height: 22, label: "" },
+    { x: 535, y: 150, width: 120, height: 22, label: "" },
+    { x: 735, y: 180, width: 120, height: 22, label: "" },
+
+    // Final destination
+    { x: 365, y: 80, width: 175, height: 22, label: "OUTLIER", logType: "bonus" }
   ]
 }
 };
@@ -290,6 +315,52 @@ function getLevelFromUrl() {
 
 const currentLevelNumber = getLevelFromUrl();
 const currentLevel = levels[currentLevelNumber];
+
+const quickLogGrid = document.getElementById("quickLogGrid");
+
+const logLabels = {
+  food: "Track Food",
+  activity: "Track Activity",
+  weight: "Log Weight",
+  workout: "Log Workout",
+  protein: "Log Protein",
+  carbs: "Log Carbs",
+  fat: "Log Fat",
+  bonus: "Bonus Point"
+};
+
+function getRequiredLogsForLevel() {
+  const requiredLogs = [];
+
+  currentLevel.platforms.forEach(platform => {
+    if (platform.logType && !requiredLogs.includes(platform.logType)) {
+      requiredLogs.push(platform.logType);
+    }
+  });
+
+  return requiredLogs;
+}
+
+function renderQuickLogButtons() {
+  if (!quickLogGrid) return;
+
+  quickLogGrid.innerHTML = "";
+
+  const requiredLogs = getRequiredLogsForLevel();
+
+  requiredLogs.forEach(logType => {
+    const button = document.createElement("button");
+
+    button.textContent = logLabels[logType] || logType;
+    button.addEventListener("click", () => {
+      openLogPanel(logType);
+    });
+
+    quickLogGrid.appendChild(button);
+  });
+}
+
+
 
 if (gameTitle) {
   gameTitle.textContent = currentLevel.title;
@@ -900,3 +971,34 @@ function gameLoop() {
 }
 
 gameLoop();
+
+const toggle = document.getElementById("gameModeToggle");
+const gameModeContent = document.getElementById("gameModeContent");
+const quickLogMode = document.getElementById("quickLogMode");
+
+function updateGameModeView() {
+  const isGameMode = toggle.checked;
+
+  localStorage.setItem("gameMode", isGameMode);
+
+  if (isGameMode) {
+    gameModeContent.style.display = "block";
+    quickLogMode.style.display = "none";
+  } else {
+    gameModeContent.style.display = "none";
+    quickLogMode.style.display = "block";
+
+    keys.left = false;
+    keys.right = false;
+    keys.jump = false;
+    player.velocityX = 0;
+    player.velocityY = 0;
+  }
+}
+
+toggle.checked = localStorage.getItem("gameMode") !== "false";
+
+toggle.addEventListener("change", updateGameModeView);
+
+updateGameModeView();
+renderQuickLogButtons();
