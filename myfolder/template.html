@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- =========================
+       PAGE SETUP
+  ========================== -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <title>Outliers Training Club</title>
 
-  <!-- FONT -->
+  <!-- =========================
+       FONT
+  ========================== -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -15,33 +20,49 @@
     rel="stylesheet"
   >
 
-  <link rel="stylesheet" href="/myfolder/CSS/styles.css">
+  <!-- =========================
+       CSS
+  ========================== -->
+  <link rel="stylesheet" href="/myfolder/CSS/base.css">
+  <link rel="stylesheet" href="/myfolder/CSS/index.css">
 </head>
 
 <body>
 
+  <!-- =========================
+       NAVIGATION
+  ========================== -->
   <nav>
-      <a href="/myfolder/index.html">Home</a>
-      <a href="/myfolder/template.html">Goals + Progress</a>
-      <a href="/myfolder/workouts.html">Workouts</a>
-      <a href="/myfolder/meal_planner.html">Meal Planner</a>
-      <a href="/myfolder/cart.html">Grocery List</a>
+    <a href="/myfolder/index.html">Home</a>
+    <a href="/myfolder/template.html">Goals + Progress</a>
+    <a href="/myfolder/workouts.html">Workouts</a>
+    <a href="/myfolder/meal_planner.html">Meal Planner</a>
+    <a href="/myfolder/cart.html">Grocery List</a>
 
     <span id="hamburger">&#9776;</span>
 
     <div id="mobile-menu">
-        <a href="/myfolder/index.html">Home</a>
-        <a href="/myfolder/template.html">Goals + Progress</a>
-        <a href="/myfolder/workouts.html">Workouts</a>
-        <a href="/myfolder/meal_planner.html">Meal Planner</a>
-        <a href="/myfolder/cart.html">Grocery List</a>
+    <a href="/myfolder/index.html">Home</a>
+    <a href="/myfolder/template.html">Goals + Progress</a>
+    <a href="/myfolder/workouts.html">Workouts</a>
+    <a href="/myfolder/meal_planner.html">Meal Planner</a>
+    <a href="/myfolder/cart.html">Grocery List</a>
     </div>
   </nav>
 
+  <!-- =========================
+       MAIN DASHBOARD
+  ========================== -->
   <main>
-
     <section class="dashboard-grid">
 
+      <div class="welcome-message">
+    <span id="typingText"></span><span class="cursor">|</span>
+</div>
+
+      <!-- =========================
+           CURRENT XP CARD
+      ========================== -->
       <div class="card xp-card">
         <div class="xp-header">
           <h2 id="xpTitle">Baseline XP</h2>
@@ -60,52 +81,75 @@
         </div>
       </div>
 
-      <div class="start-log-wrapper">
+      <!-- =========================
+           TODAY'S QUEST CARD
+      ========================== -->
+      <div class="card action-card">
+        <h2>Today's Quest</h2>
+
+        <div class="quest-list" id="questList"></div>
+
         <a
           href="/myfolder/game.html"
           class="start-log-button"
           id="startLogButton"
         >
           <img
-            src="/myfolder/gamePhotos/start_today.png"
+            src="/myfolder/gamePhotos/Screenshot 2026-07-08 at 10.50.07 AM.png"
             alt="Start Today's Log"
+            class="start-log-img"
+          >
+        </a>
+
+        <a
+          href="/myfolder/progress.html"
+          class="start-log-button"
+        >
+          <img
+            src="/myfolder/gamePhotos/ScreenshotDos.png"
+            alt="View Progress"
+            class="start-log-img"
+          >
+        </a>
+
+      </div>
+
+      <!-- =========================
+           SIDE QUESTS CARD
+      ========================== -->
+      <div class="card pet-card">
+  
+
+       <a
+          href="/myfolder/side_quests.html"
+          class="start-log-button"
+        >
+          <img
+            src="/myfolder/gamePhotos/ShadowScreenshot.png"
+            alt="View Progress"
             class="start-log-img"
           >
         </a>
       </div>
 
-      <div class="card">
-        <h2>Today's Quest</h2>
+  
 
-        <div class="quest-list" id="questList"></div>
-      </div>
-
-      <a href="/myfolder/side_quests.html" class="card-link">
-        <div class="card pet-card">
-          <h2>Side Quests</h2>
-
-          <img
-            src="/myfolder/gamePhotos/shadow.png"
-            alt="Pixel Sheep"
-            class="pixel-pet"
-          >
-        </div>
-      </a>
-
-      <div class="card">
-        <h2>
-          <span>Goals</span>
-
-          <button class="set-goals-button" id="openGoalsBtn">
-            Set Goals
-          </button>
-        </h2>
+      <!-- =========================
+           GOALS CARD
+      ========================== -->
+      <div class="card goals-card">
+        <h2>Goals</h2>
 
         <div class="goals-list" id="goalsList"></div>
 
-        <div class="placeholder"></div>
+        <button class="pixel-button" id="openGoalsBtn">
+          Set Goals
+        </button>
       </div>
 
+      <!-- =========================
+           LEVEL PROGRESS CARD
+      ========================== -->
       <div class="card xp-card">
         <div class="xp-header">
           <h2>Level Progress</h2>
@@ -158,60 +202,94 @@
         </div>
       </div>
 
-      <div class="start-log-wrapper">
-        <a href="/myfolder/progress.html" class="start-log-button">
-          <img
-            src="/myfolder/gamePhotos/view_progress.png"
-            alt="View Progress"
-            class="start-log-img"
-          >
-        </a>
-      </div>
-
     </section>
-
   </main>
 
+  <!-- =========================
+       GOALS MODAL
+  ========================== -->
   <div class="goal-modal" id="goalModal">
     <div class="goal-modal-content">
       <h2>Set Goals</h2>
 
-      <label>
-        Goal Weight
-        <input type="number" id="goalWeightInput" placeholder="Example: 125" step="0.1">
-      </label>
+
 
       <label>
         Protein Goal
-        <input type="number" id="proteinInput" placeholder="Example: 130">
+        <input
+          type="number"
+          id="proteinInput"
+          placeholder="Example: 130"
+        >
       </label>
 
       <label>
         Carbohydrate Goal
-        <input type="number" id="carbsInput" placeholder="Example: 220">
+        <input
+          type="number"
+          id="carbsInput"
+          placeholder="Example: 220"
+        >
       </label>
 
       <label>
         Fats Goal
-        <input type="number" id="fatsInput" placeholder="Example: 60">
+        <input
+          type="number"
+          id="fatsInput"
+          placeholder="Example: 60"
+        >
       </label>
 
       <label>
         Daily Calorie Goal
-        <input type="number" id="calorieInput" placeholder="Example: 2200">
+        <input
+          type="number"
+          id="calorieInput"
+          placeholder="Example: 2200"
+        >
+      </label>
+            <label>
+        Initial Weight
+        <input
+          type="number"
+          id="initialWeightInput"
+          placeholder="Example: 130.1"
+          step="0.1"
+        >
       </label>
 
-      <button class="save-goals-button" id="saveGoalsBtn">
+      <label>
+        Goal Weight
+        <input
+          type="number"
+          id="goalWeightInput"
+          placeholder="Example: 125"
+          step="0.1"
+        >
+      </label>
+
+      <button class="pixel-button" id="saveGoalsBtn">
         Save Goals
       </button>
     </div>
   </div>
 
+  <!-- =========================
+       FOOTER
+  ========================== -->
   <footer>
     OUTLIERS TRAINING CLUB © 2026
   </footer>
 
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
   <script>
+    /* =========================
+       MOBILE NAVIGATION
+    ========================== */
+
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobile-menu');
 
@@ -221,6 +299,51 @@
           ? 'none'
           : 'flex';
     });
+
+    /* TYPING INTRO */
+
+
+const typingElement = document.getElementById("typingText");
+
+const message = "Hi, Eliana";
+
+const today = new Date().toISOString().split("T")[0];
+
+const lastGreeting = localStorage.getItem("lastGreetingDate");
+
+if (lastGreeting === today) {
+
+    // Already visited Home today
+    typingElement.textContent = message;
+
+} else {
+
+    // First visit today
+    localStorage.setItem("lastGreetingDate", today);
+
+    let index = 0;
+
+    function typeGreeting() {
+
+        if (index < message.length) {
+
+            typingElement.textContent += message.charAt(index);
+
+            index++;
+
+            setTimeout(typeGreeting, 175);
+
+        }
+
+    }
+
+    setTimeout(typeGreeting, 500);
+
+}
+
+    /* =========================
+       LEVEL DATA
+    ========================== */
 
     const levels = [
       {
@@ -252,83 +375,77 @@
         quests: [
           { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
           { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
-          { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' },
-  
+          { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' }
         ]
       },
-{
-  number: 3,
-  name: 'Program',
-  xpKey: 'programXp',
-  requiredXp: 300,
-  quests: [
-    { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
-    { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
-    { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' },
-
-  ]
-},
-     {
-  number: 4,
-  name: 'Nutrition',
-  xpKey: 'nutritionXp',
-  requiredXp: 300,
-  quests: [
-
-    { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
-    { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
-    { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' },
-    { name: 'Log Carbs', xp: 30, storageKey: 'carbsLogs' },
-    { name: 'Log Fat', xp: 30, storageKey: 'fatLogs' }
-  ]
-},
-{
-  number: 5,
-  name: 'Discipline',
-  xpKey: 'disciplineXp',
-  requiredXp: 300,
-  quests: [
-
-    { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
-    { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
-    { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' },
-    { name: 'Log Carbs', xp: 30, storageKey: 'carbsLogs' },
-    { name: 'Log Fat', xp: 30, storageKey: 'fatLogs' },
-
-  ]
-},
-
-{
-  number: 6,
-  name: 'Mastery',
-  xpKey: 'masteryXp',
-  requiredXp: 300,
-  quests: [
-
-    { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
-    { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
-    { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' },
-    { name: 'Log Carbs', xp: 30, storageKey: 'carbsLogs' },
-    { name: 'Log Fat', xp: 30, storageKey: 'fatLogs' },
-
-  ]
-},
-{
-  number: 7,
-  name: 'Outlier',
-  xpKey: 'outlierXp',
-  requiredXp: 300,
-  quests: [
-
-    { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
-    { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
-    { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' },
-    { name: 'Log Carbs', xp: 30, storageKey: 'carbsLogs' },
-    { name: 'Log Fat', xp: 30, storageKey: 'fatLogs' },
-
-  ]
-}
+      {
+        number: 3,
+        name: 'Program',
+        xpKey: 'programXp',
+        requiredXp: 300,
+        quests: [
+          { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
+          { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
+          { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' }
+        ]
+      },
+      {
+        number: 4,
+        name: 'Nutrition',
+        xpKey: 'nutritionXp',
+        requiredXp: 300,
+        quests: [
+          { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
+          { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
+          { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' },
+          { name: 'Log Carbs', xp: 30, storageKey: 'carbsLogs' },
+          { name: 'Log Fat', xp: 30, storageKey: 'fatLogs' }
+        ]
+      },
+      {
+        number: 5,
+        name: 'Discipline',
+        xpKey: 'disciplineXp',
+        requiredXp: 300,
+        quests: [
+          { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
+          { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
+          { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' },
+          { name: 'Log Carbs', xp: 30, storageKey: 'carbsLogs' },
+          { name: 'Log Fat', xp: 30, storageKey: 'fatLogs' }
+        ]
+      },
+      {
+        number: 6,
+        name: 'Mastery',
+        xpKey: 'masteryXp',
+        requiredXp: 300,
+        quests: [
+          { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
+          { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
+          { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' },
+          { name: 'Log Carbs', xp: 30, storageKey: 'carbsLogs' },
+          { name: 'Log Fat', xp: 30, storageKey: 'fatLogs' }
+        ]
+      },
+      {
+        number: 7,
+        name: 'Outlier',
+        xpKey: 'outlierXp',
+        requiredXp: 300,
+        quests: [
+          { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
+          { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
+          { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' },
+          { name: 'Log Carbs', xp: 30, storageKey: 'carbsLogs' },
+          { name: 'Log Fat', xp: 30, storageKey: 'fatLogs' }
+        ]
+      }
     ];
+
+    /* =========================
+       DOM ELEMENTS
+    ========================== */
 
     const xpTitle = document.getElementById('xpTitle');
     const levelStatus = document.getElementById('levelStatus');
@@ -338,9 +455,27 @@
     const questList = document.getElementById('questList');
     const startLogButton = document.getElementById('startLogButton');
 
+    const openGoalsBtn = document.getElementById('openGoalsBtn');
+    const goalModal = document.getElementById('goalModal');
+    const saveGoalsBtn = document.getElementById('saveGoalsBtn');
+    const goalsList = document.getElementById('goalsList');
+
+    const initialWeightInput = document.getElementById('initialWeightInput');
+    const goalWeightInput = document.getElementById('goalWeightInput');
+    const proteinInput = document.getElementById('proteinInput');
+    const carbsInput = document.getElementById('carbsInput');
+    const fatsInput = document.getElementById('fatsInput');
+    const calorieInput = document.getElementById('calorieInput');
+
+    /* =========================
+       DATE HELPERS
+    ========================== */
+
     function getTodayDate() {
       const date = new Date();
+
       date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+
       return date.toISOString().split('T')[0];
     }
 
@@ -350,6 +485,10 @@
 
       return logs.some(log => log.date === today);
     }
+
+    /* =========================
+       LEVEL LOGIC
+    ========================== */
 
     function getCurrentLevelNumber() {
       const baselineXp = Number(localStorage.getItem('baselineXp') || 0);
@@ -362,31 +501,29 @@
       const outlierXp = Number(localStorage.getItem('outlierXp') || 0);
 
       if (outlierXp >= 300) {
-  localStorage.setItem('currentLevel', '7');
-  return 7;
-}
+        localStorage.setItem('currentLevel', '7');
+        return 7;
+      }
 
       if (masteryXp >= 300) {
-  localStorage.setItem('currentLevel', '7');
-  return 7;
-}
- 
+        localStorage.setItem('currentLevel', '7');
+        return 7;
+      }
+
       if (disciplineXp >= 300) {
-  localStorage.setItem('currentLevel', '6');
-  return 6;
-}
-  
+        localStorage.setItem('currentLevel', '6');
+        return 6;
+      }
+
       if (nutritionXp >= 300) {
-  localStorage.setItem('currentLevel', '5');
-  return 5;
-}
+        localStorage.setItem('currentLevel', '5');
+        return 5;
+      }
 
-
-  
       if (programXp >= 300) {
-  localStorage.setItem('currentLevel', '4');
-  return 4;
-}
+        localStorage.setItem('currentLevel', '4');
+        return 4;
+      }
 
       if (exploreXp >= 300) {
         localStorage.setItem('currentLevel', '3');
@@ -412,26 +549,62 @@
         "/myfolder/game.html?level=" + currentLevelNumber;
     }
 
+    /* =========================
+       DASHBOARD RENDERING
+    ========================== */
+function launchConfetti() {
+  for (let i = 0; i < 80; i++) {
+    const confetti = document.createElement('div');
+
+    confetti.className = 'confetti-piece';
+    confetti.style.left = Math.random() * 100 + 'vw';
+    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+    document.body.appendChild(confetti);
+
+    setTimeout(() => {
+      confetti.remove();
+    }, 2500);
+  }
+}
+
+
     function updateDashboard() {
       const currentLevelNumber = getCurrentLevelNumber();
       const currentLevel = levels[currentLevelNumber];
 
+      const lastCelebratedLevel = Number(localStorage.getItem('lastCelebratedLevel') || 0);
+
+if (currentLevelNumber > lastCelebratedLevel) {
+  launchConfetti();
+  localStorage.setItem('lastCelebratedLevel', currentLevelNumber);
+}
+
       updateStartLogButton(currentLevelNumber);
 
       const currentXp = Number(localStorage.getItem(currentLevel.xpKey) || 0);
-      const xpPercent = Math.min((currentXp / currentLevel.requiredXp) * 100, 100);
+      const xpPercent = Math.min(
+        (currentXp / currentLevel.requiredXp) * 100,
+        100
+      );
 
       xpTitle.textContent = currentLevel.name + ' XP';
-      levelStatus.textContent = 'Level ' + currentLevel.number + ': ' + currentLevel.name;
-      flowStatus.textContent = 'Level ' + currentLevel.number + ': ' + currentLevel.name;
+      levelStatus.textContent =
+        'Level ' + currentLevel.number + ': ' + currentLevel.name;
+
+      flowStatus.textContent =
+        'Level ' + currentLevel.number + ': ' + currentLevel.name;
 
       xpBarFill.style.width = xpPercent + '%';
-      xpText.textContent = currentXp + ' / ' + currentLevel.requiredXp + ' XP';
+      xpText.textContent =
+        currentXp + ' / ' + currentLevel.requiredXp + ' XP';
 
       questList.innerHTML = '';
 
       currentLevel.quests.forEach(quest => {
         const questItem = document.createElement('div');
+
         questItem.classList.add('quest-item');
 
         if (hasCompletedToday(quest.storageKey)) {
@@ -461,70 +634,90 @@
       });
     }
 
-    updateDashboard();
-
-    const openGoalsBtn = document.getElementById('openGoalsBtn');
-    const goalModal = document.getElementById('goalModal');
-    const saveGoalsBtn = document.getElementById('saveGoalsBtn');
-    const goalsList = document.getElementById('goalsList');
-
-    const goalWeightInput = document.getElementById('goalWeightInput');
-    const proteinInput = document.getElementById('proteinInput');
-    const carbsInput = document.getElementById('carbsInput');
-    const fatsInput = document.getElementById('fatsInput');
-    const calorieInput = document.getElementById('calorieInput');
+    /* =========================
+       GOALS
+    ========================== */
 
     function displayGoals(goals) {
       if (!goals) return;
 
       goalsList.innerHTML = `
-        <div>Goal Weight: ${goals.goalWeight ? goals.goalWeight + ' lbs' : '--'}</div>
+
         <div>Protein: ${goals.protein ? goals.protein + 'g' : '--'}</div>
         <div>Carbs: ${goals.carbs ? goals.carbs + 'g' : '--'}</div>
         <div>Fats: ${goals.fats ? goals.fats + 'g' : '--'}</div>
         <div>Calories: ${goals.calories ? goals.calories : '--'}</div>
-      `;
+        <div>Initial Weight: ${goals.initialWeight ? goals.initialWeight + ' lbs' : '--'}</div>
+        <div>Goal Weight: ${goals.goalWeight ? goals.goalWeight + ' lbs' : '--'}</div>
+      `
+      ;
     }
 
-    const savedGoals = JSON.parse(localStorage.getItem('clientGoals'));
+    function loadSavedGoals() {
+      const savedGoals = JSON.parse(localStorage.getItem('clientGoals'));
 
-    if (savedGoals) {
-      displayGoals(savedGoals);
+      if (savedGoals) {
+        displayGoals(savedGoals);
+      }
     }
 
-    openGoalsBtn.addEventListener('click', () => {
+    function openGoalModal() {
       goalModal.classList.add('active');
 
       const savedGoals = JSON.parse(localStorage.getItem('clientGoals'));
 
-      if (savedGoals) {
-        goalWeightInput.value = savedGoals.goalWeight;
-        proteinInput.value = savedGoals.protein;
-        carbsInput.value = savedGoals.carbs;
-        fatsInput.value = savedGoals.fats;
-        calorieInput.value = savedGoals.calories;
-      }
-    });
+      if (!savedGoals) return;
 
-    goalModal.addEventListener('click', (e) => {
-      if (e.target === goalModal) {
-        goalModal.classList.remove('active');
-      }
-    });
 
-    saveGoalsBtn.addEventListener('click', () => {
+      proteinInput.value = savedGoals.protein || '';
+      carbsInput.value = savedGoals.carbs || '';
+      fatsInput.value = savedGoals.fats || '';
+      calorieInput.value = savedGoals.calories || '';
+      initialWeightInput.value = savedGoals.initialWeight || '';
+      goalWeightInput.value = savedGoals.goalWeight || '';
+    }
+
+    function closeGoalModal() {
+      goalModal.classList.remove('active');
+    }
+
+    function saveGoals() {
       const goals = {
-        goalWeight: goalWeightInput.value,
+
         protein: proteinInput.value,
         carbs: carbsInput.value,
         fats: fatsInput.value,
-        calories: calorieInput.value
+        calories: calorieInput.value,
+        initialWeight: initialWeightInput.value,
+        goalWeight: goalWeightInput.value
       };
 
       localStorage.setItem('clientGoals', JSON.stringify(goals));
+
       displayGoals(goals);
-      goalModal.classList.remove('active');
+      closeGoalModal();
+    }
+
+    /* =========================
+       EVENT LISTENERS
+    ========================== */
+
+    openGoalsBtn.addEventListener('click', openGoalModal);
+
+    goalModal.addEventListener('click', event => {
+      if (event.target === goalModal) {
+        closeGoalModal();
+      }
     });
+
+    saveGoalsBtn.addEventListener('click', saveGoals);
+
+    /* =========================
+       INITIALIZE PAGE
+    ========================== */
+
+    updateDashboard();
+    loadSavedGoals();
   </script>
 
 </body>
