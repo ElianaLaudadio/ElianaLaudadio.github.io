@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Outliers Training Club - Progress</title>
+
+  <!-- FONT -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- CHART JS -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- SHARED STYLES -->
+  <link rel="stylesheet" href="/Users/elianalaudadio/Desktop/video_game/styles.css">
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="progress.html">Goals + Progress</a>
+    <a href="workouts.html">Workouts</a>
+    <a href="academy.html">Meal Planner</a>
+    <a href="pet.html">Grocery List</a>
+
+    <span id="hamburger">&#9776;</span>
+
+    <div id="mobile-menu">
+      <a href="index.html">Home</a>
+      <a href="progress.html">Goals + Progress</a>
+      <a href="workouts.html">Workouts</a>
+      <a href="academy.html">Meal Planner</a>
+      <a href="pet.html">Grocery List</a>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+
+  <main>
+
+    <div class="side-quest-layout">
+
+      <!-- CALENDAR -->
+
+      <section class="card">
+        <h2>Progress Calendar</h2>
+
+        <div id="calendar-container"></div>
+      </section>
+
+      <!-- WEIGHT TRACKING -->
+
+      <section class="card">
+        <h2>Weight Tracking</h2>
+
+
+
+        <canvas id="weightChart"></canvas>
+      </section>
+
+      <!-- ACHIEVEMENT SHOWCASE -->
+
+<section class="card">
+  <h2>Achievement Showcase</h2>
+
+  <div class="achievement-showcase">
+
+    <div class="achievement-group">
+      <h3>Habit Counter</h3>
+      <div class="habit-achievement-list" id="habitAchievements"></div>
+    </div>
+
+    <div class="achievement-group">
+      <h3>Pull Up Achievements</h3>
+      <div class="achievement-row" id="pullUpAchievements"></div>
+    </div>
+
+    <div class="achievement-group">
+      <h3>Push Up Achievements</h3>
+      <div class="achievement-row" id="pushUpAchievements"></div>
+    </div>
+
+    <div class="achievement-group">
+      <h3>Squat Achievements</h3>
+      <div class="achievement-row" id="squatAchievements"></div>
+    </div>
+
+    <div class="achievement-group">
+      <h3>Bench Achievements</h3>
+      <div class="achievement-row" id="benchAchievements"></div>
+    </div>
+
+    <div class="achievement-group">
+      <h3>Deadlift Achievements</h3>
+      <div class="achievement-row" id="deadliftAchievements"></div>
+    </div>
+
+    <div class="achievement-group">
+      <h3>Running Achievements</h3>
+      <div class="achievement-row" id="runningAchievements"></div>
+    </div>
+
+  </div>
+</section>
+      <!-- GOAL PROGRESS BAR -->
+
+<section class="card">
+  <h2>Goal Progress</h2>
+
+  <div class="goal-progress-info" id="goalProgressInfo">
+    No goal weight set yet.
+  </div>
+
+  <div class="goal-progress-bar-container">
+    <div class="goal-progress-bar-fill" id="goalProgressBarFill"></div>
+  </div>
+
+  <div class="goal-progress-text" id="goalProgressText">
+    0% complete
+  </div>
+</section>
+
+    </div>
+
+  </main>
+
+  <!-- NOTE MODAL -->
+
+  <div id="note-modal">
+    <div class="modal-content">
+      <div id="modal-date-label"></div>
+
+<textarea id="note-text" placeholder="Not Logged"></textarea> 
+
+      <div style="display:flex; gap:10px;">
+             <!--         <button onclick="saveNote()">Save</button>-->   
+
+        <button onclick="closeModal()">Exit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+
+  <footer>
+    OUTLIERS TRAINING CLUB © 2026
+  </footer>
+
+  <!-- JAVASCRIPT -->
+
+  <script>
+    /* ---------------- MOBILE NAVIGATION ---------------- */
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.style.display =
+        mobileMenu.style.display === 'flex'
+          ? 'none'
+          : 'flex';
+    });
+
+    /* ---------------- PROGRESS CALENDAR ---------------- */
+
+    const calendarContainer = document.getElementById("calendar-container");
+
+    let currentDate = new Date();
+    let currentMonth = currentDate.getMonth();
+    let currentYear = currentDate.getFullYear();
+    let activeKey = "";
+
+    function generateCalendar(year, month) {
+      const date = new Date(year, month, 1);
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const startDay = date.getDay();
+      const keyPrefix = `${year}-${month + 1}`;
+
+      let html = `
+        <div class="calendar-header">
+          <button onclick="changeMonth(-1)">←</button>
+          <strong>${date.toLocaleString('default', { month: 'long' })} ${year}</strong>
+          <button onclick="changeMonth(1)">→</button>
+        </div>
+
+        <div class="calendar-grid">
+          ${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d => `<div class="day-name">${d}</div>`).join('')}
+      `;
+
+      for (let i = 0; i < startDay; i++) {
+        html += `<div></div>`;
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const key = `${keyPrefix}-${day}`;
+        const note = localStorage.getItem(key);
+
+        html += `
+          <div onclick="addNote('${key}')">
+            ${day}${note ? '<div class="note-indicator"></div>' : ''}
+          </div>
+        `;
+      }
+
+      html += `</div>`;
+      calendarContainer.innerHTML = html;
+    }
+
+    function changeMonth(offset) {
+      currentMonth += offset;
+
+      if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+      } else if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+      }
+
+      generateCalendar(currentYear, currentMonth);
+    }
+
+    function addNote(key) {
+      activeKey = key;
+
+      document.getElementById("modal-date-label").innerText =
+        key.split("-")[2];
+
+      document.getElementById("note-text").value =
+        localStorage.getItem(key) || "";
+
+      document.getElementById("note-modal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("note-modal").style.display = "none";
+    }
+
+    function saveNote() {
+      const text = document.getElementById("note-text").value.trim();
+
+      if (text) {
+        localStorage.setItem(activeKey, text);
+      } else {
+        localStorage.removeItem(activeKey);
+      }
+
+      closeModal();
+      generateCalendar(currentYear, currentMonth);
+    }
+
+    generateCalendar(currentYear, currentMonth);
+
+    /* ---------------- WEIGHT TRACKING ---------------- */
+
+    const weightCtx = document.getElementById('weightChart').getContext('2d');
+
+    let weightData = JSON.parse(localStorage.getItem('weightEntries') || '[]');
+
+    let weightChart = new Chart(weightCtx, {
+      type: 'line',
+      data: {
+        labels: weightData.map(entry => entry.label),
+        datasets: [{
+          label: 'Weight (lbs)',
+          data: weightData.map(entry => entry.weight),
+          borderColor: '#111111',
+          backgroundColor: 'rgba(17,17,17,0.15)',
+          borderWidth: 3,
+          fill: true,
+          tension: 0.3,
+          pointRadius: 6,
+          pointBackgroundColor: '#111111',
+          pointBorderColor: '#111111',
+          pointBorderWidth: 2
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            ticks: {
+              color: '#111111',
+              font: {
+                weight: '700'
+              }
+            },
+            grid: {
+              color: '#cccccc'
+            }
+          },
+          x: {
+            ticks: {
+              color: '#111111',
+              font: {
+                weight: '700'
+              }
+            },
+            grid: {
+              color: '#cccccc'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: '#111111',
+              font: {
+                weight: '700'
+              }
+            }
+          }
+        }
+      }
+    });
+
+    function getTodayDate() {
+      const date = new Date();
+      date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+      return date.toISOString().split('T')[0];
+    }
+
+    function setDefaultWeightDate() {
+      const weightDateInput = document.getElementById('weight-date');
+
+      if (weightDateInput && !weightDateInput.value) {
+        weightDateInput.value = getTodayDate();
+      }
+    }
+
+    function addWeight() {
+      const weightInput = document.getElementById('weight-input');
+      const weightDateInput = document.getElementById('weight-date');
+
+      const weight = parseFloat(weightInput.value);
+
+      if (isNaN(weight)) {
+        alert('Please enter a valid weight.');
+        return;
+      }
+
+      const entryDate = weightDateInput.value || getTodayDate();
+
+      weightData.push({
+        date: entryDate,
+        label: entryDate,
+        weight: weight
+      });
+
+      localStorage.setItem('weightEntries', JSON.stringify(weightData));
+
+      updateWeightChart();
+
+      weightInput.value = '';
+    }
+
+    function deleteLastEntry() {
+      if (weightData.length === 0) {
+        alert('No entries to delete.');
+        return;
+      }
+
+      weightData.pop();
+
+      localStorage.setItem('weightEntries', JSON.stringify(weightData));
+
+      updateWeightChart();
+    }
+
+    function updateWeightChart() {
+      weightChart.data.labels = weightData.map(entry => entry.label || entry.date);
+      weightChart.data.datasets[0].data = weightData.map(entry => entry.weight);
+      weightChart.update();
+    }
+
+    setDefaultWeightDate();
+    updateWeightChart();
+
+    /* ---------------- GOAL WEIGHT PROGRESS ---------------- */
+
+const goalProgressInfo = document.getElementById('goalProgressInfo');
+const goalProgressBarFill = document.getElementById('goalProgressBarFill');
+const goalProgressText = document.getElementById('goalProgressText');
+
+function updateGoalProgress() {
+  const savedGoals = JSON.parse(localStorage.getItem('clientGoals') || '{}');
+  const goalWeight = parseFloat(savedGoals.goalWeight);
+
+  const weightEntries = JSON.parse(localStorage.getItem('weightEntries') || '[]');
+
+  if (!goalWeight || weightEntries.length === 0) {
+    goalProgressInfo.textContent =
+      'Set a goal weight and log your weight to see progress.';
+
+    goalProgressBarFill.style.width = '0%';
+    goalProgressText.textContent = '0% complete';
+    return;
+  }
+
+  const sortedEntries = [...weightEntries].sort((a, b) => {
+    return new Date(a.date) - new Date(b.date);
+  });
+
+const startWeight = parseFloat(savedGoals.initialWeight);
+  const currentWeight = parseFloat(sortedEntries[sortedEntries.length - 1].weight);
+
+  const totalChangeNeeded = goalWeight - startWeight;
+  const currentChange = currentWeight - startWeight;
+
+  let progressPercent = 0;
+
+  if (totalChangeNeeded !== 0) {
+    progressPercent = (currentChange / totalChangeNeeded) * 100;
+  } else {
+    progressPercent = 100;
+  }
+
+  progressPercent = Math.max(0, Math.min(progressPercent, 100));
+
+  goalProgressBarFill.style.width = progressPercent + '%';
+
+  goalProgressInfo.textContent =
+    `Start: ${startWeight} lbs | Current: ${currentWeight} lbs | Goal: ${goalWeight} lbs`;
+
+  goalProgressText.textContent =
+    Math.round(progressPercent) + '% complete';
+}
+
+/* ---------------- ACHIEVEMENT SHOWCASE ---------------- */
+
+const habitAchievements = document.getElementById("habitAchievements");
+const pullUpAchievements = document.getElementById("pullUpAchievements");
+const pushUpAchievements = document.getElementById("pushUpAchievements");
+const squatAchievements = document.getElementById("squatAchievements");
+const benchAchievements = document.getElementById("benchAchievements");
+const deadliftAchievements = document.getElementById("deadliftAchievements");
+const runningAchievements = document.getElementById("runningAchievements");
+
+function addAchievement(row, imagePath, altText) {
+  const img = document.createElement("img");
+  img.src = imagePath;
+  img.alt = altText;
+  img.className = "achievement-icon";
+  row.appendChild(img);
+}
+
+function addPrAchievement(row, prValue) {
+  const item = document.createElement("div");
+
+  item.className = "pr-achievement";
+  item.innerHTML = `
+    <strong>${prValue ? prValue + " lbs" : "--"}</strong>
+  `;
+
+  row.appendChild(item);
+}
+
+function countDailyQuestCompletions(questName) {
+  let count = 0;
+
+  Object.keys(localStorage).forEach(key => {
+    if (!key.startsWith("sideQuestDaily_")) return;
+
+    const completions = JSON.parse(localStorage.getItem(key) || "[]");
+
+    if (completions.includes(questName)) {
+      count++;
+    }
+  });
+
+  return count;
+}
+
+function addHabitAchievement(label, count) {
+  const item = document.createElement("div");
+
+  item.className = "habit-achievement";
+  item.innerHTML = `
+    <span>${label}</span>
+    <strong>${count}x</strong>
+  `;
+
+  habitAchievements.appendChild(item);
+}
+
+function renderAchievements() {
+  const challengeCompletions = JSON.parse(
+    localStorage.getItem("sideQuestChallenges") || "[]"
+  );
+
+  habitAchievements.innerHTML = "";
+  pullUpAchievements.innerHTML = "";
+  pushUpAchievements.innerHTML = "";
+  squatAchievements.innerHTML = "";
+  benchAchievements.innerHTML = "";
+  deadliftAchievements.innerHTML = "";
+  runningAchievements.innerHTML = "";
+
+  addHabitAchievement("Water Goal", countDailyQuestCompletions("Drink Enough Water"));
+  addHabitAchievement("Eat Veggies", countDailyQuestCompletions("Eat Veggies"));
+  addHabitAchievement("Eat Fruit", countDailyQuestCompletions("Eat Fruit"));
+  addHabitAchievement("Stretch", countDailyQuestCompletions("Stretch"));
+  addHabitAchievement("10,000 Steps", countDailyQuestCompletions("Hit 10,000 Steps"));
+
+ if (challengeCompletions.includes("Do a Pull Up")) {
+    addAchievement(
+        pullUpAchievements,
+        "/Users/elianalaudadio/Desktop/video_game/bronze.png",
+        "Bronze"
+    );
+}
+
+if (challengeCompletions.includes("3 Pull Ups")) {
+    addAchievement(
+        pullUpAchievements,
+        "/Users/elianalaudadio/Desktop/video_game/silver.png",
+        "Silver"
+    );
+}
+
+if (challengeCompletions.includes("5 Pull Ups")) {
+    addAchievement(
+        pullUpAchievements,
+        "/Users/elianalaudadio/Desktop/video_game/gold.png",
+        "Gold"
+    );
+}
+
+if (challengeCompletions.includes("10 Pull Ups")) {
+    addAchievement(
+        pullUpAchievements,
+        "/Users/elianalaudadio/Desktop/video_game/defaulttrophy.png",
+        "Trophy"
+    );
+}
+
+if (challengeCompletions.includes("Do a Push Up")) {
+    addAchievement(pushUpAchievements, "/Users/elianalaudadio/Desktop/video_game/bronze.png", "Bronze");
+}
+
+if (challengeCompletions.includes("3 Push Ups")) {
+    addAchievement(pushUpAchievements, "/Users/elianalaudadio/Desktop/video_game/silver.png", "Silver");
+}
+
+if (challengeCompletions.includes("5 Push Ups")) {
+    addAchievement(pushUpAchievements, "/Users/elianalaudadio/Desktop/video_game/gold.png", "Gold");
+}
+
+if (challengeCompletions.includes("10 Push Ups")) {
+    addAchievement(pushUpAchievements, "/Users/elianalaudadio/Desktop/video_game/defaulttrophy.png", "Trophy");
+}
+
+if (challengeCompletions.includes("Find your Max Squat")) {
+  addPrAchievement(squatAchievements, localStorage.getItem("squatPr"));
+}
+
+if (challengeCompletions.includes("Find your Max Bench")) {
+  addPrAchievement(benchAchievements, localStorage.getItem("benchPr"));
+}
+
+if (challengeCompletions.includes("Find your Max Deadlift")) {
+  addPrAchievement(deadliftAchievements, localStorage.getItem("deadliftPr"));
+}
+
+if (challengeCompletions.includes("Run A Mile")) {
+    addAchievement(runningAchievements, "/Users/elianalaudadio/Desktop/video_game/bronze.png", "Bronze");
+}
+
+if (challengeCompletions.includes("3 Miles")) {
+    addAchievement(runningAchievements, "/Users/elianalaudadio/Desktop/video_game/silver.png", "Silver");
+}
+
+if (challengeCompletions.includes("5 Miles")) {
+    addAchievement(runningAchievements, "/Users/elianalaudadio/Desktop/video_game/gold.png", "Gold");
+}
+
+if (challengeCompletions.includes("10 Miles")) {
+    addAchievement(runningAchievements, "/Users/elianalaudadio/Desktop/video_game/defaulttrophy.png", "Trophy");
+}
+}
+
+renderAchievements();
+
+updateGoalProgress();
+  </script>
+
+</body>
+</html>
