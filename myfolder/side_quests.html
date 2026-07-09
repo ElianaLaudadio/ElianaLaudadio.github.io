@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Outliers Training Club - Side Quests</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+    <link rel="stylesheet" href="/Users/elianalaudadio/Desktop/video_game/styles.css">
+</head>
+
+<body>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="progress.html">Goals + Progress</a>
+    <a href="workouts.html">Workouts</a>
+    <a href="academy.html">Meal Planner</a>
+    <a href="pet.html">Grocery List</a>
+
+    <span id="hamburger">&#9776;</span>
+
+    <div id="mobile-menu">
+      <a href="index.html">Home</a>
+      <a href="progress.html">Goals + Progress</a>
+      <a href="workouts.html">Workouts</a>
+      <a href="academy.html">Meal Planner</a>
+      <a href="pet.html">Grocery List</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="side-quest-layout">
+
+      <section class="card">
+        <h2>Side Quests</h2>
+
+        <div class="pet-area">
+          <img id="sheepImage" src="/Users/elianalaudadio/Desktop/video_game/shadow.png" alt="Pixel Sheep" class="pixel-pet">
+
+          <img id="broccoliItem" src="/Users/elianalaudadio/Desktop/video_game/broccoli.png" alt="Pixel Broccoli" class="pet-item broccoli-item">
+          <img id="pineappleItem" src="/Users/elianalaudadio/Desktop/video_game/pineapple.png" alt="Pixel Pineapple" class="pet-item pineapple-item">
+          <img id="waterBottleItem" src="/Users/elianalaudadio/Desktop/video_game/water_bottle.png" alt="Pixel Water Bottle" class="pet-item water-bottle-item">
+          <img id="watchItem" src="/Users/elianalaudadio/Desktop/video_game/watch.png" alt="10,000 Steps Watch" class="pet-item watch-item">
+          <img id="yogaItem" src="/Users/elianalaudadio/Desktop/video_game/yoga.png" alt="Yoga Mat" class="pet-item yoga-item">
+
+          <img id="groceryItem" src="/Users/elianalaudadio/Desktop/video_game/grocery.png" alt="Grocery Cart" class="pet-item grocery-item">
+          <img id="checklistItem" src="/Users/elianalaudadio/Desktop/video_game/checklist.png" alt="Meal Plan Checklist" class="pet-item checklist-item">
+          <img id="mealPrepItem" src="/Users/elianalaudadio/Desktop/video_game/mealprep.png" alt="Meal Prep" class="pet-item meal-prep-item">
+          <img id="plateItem" src="/Users/elianalaudadio/Desktop/video_game/plate.png" alt="Meal Prep Plate" class="pet-item plate-item">
+          <img id="fishItem" src="/Users/elianalaudadio/Desktop/video_game/fish.png" alt="Pixel Fish" class="pet-item fish-item">
+          <img id="foamItem" src="/Users/elianalaudadio/Desktop/video_game/foam.png" alt="Pixel Foam Roller" class="pet-item foam-item">
+          <img id="sleepItem" src="/Users/elianalaudadio/Desktop/video_game/sleep.png" alt="Pixel Sleep" class="pet-item sleep-item">
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Daily Quests</h2>
+
+        <div class="checklist" id="dailyQuestList">
+          <label><input type="checkbox" data-quest="Drink Enough Water"> Drink Enough Water</label>
+          <label><input type="checkbox" data-quest="Eat Fruit"> Eat Fruit</label>
+          <label><input type="checkbox" data-quest="Eat Veggies"> Eat Veggies</label>
+          <label><input type="checkbox" data-quest="Take a Progress Photo"> Take a Progress Photo</label>
+          <label><input type="checkbox" data-quest="Touch Grass"> Touch Grass</label>
+          <label><input type="checkbox" data-quest="Hit 10,000 Steps"> Hit 10,000 Steps</label>
+          <label><input type="checkbox" data-quest="Stretch"> Stretch</label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Weekly Quests</h2>
+
+        <div class="checklist" id="weeklyQuestList">
+          <label><input type="checkbox" data-quest="Grocery Shopping"> Grocery Shopping</label>
+          <label><input type="checkbox" data-quest="Meal Plan"> Meal Plan</label>
+          <label><input type="checkbox" data-quest="Meal Prep"> Meal Prep</label>
+          <label><input type="checkbox" data-quest="Actually Eat Meal Prep"> Actually Eat Meal Prep</label>
+          <label><input type="checkbox" data-quest="Eat Fish Twice"> Eat Fish Twice</label>
+          <label><input type="checkbox" data-quest="Foam Roll"> Foam Roll</label>
+          <label><input type="checkbox" data-quest="Sleep 8 Hours for 3 Nights"> Sleep 8 Hours for 3 Nights</label>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Challenges</h2>
+        <div class="checklist" id="challengeList"></div>
+      </section>
+
+                  <div class="start-log-wrapper">
+        <a href="/Users/elianalaudadio/Desktop/video_game/progress.html" class="start-log-button">
+          <img
+            src="/Users/elianalaudadio/Desktop/video_game/view_progress.png"
+            alt="View Progress"
+            class="start-log-img"
+          >
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    OUTLIERS TRAINING CLUB © 2026
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.style.display =
+        mobileMenu.style.display === 'flex'
+          ? 'none'
+          : 'flex';
+    });
+
+    const challengeList = document.getElementById('challengeList');
+
+    const broccoliItem = document.getElementById('broccoliItem');
+    const pineappleItem = document.getElementById('pineappleItem');
+    const waterBottleItem = document.getElementById('waterBottleItem');
+    const watchItem = document.getElementById('watchItem');
+    const yogaItem = document.getElementById('yogaItem');
+
+    const groceryItem = document.getElementById('groceryItem');
+    const checklistItem = document.getElementById('checklistItem');
+    const mealPrepItem = document.getElementById('mealPrepItem');
+    const plateItem = document.getElementById('plateItem');
+    const fishItem = document.getElementById('fishItem');
+    const foamItem = document.getElementById('foamItem');
+    const sleepItem = document.getElementById('sleepItem');
+
+    const body = document.body;
+    const sheepImage = document.getElementById('sheepImage');
+
+    const dailyQuestCheckboxes = document.querySelectorAll(
+      '#dailyQuestList input[type="checkbox"]'
+    );
+
+    const weeklyQuestCheckboxes = document.querySelectorAll(
+      '#weeklyQuestList input[type="checkbox"]'
+    );
+
+    const challengeProgression = {
+      pullUp: [1, 3, 5, 10],
+      pushUp: [1, 3, 5, 10],
+      mile: [1, 3, 5, 10]
+    };
+
+    const staticChallenges = [
+      "Find your Max Squat",
+      "Find your Max Bench",
+      "Find your Max Deadlift"
+    ];
+
+    function getTodayKey() {
+      const date = new Date();
+      date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+      return 'sideQuestDaily_' + date.toISOString().split('T')[0];
+    }
+
+    function getDailyCompletions() {
+      return JSON.parse(localStorage.getItem(getTodayKey()) || '[]');
+    }
+
+    function saveDailyCompletions(completions) {
+      localStorage.setItem(getTodayKey(), JSON.stringify(completions));
+    }
+
+function getWeekKey() {
+  const now = new Date();
+
+  // Sunday of this week
+  const sunday = new Date(now);
+  sunday.setDate(now.getDate() - now.getDay());
+
+  sunday.setHours(0, 0, 0, 0);
+
+  return sunday.toISOString().split('T')[0];
+}
+
+function getWeeklyCompletions() {
+
+  const currentWeek = getWeekKey();
+
+  const savedWeek =
+    localStorage.getItem("sideQuestWeek");
+
+  if (savedWeek !== currentWeek) {
+
+    localStorage.setItem("sideQuestWeek", currentWeek);
+    localStorage.setItem("sideQuestWeekly", "[]");
+
+  }
+
+  return JSON.parse(
+    localStorage.getItem("sideQuestWeekly") || "[]"
+  );
+}
+
+    function saveWeeklyCompletions(completions) {
+      localStorage.setItem('sideQuestWeekly', JSON.stringify(completions));
+    }
+
+    function getChallengeCompletions() {
+      return JSON.parse(localStorage.getItem('sideQuestChallenges') || '[]');
+    }
+
+    function saveChallengeCompletions(completions) {
+      localStorage.setItem('sideQuestChallenges', JSON.stringify(completions));
+    }
+
+    function getProgressiveChallengeLevel(type) {
+      return Number(localStorage.getItem(type + 'ChallengeLevel') || 0);
+    }
+
+    function saveProgressiveChallengeLevel(type, level) {
+      localStorage.setItem(type + 'ChallengeLevel', level);
+    }
+
+    function getChallengeName(type, amount) {
+      if (type === 'pullUp') {
+        return amount === 1 ? 'Do a Pull Up' : `Do ${amount} Pull Ups`;
+      }
+
+      if (type === 'pushUp') {
+        return amount === 1 ? 'Do a Push Up' : `Do ${amount} Push Ups`;
+      }
+
+      if (type === 'mile') {
+        return amount === 1 ? 'Run A Mile' : `Run ${amount} Miles`;
+      }
+    }
+
+    function lockCompletedCheckboxes(checkboxes, completions) {
+      checkboxes.forEach(checkbox => {
+        const questName = checkbox.dataset.quest;
+        const label = checkbox.closest('label');
+
+        if (completions.includes(questName)) {
+          checkbox.checked = true;
+          checkbox.disabled = true;
+          label.classList.add('quest-locked');
+        } else {
+          checkbox.checked = false;
+          checkbox.disabled = false;
+          label.classList.remove('quest-locked');
+        }
+      });
+    }
+
+function renderChallengeList() {
+  challengeList.innerHTML = '';
+
+  const challengeCompletions = getChallengeCompletions();
+
+  const progressiveChallengeRows = [
+    {
+      type: 'mile',
+      quests: [
+    'Run A Mile',
+    '3 Miles',
+    '5 Miles',
+    '10 Miles'
+  ]
+    },
+    {
+      type: 'pullUp',
+      quests: [
+  'Do a Pull Up',
+  '3 Pull Ups',
+  '5 Pull Ups',
+  '10 Pull Ups'
+]
+    },
+    {
+      type: 'pushUp',
+      quests: [
+    'Do a Push Up',
+    '3 Push Ups',
+    '5 Push Ups',
+    '10 Push Ups'
+  ]
+    }
+  ];
+
+  progressiveChallengeRows.forEach(row => {
+    const rowDiv = document.createElement('div');
+    rowDiv.className = 'challenge-row';
+
+    row.quests.forEach(questName => {
+      const label = document.createElement('label');
+      const isCompleted = challengeCompletions.includes(questName);
+
+      label.innerHTML = `
+        <input
+          type="checkbox"
+          data-progressive-type="${row.type}"
+          data-quest="${questName}"
+          ${isCompleted ? 'checked disabled' : ''}
+        >
+        ${questName}
+      `;
+
+      if (isCompleted) {
+        label.classList.add('quest-locked');
+      }
+
+      rowDiv.appendChild(label);
+    });
+
+    challengeList.appendChild(rowDiv);
+  });
+
+  staticChallenges.forEach(questName => {
+    const label = document.createElement('label');
+    const isCompleted = challengeCompletions.includes(questName);
+
+    label.innerHTML = `
+      <input
+        type="checkbox"
+        data-quest="${questName}"
+        ${isCompleted ? 'checked' : ''}
+      >
+      ${questName}
+      ${isCompleted ? '<span class="update-pr-text">UPDATE PR</span>' : ''}
+    `;
+
+    challengeList.appendChild(label);
+  });
+
+  const challengeCheckboxes = document.querySelectorAll(
+    '#challengeList input[type="checkbox"]'
+  );
+
+  challengeCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', () => {
+      if (!checkbox.checked) return;
+
+      const questName = checkbox.dataset.quest;
+      const challengeCompletions = getChallengeCompletions();
+
+      if (!challengeCompletions.includes(questName)) {
+        challengeCompletions.push(questName);
+        saveChallengeCompletions(challengeCompletions);
+      }
+
+      if (questName === "Find your Max Squat") {
+        const currentPr = localStorage.getItem("squatPr") || "";
+        const squatPr = prompt("What is your squat PR?", currentPr);
+
+        if (squatPr) {
+          localStorage.setItem("squatPr", squatPr);
+        }
+      }
+
+      if (questName === "Find your Max Bench") {
+        const currentPr = localStorage.getItem("benchPr") || "";
+        const benchPr = prompt("What is your bench PR?", currentPr);
+
+        if (benchPr) {
+          localStorage.setItem("benchPr", benchPr);
+        }
+      }
+
+      if (questName === "Find your Max Deadlift") {
+        const currentPr = localStorage.getItem("deadliftPr") || "";
+        const deadliftPr = prompt("What is your deadlift PR?", currentPr);
+
+        if (deadliftPr) {
+          localStorage.setItem("deadliftPr", deadliftPr);
+        }
+      }
+
+      renderAccomplishments();
+    });
+  });
+}
+
+    function renderPetItems(dailyCompletions, weeklyCompletions) {
+      watchItem.style.display =
+        dailyCompletions.includes("Hit 10,000 Steps") ? "block" : "none";
+
+      yogaItem.style.display =
+        dailyCompletions.includes("Stretch") ? "block" : "none";
+
+      broccoliItem.style.display =
+        dailyCompletions.includes("Eat Veggies") ? "block" : "none";
+
+      pineappleItem.style.display =
+        dailyCompletions.includes("Eat Fruit") ? "block" : "none";
+
+      waterBottleItem.style.display =
+        dailyCompletions.includes("Drink Enough Water") ? "block" : "none";
+
+      groceryItem.style.display =
+        weeklyCompletions.includes("Grocery Shopping") ? "block" : "none";
+
+      checklistItem.style.display =
+        weeklyCompletions.includes("Meal Plan") ? "block" : "none";
+
+      mealPrepItem.style.display =
+        weeklyCompletions.includes("Meal Prep") ? "block" : "none";
+
+      plateItem.style.display =
+        weeklyCompletions.includes("Actually Eat Meal Prep") ? "block" : "none";
+
+      fishItem.style.display =
+        weeklyCompletions.includes("Eat Fish Twice") ? "block" : "none";
+
+      foamItem.style.display =
+        weeklyCompletions.includes("Foam Roll") ? "block" : "none";
+
+      sleepItem.style.display =
+        weeklyCompletions.includes("Sleep 8 Hours for 3 Nights") ? "block" : "none";
+
+      if (dailyCompletions.includes("Take a Progress Photo")) {
+        sheepImage.src =
+          "/Users/elianalaudadio/Desktop/video_game/selfie.png";
+      } else {
+        sheepImage.src =
+          "/Users/elianalaudadio/Desktop/video_game/shadow.png";
+      }
+
+      if (dailyCompletions.includes("Touch Grass")) {
+        body.classList.add("grass-mode");
+      } else {
+        body.classList.remove("grass-mode");
+      }
+    }
+
+    function renderAccomplishments() {
+      const dailyCompletions = getDailyCompletions();
+      const weeklyCompletions = getWeeklyCompletions();
+
+      lockCompletedCheckboxes(dailyQuestCheckboxes, dailyCompletions);
+      lockCompletedCheckboxes(weeklyQuestCheckboxes, weeklyCompletions);
+
+      renderChallengeList();
+      renderPetItems(dailyCompletions, weeklyCompletions);
+    }
+
+    dailyQuestCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', () => {
+        if (!checkbox.checked) return;
+
+        const questName = checkbox.dataset.quest;
+        const dailyCompletions = getDailyCompletions();
+
+        if (!dailyCompletions.includes(questName)) {
+          dailyCompletions.push(questName);
+          saveDailyCompletions(dailyCompletions);
+        }
+
+        renderAccomplishments();
+      });
+    });
+
+    weeklyQuestCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', () => {
+        if (!checkbox.checked) return;
+
+        const questName = checkbox.dataset.quest;
+        const weeklyCompletions = getWeeklyCompletions();
+
+        if (!weeklyCompletions.includes(questName)) {
+          weeklyCompletions.push(questName);
+          saveWeeklyCompletions(weeklyCompletions);
+        }
+
+        renderAccomplishments();
+      });
+    });
+
+    renderAccomplishments();
+  </script>
+
+</body>
+</html>
