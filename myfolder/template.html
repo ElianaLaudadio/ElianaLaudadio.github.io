@@ -288,9 +288,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/myfolder/js/auth.js?v=6"></script>
-    /* =========================
+    /* 
        MOBILE NAVIGATION
-    ========================== */
+    */
 
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -305,44 +305,50 @@
     /* TYPING INTRO */
 
 
+/* =========================
+   TYPING INTRO
+========================== */
+
 const typingElement = document.getElementById("typingText");
 
-const profile = await window.auth.getOrCreateProfile();
+function displayGreeting(displayName, userId) {
+  const message = `Hi, ${displayName || "Outlier"}`;
 
-displayGreeting(profile.display_name);
+  const today = getTodayDate();
 
-const today = new Date().toISOString().split("T")[0];
+  // Including the user ID prevents different users on one device
+  // from sharing the same greeting status.
+  const greetingStorageKey =
+    `lastGreetingDate:${userId}`;
 
-const lastGreeting = localStorage.getItem("lastGreetingDate");
+  const lastGreeting =
+    localStorage.getItem(greetingStorageKey);
 
-if (lastGreeting === today) {
+  typingElement.textContent = "";
 
-    // Already visited Home today
+  if (lastGreeting === today) {
     typingElement.textContent = message;
+    return;
+  }
 
-} else {
+  localStorage.setItem(greetingStorageKey, today);
 
-    // First visit today
-    localStorage.setItem("lastGreetingDate", today);
+  let characterIndex = 0;
 
-    let index = 0;
-
-    function typeGreeting() {
-
-        if (index < message.length) {
-
-            typingElement.textContent += message.charAt(index);
-
-            index++;
-
-            setTimeout(typeGreeting, 175);
-
-        }
-
+  function typeGreeting() {
+    if (characterIndex >= message.length) {
+      return;
     }
 
-    setTimeout(typeGreeting, 500);
+    typingElement.textContent +=
+      message.charAt(characterIndex);
 
+    characterIndex += 1;
+
+    setTimeout(typeGreeting, 175);
+  }
+
+  setTimeout(typeGreeting, 500);
 }
 
     /* =========================
