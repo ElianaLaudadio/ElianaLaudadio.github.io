@@ -776,6 +776,12 @@ async function initializePage() {
     if (profileError) {
       throw profileError;
     }
+const gameProgress =
+  await getOrCreateGameProgress(user.id);
+
+console.log("Game progress:", gameProgress);
+
+    
 
     displayGreeting(
       profile?.display_name || "Outlier",
