@@ -133,7 +133,6 @@
       </div>
 
   
-
       <!-- =========================
            GOALS CARD
       ========================== -->
@@ -308,7 +307,9 @@
 
 const typingElement = document.getElementById("typingText");
 
-const message = "Hi, Eliana";
+const profile = await window.auth.getOrCreateProfile();
+
+displayGreeting(profile.display_name);
 
 const today = new Date().toISOString().split("T")[0];
 
