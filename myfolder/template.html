@@ -733,7 +733,7 @@ if (currentLevelNumber > lastCelebratedLevel) {
 async function initializePage() {
   try {
     const user = await window.auth.requireAuth(
-      "/index.html"
+      "myfolder/index.html"
     );
 
     // requireAuth redirects when no user exists.
