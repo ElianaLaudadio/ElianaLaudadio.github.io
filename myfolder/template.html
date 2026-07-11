@@ -724,7 +724,39 @@ if (currentLevelNumber > lastCelebratedLevel) {
 
     saveGoalsBtn.addEventListener('click', saveGoals);
 
+async function getOrCreateGameProgress(userId) {
+  const { data: existingProgress, error: selectError } =
+    await window.auth.supabase
+      .from("game_progress")
+      .select("user_id, current_level, current_xp, updated_at")
+      .eq("user_id", userId)
+      .maybeSingle();
 
+  if (selectError) {
+    throw selectError;
+  }
+
+  if (existingProgress) {
+    return existingProgress;
+  }
+
+  const { data: newProgress, error: insertError } =
+    await window.auth.supabase
+      .from("game_progress")
+      .insert({
+        user_id: userId,
+        current_level: 0,
+        current_xp: 0
+      })
+      .select("user_id, current_level, current_xp, updated_at")
+      .single();
+
+  if (insertError) {
+    throw insertError;
+  }
+
+  return newProgress;
+}
 
 async function initializePage() {
   try {
