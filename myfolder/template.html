@@ -726,38 +726,41 @@ if (currentLevelNumber > lastCelebratedLevel) {
 
 
 
-/* =========================
-   INITIALIZE PAGE
-========================== */
-
 async function initializePage() {
   try {
-const user = await window.auth.requireAuth();
+    const user = await window.auth.requireAuth();
 
-    // requireAuth redirects when no user exists.
     if (!user) {
       return;
     }
 
+    const { data: profile, error: profileError } =
+      await window.auth.supabase
+        .from("profiles")
+        .select("display_name")
+        .eq("id", user.id)
+        .maybeSingle();
 
+    if (profileError) {
+      throw profileError;
+    }
 
     displayGreeting(
       profile?.display_name || "Outlier",
       user.id
     );
 
-    // These still use localStorage for now.
     updateDashboard();
     loadSavedGoals();
+
   } catch (error) {
     console.error(
-      "Could not initialize index page:",
+      "Could not initialize dashboard:",
       error
     );
 
     typingElement.textContent = "Hi, Outlier";
 
-    // Still show the rest of the page if the profile fails.
     updateDashboard();
     loadSavedGoals();
   }
