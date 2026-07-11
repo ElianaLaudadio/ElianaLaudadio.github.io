@@ -739,8 +739,7 @@ const user = await window.auth.requireAuth();
       return;
     }
 
-    const profile =
-      await window.auth.getOrCreateProfile();
+
 
     displayGreeting(
       profile?.display_name || "Outlier",
