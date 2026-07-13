@@ -704,6 +704,7 @@ async function saveFoodLog() {
 
   try {
     // Save the actual food entry to Supabase.
+    console.log("Saving food to Supabase:", food);
     await saveDailyLogField("food", food);
 
     // Award XP only for the first food log today.
