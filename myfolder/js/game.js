@@ -480,6 +480,23 @@ async function saveDailyLogField(fieldName, fieldValue) {
 
   const today = getTodayDate();
 
+  // Check whether this field was already completed today.
+  const { data: existingLog, error: readError } =
+    await window.auth.supabase
+      .from("daily_logs")
+      .select(fieldName)
+      .eq("user_id", user.id)
+      .eq("log_date", today)
+      .maybeSingle();
+
+  if (readError) {
+    throw readError;
+  }
+
+  const wasAlreadyCompleted =
+    existingLog?.[fieldName] !== null &&
+    existingLog?.[fieldName] !== undefined;
+
   const { data, error } = await window.auth.supabase
     .from("daily_logs")
     .upsert(
@@ -500,9 +517,64 @@ async function saveDailyLogField(fieldName, fieldValue) {
     throw error;
   }
 
-  return data;
+  return {
+    dailyLog: data,
+    isNewCompletion: !wasAlreadyCompleted
+  };
 }
+async function saveQuestEntry({
+  fieldName,
+  fieldValue,
+  storageKey,
+  localLog,
+  calendarTitle,
+  calendarText,
+  xpAmount,
+  completedKey
+}) {
+  const today = getTodayDate();
 
+  try {
+    const { isNewCompletion } =
+      await saveDailyLogField(
+        fieldName,
+        fieldValue
+      );
+
+    // Keep these temporarily for your current
+    // dashboard/calendar/progress functionality.
+    saveLog(storageKey, {
+      date: today,
+      ...localLog
+    });
+
+    addLogToCalendar(
+      calendarTitle,
+      calendarText
+    );
+
+    if (isNewCompletion) {
+      await addLevelXp(xpAmount);
+    }
+
+    completedLogs[completedKey] = true;
+    closeLogPanel();
+
+    return true;
+
+  } catch (error) {
+    console.error(
+      `Could not save ${fieldName} log:`,
+      error
+    );
+
+    alert(
+      `Your ${fieldName} log could not be fully saved. Please try again.`
+    );
+
+    return false;
+  }
+}
 
 function saveLog(storageKey, logObject) {
   const logs = JSON.parse(
@@ -624,63 +696,51 @@ if (fatInput) fatInput.value = "";
 }
 
 async function saveCarbsLog() {
-  const carbs = parseFloat(carbsInput.value);
+  const carbs = parseFloat(
+    carbsInput.value
+  );
 
   if (isNaN(carbs)) {
     alert("Please enter your carbs.");
     return;
   }
 
-  const today = getTodayDate();
-
-  const isNewLog = saveLog("carbsLogs", {
-    date: today,
-    carbs: carbs
+  await saveQuestEntry({
+    fieldName: "carbs",
+    fieldValue: carbs,
+    storageKey: "carbsLogs",
+    localLog: {
+      carbs: carbs
+    },
+    calendarTitle: "Carbs Log",
+    calendarText: carbs + "g",
+    xpAmount: questXp,
+    completedKey: "carbs"
   });
-
-  addLogToCalendar("Carbs Log", carbs + "g");
-
-  try {
-    if (isNewLog) {
-      await addLevelXp(questXp);
-    }
-  } catch (error) {
-    console.error("Could not award carbs XP:", error);
-    alert("Your carbs were saved, but XP could not be updated.");
-  }
-
-  completedLogs.carbs = true;
-  closeLogPanel();
 }
 
 async function saveFatLog() {
-  const fat = parseFloat(fatInput.value);
+  const fat = parseFloat(
+    fatInput.value
+  );
 
   if (isNaN(fat)) {
     alert("Please enter your fat.");
     return;
   }
 
-  const today = getTodayDate();
-
-  const isNewLog = saveLog("fatLogs", {
-    date: today,
-    fat: fat
+  await saveQuestEntry({
+    fieldName: "fat",
+    fieldValue: fat,
+    storageKey: "fatLogs",
+    localLog: {
+      fat: fat
+    },
+    calendarTitle: "Fat Log",
+    calendarText: fat + "g",
+    xpAmount: questXp,
+    completedKey: "fat"
   });
-
-  addLogToCalendar("Fat Log", fat + "g");
-
-  try {
-    if (isNewLog) {
-      await addLevelXp(questXp);
-    }
-  } catch (error) {
-    console.error("Could not award fat XP:", error);
-    alert("Your fat was saved, but XP could not be updated.");
-  }
-
-  completedLogs.fat = true;
-  closeLogPanel();
 }
 
 async function saveFoodLog() {
@@ -691,37 +751,18 @@ async function saveFoodLog() {
     return;
   }
 
-  const today = getTodayDate();
-
-  // Keep localStorage temporarily so the dashboard
-  // can still recognize today's completed quest.
-  const isNewLog = saveLog("foodLogs", {
-    date: today,
-    food: food
+  await saveQuestEntry({
+    fieldName: "food",
+    fieldValue: food,
+    storageKey: "foodLogs",
+    localLog: {
+      food: food
+    },
+    calendarTitle: "Food Log",
+    calendarText: food,
+    xpAmount: questXp,
+    completedKey: "food"
   });
-
-  addLogToCalendar("Food Log", food);
-
-  try {
-    // Save the actual food entry to Supabase.
-
-    await saveDailyLogField("food", food);
-
-    // Award XP only for the first food log today.
-    if (isNewLog) {
-      await addLevelXp(questXp);
-    }
-
-    completedLogs.food = true;
-    closeLogPanel();
-
-  } catch (error) {
-    console.error("Could not save food log:", error);
-
-    alert(
-      "Your food log could not be fully saved. Please try again."
-    );
-  }
 }
 
 async function saveActivityLog() {
@@ -732,50 +773,61 @@ async function saveActivityLog() {
     return;
   }
 
-  const today = getTodayDate();
-
-  const isNewLog = saveLog("activityLogs", {
-    date: today,
-    activity: activity
+  await saveQuestEntry({
+    fieldName: "activity",
+    fieldValue: activity,
+    storageKey: "activityLogs",
+    localLog: {
+      activity: activity
+    },
+    calendarTitle: "Activity Log",
+    calendarText: activity,
+    xpAmount: questXp,
+    completedKey: "activity"
   });
-
-  addLogToCalendar("Activity Log", activity);
-
-  try {
-    if (isNewLog) {
-      await addLevelXp(questXp);
-    }
-  } catch (error) {
-    console.error("Could not award activity XP:", error);
-    alert("Your activity was saved, but XP could not be updated.");
-  }
-
-  completedLogs.activity = true;
-  closeLogPanel();
 }
 
 async function saveWeightLog() {
-  const weight = parseFloat(weightInput.value);
+  const weight = parseFloat(
+    weightInput.value
+  );
 
   if (isNaN(weight)) {
     alert("Please enter your weight.");
     return;
   }
 
-  const today = getTodayDate();
-
-  const isNewLog = saveLog("weightLogs", {
-    date: today,
-    weight: weight
+  const saved = await saveQuestEntry({
+    fieldName: "weight",
+    fieldValue: weight,
+    storageKey: "weightLogs",
+    localLog: {
+      weight: weight
+    },
+    calendarTitle: "Weight Log",
+    calendarText: weight + " lbs",
+    xpAmount: questXp,
+    completedKey: "weight"
   });
 
+  if (!saved) {
+    return;
+  }
+
+  // Keep the existing local weight chart working
+  // until progress.html is converted to Supabase.
+  const today = getTodayDate();
+
   const weightEntries = JSON.parse(
-    localStorage.getItem("weightEntries") || "[]"
+    localStorage.getItem(
+      "weightEntries"
+    ) || "[]"
   );
 
-  const existingWeightIndex = weightEntries.findIndex(
-    entry => entry.date === today
-  );
+  const existingWeightIndex =
+    weightEntries.findIndex(
+      entry => entry.date === today
+    );
 
   const newWeightEntry = {
     date: today,
@@ -784,7 +836,8 @@ async function saveWeightLog() {
   };
 
   if (existingWeightIndex !== -1) {
-    weightEntries[existingWeightIndex] = newWeightEntry;
+    weightEntries[existingWeightIndex] =
+      newWeightEntry;
   } else {
     weightEntries.push(newWeightEntry);
   }
@@ -793,20 +846,6 @@ async function saveWeightLog() {
     "weightEntries",
     JSON.stringify(weightEntries)
   );
-
-  addLogToCalendar("Weight Log", weight + " lbs");
-
-  try {
-    if (isNewLog) {
-      await addLevelXp(questXp);
-    }
-  } catch (error) {
-    console.error("Could not award weight XP:", error);
-    alert("Your weight was saved, but XP could not be updated.");
-  }
-
-  completedLogs.weight = true;
-  closeLogPanel();
 }
 
 async function saveWorkoutLog() {
@@ -817,89 +856,67 @@ async function saveWorkoutLog() {
     return;
   }
 
-  const today = getTodayDate();
-
-  const isNewLog = saveLog("workoutLogs", {
-    date: today,
-    workout: workout
+  await saveQuestEntry({
+    fieldName: "workout",
+    fieldValue: workout,
+    storageKey: "workoutLogs",
+    localLog: {
+      workout: workout
+    },
+    calendarTitle: "Workout Log",
+    calendarText: workout,
+    xpAmount: questXp,
+    completedKey: "workout"
   });
-
-  addLogToCalendar("Workout Log", workout);
-
-  try {
-    if (isNewLog) {
-      await addLevelXp(questXp);
-    }
-  } catch (error) {
-    console.error("Could not award workout XP:", error);
-    alert("Your workout was saved, but XP could not be updated.");
-  }
-
-  completedLogs.workout = true;
-  closeLogPanel();
 }
 
 async function saveProteinLog() {
-  const protein = parseFloat(proteinInput.value);
+  const protein = parseFloat(
+    proteinInput.value
+  );
 
   if (isNaN(protein)) {
     alert("Please enter your protein.");
     return;
   }
 
-  const today = getTodayDate();
-
-  const isNewLog = saveLog("proteinLogs", {
-    date: today,
-    protein: protein
+  await saveQuestEntry({
+    fieldName: "protein",
+    fieldValue: protein,
+    storageKey: "proteinLogs",
+    localLog: {
+      protein: protein
+    },
+    calendarTitle: "Protein Log",
+    calendarText: protein + "g",
+    xpAmount: questXp,
+    completedKey: "protein"
   });
-
-  addLogToCalendar("Protein Log", protein + "g");
-
-  try {
-    if (isNewLog) {
-      await addLevelXp(questXp);
-    }
-  } catch (error) {
-    console.error("Could not award protein XP:", error);
-    alert("Your protein was saved, but XP could not be updated.");
-  }
-
-  completedLogs.protein = true;
-  closeLogPanel();
 }
 
 async function saveBonusLog() {
   const bonus = bonusInput.value.trim();
 
   if (!bonus) {
-    alert("Please enter your bonus leverage point.");
+    alert(
+      "Please enter your bonus leverage point."
+    );
     return;
   }
 
-  const today = getTodayDate();
-
-  const isNewLog = saveLog("bonusLogs", {
-    date: today,
-    bonus: bonus
+  await saveQuestEntry({
+    fieldName: "bonus",
+    fieldValue: bonus,
+    storageKey: "bonusLogs",
+    localLog: {
+      bonus: bonus
+    },
+    calendarTitle:
+      "Bonus Leverage Point",
+    calendarText: bonus,
+    xpAmount: bonusXp,
+    completedKey: "bonus"
   });
-
-  addLogToCalendar(
-    "Bonus Leverage Point",
-    bonus
-  );
-
-  try {
-    if (isNewLog) {
-      await addLevelXp(bonusXp);
-    }
-  } catch (error) {
-    console.error("Could not award bonus XP:", error);
-    alert("Your bonus was saved, but XP could not be updated.");
-  }
-
-  completedLogs.bonus = true;
-  closeLogPanel();
 }
 
 if (saveFoodBtn) saveFoodBtn.addEventListener("click", saveFoodLog);
