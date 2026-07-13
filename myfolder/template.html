@@ -361,7 +361,6 @@ function displayGreeting(displayName, userId) {
       {
         number: 0,
         name: 'Baseline',
-        xpKey: 'baselineXp',
         requiredXp: 300,
         quests: [
           { name: 'Log Food', xp: 30, storageKey: 'foodLogs' },
@@ -371,7 +370,6 @@ function displayGreeting(displayName, userId) {
       {
         number: 1,
         name: 'Consistency',
-        xpKey: 'consistencyXp',
         requiredXp: 300,
         quests: [
           { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
@@ -382,7 +380,6 @@ function displayGreeting(displayName, userId) {
       {
         number: 2,
         name: 'Explore',
-        xpKey: 'exploreXp',
         requiredXp: 300,
         quests: [
           { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
@@ -393,7 +390,6 @@ function displayGreeting(displayName, userId) {
       {
         number: 3,
         name: 'Program',
-        xpKey: 'programXp',
         requiredXp: 300,
         quests: [
           { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
@@ -404,7 +400,6 @@ function displayGreeting(displayName, userId) {
       {
         number: 4,
         name: 'Nutrition',
-        xpKey: 'nutritionXp',
         requiredXp: 300,
         quests: [
           { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
@@ -417,7 +412,6 @@ function displayGreeting(displayName, userId) {
       {
         number: 5,
         name: 'Discipline',
-        xpKey: 'disciplineXp',
         requiredXp: 300,
         quests: [
           { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
@@ -430,7 +424,6 @@ function displayGreeting(displayName, userId) {
       {
         number: 6,
         name: 'Mastery',
-        xpKey: 'masteryXp',
         requiredXp: 300,
         quests: [
           { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
@@ -443,7 +436,6 @@ function displayGreeting(displayName, userId) {
       {
         number: 7,
         name: 'Outlier',
-        xpKey: 'outlierXp',
         requiredXp: 300,
         quests: [
           { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
@@ -529,69 +521,109 @@ function launchConfetti() {
 }
 
 
-    function updateDashboard() {
-      const currentLevelNumber = getCurrentLevelNumber();
-      const currentLevel = levels[currentLevelNumber];
+function updateDashboard(gameProgress) {
+  const currentLevelNumber = Number(
+    gameProgress?.current_level ?? 0
+  );
 
-      const lastCelebratedLevel = Number(localStorage.getItem('lastCelebratedLevel') || 0);
+  const currentXp = Number(
+    gameProgress?.current_xp ?? 0
+  );
 
-if (currentLevelNumber > lastCelebratedLevel) {
-  launchConfetti();
-  localStorage.setItem('lastCelebratedLevel', currentLevelNumber);
-}
+  const currentLevel =
+    levels[currentLevelNumber] || levels[0];
 
-      updateStartLogButton(currentLevelNumber);
+  const lastCelebratedLevel = Number(
+    localStorage.getItem('lastCelebratedLevel') || 0
+  );
 
-      const currentXp = Number(localStorage.getItem(currentLevel.xpKey) || 0);
-      const xpPercent = Math.min(
-        (currentXp / currentLevel.requiredXp) * 100,
-        100
+  if (currentLevelNumber > lastCelebratedLevel) {
+    launchConfetti();
+
+    localStorage.setItem(
+      'lastCelebratedLevel',
+      currentLevelNumber
+    );
+  }
+
+  updateStartLogButton(currentLevelNumber);
+
+  const xpPercent = Math.min(
+    (currentXp / currentLevel.requiredXp) * 100,
+    100
+  );
+
+  xpTitle.textContent =
+    currentLevel.name + ' XP';
+
+  levelStatus.textContent =
+    'Level ' +
+    currentLevel.number +
+    ': ' +
+    currentLevel.name;
+
+  flowStatus.textContent =
+    'Level ' +
+    currentLevel.number +
+    ': ' +
+    currentLevel.name;
+
+  xpBarFill.style.width =
+    xpPercent + '%';
+
+  xpText.textContent =
+    currentXp +
+    ' / ' +
+    currentLevel.requiredXp +
+    ' XP';
+
+  questList.innerHTML = '';
+
+  currentLevel.quests.forEach(quest => {
+    const questItem =
+      document.createElement('div');
+
+    questItem.classList.add('quest-item');
+
+    if (hasCompletedToday(quest.storageKey)) {
+      questItem.classList.add('complete');
+    }
+
+    questItem.innerHTML = `
+      <span>${quest.name}</span>
+      <span>+${quest.xp} XP</span>
+    `;
+
+    questList.appendChild(questItem);
+  });
+
+  levels.forEach(level => {
+    const levelElement =
+      document.getElementById(
+        'level' + level.number
       );
 
-      xpTitle.textContent = currentLevel.name + ' XP';
-      levelStatus.textContent =
-        'Level ' + currentLevel.number + ': ' + currentLevel.name;
-
-      flowStatus.textContent =
-        'Level ' + currentLevel.number + ': ' + currentLevel.name;
-
-      xpBarFill.style.width = xpPercent + '%';
-      xpText.textContent =
-        currentXp + ' / ' + currentLevel.requiredXp + ' XP';
-
-      questList.innerHTML = '';
-
-      currentLevel.quests.forEach(quest => {
-        const questItem = document.createElement('div');
-
-        questItem.classList.add('quest-item');
-
-        if (hasCompletedToday(quest.storageKey)) {
-          questItem.classList.add('complete');
-        }
-
-        questItem.innerHTML = `
-          <span>${quest.name}</span>
-          <span>+${quest.xp} XP</span>
-        `;
-
-        questList.appendChild(questItem);
-      });
-
-      levels.forEach(level => {
-        const levelElement = document.getElementById('level' + level.number);
-
-        levelElement.classList.remove('current', 'complete', 'locked');
-
-        if (level.number < currentLevelNumber) {
-          levelElement.classList.add('complete');
-        } else if (level.number === currentLevelNumber) {
-          levelElement.classList.add('current');
-        } else {
-          levelElement.classList.add('locked');
-        }
-      });
+    if (!levelElement) {
+      return;
     }
+
+    levelElement.classList.remove(
+      'current',
+      'complete',
+      'locked'
+    );
+
+    if (level.number < currentLevelNumber) {
+      levelElement.classList.add('complete');
+    } else if (
+      level.number === currentLevelNumber
+    ) {
+      levelElement.classList.add('current');
+    } else {
+      levelElement.classList.add('locked');
+    }
+  });
+}
 
     /* =========================
        GOALS
@@ -705,37 +737,59 @@ async function getOrCreateGameProgress(userId) {
   return newProgress;
 }
 
+/* =========================
+   INITIALIZE PAGE
+========================== */
+
 async function initializePage() {
   try {
-    const user = await window.auth.requireAuth();
+    const user =
+      await window.auth.requireAuth();
 
     if (!user) {
       return;
     }
 
-    const { data: profile, error: profileError } =
-      await window.auth.supabase
-        .from("profiles")
-        .select("display_name")
-        .eq("id", user.id)
-        .maybeSingle();
+    const {
+      data: profile,
+      error: profileError
+    } = await window.auth.supabase
+      .from("profiles")
+      .select("display_name")
+      .eq("id", user.id)
+      .maybeSingle();
 
     if (profileError) {
       throw profileError;
     }
-const gameProgress =
-  await getOrCreateGameProgress(user.id);
 
-console.log("Game progress:", gameProgress);
+    const {
+      data: gameProgress,
+      error: gameProgressError
+    } = await window.auth.supabase
+      .from("game_progress")
+      .select(
+        "user_id, current_level, current_xp, updated_at"
+      )
+      .eq("user_id", user.id)
+      .maybeSingle();
 
-    
+    if (gameProgressError) {
+      throw gameProgressError;
+    }
+
+    if (!gameProgress) {
+      throw new Error(
+        "No game_progress row exists for this user."
+      );
+    }
 
     displayGreeting(
       profile?.display_name || "Outlier",
       user.id
     );
 
-    updateDashboard();
+    updateDashboard(gameProgress);
     loadSavedGoals();
 
   } catch (error) {
@@ -744,14 +798,22 @@ console.log("Game progress:", gameProgress);
       error
     );
 
-    typingElement.textContent = "Hi, Outlier";
+    typingElement.textContent =
+      "Hi, Outlier";
 
-    updateDashboard();
+    // Safe fallback if Supabase fails.
+    updateDashboard({
+      current_level: 0,
+      current_xp: 0
+    });
+
     loadSavedGoals();
   }
 }
 
 initializePage();
+
+
   </script>
 
 </body>
