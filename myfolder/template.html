@@ -502,59 +502,6 @@ function displayGreeting(displayName, userId) {
        LEVEL LOGIC
     ========================== */
 
-    function getCurrentLevelNumber() {
-      const baselineXp = Number(localStorage.getItem('baselineXp') || 0);
-      const consistencyXp = Number(localStorage.getItem('consistencyXp') || 0);
-      const exploreXp = Number(localStorage.getItem('exploreXp') || 0);
-      const programXp = Number(localStorage.getItem('programXp') || 0);
-      const nutritionXp = Number(localStorage.getItem('nutritionXp') || 0);
-      const disciplineXp = Number(localStorage.getItem('disciplineXp') || 0);
-      const masteryXp = Number(localStorage.getItem('masteryXp') || 0);
-      const outlierXp = Number(localStorage.getItem('outlierXp') || 0);
-
-      if (outlierXp >= 300) {
-        localStorage.setItem('currentLevel', '7');
-        return 7;
-      }
-
-      if (masteryXp >= 300) {
-        localStorage.setItem('currentLevel', '7');
-        return 7;
-      }
-
-      if (disciplineXp >= 300) {
-        localStorage.setItem('currentLevel', '6');
-        return 6;
-      }
-
-      if (nutritionXp >= 300) {
-        localStorage.setItem('currentLevel', '5');
-        return 5;
-      }
-
-      if (programXp >= 300) {
-        localStorage.setItem('currentLevel', '4');
-        return 4;
-      }
-
-      if (exploreXp >= 300) {
-        localStorage.setItem('currentLevel', '3');
-        return 3;
-      }
-
-      if (consistencyXp >= 300) {
-        localStorage.setItem('currentLevel', '2');
-        return 2;
-      }
-
-      if (baselineXp >= 300) {
-        localStorage.setItem('currentLevel', '1');
-        return 1;
-      }
-
-      localStorage.setItem('currentLevel', '0');
-      return 0;
-    }
 
     function updateStartLogButton(currentLevelNumber) {
       startLogButton.href =
