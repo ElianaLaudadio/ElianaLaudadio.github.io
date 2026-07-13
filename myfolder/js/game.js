@@ -126,7 +126,6 @@ const levels = {
   0: {
     title: "Level 0: Baseline",
     hudTitle: "LEVEL 0: BASELINE",
-    xpKey: "baselineXp",
     requiredXp: 300,
     startX: 65,
     startY: 300,
@@ -143,7 +142,6 @@ const levels = {
   1: {
     title: "Level 1: Consistency",
     hudTitle: "LEVEL 1: CONSISTENCY",
-    xpKey: "consistencyXp",
     requiredXp: 300,
     startX: 75,
     startY: 365,
@@ -161,7 +159,6 @@ const levels = {
   2: {
     title: "Level 2: Explore",
     hudTitle: "LEVEL 2: EXPLORE",
-    xpKey: "exploreXp",
     requiredXp: 600,
     startX: 60,
     startY: 370,
@@ -181,7 +178,6 @@ const levels = {
   3: {
   title: "Level 3: Program",
   hudTitle: "LEVEL 3: PROGRAM",
-  xpKey: "programXp",
   requiredXp: 900,
   startX: 760,
   startY: 365,
@@ -201,7 +197,6 @@ const levels = {
 4: {
   title: "Level 4: Nutrition",
   hudTitle: "LEVEL 4: NUTRITION",
-  xpKey: "nutritionXp",
   requiredXp: 900,
   startX: 70,
   startY: 380,
@@ -221,7 +216,6 @@ const levels = {
 5: {
   title: "Level 5: Discipline",
   hudTitle: "LEVEL 5: DISCIPLINE",
-  xpKey: "disciplineXp",
   requiredXp: 600,
   startX: 735,
   startY: 380,
@@ -241,7 +235,6 @@ const levels = {
 6: {
   title: "Level 6: Mastery",
   hudTitle: "LEVEL 6: MASTERY",
-  xpKey: "masteryXp",
   requiredXp: 600,
   startX: 415,
   startY: 390,
@@ -272,7 +265,6 @@ const levels = {
 7: {
   title: "Level 7: Outlier",
   hudTitle: "LEVEL 7: OUTLIER",
-  xpKey: "outlierXp",
   requiredXp: 300,
   startX: 60,
   startY: 390,
@@ -313,8 +305,8 @@ function getLevelFromUrl() {
   return levels[level] ? level : 0;
 }
 
-const currentLevelNumber = getLevelFromUrl();
-const currentLevel = levels[currentLevelNumber];
+let currentLevelNumber = getLevelFromUrl();
+let currentLevel = levels[currentLevelNumber];
 
 const quickLogGrid = document.getElementById("quickLogGrid");
 
@@ -382,15 +374,67 @@ const player = {
 
 const platforms = currentLevel.platforms;
 
-function getLevelXp() {
-  return Number(localStorage.getItem(currentLevel.xpKey) || 0);
-}
+async function addLevelXp(amount) {
+  const user = await window.auth.getUser();
 
-function addLevelXp(amount) {
-  const currentXp = getLevelXp();
-  const newXp = Math.min(currentXp + amount, currentLevel.requiredXp);
+  if (!user) {
+    throw new Error("User is not authenticated.");
+  }
 
-  localStorage.setItem(currentLevel.xpKey, newXp);
+  const { data: progress, error: readError } =
+    await window.auth.supabase
+      .from("game_progress")
+      .select("current_level, current_xp")
+      .eq("user_id", user.id)
+      .single();
+
+  if (readError) {
+    throw readError;
+  }
+
+  let newLevel = Number(progress.current_level);
+  let newXp = Number(progress.current_xp) + amount;
+
+  const levelRequiredXp =
+    levels[newLevel]?.requiredXp ?? 300;
+
+  // Level up and carry extra XP into the next level.
+  if (newXp >= levelRequiredXp && newLevel < 7) {
+    newXp -= levelRequiredXp;
+    newLevel += 1;
+  }
+
+  // Level 7 is the maximum level.
+  if (newLevel === 7) {
+    const maxXp = levels[7].requiredXp;
+    newXp = Math.min(newXp, maxXp);
+  }
+
+  const { data: updatedProgress, error: updateError } =
+    await window.auth.supabase
+      .from("game_progress")
+      .update({
+        current_level: newLevel,
+        current_xp: newXp,
+        updated_at: new Date().toISOString()
+      })
+      .eq("user_id", user.id)
+      .select("current_level, current_xp")
+      .single();
+
+  if (updateError) {
+    throw updateError;
+  }
+
+  currentLevelNumber = updatedProgress.current_level;
+  currentLevel = levels[currentLevelNumber];
+
+  localStorage.setItem(
+    "currentLevel",
+    String(currentLevelNumber)
+  );
+
+  return updatedProgress;
 }
 
 function getTodayDate() {
@@ -424,17 +468,28 @@ function addLogToCalendar(logTitle, logText) {
 }
 
 function saveLog(storageKey, logObject) {
-  const logs = JSON.parse(localStorage.getItem(storageKey) || "[]");
+  const logs = JSON.parse(
+    localStorage.getItem(storageKey) || "[]"
+  );
 
-  const existingIndex = logs.findIndex(log => log.date === logObject.date);
+  const existingIndex = logs.findIndex(
+    log => log.date === logObject.date
+  );
 
-  if (existingIndex !== -1) {
-    logs[existingIndex] = logObject;
-  } else {
+  const isNewLog = existingIndex === -1;
+
+  if (isNewLog) {
     logs.push(logObject);
+  } else {
+    logs[existingIndex] = logObject;
   }
 
-  localStorage.setItem(storageKey, JSON.stringify(logs));
+  localStorage.setItem(
+    storageKey,
+    JSON.stringify(logs)
+  );
+
+  return isNewLog;
 }
 
 document.addEventListener("keydown", (e) => {
@@ -531,7 +586,7 @@ if (fatInput) fatInput.value = "";
   canvas.focus();
 }
 
-function saveCarbsLog() {
+async function saveCarbsLog() {
   const carbs = parseFloat(carbsInput.value);
 
   if (isNaN(carbs)) {
@@ -541,18 +596,27 @@ function saveCarbsLog() {
 
   const today = getTodayDate();
 
-  saveLog("carbsLogs", {
+  const isNewLog = saveLog("carbsLogs", {
     date: today,
     carbs: carbs
   });
 
   addLogToCalendar("Carbs Log", carbs + "g");
-  addLevelXp(questXp);
+
+  try {
+    if (isNewLog) {
+      await addLevelXp(questXp);
+    }
+  } catch (error) {
+    console.error("Could not award carbs XP:", error);
+    alert("Your carbs were saved, but XP could not be updated.");
+  }
+
   completedLogs.carbs = true;
   closeLogPanel();
 }
 
-function saveFatLog() {
+async function saveFatLog() {
   const fat = parseFloat(fatInput.value);
 
   if (isNaN(fat)) {
@@ -562,18 +626,27 @@ function saveFatLog() {
 
   const today = getTodayDate();
 
-  saveLog("fatLogs", {
+  const isNewLog = saveLog("fatLogs", {
     date: today,
     fat: fat
   });
 
   addLogToCalendar("Fat Log", fat + "g");
-  addLevelXp(questXp);
+
+  try {
+    if (isNewLog) {
+      await addLevelXp(questXp);
+    }
+  } catch (error) {
+    console.error("Could not award fat XP:", error);
+    alert("Your fat was saved, but XP could not be updated.");
+  }
+
   completedLogs.fat = true;
   closeLogPanel();
 }
 
-function saveFoodLog() {
+async function saveFoodLog() {
   const food = foodInput.value.trim();
 
   if (!food) {
@@ -583,18 +656,27 @@ function saveFoodLog() {
 
   const today = getTodayDate();
 
-  saveLog("foodLogs", {
+  const isNewLog = saveLog("foodLogs", {
     date: today,
     food: food
   });
 
   addLogToCalendar("Food Log", food);
-  addLevelXp(questXp);
+
+  try {
+    if (isNewLog) {
+      await addLevelXp(questXp);
+    }
+  } catch (error) {
+    console.error("Could not award food XP:", error);
+    alert("Your food was saved, but XP could not be updated.");
+  }
+
   completedLogs.food = true;
   closeLogPanel();
 }
 
-function saveActivityLog() {
+async function saveActivityLog() {
   const activity = activityInput.value.trim();
 
   if (!activity) {
@@ -604,18 +686,27 @@ function saveActivityLog() {
 
   const today = getTodayDate();
 
-  saveLog("activityLogs", {
+  const isNewLog = saveLog("activityLogs", {
     date: today,
     activity: activity
   });
 
   addLogToCalendar("Activity Log", activity);
-  addLevelXp(questXp);
+
+  try {
+    if (isNewLog) {
+      await addLevelXp(questXp);
+    }
+  } catch (error) {
+    console.error("Could not award activity XP:", error);
+    alert("Your activity was saved, but XP could not be updated.");
+  }
+
   completedLogs.activity = true;
   closeLogPanel();
 }
 
-function saveWeightLog() {
+async function saveWeightLog() {
   const weight = parseFloat(weightInput.value);
 
   if (isNaN(weight)) {
@@ -625,14 +716,18 @@ function saveWeightLog() {
 
   const today = getTodayDate();
 
-  saveLog("weightLogs", {
+  const isNewLog = saveLog("weightLogs", {
     date: today,
     weight: weight
   });
 
-  const weightEntries = JSON.parse(localStorage.getItem("weightEntries") || "[]");
+  const weightEntries = JSON.parse(
+    localStorage.getItem("weightEntries") || "[]"
+  );
 
-  const existingWeightIndex = weightEntries.findIndex(entry => entry.date === today);
+  const existingWeightIndex = weightEntries.findIndex(
+    entry => entry.date === today
+  );
 
   const newWeightEntry = {
     date: today,
@@ -646,15 +741,27 @@ function saveWeightLog() {
     weightEntries.push(newWeightEntry);
   }
 
-  localStorage.setItem("weightEntries", JSON.stringify(weightEntries));
+  localStorage.setItem(
+    "weightEntries",
+    JSON.stringify(weightEntries)
+  );
 
   addLogToCalendar("Weight Log", weight + " lbs");
-  addLevelXp(questXp);
+
+  try {
+    if (isNewLog) {
+      await addLevelXp(questXp);
+    }
+  } catch (error) {
+    console.error("Could not award weight XP:", error);
+    alert("Your weight was saved, but XP could not be updated.");
+  }
+
   completedLogs.weight = true;
   closeLogPanel();
 }
 
-function saveWorkoutLog() {
+async function saveWorkoutLog() {
   const workout = workoutInput.value.trim();
 
   if (!workout) {
@@ -664,18 +771,27 @@ function saveWorkoutLog() {
 
   const today = getTodayDate();
 
-  saveLog("workoutLogs", {
+  const isNewLog = saveLog("workoutLogs", {
     date: today,
     workout: workout
   });
 
   addLogToCalendar("Workout Log", workout);
-  addLevelXp(questXp);
+
+  try {
+    if (isNewLog) {
+      await addLevelXp(questXp);
+    }
+  } catch (error) {
+    console.error("Could not award workout XP:", error);
+    alert("Your workout was saved, but XP could not be updated.");
+  }
+
   completedLogs.workout = true;
   closeLogPanel();
 }
 
-function saveProteinLog() {
+async function saveProteinLog() {
   const protein = parseFloat(proteinInput.value);
 
   if (isNaN(protein)) {
@@ -685,18 +801,27 @@ function saveProteinLog() {
 
   const today = getTodayDate();
 
-  saveLog("proteinLogs", {
+  const isNewLog = saveLog("proteinLogs", {
     date: today,
     protein: protein
   });
 
   addLogToCalendar("Protein Log", protein + "g");
-  addLevelXp(questXp);
+
+  try {
+    if (isNewLog) {
+      await addLevelXp(questXp);
+    }
+  } catch (error) {
+    console.error("Could not award protein XP:", error);
+    alert("Your protein was saved, but XP could not be updated.");
+  }
+
   completedLogs.protein = true;
   closeLogPanel();
 }
 
-function saveBonusLog() {
+async function saveBonusLog() {
   const bonus = bonusInput.value.trim();
 
   if (!bonus) {
@@ -706,13 +831,25 @@ function saveBonusLog() {
 
   const today = getTodayDate();
 
-  saveLog("bonusLogs", {
+  const isNewLog = saveLog("bonusLogs", {
     date: today,
     bonus: bonus
   });
 
-  addLogToCalendar("Bonus Leverage Point", bonus);
-  addLevelXp(bonusXp);
+  addLogToCalendar(
+    "Bonus Leverage Point",
+    bonus
+  );
+
+  try {
+    if (isNewLog) {
+      await addLevelXp(bonusXp);
+    }
+  } catch (error) {
+    console.error("Could not award bonus XP:", error);
+    alert("Your bonus was saved, but XP could not be updated.");
+  }
+
   completedLogs.bonus = true;
   closeLogPanel();
 }
