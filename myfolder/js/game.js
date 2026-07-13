@@ -1,3 +1,7 @@
+(async () => {
+  await window.auth.requireAuth();
+})();
+
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
