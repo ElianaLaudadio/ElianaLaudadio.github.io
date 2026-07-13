@@ -766,7 +766,7 @@ async function saveFoodLog() {
 }
 
 async function saveActivityLog() {
-  console.log("saveActivityLog called");
+
   const activity = activityInput.value.trim();
 
   if (!activity) {
