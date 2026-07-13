@@ -773,18 +773,85 @@ async function saveActivityLog() {
     return;
   }
 
-  await saveQuestEntry({
-    fieldName: "activity",
-    fieldValue: activity,
-    storageKey: "activityLogs",
-    localLog: {
+  const user = await window.auth.getUser();
+
+  if (!user) {
+    alert("You must be logged in.");
+    return;
+  }
+
+  const today = getTodayDate();
+
+  try {
+    // Check whether activity was already logged today.
+    const { data: existingLog, error: readError } =
+      await window.auth.supabase
+        .from("daily_logs")
+        .select("activity")
+        .eq("user_id", user.id)
+        .eq("log_date", today)
+        .maybeSingle();
+
+    if (readError) {
+      throw readError;
+    }
+
+    const isNewCompletion =
+      existingLog?.activity === null ||
+      existingLog?.activity === undefined;
+
+    // Save activity to Supabase.
+    const { data, error: saveError } =
+      await window.auth.supabase
+        .from("daily_logs")
+        .upsert(
+          {
+            user_id: user.id,
+            log_date: today,
+            activity: activity,
+            updated_at: new Date().toISOString()
+          },
+          {
+            onConflict: "user_id,log_date"
+          }
+        )
+        .select()
+        .single();
+
+    if (saveError) {
+      throw saveError;
+    }
+
+    // Keep current local features working temporarily.
+    saveLog("activityLogs", {
+      date: today,
       activity: activity
-    },
-    calendarTitle: "Activity Log",
-    calendarText: activity,
-    xpAmount: questXp,
-    completedKey: "activity"
-  });
+    });
+
+    addLogToCalendar(
+      "Activity Log",
+      activity
+    );
+
+    if (isNewCompletion) {
+      await addLevelXp(questXp);
+    }
+
+    completedLogs.activity = true;
+    closeLogPanel();
+
+    console.log("Activity saved:", data);
+
+  } catch (error) {
+    console.error(
+      "Could not save activity log:",
+      error
+    );
+
+    alert(
+      "Your activity log could not be saved. Check the console for details."
+    );
+  }
 }
 
 async function saveWeightLog() {
