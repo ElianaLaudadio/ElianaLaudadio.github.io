@@ -471,6 +471,39 @@ function addLogToCalendar(logTitle, logText) {
   localStorage.setItem(calendarKey, filteredLines.join("\n"));
 }
 
+async function saveDailyLogField(fieldName, fieldValue) {
+  const user = await window.auth.getUser();
+
+  if (!user) {
+    throw new Error("User is not authenticated.");
+  }
+
+  const today = getTodayDate();
+
+  const { data, error } = await window.auth.supabase
+    .from("daily_logs")
+    .upsert(
+      {
+        user_id: user.id,
+        log_date: today,
+        [fieldName]: fieldValue,
+        updated_at: new Date().toISOString()
+      },
+      {
+        onConflict: "user_id,log_date"
+      }
+    )
+    .select()
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
+
 function saveLog(storageKey, logObject) {
   const logs = JSON.parse(
     localStorage.getItem(storageKey) || "[]"
@@ -660,6 +693,8 @@ async function saveFoodLog() {
 
   const today = getTodayDate();
 
+  // Keep localStorage temporarily so the dashboard
+  // can still recognize today's completed quest.
   const isNewLog = saveLog("foodLogs", {
     date: today,
     food: food
@@ -668,16 +703,24 @@ async function saveFoodLog() {
   addLogToCalendar("Food Log", food);
 
   try {
+    // Save the actual food entry to Supabase.
+    await saveDailyLogField("food", food);
+
+    // Award XP only for the first food log today.
     if (isNewLog) {
       await addLevelXp(questXp);
     }
-  } catch (error) {
-    console.error("Could not award food XP:", error);
-    alert("Your food was saved, but XP could not be updated.");
-  }
 
-  completedLogs.food = true;
-  closeLogPanel();
+    completedLogs.food = true;
+    closeLogPanel();
+
+  } catch (error) {
+    console.error("Could not save food log:", error);
+
+    alert(
+      "Your food log could not be fully saved. Please try again."
+    );
+  }
 }
 
 async function saveActivityLog() {
