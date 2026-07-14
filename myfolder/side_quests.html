@@ -224,9 +224,12 @@ async function saveDailyCompletion(
         }
       );
 
-  if (error) {
-    throw error;
-  }
+if (error) {
+  console.error("Daily quest Supabase error:", error);
+  throw error;
+}
+
+console.log("Daily quest saved:", questName);
 }
 
 function getWeekKey() {
@@ -541,8 +544,10 @@ dailyQuestCheckboxes.forEach(checkbox => {
         return;
       }
 
-      const questName =
-        checkbox.dataset.quest;
+      const questName = checkbox.dataset.quest;
+
+      console.log("Daily quest clicked:", questName);
+      
 
       try {
         await saveDailyCompletion(
