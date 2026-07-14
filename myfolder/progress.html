@@ -398,6 +398,8 @@ async function loadWeightData(userId) {
     weight: Number(entry.weight)
   }));
 
+   console.log("Loaded weight data:", weightData);
+
   updateWeightChart();
 }
     
