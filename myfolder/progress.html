@@ -421,48 +421,86 @@ const goalProgressInfo = document.getElementById('goalProgressInfo');
 const goalProgressBarFill = document.getElementById('goalProgressBarFill');
 const goalProgressText = document.getElementById('goalProgressText');
 
-function updateGoalProgress() {
-  const savedGoals = JSON.parse(localStorage.getItem('clientGoals') || '{}');
-  const goalWeight = parseFloat(savedGoals.goalWeight);
+async function updateGoalProgress(userId) {
+  const { data: goals, error } =
+    await window.auth.supabase
+      .from("goals")
+      .select("initial_weight, goal_weight")
+      .eq("user_id", userId)
+      .maybeSingle();
 
-  const weightEntries = JSON.parse(localStorage.getItem('weightEntries') || '[]');
+  if (error) {
+    throw error;
+  }
 
-  if (!goalWeight || weightEntries.length === 0) {
+  const startWeight = Number(
+    goals?.initial_weight
+  );
+
+  const goalWeight = Number(
+    goals?.goal_weight
+  );
+
+  if (
+    !goals ||
+    !Number.isFinite(startWeight) ||
+    !Number.isFinite(goalWeight) ||
+    weightData.length === 0
+  ) {
     goalProgressInfo.textContent =
-      'Set a goal weight and log your weight to see progress.';
+      "Set a goal weight and log your weight to see progress.";
 
-    goalProgressBarFill.style.width = '0%';
-    goalProgressText.textContent = '0% complete';
+    goalProgressBarFill.style.width =
+      "0%";
+
+    goalProgressText.textContent =
+      "0% complete";
+
     return;
   }
 
-  const sortedEntries = [...weightEntries].sort((a, b) => {
-    return new Date(a.date) - new Date(b.date);
-  });
+  const sortedEntries = [...weightData].sort(
+    (a, b) =>
+      new Date(a.date) - new Date(b.date)
+  );
 
-const startWeight = parseFloat(savedGoals.initialWeight);
-  const currentWeight = parseFloat(sortedEntries[sortedEntries.length - 1].weight);
+  const currentWeight = Number(
+    sortedEntries[
+      sortedEntries.length - 1
+    ].weight
+  );
 
-  const totalChangeNeeded = goalWeight - startWeight;
-  const currentChange = currentWeight - startWeight;
+  const totalChangeNeeded =
+    goalWeight - startWeight;
+
+  const currentChange =
+    currentWeight - startWeight;
 
   let progressPercent = 0;
 
-  if (totalChangeNeeded !== 0) {
-    progressPercent = (currentChange / totalChangeNeeded) * 100;
-  } else {
+  if (totalChangeNeeded === 0) {
     progressPercent = 100;
+  } else {
+    progressPercent =
+      (currentChange / totalChangeNeeded) * 100;
   }
 
-  progressPercent = Math.max(0, Math.min(progressPercent, 100));
+  progressPercent = Math.max(
+    0,
+    Math.min(progressPercent, 100)
+  );
 
-  goalProgressBarFill.style.width = progressPercent + '%';
+  goalProgressBarFill.style.width =
+    progressPercent + "%";
 
   goalProgressInfo.textContent =
-    `Start: ${startWeight} lbs | Current: ${currentWeight} lbs | Goal: ${goalWeight} lbs`;
+    `Start: ${startWeight} lbs | ` +
+    `Current: ${currentWeight} lbs | ` +
+    `Goal: ${goalWeight} lbs`;
 
   goalProgressText.textContent =
-    Math.round(progressPercent) + '% complete';
+    Math.round(progressPercent) +
+    "% complete";
 }
 
 /* ---------------- ACHIEVEMENT SHOWCASE ---------------- */
@@ -532,6 +570,7 @@ async function initializeProgressPage() {
     }
 
     await loadWeightData(user.id);
+    await updateGoalProgress(user.id);
 
   } catch (error) {
     console.error(
@@ -643,7 +682,6 @@ if (challengeCompletions.includes("10 Miles")) {
 
 renderAchievements();
 
-updateGoalProgress();
   </script>
 
 </body>
