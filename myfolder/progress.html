@@ -265,7 +265,7 @@
 
     const weightCtx = document.getElementById('weightChart').getContext('2d');
 
-    let weightData = JSON.parse(localStorage.getItem('weightEntries') || '[]');
+    let weightData = [];
 
     let weightChart = new Chart(weightCtx, {
       type: 'line',
@@ -377,6 +377,30 @@
       updateWeightChart();
     }
 
+async function loadWeightData(userId) {
+  const { data, error } =
+    await window.auth.supabase
+      .from("daily_logs")
+      .select("log_date, weight")
+      .eq("user_id", userId)
+      .not("weight", "is", null)
+      .order("log_date", {
+        ascending: true
+      });
+
+  if (error) {
+    throw error;
+  }
+
+  weightData = (data || []).map(entry => ({
+    date: entry.log_date,
+    label: entry.log_date,
+    weight: Number(entry.weight)
+  }));
+
+  updateWeightChart();
+}
+    
     function updateWeightChart() {
       weightChart.data.labels = weightData.map(entry => entry.label || entry.date);
       weightChart.data.datasets[0].data = weightData.map(entry => entry.weight);
@@ -384,7 +408,7 @@
     }
 
     setDefaultWeightDate();
-    updateWeightChart();
+
 
     /* ---------------- GOAL WEIGHT PROGRESS ---------------- */
 
@@ -492,6 +516,29 @@ function addHabitAchievement(label, count) {
 
   habitAchievements.appendChild(item);
 }
+
+async function initializeProgressPage() {
+  try {
+    const user =
+      await window.auth.requireAuth();
+
+    if (!user) {
+      return;
+    }
+
+    await loadWeightData(user.id);
+
+  } catch (error) {
+    console.error(
+      "Could not initialize progress page:",
+      error
+    );
+  }
+}
+
+initializeProgressPage();
+
+    
 
 function renderAchievements() {
   const challengeCompletions = JSON.parse(
