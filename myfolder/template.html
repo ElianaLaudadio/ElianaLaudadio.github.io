@@ -644,50 +644,140 @@ function updateDashboard(gameProgress) {
       ;
     }
 
-    function loadSavedGoals() {
-      const savedGoals = JSON.parse(localStorage.getItem('clientGoals'));
+async function loadSavedGoals(userId) {
+  const { data: goals, error } =
+    await window.auth.supabase
+      .from("goals")
+      .select(
+        "protein, carbs, fats, calories, initial_weight, goal_weight"
+      )
+      .eq("user_id", userId)
+      .maybeSingle();
 
-      if (savedGoals) {
-        displayGoals(savedGoals);
-      }
+  if (error) {
+    throw error;
+  }
+
+  if (!goals) {
+    return;
+  }
+
+  displayGoals({
+    protein: goals.protein,
+    carbs: goals.carbs,
+    fats: goals.fats,
+    calories: goals.calories,
+    initialWeight: goals.initial_weight,
+    goalWeight: goals.goal_weight
+  });
+}
+
+async function openGoalModal() {
+  goalModal.classList.add('active');
+
+  try {
+    const user = await window.auth.getUser();
+
+    if (!user) {
+      return;
     }
 
-    function openGoalModal() {
-      goalModal.classList.add('active');
+    const { data: goals, error } =
+      await window.auth.supabase
+        .from("goals")
+        .select(
+          "protein, carbs, fats, calories, initial_weight, goal_weight"
+        )
+        .eq("user_id", user.id)
+        .maybeSingle();
 
-      const savedGoals = JSON.parse(localStorage.getItem('clientGoals'));
-
-      if (!savedGoals) return;
-
-
-      proteinInput.value = savedGoals.protein || '';
-      carbsInput.value = savedGoals.carbs || '';
-      fatsInput.value = savedGoals.fats || '';
-      calorieInput.value = savedGoals.calories || '';
-      initialWeightInput.value = savedGoals.initialWeight || '';
-      goalWeightInput.value = savedGoals.goalWeight || '';
+    if (error) {
+      throw error;
     }
+
+    if (!goals) {
+      return;
+    }
+
+    proteinInput.value = goals.protein ?? '';
+    carbsInput.value = goals.carbs ?? '';
+    fatsInput.value = goals.fats ?? '';
+    calorieInput.value = goals.calories ?? '';
+    initialWeightInput.value = goals.initial_weight ?? '';
+    goalWeightInput.value = goals.goal_weight ?? '';
+
+  } catch (error) {
+    console.error("Could not load goals:", error);
+  }
+}
 
     function closeGoalModal() {
       goalModal.classList.remove('active');
     }
 
-    function saveGoals() {
-      const goals = {
+async function saveGoals() {
+  try {
+    const user = await window.auth.getUser();
 
-        protein: proteinInput.value,
-        carbs: carbsInput.value,
-        fats: fatsInput.value,
-        calories: calorieInput.value,
-        initialWeight: initialWeightInput.value,
-        goalWeight: goalWeightInput.value
-      };
-
-      localStorage.setItem('clientGoals', JSON.stringify(goals));
-
-      displayGoals(goals);
-      closeGoalModal();
+    if (!user) {
+      throw new Error("User is not authenticated.");
     }
+
+    const goals = {
+      user_id: user.id,
+      protein: proteinInput.value
+        ? Number(proteinInput.value)
+        : null,
+      carbs: carbsInput.value
+        ? Number(carbsInput.value)
+        : null,
+      fats: fatsInput.value
+        ? Number(fatsInput.value)
+        : null,
+      calories: calorieInput.value
+        ? Number(calorieInput.value)
+        : null,
+      initial_weight: initialWeightInput.value
+        ? Number(initialWeightInput.value)
+        : null,
+      goal_weight: goalWeightInput.value
+        ? Number(goalWeightInput.value)
+        : null,
+      updated_at: new Date().toISOString()
+    };
+
+    const { data: savedGoals, error } =
+      await window.auth.supabase
+        .from("goals")
+        .upsert(goals, {
+          onConflict: "user_id"
+        })
+        .select()
+        .single();
+
+    if (error) {
+      throw error;
+    }
+
+    displayGoals({
+      protein: savedGoals.protein,
+      carbs: savedGoals.carbs,
+      fats: savedGoals.fats,
+      calories: savedGoals.calories,
+      initialWeight: savedGoals.initial_weight,
+      goalWeight: savedGoals.goal_weight
+    });
+
+    closeGoalModal();
+
+  } catch (error) {
+    console.error("Could not save goals:", error);
+
+    alert(
+      "Your goals could not be saved. Please try again."
+    );
+  }
+}
 
     /* =========================
        EVENT LISTENERS
@@ -790,7 +880,7 @@ async function initializePage() {
     );
 
     updateDashboard(gameProgress);
-    loadSavedGoals();
+    await loadSavedGoals(user.id);
 
   } catch (error) {
     console.error(
@@ -807,7 +897,7 @@ async function initializePage() {
       current_xp: 0
     });
 
-    loadSavedGoals();
+
   }
 }
 
