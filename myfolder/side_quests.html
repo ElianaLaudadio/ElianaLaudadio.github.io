@@ -148,6 +148,8 @@
     const body = document.body;
     const sheepImage = document.getElementById('sheepImage');
 
+    let currentUser = null;
+
     const dailyQuestCheckboxes = document.querySelectorAll(
       '#dailyQuestList input[type="checkbox"]'
     );
@@ -489,32 +491,82 @@ function renderChallengeList() {
       }
     }
 
-    function renderAccomplishments() {
-      const dailyCompletions = getDailyCompletions();
-      const weeklyCompletions = getWeeklyCompletions();
+async function renderAccomplishments() {
+  if (!currentUser) {
+    return;
+  }
 
-      lockCompletedCheckboxes(dailyQuestCheckboxes, dailyCompletions);
-      lockCompletedCheckboxes(weeklyQuestCheckboxes, weeklyCompletions);
+  try {
+    const dailyCompletions =
+      await getDailyCompletions(currentUser.id);
 
-      renderChallengeList();
-      renderPetItems(dailyCompletions, weeklyCompletions);
+    const weeklyCompletions =
+      getWeeklyCompletions();
+
+    lockCompletedCheckboxes(
+      dailyQuestCheckboxes,
+      dailyCompletions
+    );
+
+    lockCompletedCheckboxes(
+      weeklyQuestCheckboxes,
+      weeklyCompletions
+    );
+
+    renderChallengeList();
+
+    renderPetItems(
+      dailyCompletions,
+      weeklyCompletions
+    );
+
+  } catch (error) {
+    console.error(
+      "Could not render side quests:",
+      error
+    );
+  }
+}
+
+dailyQuestCheckboxes.forEach(checkbox => {
+  checkbox.addEventListener(
+    'change',
+    async () => {
+      if (!checkbox.checked) {
+        return;
+      }
+
+      if (!currentUser) {
+        checkbox.checked = false;
+        return;
+      }
+
+      const questName =
+        checkbox.dataset.quest;
+
+      try {
+        await saveDailyCompletion(
+          currentUser.id,
+          questName
+        );
+
+        await renderAccomplishments();
+
+      } catch (error) {
+        console.error(
+          "Could not save daily quest:",
+          error
+        );
+
+        checkbox.checked = false;
+
+        alert(
+          "That daily quest could not be saved. Please try again."
+        );
+      }
     }
-
-    dailyQuestCheckboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', () => {
-        if (!checkbox.checked) return;
-
-        const questName = checkbox.dataset.quest;
-        const dailyCompletions = getDailyCompletions();
-
-        if (!dailyCompletions.includes(questName)) {
-          dailyCompletions.push(questName);
-          saveDailyCompletions(dailyCompletions);
-        }
-
-        renderAccomplishments();
-      });
-    });
+  );
+});
 
     weeklyQuestCheckboxes.forEach(checkbox => {
       checkbox.addEventListener('change', () => {
@@ -532,7 +584,26 @@ function renderChallengeList() {
       });
     });
 
-    renderAccomplishments();
+async function initializeSideQuestsPage() {
+  try {
+    currentUser =
+      await window.auth.requireAuth();
+
+    if (!currentUser) {
+      return;
+    }
+
+    await renderAccomplishments();
+
+  } catch (error) {
+    console.error(
+      "Could not initialize side quests:",
+      error
+    );
+  }
+}
+
+initializeSideQuestsPage();
   </script>
 
 </body>
