@@ -176,6 +176,15 @@
       return 'sideQuestDaily_' + date.toISOString().split('T')[0];
     }
 
+    function getTodayDate() {
+  const date = new Date();
+  date.setMinutes(
+    date.getMinutes() - date.getTimezoneOffset()
+  );
+
+  return date.toISOString().split("T")[0];
+}
+
 async function getDailyCompletions(userId) {
   const today = new Date()
     .toISOString()
@@ -297,13 +306,71 @@ async function saveWeeklyCompletion(
   }
 }
 
-    function getChallengeCompletions() {
-      return JSON.parse(localStorage.getItem('sideQuestChallenges') || '[]');
+async function getChallengeCompletions(userId) {
+  const { data, error } =
+    await window.auth.supabase
+      .from("side_quests")
+      .select("quest_name, pr_value")
+      .eq("user_id", userId)
+      .eq("quest_type", "challenge");
+
+  if (error) {
+    throw error;
+  }
+
+  return data || [];
+}
+
+async function saveChallengeCompletion(
+  userId,
+  questName,
+  prValue = null
+) {
+  const { data: existing, error: readError } =
+    await window.auth.supabase
+      .from("side_quests")
+      .select("id")
+      .eq("user_id", userId)
+      .eq("quest_name", questName)
+      .eq("quest_type", "challenge")
+      .maybeSingle();
+
+  if (readError) {
+    throw readError;
+  }
+
+  if (existing) {
+    const { error: updateError } =
+      await window.auth.supabase
+        .from("side_quests")
+        .update({
+          pr_value: prValue,
+          updated_at: new Date().toISOString()
+        })
+        .eq("id", existing.id);
+
+    if (updateError) {
+      throw updateError;
     }
 
-    function saveChallengeCompletions(completions) {
-      localStorage.setItem('sideQuestChallenges', JSON.stringify(completions));
-    }
+    return;
+  }
+
+  const { error: insertError } =
+    await window.auth.supabase
+      .from("side_quests")
+      .insert({
+        user_id: userId,
+        quest_name: questName,
+        quest_type: "challenge",
+        completed_date: getTodayDate(),
+        pr_value: prValue
+      });
+
+  if (insertError) {
+    throw insertError;
+  }
+}
 
     function getProgressiveChallengeLevel(type) {
       return Number(localStorage.getItem(type + 'ChallengeLevel') || 0);
@@ -344,10 +411,18 @@ async function saveWeeklyCompletion(
       });
     }
 
-function renderChallengeList() {
+async function renderChallengeList() {
   challengeList.innerHTML = '';
 
-  const challengeCompletions = getChallengeCompletions();
+const challengeRows =
+  await getChallengeCompletions(
+    currentUser.id
+  );
+
+const challengeCompletions =
+  challengeRows.map(
+    row => row.quest_name
+  );
 
   const progressiveChallengeRows = [
     {
@@ -428,48 +503,96 @@ function renderChallengeList() {
     '#challengeList input[type="checkbox"]'
   );
 
-  challengeCheckboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', () => {
-      if (!checkbox.checked) return;
-
-      const questName = checkbox.dataset.quest;
-      const challengeCompletions = getChallengeCompletions();
-
-      if (!challengeCompletions.includes(questName)) {
-        challengeCompletions.push(questName);
-        saveChallengeCompletions(challengeCompletions);
+challengeCheckboxes.forEach(checkbox => {
+  checkbox.addEventListener(
+    "change",
+    async () => {
+      if (!checkbox.checked) {
+        return;
       }
 
-      if (questName === "Find your Max Squat") {
-        const currentPr = localStorage.getItem("squatPr") || "";
-        const squatPr = prompt("What is your squat PR?", currentPr);
+      if (!currentUser) {
+        checkbox.checked = false;
+        return;
+      }
 
-        if (squatPr) {
-          localStorage.setItem("squatPr", squatPr);
+      const questName =
+        checkbox.dataset.quest;
+
+      try {
+        let prValue = null;
+
+        if (
+          questName ===
+          "Find your Max Squat"
+        ) {
+          const value = prompt(
+            "What is your squat PR?"
+          );
+
+          if (!value) {
+            checkbox.checked = false;
+            return;
+          }
+
+          prValue = Number(value);
         }
-      }
 
-      if (questName === "Find your Max Bench") {
-        const currentPr = localStorage.getItem("benchPr") || "";
-        const benchPr = prompt("What is your bench PR?", currentPr);
+        if (
+          questName ===
+          "Find your Max Bench"
+        ) {
+          const value = prompt(
+            "What is your bench PR?"
+          );
 
-        if (benchPr) {
-          localStorage.setItem("benchPr", benchPr);
+          if (!value) {
+            checkbox.checked = false;
+            return;
+          }
+
+          prValue = Number(value);
         }
-      }
 
-      if (questName === "Find your Max Deadlift") {
-        const currentPr = localStorage.getItem("deadliftPr") || "";
-        const deadliftPr = prompt("What is your deadlift PR?", currentPr);
+        if (
+          questName ===
+          "Find your Max Deadlift"
+        ) {
+          const value = prompt(
+            "What is your deadlift PR?"
+          );
 
-        if (deadliftPr) {
-          localStorage.setItem("deadliftPr", deadliftPr);
+          if (!value) {
+            checkbox.checked = false;
+            return;
+          }
+
+          prValue = Number(value);
         }
-      }
 
-      renderAccomplishments();
-    });
-  });
+        await saveChallengeCompletion(
+          currentUser.id,
+          questName,
+          prValue
+        );
+
+        await renderAccomplishments();
+
+      } catch (error) {
+        console.error(
+          "Could not save challenge:",
+          error
+        );
+
+        checkbox.checked = false;
+
+        alert(
+          "That challenge could not be saved. Please try again."
+        );
+      }
+    }
+  );
+});
 }
 
     function renderPetItems(dailyCompletions, weeklyCompletions) {
@@ -548,7 +671,7 @@ const weeklyCompletions =
       weeklyCompletions
     );
 
-    renderChallengeList();
+  await renderChallengeList();
 
     renderPetItems(
       dailyCompletions,
