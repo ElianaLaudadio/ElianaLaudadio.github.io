@@ -174,13 +174,58 @@
       return 'sideQuestDaily_' + date.toISOString().split('T')[0];
     }
 
-    function getDailyCompletions() {
-      return JSON.parse(localStorage.getItem(getTodayKey()) || '[]');
-    }
+async function getDailyCompletions(userId) {
+  const today = new Date()
+    .toISOString()
+    .split("T")[0];
 
-    function saveDailyCompletions(completions) {
-      localStorage.setItem(getTodayKey(), JSON.stringify(completions));
-    }
+  const { data, error } =
+    await window.auth.supabase
+      .from("side_quests")
+      .select("quest_name")
+      .eq("user_id", userId)
+      .eq("quest_type", "daily")
+      .eq("completed_date", today);
+
+  if (error) {
+    throw error;
+  }
+
+  return (data || []).map(
+    row => row.quest_name
+  );
+}
+
+async function saveDailyCompletion(
+  userId,
+  questName
+) {
+  const today = new Date()
+    .toISOString()
+    .split("T")[0];
+
+  const { error } =
+    await window.auth.supabase
+      .from("side_quests")
+      .upsert(
+        {
+          user_id: userId,
+          quest_name: questName,
+          quest_type: "daily",
+          completed_date: today,
+          updated_at:
+            new Date().toISOString()
+        },
+        {
+          onConflict:
+            "user_id,quest_name,quest_type,completed_date"
+        }
+      );
+
+  if (error) {
+    throw error;
+  }
+}
 
 function getWeekKey() {
   const now = new Date();
