@@ -660,10 +660,10 @@ async function renderChallengeList() {
     );
 
   } catch (error) {
-    console.error(
-      "Could not render challenge list:",
-      error
-    );
+console.error(
+  "Could not render challenge list:",
+  JSON.stringify(error, null, 2)
+);
 
     challengeList.innerHTML = `
       <p>Challenges could not be loaded.</p>
