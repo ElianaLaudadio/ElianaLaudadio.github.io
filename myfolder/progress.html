@@ -327,58 +327,7 @@
       }
     });
 
-    function getTodayDate() {
-      const date = new Date();
-      date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-      return date.toISOString().split('T')[0];
-    }
 
-    function setDefaultWeightDate() {
-      const weightDateInput = document.getElementById('weight-date');
-
-      if (weightDateInput && !weightDateInput.value) {
-        weightDateInput.value = getTodayDate();
-      }
-    }
-
-    function addWeight() {
-      const weightInput = document.getElementById('weight-input');
-      const weightDateInput = document.getElementById('weight-date');
-
-      const weight = parseFloat(weightInput.value);
-
-      if (isNaN(weight)) {
-        alert('Please enter a valid weight.');
-        return;
-      }
-
-      const entryDate = weightDateInput.value || getTodayDate();
-
-      weightData.push({
-        date: entryDate,
-        label: entryDate,
-        weight: weight
-      });
-
-      localStorage.setItem('weightEntries', JSON.stringify(weightData));
-
-      updateWeightChart();
-
-      weightInput.value = '';
-    }
-
-    function deleteLastEntry() {
-      if (weightData.length === 0) {
-        alert('No entries to delete.');
-        return;
-      }
-
-      weightData.pop();
-
-      localStorage.setItem('weightEntries', JSON.stringify(weightData));
-
-      updateWeightChart();
-    }
 
 async function loadWeightData(userId) {
   const { data, error } =
