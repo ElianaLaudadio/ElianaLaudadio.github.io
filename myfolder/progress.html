@@ -571,6 +571,7 @@ async function initializeProgressPage() {
 
     await loadWeightData(user.id);
     await updateGoalProgress(user.id);
+    await renderAchievements(user.id);
 
   } catch (error) {
     console.error(
@@ -584,9 +585,28 @@ initializeProgressPage();
 
     
 
-function renderAchievements() {
-  const challengeCompletions = JSON.parse(
-    localStorage.getItem("sideQuestChallenges") || "[]"
+async function renderAchievements(userId) {
+  const { data: challengeRows, error } =
+    await window.auth.supabase
+      .from("side_quests")
+      .select("quest_name, pr_value")
+      .eq("user_id", userId)
+      .eq("quest_type", "challenge");
+
+  if (error) {
+    throw error;
+  }
+
+  const challengeCompletions =
+    (challengeRows || []).map(
+      row => row.quest_name
+    );
+
+  const challengeMap = new Map(
+    (challengeRows || []).map(row => [
+      row.quest_name,
+      row
+    ])
   );
 
   habitAchievements.innerHTML = "";
@@ -597,90 +617,134 @@ function renderAchievements() {
   deadliftAchievements.innerHTML = "";
   runningAchievements.innerHTML = "";
 
-  addHabitAchievement("Water Goal", countDailyQuestCompletions("Drink Enough Water"));
-  addHabitAchievement("Eat Veggies", countDailyQuestCompletions("Eat Veggies"));
-  addHabitAchievement("Eat Fruit", countDailyQuestCompletions("Eat Fruit"));
-  addHabitAchievement("Stretch", countDailyQuestCompletions("Stretch"));
-  addHabitAchievement("10,000 Steps", countDailyQuestCompletions("Hit 10,000 Steps"));
-
- if (challengeCompletions.includes("Do a Pull Up")) {
+  if (challengeCompletions.includes("Do a Pull Up")) {
     addAchievement(
-        pullUpAchievements,
-        "/myfolder/gamePhotos/bronze.png",
-        "Bronze"
+      pullUpAchievements,
+      "/myfolder/gamePhotos/bronze.png",
+      "Bronze"
     );
-}
+  }
 
-if (challengeCompletions.includes("3 Pull Ups")) {
+  if (challengeCompletions.includes("3 Pull Ups")) {
     addAchievement(
-        pullUpAchievements,
-        "/myfolder/gamePhotos/silver.png",
-        "Silver"
+      pullUpAchievements,
+      "/myfolder/gamePhotos/silver.png",
+      "Silver"
     );
-}
+  }
 
-if (challengeCompletions.includes("5 Pull Ups")) {
+  if (challengeCompletions.includes("5 Pull Ups")) {
     addAchievement(
-        pullUpAchievements,
-        "/myfolder/gamePhotos/gold.png",
-        "Gold"
+      pullUpAchievements,
+      "/myfolder/gamePhotos/gold.png",
+      "Gold"
     );
-}
+  }
 
-if (challengeCompletions.includes("10 Pull Ups")) {
+  if (challengeCompletions.includes("10 Pull Ups")) {
     addAchievement(
-        pullUpAchievements,
-        "/myfolder/gamePhotos/defaulttrophy.png",
-        "Trophy"
+      pullUpAchievements,
+      "/myfolder/gamePhotos/defaulttrophy.png",
+      "Trophy"
     );
+  }
+
+  if (challengeCompletions.includes("Do a Push Up")) {
+    addAchievement(
+      pushUpAchievements,
+      "/myfolder/gamePhotos/bronze.png",
+      "Bronze"
+    );
+  }
+
+  if (challengeCompletions.includes("3 Push Ups")) {
+    addAchievement(
+      pushUpAchievements,
+      "/myfolder/gamePhotos/silver.png",
+      "Silver"
+    );
+  }
+
+  if (challengeCompletions.includes("5 Push Ups")) {
+    addAchievement(
+      pushUpAchievements,
+      "/myfolder/gamePhotos/gold.png",
+      "Gold"
+    );
+  }
+
+  if (challengeCompletions.includes("10 Push Ups")) {
+    addAchievement(
+      pushUpAchievements,
+      "/myfolder/gamePhotos/defaulttrophy.png",
+      "Trophy"
+    );
+  }
+
+  const squatRow =
+    challengeMap.get("Find your Max Squat");
+
+  if (squatRow) {
+    addPrAchievement(
+      squatAchievements,
+      squatRow.pr_value
+    );
+  }
+
+  const benchRow =
+    challengeMap.get("Find your Max Bench");
+
+  if (benchRow) {
+    addPrAchievement(
+      benchAchievements,
+      benchRow.pr_value
+    );
+  }
+
+  const deadliftRow =
+    challengeMap.get("Find your Max Deadlift");
+
+  if (deadliftRow) {
+    addPrAchievement(
+      deadliftAchievements,
+      deadliftRow.pr_value
+    );
+  }
+
+  if (challengeCompletions.includes("Run A Mile")) {
+    addAchievement(
+      runningAchievements,
+      "/myfolder/gamePhotos/bronze.png",
+      "Bronze"
+    );
+  }
+
+  if (challengeCompletions.includes("3 Miles")) {
+    addAchievement(
+      runningAchievements,
+      "/myfolder/gamePhotos/silver.png",
+      "Silver"
+    );
+  }
+
+  if (challengeCompletions.includes("5 Miles")) {
+    addAchievement(
+      runningAchievements,
+      "/myfolder/gamePhotos/gold.png",
+      "Gold"
+    );
+  }
+
+  if (challengeCompletions.includes("10 Miles")) {
+    addAchievement(
+      runningAchievements,
+      "/myfolder/gamePhotos/defaulttrophy.png",
+      "Trophy"
+    );
+  }
 }
 
-if (challengeCompletions.includes("Do a Push Up")) {
-    addAchievement(pushUpAchievements, "/myfolder/gamePhotos/bronze.png", "Bronze");
-}
 
-if (challengeCompletions.includes("3 Push Ups")) {
-    addAchievement(pushUpAchievements, "/myfolder/gamePhotos/silver.png", "Silver");
-}
-
-if (challengeCompletions.includes("5 Push Ups")) {
-    addAchievement(pushUpAchievements, "/myfolder/gamePhotos/gold.png", "Gold");
-}
-
-if (challengeCompletions.includes("10 Push Ups")) {
-    addAchievement(pushUpAchievements, "/myfolder/gamePhotos/defaulttrophy.png", "Trophy");
-}
-
-if (challengeCompletions.includes("Find your Max Squat")) {
-  addPrAchievement(squatAchievements, localStorage.getItem("squatPr"));
-}
-
-if (challengeCompletions.includes("Find your Max Bench")) {
-  addPrAchievement(benchAchievements, localStorage.getItem("benchPr"));
-}
-
-if (challengeCompletions.includes("Find your Max Deadlift")) {
-  addPrAchievement(deadliftAchievements, localStorage.getItem("deadliftPr"));
-}
-
-if (challengeCompletions.includes("Run A Mile")) {
-    addAchievement(runningAchievements, "/myfolder/gamePhotos/bronze.png", "Bronze");
-}
-
-if (challengeCompletions.includes("3 Miles")) {
-    addAchievement(runningAchievements, "/myfolder/gamePhotos/silver.png", "Silver");
-}
-
-if (challengeCompletions.includes("5 Miles")) {
-    addAchievement(runningAchievements, "/myfolder/gamePhotos/gold.png", "Gold");
-}
-
-if (challengeCompletions.includes("10 Miles")) {
-    addAchievement(runningAchievements, "/myfolder/gamePhotos/defaulttrophy.png", "Trophy");
-}
-}
-
-renderAchievements();
 
   </script>
 
