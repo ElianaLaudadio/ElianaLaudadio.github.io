@@ -299,14 +299,9 @@ async function getChallengeCompletions(userId) {
       .eq("user_id", userId)
       .eq("quest_type", "challenge");
 
-  if (error) {
-    console.error(
-      "Challenge query error:",
-      error
-    );
-
+if (error) {
     throw error;
-  }
+}
 
   return data || [];
 }
