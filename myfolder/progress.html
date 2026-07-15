@@ -532,20 +532,26 @@ function addPrAchievement(row, prValue) {
   row.appendChild(item);
 }
 
-function countDailyQuestCompletions(questName) {
-  let count = 0;
+async function countDailyQuestCompletions(
+  userId,
+  questName
+) {
+  const { count, error } =
+    await window.auth.supabase
+      .from("side_quests")
+      .select("*", {
+        count: "exact",
+        head: true
+      })
+      .eq("user_id", userId)
+      .eq("quest_type", "daily")
+      .eq("quest_name", questName);
 
-  Object.keys(localStorage).forEach(key => {
-    if (!key.startsWith("sideQuestDaily_")) return;
+  if (error) {
+    throw error;
+  }
 
-    const completions = JSON.parse(localStorage.getItem(key) || "[]");
-
-    if (completions.includes(questName)) {
-      count++;
-    }
-  });
-
-  return count;
+  return count || 0;
 }
 
 function addHabitAchievement(label, count) {
@@ -617,7 +623,65 @@ async function renderAchievements(userId) {
   deadliftAchievements.innerHTML = "";
   runningAchievements.innerHTML = "";
 
-  if (challengeCompletions.includes("Do a Pull Up")) {
+  const [
+    waterCount,
+    veggieCount,
+    fruitCount,
+    stretchCount,
+    stepsCount
+  ] = await Promise.all([
+    countDailyQuestCompletions(
+      userId,
+      "Drink Enough Water"
+    ),
+    countDailyQuestCompletions(
+      userId,
+      "Eat Veggies"
+    ),
+    countDailyQuestCompletions(
+      userId,
+      "Eat Fruit"
+    ),
+    countDailyQuestCompletions(
+      userId,
+      "Stretch"
+    ),
+    countDailyQuestCompletions(
+      userId,
+      "Hit 10,000 Steps"
+    )
+  ]);
+
+  addHabitAchievement(
+    "Water Goal",
+    waterCount
+  );
+
+  addHabitAchievement(
+    "Eat Veggies",
+    veggieCount
+  );
+
+  addHabitAchievement(
+    "Eat Fruit",
+    fruitCount
+  );
+
+  addHabitAchievement(
+    "Stretch",
+    stretchCount
+  );
+
+  addHabitAchievement(
+    "10,000 Steps",
+    stepsCount
+  );
+
+  if (
+    challengeCompletions.includes(
+      "Do a Pull Up"
+    )
+  ) {
     addAchievement(
       pullUpAchievements,
       "/myfolder/gamePhotos/bronze.png",
@@ -625,7 +689,11 @@ async function renderAchievements(userId) {
     );
   }
 
-  if (challengeCompletions.includes("3 Pull Ups")) {
+  if (
+    challengeCompletions.includes(
+      "3 Pull Ups"
+    )
+  ) {
     addAchievement(
       pullUpAchievements,
       "/myfolder/gamePhotos/silver.png",
@@ -633,7 +701,11 @@ async function renderAchievements(userId) {
     );
   }
 
-  if (challengeCompletions.includes("5 Pull Ups")) {
+  if (
+    challengeCompletions.includes(
+      "5 Pull Ups"
+    )
+  ) {
     addAchievement(
       pullUpAchievements,
       "/myfolder/gamePhotos/gold.png",
@@ -641,7 +713,11 @@ async function renderAchievements(userId) {
     );
   }
 
-  if (challengeCompletions.includes("10 Pull Ups")) {
+  if (
+    challengeCompletions.includes(
+      "10 Pull Ups"
+    )
+  ) {
     addAchievement(
       pullUpAchievements,
       "/myfolder/gamePhotos/defaulttrophy.png",
@@ -649,7 +725,11 @@ async function renderAchievements(userId) {
     );
   }
 
-  if (challengeCompletions.includes("Do a Push Up")) {
+  if (
+    challengeCompletions.includes(
+      "Do a Push Up"
+    )
+  ) {
     addAchievement(
       pushUpAchievements,
       "/myfolder/gamePhotos/bronze.png",
@@ -657,7 +737,11 @@ async function renderAchievements(userId) {
     );
   }
 
-  if (challengeCompletions.includes("3 Push Ups")) {
+  if (
+    challengeCompletions.includes(
+      "3 Push Ups"
+    )
+  ) {
     addAchievement(
       pushUpAchievements,
       "/myfolder/gamePhotos/silver.png",
@@ -665,7 +749,11 @@ async function renderAchievements(userId) {
     );
   }
 
-  if (challengeCompletions.includes("5 Push Ups")) {
+  if (
+    challengeCompletions.includes(
+      "5 Push Ups"
+    )
+  ) {
     addAchievement(
       pushUpAchievements,
       "/myfolder/gamePhotos/gold.png",
@@ -673,7 +761,11 @@ async function renderAchievements(userId) {
     );
   }
 
-  if (challengeCompletions.includes("10 Push Ups")) {
+  if (
+    challengeCompletions.includes(
+      "10 Push Ups"
+    )
+  ) {
     addAchievement(
       pushUpAchievements,
       "/myfolder/gamePhotos/defaulttrophy.png",
@@ -682,7 +774,9 @@ async function renderAchievements(userId) {
   }
 
   const squatRow =
-    challengeMap.get("Find your Max Squat");
+    challengeMap.get(
+      "Find your Max Squat"
+    );
 
   if (squatRow) {
     addPrAchievement(
@@ -692,7 +786,9 @@ async function renderAchievements(userId) {
   }
 
   const benchRow =
-    challengeMap.get("Find your Max Bench");
+    challengeMap.get(
+      "Find your Max Bench"
+    );
 
   if (benchRow) {
     addPrAchievement(
@@ -702,7 +798,9 @@ async function renderAchievements(userId) {
   }
 
   const deadliftRow =
-    challengeMap.get("Find your Max Deadlift");
+    challengeMap.get(
+      "Find your Max Deadlift"
+    );
 
   if (deadliftRow) {
     addPrAchievement(
@@ -711,7 +809,11 @@ async function renderAchievements(userId) {
     );
   }
 
-  if (challengeCompletions.includes("Run A Mile")) {
+  if (
+    challengeCompletions.includes(
+      "Run A Mile"
+    )
+  ) {
     addAchievement(
       runningAchievements,
       "/myfolder/gamePhotos/bronze.png",
@@ -719,7 +821,11 @@ async function renderAchievements(userId) {
     );
   }
 
-  if (challengeCompletions.includes("3 Miles")) {
+  if (
+    challengeCompletions.includes(
+      "3 Miles"
+    )
+  ) {
     addAchievement(
       runningAchievements,
       "/myfolder/gamePhotos/silver.png",
@@ -727,7 +833,11 @@ async function renderAchievements(userId) {
     );
   }
 
-  if (challengeCompletions.includes("5 Miles")) {
+  if (
+    challengeCompletions.includes(
+      "5 Miles"
+    )
+  ) {
     addAchievement(
       runningAchievements,
       "/myfolder/gamePhotos/gold.png",
@@ -735,7 +845,11 @@ async function renderAchievements(userId) {
     );
   }
 
-  if (challengeCompletions.includes("10 Miles")) {
+  if (
+    challengeCompletions.includes(
+      "10 Miles"
+    )
+  ) {
     addAchievement(
       runningAchievements,
       "/myfolder/gamePhotos/defaulttrophy.png",
