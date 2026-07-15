@@ -140,7 +140,9 @@
     <div class="modal-content">
       <div id="modal-date-label"></div>
 
-<textarea id="note-text" placeholder="Not Logged"></textarea> 
+<div id="daily-log-details" class="daily-log-details">
+  Nothing logged on this day.
+</div>
 
       <div style="display:flex; gap:10px;">
              <!--         <button onclick="saveNote()">Save</button>-->   
@@ -181,88 +183,336 @@
     let currentDate = new Date();
     let currentMonth = currentDate.getMonth();
     let currentYear = currentDate.getFullYear();
-    let activeKey = "";
+    let currentUserId = null;
+    let calendarLogs = {};
 
-    function generateCalendar(year, month) {
-      const date = new Date(year, month, 1);
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
-      const startDay = date.getDay();
-      const keyPrefix = `${year}-${month + 1}`;
+    function formatCalendarDate(
+  year,
+  month,
+  day
+) {
+  const paddedMonth = String(
+    month + 1
+  ).padStart(2, "0");
 
-      let html = `
-        <div class="calendar-header">
-          <button onclick="changeMonth(-1)">←</button>
-          <strong>${date.toLocaleString('default', { month: 'long' })} ${year}</strong>
-          <button onclick="changeMonth(1)">→</button>
+  const paddedDay = String(day)
+    .padStart(2, "0");
+
+  return `${year}-${paddedMonth}-${paddedDay}`;
+}
+
+    async function loadCalendarLogs(
+  userId,
+  year,
+  month
+) {
+  const firstDate =
+    formatCalendarDate(
+      year,
+      month,
+      1
+    );
+
+  const lastDay =
+    new Date(
+      year,
+      month + 1,
+      0
+    ).getDate();
+
+  const lastDate =
+    formatCalendarDate(
+      year,
+      month,
+      lastDay
+    );
+
+  const { data, error } =
+    await window.auth.supabase
+      .from("daily_logs")
+      .select(`
+        log_date,
+        food,
+        activity,
+        workout,
+        weight,
+        protein,
+        carbs,
+        fat,
+        bonus
+      `)
+      .eq("user_id", userId)
+      .gte("log_date", firstDate)
+      .lte("log_date", lastDate);
+
+  if (error) {
+    throw error;
+  }
+
+  calendarLogs = {};
+
+  (data || []).forEach(row => {
+    calendarLogs[row.log_date] = row;
+  });
+}
+
+async function generateCalendar(
+  year,
+  month
+) {
+  if (currentUserId) {
+    try {
+      await loadCalendarLogs(
+        currentUserId,
+        year,
+        month
+      );
+    } catch (error) {
+      console.error(
+        "Could not load calendar logs:",
+        error
+      );
+
+      calendarLogs = {};
+    }
+  }
+
+  const date =
+    new Date(year, month, 1);
+
+  const daysInMonth =
+    new Date(
+      year,
+      month + 1,
+      0
+    ).getDate();
+
+  const startDay = date.getDay();
+
+  let html = `
+    <div class="calendar-header">
+      <button onclick="changeMonth(-1)">
+        ←
+      </button>
+
+      <strong>
+        ${date.toLocaleString(
+          "default",
+          { month: "long" }
+        )} ${year}
+      </strong>
+
+      <button onclick="changeMonth(1)">
+        →
+      </button>
+    </div>
+
+    <div class="calendar-grid">
+      ${[
+        "Sun",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat"
+      ].map(dayName => `
+        <div class="day-name">
+          ${dayName}
         </div>
+      `).join("")}
+  `;
 
-        <div class="calendar-grid">
-          ${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d => `<div class="day-name">${d}</div>`).join('')}
-      `;
+  for (
+    let i = 0;
+    i < startDay;
+    i++
+  ) {
+    html += "<div></div>";
+  }
 
-      for (let i = 0; i < startDay; i++) {
-        html += `<div></div>`;
-      }
+  for (
+    let day = 1;
+    day <= daysInMonth;
+    day++
+  ) {
+    const key =
+      formatCalendarDate(
+        year,
+        month,
+        day
+      );
 
-      for (let day = 1; day <= daysInMonth; day++) {
-        const key = `${keyPrefix}-${day}`;
-        const note = localStorage.getItem(key);
+    const log =
+      calendarLogs[key];
 
-        html += `
-          <div onclick="addNote('${key}')">
-            ${day}${note ? '<div class="note-indicator"></div>' : ''}
-          </div>
-        `;
-      }
+    const hasLog =
+      log &&
+      (
+        log.food ||
+        log.activity ||
+        log.workout ||
+        log.weight !== null ||
+        log.protein !== null ||
+        log.carbs !== null ||
+        log.fat !== null ||
+        log.bonus
+      );
 
-      html += `</div>`;
-      calendarContainer.innerHTML = html;
-    }
+    html += `
+      <div onclick="openDailyLog('${key}')">
+        ${day}
 
-    function changeMonth(offset) {
-      currentMonth += offset;
+        ${
+          hasLog
+            ? '<div class="note-indicator"></div>'
+            : ""
+        }
+      </div>
+    `;
+  }
 
-      if (currentMonth > 11) {
-        currentMonth = 0;
-        currentYear++;
-      } else if (currentMonth < 0) {
-        currentMonth = 11;
-        currentYear--;
-      }
+  html += "</div>";
 
-      generateCalendar(currentYear, currentMonth);
-    }
+  calendarContainer.innerHTML = html;
+}
 
-    function addNote(key) {
-      activeKey = key;
+async function changeMonth(offset) {
+  currentMonth += offset;
 
-      document.getElementById("modal-date-label").innerText =
-        key.split("-")[2];
+  if (currentMonth > 11) {
+    currentMonth = 0;
+    currentYear++;
+  } else if (currentMonth < 0) {
+    currentMonth = 11;
+    currentYear--;
+  }
 
-      document.getElementById("note-text").value =
-        localStorage.getItem(key) || "";
+  await generateCalendar(
+    currentYear,
+    currentMonth
+  );
+}
 
-      document.getElementById("note-modal").style.display = "flex";
-    }
+
 
     function closeModal() {
       document.getElementById("note-modal").style.display = "none";
     }
 
-    function saveNote() {
-      const text = document.getElementById("note-text").value.trim();
+function openDailyLog(key) {
+  const log =
+    calendarLogs[key];
 
-      if (text) {
-        localStorage.setItem(activeKey, text);
-      } else {
-        localStorage.removeItem(activeKey);
+  const date =
+    new Date(key + "T00:00:00");
+
+  document.getElementById(
+    "modal-date-label"
+  ).textContent =
+    date.toLocaleDateString(
+      "default",
+      {
+        month: "long",
+        day: "numeric",
+        year: "numeric"
       }
+    );
 
-      closeModal();
-      generateCalendar(currentYear, currentMonth);
+  const details =
+    document.getElementById(
+      "daily-log-details"
+    );
+
+  if (!log) {
+    details.innerHTML =
+      "<p>Nothing was logged on this day.</p>";
+  } else {
+    const rows = [];
+
+    if (log.food) {
+      rows.push(`
+        <div>
+          <strong>Food</strong>
+          <p>${log.food}</p>
+        </div>
+      `);
     }
 
-    generateCalendar(currentYear, currentMonth);
+    if (log.activity) {
+      rows.push(`
+        <div>
+          <strong>Activity</strong>
+          <p>${log.activity}</p>
+        </div>
+      `);
+    }
+
+    if (log.workout) {
+      rows.push(`
+        <div>
+          <strong>Workout</strong>
+          <p>${log.workout}</p>
+        </div>
+      `);
+    }
+
+    if (log.weight !== null) {
+      rows.push(`
+        <div>
+          <strong>Weight</strong>
+          <p>${log.weight} lbs</p>
+        </div>
+      `);
+    }
+
+    if (log.protein !== null) {
+      rows.push(`
+        <div>
+          <strong>Protein</strong>
+          <p>${log.protein}g</p>
+        </div>
+      `);
+    }
+
+    if (log.carbs !== null) {
+      rows.push(`
+        <div>
+          <strong>Carbs</strong>
+          <p>${log.carbs}g</p>
+        </div>
+      `);
+    }
+
+    if (log.fat !== null) {
+      rows.push(`
+        <div>
+          <strong>Fat</strong>
+          <p>${log.fat}g</p>
+        </div>
+      `);
+    }
+
+    if (log.bonus) {
+      rows.push(`
+        <div>
+          <strong>Bonus</strong>
+          <p>${log.bonus}</p>
+        </div>
+      `);
+    }
+
+    details.innerHTML =
+      rows.length
+        ? rows.join("")
+        : "<p>Nothing was logged on this day.</p>";
+  }
+
+  document.getElementById(
+    "note-modal"
+  ).style.display = "flex";
+}
+
 
     /* ---------------- WEIGHT TRACKING ---------------- */
 
@@ -524,6 +774,13 @@ async function initializeProgressPage() {
       return;
     }
 
+    currentUserId = user.id;
+
+    await generateCalendar(
+      currentYear,
+      currentMonth
+    );
+
     await loadWeightData(user.id);
     await updateGoalProgress(user.id);
     await renderAchievements(user.id);
@@ -535,6 +792,8 @@ async function initializeProgressPage() {
     );
   }
 }
+
+initializeProgressPage();
 
 initializeProgressPage();
 
