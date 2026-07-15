@@ -412,187 +412,258 @@ async function saveChallengeCompletion(
     }
 
 async function renderChallengeList() {
-  challengeList.innerHTML = '';
+  if (!challengeList || !currentUser) {
+    return;
+  }
 
-const challengeRows =
-  await getChallengeCompletions(
-    currentUser.id
-  );
+  try {
+    const challengeRows =
+      await getChallengeCompletions(
+        currentUser.id
+      );
 
-const challengeCompletions =
-  challengeRows.map(
-    row => row.quest_name
-  );
+    const challengeCompletions =
+      challengeRows.map(
+        row => row.quest_name
+      );
 
-  const progressiveChallengeRows = [
-    {
-      type: 'mile',
-      quests: [
-    'Run A Mile',
-    '3 Miles',
-    '5 Miles',
-    '10 Miles'
-  ]
-    },
-    {
-      type: 'pullUp',
-      quests: [
-  'Do a Pull Up',
-  '3 Pull Ups',
-  '5 Pull Ups',
-  '10 Pull Ups'
-]
-    },
-    {
-      type: 'pushUp',
-      quests: [
-    'Do a Push Up',
-    '3 Push Ups',
-    '5 Push Ups',
-    '10 Push Ups'
-  ]
-    }
-  ];
+    challengeList.innerHTML = "";
 
-  progressiveChallengeRows.forEach(row => {
-    const rowDiv = document.createElement('div');
-    rowDiv.className = 'challenge-row';
+    const progressiveChallengeRows = [
+      {
+        type: "mile",
+        quests: [
+          "Run A Mile",
+          "3 Miles",
+          "5 Miles",
+          "10 Miles"
+        ]
+      },
+      {
+        type: "pullUp",
+        quests: [
+          "Do a Pull Up",
+          "3 Pull Ups",
+          "5 Pull Ups",
+          "10 Pull Ups"
+        ]
+      },
+      {
+        type: "pushUp",
+        quests: [
+          "Do a Push Up",
+          "3 Push Ups",
+          "5 Push Ups",
+          "10 Push Ups"
+        ]
+      }
+    ];
 
-    row.quests.forEach(questName => {
-      const label = document.createElement('label');
-      const isCompleted = challengeCompletions.includes(questName);
+    progressiveChallengeRows.forEach(row => {
+      const rowDiv =
+        document.createElement("div");
+
+      rowDiv.className = "challenge-row";
+
+      row.quests.forEach(questName => {
+        const label =
+          document.createElement("label");
+
+        const isCompleted =
+          challengeCompletions.includes(
+            questName
+          );
+
+        label.innerHTML = `
+          <input
+            type="checkbox"
+            data-progressive-type="${row.type}"
+            data-quest="${questName}"
+            ${isCompleted ? "checked disabled" : ""}
+          >
+          ${questName}
+        `;
+
+        if (isCompleted) {
+          label.classList.add(
+            "quest-locked"
+          );
+        }
+
+        rowDiv.appendChild(label);
+      });
+
+      challengeList.appendChild(rowDiv);
+    });
+
+    staticChallenges.forEach(questName => {
+      const label =
+        document.createElement("label");
+
+      const isCompleted =
+        challengeCompletions.includes(
+          questName
+        );
 
       label.innerHTML = `
         <input
           type="checkbox"
-          data-progressive-type="${row.type}"
           data-quest="${questName}"
-          ${isCompleted ? 'checked disabled' : ''}
+          ${isCompleted ? "checked" : ""}
         >
         ${questName}
+        ${
+          isCompleted
+            ? '<span class="update-pr-text">UPDATE PR</span>'
+            : ""
+        }
       `;
 
-      if (isCompleted) {
-        label.classList.add('quest-locked');
-      }
-
-      rowDiv.appendChild(label);
+      challengeList.appendChild(label);
     });
 
-    challengeList.appendChild(rowDiv);
-  });
+    const challengeCheckboxes =
+      challengeList.querySelectorAll(
+        'input[type="checkbox"]'
+      );
 
-  staticChallenges.forEach(questName => {
-    const label = document.createElement('label');
-    const isCompleted = challengeCompletions.includes(questName);
+    challengeCheckboxes.forEach(
+      checkbox => {
+        checkbox.addEventListener(
+          "change",
+          async () => {
+            if (!checkbox.checked) {
+              return;
+            }
 
-    label.innerHTML = `
-      <input
-        type="checkbox"
-        data-quest="${questName}"
-        ${isCompleted ? 'checked' : ''}
-      >
-      ${questName}
-      ${isCompleted ? '<span class="update-pr-text">UPDATE PR</span>' : ''}
+            if (!currentUser) {
+              checkbox.checked = false;
+              return;
+            }
+
+            const questName =
+              checkbox.dataset.quest;
+
+            try {
+              let prValue = null;
+
+              const isPrChallenge =
+                questName ===
+                  "Find your Max Squat" ||
+                questName ===
+                  "Find your Max Bench" ||
+                questName ===
+                  "Find your Max Deadlift";
+
+              if (isPrChallenge) {
+                const challengeRow =
+                  challengeRows.find(
+                    row =>
+                      row.quest_name ===
+                      questName
+                  );
+
+                const existingPr =
+                  challengeRow?.pr_value ?? "";
+
+                let promptMessage =
+                  "What is your PR?";
+
+                if (
+                  questName ===
+                  "Find your Max Squat"
+                ) {
+                  promptMessage =
+                    "What is your squat PR?";
+                }
+
+                if (
+                  questName ===
+                  "Find your Max Bench"
+                ) {
+                  promptMessage =
+                    "What is your bench PR?";
+                }
+
+                if (
+                  questName ===
+                  "Find your Max Deadlift"
+                ) {
+                  promptMessage =
+                    "What is your deadlift PR?";
+                }
+
+                const value = prompt(
+                  promptMessage,
+                  existingPr
+                );
+
+                if (
+                  value === null ||
+                  value.trim() === ""
+                ) {
+                  checkbox.checked =
+                    challengeCompletions.includes(
+                      questName
+                    );
+
+                  return;
+                }
+
+                prValue = Number(value);
+
+                if (
+                  !Number.isFinite(prValue) ||
+                  prValue <= 0
+                ) {
+                  alert(
+                    "Please enter a valid PR."
+                  );
+
+                  checkbox.checked =
+                    challengeCompletions.includes(
+                      questName
+                    );
+
+                  return;
+                }
+              }
+
+              await saveChallengeCompletion(
+                currentUser.id,
+                questName,
+                prValue
+              );
+
+              await renderAccomplishments();
+
+            } catch (error) {
+              console.error(
+                "Could not save challenge:",
+                error
+              );
+
+              checkbox.checked = false;
+
+              alert(
+                "That challenge could not be saved. Please try again."
+              );
+            }
+          }
+        );
+      }
+    );
+
+  } catch (error) {
+    console.error(
+      "Could not render challenge list:",
+      error
+    );
+
+    challengeList.innerHTML = `
+      <p>Challenges could not be loaded.</p>
     `;
-
-    challengeList.appendChild(label);
-  });
-
-  const challengeCheckboxes = document.querySelectorAll(
-    '#challengeList input[type="checkbox"]'
-  );
-
-challengeCheckboxes.forEach(checkbox => {
-  checkbox.addEventListener(
-    "change",
-    async () => {
-      if (!checkbox.checked) {
-        return;
-      }
-
-      if (!currentUser) {
-        checkbox.checked = false;
-        return;
-      }
-
-      const questName =
-        checkbox.dataset.quest;
-
-      try {
-        let prValue = null;
-
-        if (
-          questName ===
-          "Find your Max Squat"
-        ) {
-          const value = prompt(
-            "What is your squat PR?"
-          );
-
-          if (!value) {
-            checkbox.checked = false;
-            return;
-          }
-
-          prValue = Number(value);
-        }
-
-        if (
-          questName ===
-          "Find your Max Bench"
-        ) {
-          const value = prompt(
-            "What is your bench PR?"
-          );
-
-          if (!value) {
-            checkbox.checked = false;
-            return;
-          }
-
-          prValue = Number(value);
-        }
-
-        if (
-          questName ===
-          "Find your Max Deadlift"
-        ) {
-          const value = prompt(
-            "What is your deadlift PR?"
-          );
-
-          if (!value) {
-            checkbox.checked = false;
-            return;
-          }
-
-          prValue = Number(value);
-        }
-
-        await saveChallengeCompletion(
-          currentUser.id,
-          questName,
-          prValue
-        );
-
-        await renderAccomplishments();
-
-      } catch (error) {
-        console.error(
-          "Could not save challenge:",
-          error
-        );
-
-        checkbox.checked = false;
-
-        alert(
-          "That challenge could not be saved. Please try again."
-        );
-      }
-    }
-  );
-});
+  }
 }
 
     function renderPetItems(dailyCompletions, weeklyCompletions) {
