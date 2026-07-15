@@ -158,11 +158,6 @@
       '#weeklyQuestList input[type="checkbox"]'
     );
 
-    const challengeProgression = {
-      pullUp: [1, 3, 5, 10],
-      pushUp: [1, 3, 5, 10],
-      mile: [1, 3, 5, 10]
-    };
 
     const staticChallenges = [
       "Find your Max Squat",
@@ -170,11 +165,6 @@
       "Find your Max Deadlift"
     ];
 
-    function getTodayKey() {
-      const date = new Date();
-      date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-      return 'sideQuestDaily_' + date.toISOString().split('T')[0];
-    }
 
     function getTodayDate() {
   const date = new Date();
@@ -186,9 +176,7 @@
 }
 
 async function getDailyCompletions(userId) {
-  const today = new Date()
-    .toISOString()
-    .split("T")[0];
+const today = getTodayDate();
 
   const { data, error } =
     await window.auth.supabase
@@ -211,9 +199,7 @@ async function saveDailyCompletion(
   userId,
   questName
 ) {
-  const today = new Date()
-    .toISOString()
-    .split("T")[0];
+const today = getTodayDate();
 
   const { error } =
     await window.auth.supabase
@@ -238,7 +224,6 @@ if (error) {
   throw error;
 }
 
-console.log("Daily quest saved:", questName);
 }
 
 function getWeekKey() {
@@ -377,27 +362,7 @@ async function saveChallengeCompletion(
   }
 }
 
-    function getProgressiveChallengeLevel(type) {
-      return Number(localStorage.getItem(type + 'ChallengeLevel') || 0);
-    }
 
-    function saveProgressiveChallengeLevel(type, level) {
-      localStorage.setItem(type + 'ChallengeLevel', level);
-    }
-
-    function getChallengeName(type, amount) {
-      if (type === 'pullUp') {
-        return amount === 1 ? 'Do a Pull Up' : `Do ${amount} Pull Ups`;
-      }
-
-      if (type === 'pushUp') {
-        return amount === 1 ? 'Do a Push Up' : `Do ${amount} Push Ups`;
-      }
-
-      if (type === 'mile') {
-        return amount === 1 ? 'Run A Mile' : `Run ${amount} Miles`;
-      }
-    }
 
     function lockCompletedCheckboxes(checkboxes, completions) {
       checkboxes.forEach(checkbox => {
@@ -662,7 +627,7 @@ async function renderChallengeList() {
   } catch (error) {
 console.error(
   "Could not render challenge list:",
-  JSON.stringify(error, null, 2)
+  error
 );
 
     challengeList.innerHTML = `
@@ -777,7 +742,7 @@ dailyQuestCheckboxes.forEach(checkbox => {
 
       const questName = checkbox.dataset.quest;
 
-      console.log("Daily quest clicked:", questName);
+  
       
 
       try {
