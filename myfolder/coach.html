@@ -5,15 +5,27 @@
        PAGE SETUP
   ========================== -->
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <title>Outliers Training Club</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Outliers Training Club - Coach Dashboard</title>
 
   <!-- =========================
        FONT
   ========================== -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
 
   <link
     href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
@@ -21,10 +33,104 @@
   >
 
   <!-- =========================
-       CSS
+       SHARED CSS
   ========================== -->
-  <link rel="stylesheet" href="/myfolder/CSS/base.css">
+  <link
+    rel="stylesheet"
+    href="/myfolder/CSS/base.css"
+  >
 
+  <!-- =========================
+       TEMPORARY COACH CSS
+       Move this to coach.css later
+  ========================== -->
+  <style>
+    .coach-dashboard {
+      width: min(900px, 92%);
+      margin: 50px auto;
+    }
+
+    .coach-heading {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .coach-heading h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+    }
+
+    .coach-heading p {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    .client-card {
+      padding: 25px;
+    }
+
+    .client-card h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+
+    .client-button-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .client-button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      width: 100%;
+      box-sizing: border-box;
+      padding: 18px 20px;
+
+      border: 2px solid #111111;
+      border-radius: 0;
+
+      background: #ffffff;
+      color: #111111;
+
+      font-family: "Atkinson Hyperlegible", sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      text-decoration: none;
+
+      cursor: pointer;
+      transition:
+        transform 0.15s ease,
+        background-color 0.15s ease;
+    }
+
+    .client-button:hover,
+    .client-button:focus-visible {
+      background: #ece9e6;
+      transform: translateX(5px);
+    }
+
+    .client-button-arrow {
+      font-size: 1.4rem;
+    }
+
+    @media (max-width: 600px) {
+      .coach-dashboard {
+        width: min(94%, 900px);
+        margin-top: 30px;
+      }
+
+      .client-card {
+        padding: 18px;
+      }
+
+      .client-button {
+        padding: 16px;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -33,59 +139,123 @@
        NAVIGATION
   ========================== -->
   <nav>
-    <a href="/myfolder/index.html">Home</a>
-    <a href="/myfolder/template.html">Goals + Progress</a>
-    <a href="/myfolder/workouts.html">Workouts</a>
-    <a href="/myfolder/meal_planner.html">Meal Planner</a>
-    <a href="/myfolder/cart.html">Grocery List</a>
-    <a href="/myfolder/coach.html">Temp Coach</a>
+    <a href="/myfolder/index.html">
+      Home
+    </a>
 
-    <span id="hamburger">&#9776;</span>
+    <a href="/myfolder/template.html">
+      Goals + Progress
+    </a>
+
+    <a href="/myfolder/workouts.html">
+      Workouts
+    </a>
+
+    <a href="/myfolder/meal_planner.html">
+      Meal Planner
+    </a>
+
+    <a href="/myfolder/cart.html">
+      Grocery List
+    </a>
+
+    <a href="/myfolder/coach.html">
+      Temp Coach
+    </a>
+
+    <span id="hamburger">
+      &#9776;
+    </span>
 
     <div id="mobile-menu">
-    <a href="/myfolder/index.html">Home</a>
-    <a href="/myfolder/template.html">Goals + Progress</a>
-    <a href="/myfolder/workouts.html">Workouts</a>
-    <a href="/myfolder/meal_planner.html">Meal Planner</a>
-    <a href="/myfolder/cart.html">Grocery List</a>
+      <a href="/myfolder/index.html">
+        Home
+      </a>
+
+      <a href="/myfolder/template.html">
+        Goals + Progress
+      </a>
+
+      <a href="/myfolder/workouts.html">
+        Workouts
+      </a>
+
+      <a href="/myfolder/meal_planner.html">
+        Meal Planner
+      </a>
+
+      <a href="/myfolder/cart.html">
+        Grocery List
+      </a>
+
+      <a href="/myfolder/coach.html">
+        Temp Coach
+      </a>
     </div>
   </nav>
 
   <!-- =========================
-       MAIN DASHBOARD
+       COACH DASHBOARD
   ========================== -->
-  <main>
-    <section class="dashboard-grid">
+  <main class="coach-dashboard">
 
-      <div class="welcome-message">
-    
-</div>
+    <header class="coach-heading">
+      <h1>Coach Dashboard</h1>
 
-      <!-- =========================
-           SIDE QUESTS CARD
-      ========================== -->
-      <div class="card pet-card">
-  
+      <p>
+        Select a client to view their progress.
+      </p>
+    </header>
 
-       <a
-          href="/myfolder/side_quests.html"
-          class="start-log-button"
+    <!-- =========================
+         CLIENTS
+    ========================== -->
+    <section class="card client-card">
+      <h2>Clients</h2>
+
+      <div class="client-button-list">
+
+        <a
+          href="/myfolder/progress.html"
+          class="client-button"
+          data-client-name="Tim"
         >
-          <img
-            src="/myfolder/gamePhotos/ShadowScreenshot.png"
-            alt="View Progress"
-            class="start-log-img"
-          >
-        </a>
-      </div>
+          <span>Tim</span>
 
-  
- 
-    
+          <span class="client-button-arrow">
+            →
+          </span>
+        </a>
+
+        <a
+          href="/myfolder/progress.html"
+          class="client-button"
+          data-client-name="Jonny"
+        >
+          <span>Jonny</span>
+
+          <span class="client-button-arrow">
+            →
+          </span>
+        </a>
+
+        <a
+          href="/myfolder/progress.html"
+          class="client-button"
+          data-client-name="Ronny"
+        >
+          <span>Ronny</span>
+
+          <span class="client-button-arrow">
+            →
+          </span>
+        </a>
+
+      </div>
     </section>
+
   </main>
 
- 
   <!-- =========================
        FOOTER
   ========================== -->
@@ -94,11 +264,47 @@
   </footer>
 
   <!-- =========================
-       JAVASCRIPT
+       TEMPORARY COACH JAVASCRIPT
+       Move this to coach.js later
   ========================== -->
+  <script>
+    const hamburger =
+      document.getElementById("hamburger");
 
-  
+    const mobileMenu =
+      document.getElementById("mobile-menu");
 
+    if (hamburger && mobileMenu) {
+      hamburger.addEventListener(
+        "click",
+        () => {
+          mobileMenu.style.display =
+            mobileMenu.style.display === "flex"
+              ? "none"
+              : "flex";
+        }
+      );
+    }
+
+    const clientButtons =
+      document.querySelectorAll(
+        ".client-button"
+      );
+
+    clientButtons.forEach(button => {
+      button.addEventListener(
+        "click",
+        () => {
+          const clientName =
+            button.dataset.clientName;
+
+          console.log(
+            `Opening dashboard for ${clientName}`
+          );
+        }
+      );
+    });
+  </script>
 
 </body>
 </html>
