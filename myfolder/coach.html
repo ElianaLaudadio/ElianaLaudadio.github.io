@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Outliers Training Club - Coach Dashboard</title>
+
+  <!-- FONT -->
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- SHARED STYLES -->
+  <link
+    rel="stylesheet"
+    href="/myfolder/CSS/styles.css"
+  >
+</head>
+
+<body class="coach-page">
+
+  <!-- =========================
+       NAVIGATION
+  ========================== -->
+
+  <nav>
+    <a href="/myfolder/index.html">
+      Home
+    </a>
+
+    <a href="/myfolder/template.html">
+      Goals + Progress
+    </a>
+
+    <a href="/myfolder/workouts.html">
+      Workouts
+    </a>
+
+    <a href="/myfolder/meal_planner.html">
+      Meal Planner
+    </a>
+
+    <a href="/myfolder/cart.html">
+      Grocery List
+    </a>
+
+    <a
+      href="/myfolder/coach.html"
+      aria-current="page"
+    >
+      Coach Dashboard
+    </a>
+
+    <span id="hamburger">
+      &#9776;
+    </span>
+
+    <div id="mobile-menu">
+      <a href="/myfolder/index.html">
+        Home
+      </a>
+
+      <a href="/myfolder/template.html">
+        Goals + Progress
+      </a>
+
+      <a href="/myfolder/workouts.html">
+        Workouts
+      </a>
+
+      <a href="/myfolder/meal_planner.html">
+        Meal Planner
+      </a>
+
+      <a href="/myfolder/cart.html">
+        Grocery List
+      </a>
+
+      <a href="/myfolder/coach.html">
+        Coach Dashboard
+      </a>
+    </div>
+  </nav>
+
+  <!-- =========================
+       MAIN CONTENT
+  ========================== -->
+
+  <main class="coach-dashboard">
+
+    <!-- PAGE HEADER -->
+
+    <section class="coach-header">
+      <div>
+        <p class="coach-eyebrow">
+          OUTLIERS TRAINING CLUB
+        </p>
+
+        <h1 id="coachGreeting">
+          Coach Dashboard
+        </h1>
+
+        <p class="coach-header-text">
+          Review client progress, recent activity,
+          goals, and anything that needs your attention.
+        </p>
+      </div>
+
+      <button
+        type="button"
+        id="signOutBtn"
+        class="coach-sign-out-button"
+      >
+        Sign Out
+      </button>
+    </section>
+
+    <!-- LOADING / ERROR MESSAGE -->
+
+    <div
+      id="coachStatusMessage"
+      class="coach-status-message"
+      role="status"
+    >
+      Loading your coaching dashboard...
+    </div>
+
+    <!-- =========================
+         DASHBOARD SUMMARY
+    ========================== -->
+
+    <section
+      class="coach-summary-grid"
+      aria-label="Coach dashboard summary"
+    >
+
+      <article class="card coach-summary-card">
+        <p class="coach-summary-label">
+          Total Clients
+        </p>
+
+        <strong
+          id="totalClientsCount"
+          class="coach-summary-number"
+        >
+          0
+        </strong>
+      </article>
+
+      <article class="card coach-summary-card">
+        <p class="coach-summary-label">
+          Logged Today
+        </p>
+
+        <strong
+          id="clientsLoggedTodayCount"
+          class="coach-summary-number"
+        >
+          0
+        </strong>
+      </article>
+
+      <article class="card coach-summary-card">
+        <p class="coach-summary-label">
+          Need Attention
+        </p>
+
+        <strong
+          id="needsAttentionCount"
+          class="coach-summary-number"
+        >
+          0
+        </strong>
+      </article>
+
+      <article class="card coach-summary-card">
+        <p class="coach-summary-label">
+          Wins This Week
+        </p>
+
+        <strong
+          id="weeklyWinsCount"
+          class="coach-summary-number"
+        >
+          0
+        </strong>
+      </article>
+
+    </section>
+
+    <!-- =========================
+         NEEDS ATTENTION
+    ========================== -->
+
+    <section class="card coach-attention-section">
+      <div class="coach-section-heading">
+        <div>
+          <h2>Needs Attention</h2>
+
+          <p>
+            Clients who may need a check-in.
+          </p>
+        </div>
+      </div>
+
+      <div
+        id="attentionList"
+        class="coach-attention-list"
+      >
+        <p class="coach-empty-message">
+          No client alerts yet.
+        </p>
+      </div>
+    </section>
+
+    <!-- =========================
+         CLIENT LIST
+    ========================== -->
+
+    <section class="card coach-client-section">
+      <div class="coach-section-heading">
+        <div>
+          <h2>Your Clients</h2>
+
+          <p>
+            Select a client to review their progress.
+          </p>
+        </div>
+
+        <label class="coach-search-wrapper">
+          <span class="visually-hidden">
+            Search clients
+          </span>
+
+          <input
+            type="search"
+            id="clientSearchInput"
+            placeholder="Search clients"
+            autocomplete="off"
+          >
+        </label>
+      </div>
+
+      <div
+        id="clientList"
+        class="coach-client-grid"
+      >
+        <p class="coach-empty-message">
+          No clients are assigned yet.
+        </p>
+      </div>
+    </section>
+
+    <!-- =========================
+         SELECTED CLIENT
+    ========================== -->
+
+    <section
+      id="clientDetailSection"
+      class="coach-client-detail"
+      hidden
+    >
+
+      <div class="coach-client-detail-header">
+        <div>
+          <p class="coach-eyebrow">
+            CLIENT OVERVIEW
+          </p>
+
+          <h2 id="selectedClientName">
+            Client
+          </h2>
+
+          <p id="selectedClientSubtitle">
+            Select a client to review their information.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          id="closeClientDetailBtn"
+          class="coach-close-detail-button"
+        >
+          Close
+        </button>
+      </div>
+
+      <!-- CLIENT SUMMARY -->
+
+      <div class="coach-client-summary-grid">
+
+        <article class="card">
+          <h3>Current Level</h3>
+
+          <p
+            id="selectedClientLevel"
+            class="coach-detail-value"
+          >
+            —
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Total XP</h3>
+
+          <p
+            id="selectedClientXp"
+            class="coach-detail-value"
+          >
+            —
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Latest Weight</h3>
+
+          <p
+            id="selectedClientWeight"
+            class="coach-detail-value"
+          >
+            —
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Goal Weight</h3>
+
+          <p
+            id="selectedClientGoalWeight"
+            class="coach-detail-value"
+          >
+            —
+          </p>
+        </article>
+
+      </div>
+
+      <!-- TODAY'S LOGS -->
+
+      <section class="card coach-client-panel">
+        <div class="coach-section-heading">
+          <div>
+            <h3>Today’s Logs</h3>
+
+            <p id="selectedClientLogDate">
+              No date selected.
+            </p>
+          </div>
+        </div>
+
+        <div
+          id="selectedClientDailyLogs"
+          class="coach-log-grid"
+        >
+          <p class="coach-empty-message">
+            No logs are available.
+          </p>
+        </div>
+      </section>
+
+      <!-- GOALS -->
+
+      <section class="card coach-client-panel">
+        <div class="coach-section-heading">
+          <div>
+            <h3>Client Goals</h3>
+
+            <p>
+              Current nutrition and body-weight targets.
+            </p>
+          </div>
+        </div>
+
+        <div class="coach-goal-grid">
+
+          <div class="coach-goal-item">
+            <span>Calories</span>
+            <strong id="selectedGoalCalories">—</strong>
+          </div>
+
+          <div class="coach-goal-item">
+            <span>Protein</span>
+            <strong id="selectedGoalProtein">—</strong>
+          </div>
+
+          <div class="coach-goal-item">
+            <span>Carbs</span>
+            <strong id="selectedGoalCarbs">—</strong>
+          </div>
+
+          <div class="coach-goal-item">
+            <span>Fat</span>
+            <strong id="selectedGoalFat">—</strong>
+          </div>
+
+          <div class="coach-goal-item">
+            <span>Initial Weight</span>
+            <strong id="selectedInitialWeight">—</strong>
+          </div>
+
+          <div class="coach-goal-item">
+            <span>Goal Weight</span>
+            <strong id="selectedGoalWeight">—</strong>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- RECENT HISTORY -->
+
+      <section class="card coach-client-panel">
+        <div class="coach-section-heading">
+          <div>
+            <h3>Recent Activity</h3>
+
+            <p>
+              The client’s most recent recorded days.
+            </p>
+          </div>
+        </div>
+
+        <div
+          id="selectedClientHistory"
+          class="coach-history-list"
+        >
+          <p class="coach-empty-message">
+            No recent activity is available.
+          </p>
+        </div>
+      </section>
+
+      <!-- SIDE QUESTS -->
+
+      <section class="card coach-client-panel">
+        <div class="coach-section-heading">
+          <div>
+            <h3>Side Quest Progress</h3>
+
+            <p>
+              Daily, weekly, and permanent achievements.
+            </p>
+          </div>
+        </div>
+
+        <div
+          id="selectedClientSideQuests"
+          class="coach-side-quest-summary"
+        >
+          <p class="coach-empty-message">
+            No side-quest information is available.
+          </p>
+        </div>
+      </section>
+
+    </section>
+
+  </main>
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
+  <footer>
+    OUTLIERS TRAINING CLUB © 2026
+  </footer>
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="/myfolder/js/auth.js?v=10"></script>
+
+  <script src="/myfolder/js/coach.js?v=1"></script>
+
+</body>
+</html>
