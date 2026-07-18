@@ -1400,3 +1400,35 @@ body.game-page main {
 .quick-log-grid button:hover {
   background: #ece9e6;
 }
+
+
+/* COACH VIEW CLIENT PAGE */
+
+.back-button-container {
+  width: min(900px, 92%);
+  margin: 30px auto 0;
+}
+
+.back-button {
+  display: inline-block;
+
+  padding: 10px 18px;
+
+  border: 2px solid #111111;
+
+  background: #ffffff;
+  color: #111111;
+
+  font-family: "Atkinson Hyperlegible", sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+
+  transition:
+    background-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.back-button:hover {
+  background: #ece9e6;
+  transform: translateX(-4px);
+}
