@@ -1433,8 +1433,12 @@ body.game-page main {
   transform: translateX(-4px);
 }
 
-#clientProgressHeading {
+.client-progress-title {
+  width: 100%;
   text-align: center;
-  margin-top: 20px;
-  margin-bottom: 30px;
+  margin: 20px 0 30px;
+}
+
+.client-progress-title h1 {
+  margin: 0;
 }
