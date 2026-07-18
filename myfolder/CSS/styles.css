@@ -1434,11 +1434,15 @@ body.game-page main {
 }
 
 .client-progress-title {
+  display: block;
   width: 100%;
   text-align: center;
-  margin: 20px 0 30px;
+  margin: 20px auto 30px;
 }
 
 .client-progress-title h1 {
+  display: block;
+  width: 100%;
   margin: 0;
+  text-align: center;
 }
