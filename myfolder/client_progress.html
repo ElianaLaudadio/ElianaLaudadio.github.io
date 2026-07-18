@@ -802,37 +802,61 @@ async function loadClientName() {
     
 async function initializeProgressPage() {
   try {
+    console.log("1. Starting client progress page");
+
     const user =
       await window.auth.requireAuth();
+
+    console.log("2. Logged-in coach:", user);
 
     if (!user) {
       return;
     }
 
+    console.log("3. Client ID from URL:", clientId);
+
     if (!clientId) {
       document.getElementById(
         "clientProgressHeading"
-      ).textContent =
-        "Client Not Found";
+      ).textContent = "Client Not Found";
 
       throw new Error(
-        "No client ID was provided."
+        "No client ID was provided in the URL."
       );
     }
 
     currentUserId = clientId;
 
+    console.log("4. Loading client name");
+    await loadClientName();
 
+    console.log("5. Loading calendar");
+    await generateCalendar(
+      currentYear,
+      currentMonth
+    );
 
+    console.log("6. Loading weight");
     await loadWeightData(clientId);
+
+    console.log("7. Loading goals");
     await updateGoalProgress(clientId);
+
+    console.log("8. Loading achievements");
     await renderAchievements(clientId);
+
+    console.log("9. Client progress page finished");
 
   } catch (error) {
     console.error(
-      "Could not initialize client progress page:",
+      "Client progress initialization failed:",
       error
     );
+
+    document.getElementById(
+      "clientProgressHeading"
+    ).textContent =
+      "Client Progress Could Not Load";
   }
 }
 
