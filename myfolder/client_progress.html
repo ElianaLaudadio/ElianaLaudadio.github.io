@@ -46,8 +46,21 @@
 
   <!-- MAIN -->
 
+  <div class="back-button-container">
+  <a
+    href="/myfolder/coach.html"
+    class="back-button"
+  >
+    ← Back to Coach Dashboard
+  </a>
+</div>
+
   <main>
 
+<h1 id="clientProgressHeading">
+  Client Progress
+</h1>
+    
     <div class="side-quest-layout">
 
       <!-- CALENDAR -->
@@ -765,6 +778,32 @@ function addHabitAchievement(label, count) {
   habitAchievements.appendChild(item);
 }
 
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
+
+const clientId =
+  params.get("client");
+
+async function loadClientName() {
+  const { data, error } =
+    await window.auth.supabase
+      .from("profiles")
+      .select("display_name")
+      .eq("id", clientId)
+      .single();
+
+  if (error) {
+    throw error;
+  }
+
+  document.getElementById(
+    "clientProgressHeading"
+  ).textContent =
+    `${data.display_name}'s Progress`;
+}
+    
 async function initializeProgressPage() {
   try {
     const user =
@@ -775,6 +814,7 @@ async function initializeProgressPage() {
     }
 
     currentUserId = user.id;
+    await loadClientName();
 
     await generateCalendar(
       currentYear,
