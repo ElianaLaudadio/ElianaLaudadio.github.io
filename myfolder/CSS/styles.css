@@ -1432,3 +1432,9 @@ body.game-page main {
   background: #ece9e6;
   transform: translateX(-4px);
 }
+
+#clientProgressHeading {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
