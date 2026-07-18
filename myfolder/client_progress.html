@@ -810,17 +810,18 @@ async function initializeProgressPage() {
     }
 
     if (!clientId) {
-  document.getElementById(
-    "clientProgressHeading"
-  ).textContent =
-    "Client Not Found";
+      document.getElementById(
+        "clientProgressHeading"
+      ).textContent =
+        "Client Not Found";
 
-  throw new Error(
-    "No client ID was provided."
-  );
-}
+      throw new Error(
+        "No client ID was provided."
+      );
+    }
 
-    currentUserId = user.id;
+    currentUserId = clientId;
+
     await loadClientName();
 
     await generateCalendar(
@@ -828,22 +829,13 @@ async function initializeProgressPage() {
       currentMonth
     );
 
-currentUserId = clientId;
-
-await loadClientName();
-
-await generateCalendar(
-  currentYear,
-  currentMonth
-);
-
-await loadWeightData(clientId);
-await updateGoalProgress(clientId);
-await renderAchievements(clientId);
+    await loadWeightData(clientId);
+    await updateGoalProgress(clientId);
+    await renderAchievements(clientId);
 
   } catch (error) {
     console.error(
-      "Could not initialize progress page:",
+      "Could not initialize client progress page:",
       error
     );
   }
