@@ -11,7 +11,9 @@
     content="width=device-width, initial-scale=1.0"
   />
 
-  <title>Outliers Training Club - Coach Dashboard</title>
+  <title>
+    Outliers Training Club - Coach Dashboard
+  </title>
 
   <!-- =========================
        FONT
@@ -57,23 +59,23 @@
 
     .coach-heading h1 {
       margin: 0 0 10px;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-    }
-
-    .coach-heading p {
-      margin: 0;
-      font-size: 1.05rem;
+      font-size: clamp(
+        2rem,
+        5vw,
+        3.5rem
+      );
     }
 
     .client-card {
       padding: 25px;
+      margin-bottom: 30px;
     }
 
-.client-card h2 {
-  margin-top: 0;
-  margin-bottom: 20px;
-  text-align: center;
-}
+    .client-card h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      text-align: center;
+    }
 
     .client-button-list {
       display: flex;
@@ -96,12 +98,16 @@
       background: #ffffff;
       color: #111111;
 
-      font-family: "Atkinson Hyperlegible", sans-serif;
+      font-family:
+        "Atkinson Hyperlegible",
+        sans-serif;
+
       font-size: 1.15rem;
       font-weight: 700;
       text-decoration: none;
 
       cursor: pointer;
+
       transition:
         transform 0.15s ease,
         background-color 0.15s ease;
@@ -115,6 +121,17 @@
 
     .client-button-arrow {
       font-size: 1.4rem;
+    }
+
+    .coach-status-message {
+      margin: 0;
+      text-align: center;
+    }
+
+    .coach-error-message {
+      margin: 0;
+      text-align: center;
+      font-weight: 700;
     }
 
     @media (max-width: 600px) {
@@ -205,96 +222,34 @@
     </header>
 
     <!-- =========================
-         CLIENTS
+         CLIENT PROGRESS
     ========================== -->
     <section class="card client-card">
       <h2>Clients</h2>
 
-      <div class="client-button-list">
-
-        <a
-          href="/myfolder/progress.html"
-          class="client-button"
-          data-client-name="Tim"
-        >
-          <span>Tim</span>
-
-          <span class="client-button-arrow">
-            →
-          </span>
-        </a>
-
-        <a
-          href="/myfolder/progress.html"
-          class="client-button"
-          data-client-name="Jonny"
-        >
-          <span>Jonny</span>
-
-          <span class="client-button-arrow">
-            →
-          </span>
-        </a>
-
-        <a
-          href="/myfolder/progress.html"
-          class="client-button"
-          data-client-name="Ronny"
-        >
-          <span>Ronny</span>
-
-          <span class="client-button-arrow">
-            →
-          </span>
-        </a>
-
+      <div
+        id="clientList"
+        class="client-button-list"
+      >
+        <p class="coach-status-message">
+          Loading clients...
+        </p>
       </div>
     </section>
 
-        <!-- =========================
-         CLIENTS
+    <!-- =========================
+         CLIENT PROGRAMMING
     ========================== -->
     <section class="card client-card">
       <h2>Programming</h2>
 
-      <div class="client-button-list">
-
-        <a
-          href="/myfolder/progress.html"
-          class="client-button"
-          data-client-name="Tim"
-        >
-          <span>Tim</span>
-
-          <span class="client-button-arrow">
-            →
-          </span>
-        </a>
-
-        <a
-          href="/myfolder/progress.html"
-          class="client-button"
-          data-client-name="Jonny"
-        >
-          <span>Jonny</span>
-
-          <span class="client-button-arrow">
-            →
-          </span>
-        </a>
-
-        <a
-          href="/myfolder/progress.html"
-          class="client-button"
-          data-client-name="Ronny"
-        >
-          <span>Ronny</span>
-
-          <span class="client-button-arrow">
-            →
-          </span>
-        </a>
-
+      <div
+        id="programmingClientList"
+        class="client-button-list"
+      >
+        <p class="coach-status-message">
+          Loading clients...
+        </p>
       </div>
     </section>
 
@@ -308,46 +263,296 @@
   </footer>
 
   <!-- =========================
+       SUPABASE + AUTH
+  ========================== -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
+
+  <script
+    src="/myfolder/js/auth.js?v=10"
+  ></script>
+
+  <!-- =========================
        TEMPORARY COACH JAVASCRIPT
        Move this to coach.js later
   ========================== -->
   <script>
+    /* =========================
+       MOBILE NAVIGATION
+    ========================== */
+
     const hamburger =
-      document.getElementById("hamburger");
+      document.getElementById(
+        "hamburger"
+      );
 
     const mobileMenu =
-      document.getElementById("mobile-menu");
+      document.getElementById(
+        "mobile-menu"
+      );
 
-    if (hamburger && mobileMenu) {
+    if (
+      hamburger &&
+      mobileMenu
+    ) {
       hamburger.addEventListener(
         "click",
         () => {
           mobileMenu.style.display =
-            mobileMenu.style.display === "flex"
+            mobileMenu.style.display ===
+            "flex"
               ? "none"
               : "flex";
         }
       );
     }
 
-    const clientButtons =
-      document.querySelectorAll(
-        ".client-button"
+    /* =========================
+       PAGE ELEMENTS
+    ========================== */
+
+    const clientList =
+      document.getElementById(
+        "clientList"
       );
 
-    clientButtons.forEach(button => {
-      button.addEventListener(
-        "click",
-        () => {
-          const clientName =
-            button.dataset.clientName;
+    const programmingClientList =
+      document.getElementById(
+        "programmingClientList"
+      );
 
-          console.log(
-            `Opening dashboard for ${clientName}`
+    /* =========================
+       CREATE CLIENT BUTTON
+    ========================== */
+
+    function createClientButton(
+      client,
+      destination
+    ) {
+      const link =
+        document.createElement("a");
+
+      link.className =
+        "client-button";
+
+      link.href =
+        `${destination}?client=${encodeURIComponent(
+          client.id
+        )}`;
+
+      link.dataset.clientId =
+        client.id;
+
+      const clientName =
+        client.display_name ||
+        "Unnamed Client";
+
+      link.innerHTML = `
+        <span>
+          ${clientName}
+        </span>
+
+        <span class="client-button-arrow">
+          →
+        </span>
+      `;
+
+      return link;
+    }
+
+    /* =========================
+       RENDER CLIENT BUTTONS
+    ========================== */
+
+    function renderClientLists(
+      clients
+    ) {
+      clientList.innerHTML = "";
+
+      programmingClientList.innerHTML =
+        "";
+
+      if (!clients.length) {
+        clientList.innerHTML = `
+          <p class="coach-status-message">
+            No clients are assigned yet.
+          </p>
+        `;
+
+        programmingClientList.innerHTML = `
+          <p class="coach-status-message">
+            No clients are assigned yet.
+          </p>
+        `;
+
+        return;
+      }
+
+      clients.forEach(client => {
+        /*
+          Both buttons temporarily open
+          progress.html.
+
+          Later, Clients can open
+          client_progress.html and
+          Programming can open a separate
+          programming page.
+        */
+
+        const progressButton =
+          createClientButton(
+            client,
+            "/myfolder/progress.html"
           );
+
+        const programmingButton =
+          createClientButton(
+            client,
+            "/myfolder/progress.html"
+          );
+
+        clientList.appendChild(
+          progressButton
+        );
+
+        programmingClientList.appendChild(
+          programmingButton
+        );
+      });
+    }
+
+    /* =========================
+       LOAD ASSIGNED CLIENTS
+    ========================== */
+
+    async function loadCoachClients(
+      coachId
+    ) {
+      const { data, error } =
+        await window.auth.supabase
+          .from("profiles")
+          .select(
+            "id, display_name, role, coach_id"
+          )
+          .eq(
+            "coach_id",
+            coachId
+          )
+          .eq(
+            "role",
+            "client"
+          )
+          .order(
+            "display_name",
+            {
+              ascending: true
+            }
+          );
+
+      if (error) {
+        throw error;
+      }
+
+      return data || [];
+    }
+
+    /* =========================
+       LOAD COACH PROFILE
+    ========================== */
+
+    async function loadCoachProfile(
+      userId
+    ) {
+      const { data, error } =
+        await window.auth.supabase
+          .from("profiles")
+          .select(
+            "id, display_name, role"
+          )
+          .eq(
+            "id",
+            userId
+          )
+          .single();
+
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    }
+
+    /* =========================
+       SHOW PAGE ERROR
+    ========================== */
+
+    function showCoachPageError(
+      message
+    ) {
+      clientList.innerHTML = `
+        <p class="coach-error-message">
+          ${message}
+        </p>
+      `;
+
+      programmingClientList.innerHTML = `
+        <p class="coach-error-message">
+          ${message}
+        </p>
+      `;
+    }
+
+    /* =========================
+       INITIALIZE PAGE
+    ========================== */
+
+    async function initializeCoachPage() {
+      try {
+        const user =
+          await window.auth.requireAuth();
+
+        if (!user) {
+          return;
         }
-      );
-    });
+
+        const coachProfile =
+          await loadCoachProfile(
+            user.id
+          );
+
+        if (
+          coachProfile.role !==
+          "coach"
+        ) {
+          window.location.href =
+            "/myfolder/template.html";
+
+          return;
+        }
+
+        const clients =
+          await loadCoachClients(
+            user.id
+          );
+
+        renderClientLists(
+          clients
+        );
+
+      } catch (error) {
+        console.error(
+          "Could not load coach dashboard:",
+          error
+        );
+
+        showCoachPageError(
+          "Clients could not be loaded."
+        );
+      }
+    }
+
+    initializeCoachPage();
   </script>
 
 </body>
