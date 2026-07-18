@@ -1406,7 +1406,7 @@ body.game-page main {
 
 .back-button-container {
   width: min(900px, 92%);
-  margin: 30px auto 0;
+  margin: 50px auto 0;
 
   display: flex;
   justify-content: flex-end;
