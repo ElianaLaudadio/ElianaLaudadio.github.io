@@ -822,12 +822,7 @@ async function initializeProgressPage() {
 
     currentUserId = clientId;
 
-    await loadClientName();
 
-    await generateCalendar(
-      currentYear,
-      currentMonth
-    );
 
     await loadWeightData(clientId);
     await updateGoalProgress(clientId);
