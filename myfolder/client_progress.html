@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Outliers Training Club - Progress</title>
+
+  <!-- FONT -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- CHART JS -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- SHARED STYLES -->
+  <link rel="stylesheet" href="/myfolder/CSS/styles.css">
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+
+  <nav>
+    <a href="/myfolder/index.html">Home</a>
+    <a href="/myfolder/template.html">Goals + Progress</a>
+    <a href="/myfolder/workouts.html">Workouts</a>
+    <a href="/myfolder/meal_planner.html">Meal Planner</a>
+    <a href="/myfolder/cart.html">Grocery List</a>
+
+    <span id="hamburger">&#9776;</span>
+
+    <div id="mobile-menu">
+    <a href="/myfolder/index.html">Home</a>
+    <a href="/myfolder/template.html">Goals + Progress</a>
+    <a href="/myfolder/workouts.html">Workouts</a>
+    <a href="/myfolder/meal_planner.html">Meal Planner</a>
+    <a href="/myfolder/cart.html">Grocery List</a>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+
+  <main>
+
+    <div class="side-quest-layout">
+
+      <!-- CALENDAR -->
+
+      <section class="card">
+        <h2>Progress Calendar</h2>
+
+        <div id="calendar-container"></div>
+      </section>
+
+      <!-- WEIGHT TRACKING -->
+
+      <section class="card">
+        <h2>Weight Tracking</h2>
+
+
+
+        <canvas id="weightChart"></canvas>
+      </section>
+
+      <!-- ACHIEVEMENT SHOWCASE -->
+
+<section class="card">
+  <h2>Achievement Showcase</h2>
+
+  <div class="achievement-showcase">
+
+    <div class="achievement-group">
+      <h3>Habit Counter</h3>
+      <div class="habit-achievement-list" id="habitAchievements"></div>
+    </div>
+
+    <div class="achievement-group">
+      <h3>Pull Up Achievements</h3>
+      <div class="achievement-row" id="pullUpAchievements"></div>
+    </div>
+
+    <div class="achievement-group">
+      <h3>Push Up Achievements</h3>
+      <div class="achievement-row" id="pushUpAchievements"></div>
+    </div>
+
+    <div class="achievement-group">
+      <h3>Squat Achievements</h3>
+      <div class="achievement-row" id="squatAchievements"></div>
+    </div>
+
+    <div class="achievement-group">
+      <h3>Bench Achievements</h3>
+      <div class="achievement-row" id="benchAchievements"></div>
+    </div>
+
+    <div class="achievement-group">
+      <h3>Deadlift Achievements</h3>
+      <div class="achievement-row" id="deadliftAchievements"></div>
+    </div>
+
+    <div class="achievement-group">
+      <h3>Running Achievements</h3>
+      <div class="achievement-row" id="runningAchievements"></div>
+    </div>
+
+  </div>
+</section>
+      <!-- GOAL PROGRESS BAR -->
+
+<section class="card">
+  <h2>Goal Progress</h2>
+
+  <div class="goal-progress-info" id="goalProgressInfo">
+    No goal weight set yet.
+  </div>
+
+  <div class="goal-progress-bar-container">
+    <div class="goal-progress-bar-fill" id="goalProgressBarFill"></div>
+  </div>
+
+  <div class="goal-progress-text" id="goalProgressText">
+    0% complete
+  </div>
+</section>
+
+    </div>
+
+  </main>
+
+  <!-- NOTE MODAL -->
+
+  <div id="note-modal">
+    <div class="modal-content">
+      <div id="modal-date-label"></div>
+
+<div id="daily-log-details" class="daily-log-details">
+  Nothing logged on this day.
+</div>
+
+      <div style="display:flex; gap:10px;">
+             <!--         <button onclick="saveNote()">Save</button>-->   
+
+        <button onclick="closeModal()">Exit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+
+  <footer>
+    OUTLIERS TRAINING CLUB © 2026
+  </footer>
+
+  <!-- JAVASCRIPT -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/myfolder/js/auth.js?v=10"></script>
+
+  <script>
+    /* ---------------- MOBILE NAVIGATION ---------------- */
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.style.display =
+        mobileMenu.style.display === 'flex'
+          ? 'none'
+          : 'flex';
+    });
+
+    /* ---------------- PROGRESS CALENDAR ---------------- */
+
+    const calendarContainer = document.getElementById("calendar-container");
+
+    let currentDate = new Date();
+    let currentMonth = currentDate.getMonth();
+    let currentYear = currentDate.getFullYear();
+    let currentUserId = null;
+    let calendarLogs = {};
+
+    function formatCalendarDate(
+  year,
+  month,
+  day
+) {
+  const paddedMonth = String(
+    month + 1
+  ).padStart(2, "0");
+
+  const paddedDay = String(day)
+    .padStart(2, "0");
+
+  return `${year}-${paddedMonth}-${paddedDay}`;
+}
+
+    async function loadCalendarLogs(
+  userId,
+  year,
+  month
+) {
+  const firstDate =
+    formatCalendarDate(
+      year,
+      month,
+      1
+    );
+
+  const lastDay =
+    new Date(
+      year,
+      month + 1,
+      0
+    ).getDate();
+
+  const lastDate =
+    formatCalendarDate(
+      year,
+      month,
+      lastDay
+    );
+
+  const { data, error } =
+    await window.auth.supabase
+      .from("daily_logs")
+      .select(`
+        log_date,
+        food,
+        activity,
+        workout,
+        weight,
+        protein,
+        carbs,
+        fat,
+        bonus
+      `)
+      .eq("user_id", userId)
+      .gte("log_date", firstDate)
+      .lte("log_date", lastDate);
+
+  if (error) {
+    throw error;
+  }
+
+  calendarLogs = {};
+
+  (data || []).forEach(row => {
+    calendarLogs[row.log_date] = row;
+  });
+}
+
+async function generateCalendar(
+  year,
+  month
+) {
+  if (currentUserId) {
+    try {
+      await loadCalendarLogs(
+        currentUserId,
+        year,
+        month
+      );
+    } catch (error) {
+      console.error(
+        "Could not load calendar logs:",
+        error
+      );
+
+      calendarLogs = {};
+    }
+  }
+
+  const date =
+    new Date(year, month, 1);
+
+  const daysInMonth =
+    new Date(
+      year,
+      month + 1,
+      0
+    ).getDate();
+
+  const startDay = date.getDay();
+
+  let html = `
+    <div class="calendar-header">
+      <button onclick="changeMonth(-1)">
+        ←
+      </button>
+
+      <strong>
+        ${date.toLocaleString(
+          "default",
+          { month: "long" }
+        )} ${year}
+      </strong>
+
+      <button onclick="changeMonth(1)">
+        →
+      </button>
+    </div>
+
+    <div class="calendar-grid">
+      ${[
+        "Sun",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat"
+      ].map(dayName => `
+        <div class="day-name">
+          ${dayName}
+        </div>
+      `).join("")}
+  `;
+
+  for (
+    let i = 0;
+    i < startDay;
+    i++
+  ) {
+    html += "<div></div>";
+  }
+
+  for (
+    let day = 1;
+    day <= daysInMonth;
+    day++
+  ) {
+    const key =
+      formatCalendarDate(
+        year,
+        month,
+        day
+      );
+
+    const log =
+      calendarLogs[key];
+
+    const hasLog =
+      log &&
+      (
+        log.food ||
+        log.activity ||
+        log.workout ||
+        log.weight !== null ||
+        log.protein !== null ||
+        log.carbs !== null ||
+        log.fat !== null ||
+        log.bonus
+      );
+
+    html += `
+      <div onclick="openDailyLog('${key}')">
+        ${day}
+
+        ${
+          hasLog
+            ? '<div class="note-indicator"></div>'
+            : ""
+        }
+      </div>
+    `;
+  }
+
+  html += "</div>";
+
+  calendarContainer.innerHTML = html;
+}
+
+async function changeMonth(offset) {
+  currentMonth += offset;
+
+  if (currentMonth > 11) {
+    currentMonth = 0;
+    currentYear++;
+  } else if (currentMonth < 0) {
+    currentMonth = 11;
+    currentYear--;
+  }
+
+  await generateCalendar(
+    currentYear,
+    currentMonth
+  );
+}
+
+
+
+    function closeModal() {
+      document.getElementById("note-modal").style.display = "none";
+    }
+
+function openDailyLog(key) {
+  const log =
+    calendarLogs[key];
+
+  const date =
+    new Date(key + "T00:00:00");
+
+  document.getElementById(
+    "modal-date-label"
+  ).textContent =
+    date.toLocaleDateString(
+      "default",
+      {
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+      }
+    );
+
+  const details =
+    document.getElementById(
+      "daily-log-details"
+    );
+
+  if (!log) {
+    details.innerHTML =
+      "<p>Nothing logged on this day.</p>";
+  } else {
+    const rows = [];
+
+    if (log.food) {
+      rows.push(`
+        <div>
+          <strong>Food</strong>
+          <p>${log.food}</p>
+        </div>
+      `);
+    }
+
+    if (log.activity) {
+      rows.push(`
+        <div>
+          <strong>Activity</strong>
+          <p>${log.activity}</p>
+        </div>
+      `);
+    }
+
+    if (log.workout) {
+      rows.push(`
+        <div>
+          <strong>Workout</strong>
+          <p>${log.workout}</p>
+        </div>
+      `);
+    }
+
+    if (log.weight !== null) {
+      rows.push(`
+        <div>
+          <strong>Weight</strong>
+          <p>${log.weight} lbs</p>
+        </div>
+      `);
+    }
+
+    if (log.protein !== null) {
+      rows.push(`
+        <div>
+          <strong>Protein</strong>
+          <p>${log.protein}g</p>
+        </div>
+      `);
+    }
+
+    if (log.carbs !== null) {
+      rows.push(`
+        <div>
+          <strong>Carbs</strong>
+          <p>${log.carbs}g</p>
+        </div>
+      `);
+    }
+
+    if (log.fat !== null) {
+      rows.push(`
+        <div>
+          <strong>Fat</strong>
+          <p>${log.fat}g</p>
+        </div>
+      `);
+    }
+
+    if (log.bonus) {
+      rows.push(`
+        <div>
+          <strong>Bonus</strong>
+          <p>${log.bonus}</p>
+        </div>
+      `);
+    }
+
+    details.innerHTML =
+      rows.length
+        ? rows.join("")
+        : "<p>Nothing was logged on this day.</p>";
+  }
+
+  document.getElementById(
+    "note-modal"
+  ).style.display = "flex";
+}
+
+
+    /* ---------------- WEIGHT TRACKING ---------------- */
+
+    const weightCtx = document.getElementById('weightChart').getContext('2d');
+
+    let weightData = [];
+
+    let weightChart = new Chart(weightCtx, {
+      type: 'line',
+      data: {
+        labels: weightData.map(entry => entry.label),
+        datasets: [{
+          label: 'Weight (lbs)',
+          data: weightData.map(entry => entry.weight),
+          borderColor: '#111111',
+          backgroundColor: 'rgba(17,17,17,0.15)',
+          borderWidth: 3,
+          fill: true,
+          tension: 0.3,
+          pointRadius: 6,
+          pointBackgroundColor: '#111111',
+          pointBorderColor: '#111111',
+          pointBorderWidth: 2
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            ticks: {
+              color: '#111111',
+              font: {
+                weight: '700'
+              }
+            },
+            grid: {
+              color: '#cccccc'
+            }
+          },
+          x: {
+            ticks: {
+              color: '#111111',
+              font: {
+                weight: '700'
+              }
+            },
+            grid: {
+              color: '#cccccc'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: '#111111',
+              font: {
+                weight: '700'
+              }
+            }
+          }
+        }
+      }
+    });
+
+
+
+async function loadWeightData(userId) {
+  const { data, error } =
+    await window.auth.supabase
+      .from("daily_logs")
+      .select("log_date, weight")
+      .eq("user_id", userId)
+      .not("weight", "is", null)
+      .order("log_date", {
+        ascending: true
+      });
+
+  if (error) {
+    throw error;
+  }
+
+  weightData = (data || []).map(entry => ({
+    date: entry.log_date,
+    label: entry.log_date,
+    weight: Number(entry.weight)
+  }));
+
+
+
+  updateWeightChart();
+}
+    
+    function updateWeightChart() {
+      weightChart.data.labels = weightData.map(entry => entry.label || entry.date);
+      weightChart.data.datasets[0].data = weightData.map(entry => entry.weight);
+      weightChart.update();
+    }
+
+
+
+
+    /* ---------------- GOAL WEIGHT PROGRESS ---------------- */
+
+const goalProgressInfo = document.getElementById('goalProgressInfo');
+const goalProgressBarFill = document.getElementById('goalProgressBarFill');
+const goalProgressText = document.getElementById('goalProgressText');
+
+async function updateGoalProgress(userId) {
+  const { data: goals, error } =
+    await window.auth.supabase
+      .from("goals")
+      .select("initial_weight, goal_weight")
+      .eq("user_id", userId)
+      .maybeSingle();
+
+  if (error) {
+    throw error;
+  }
+
+  const startWeight = Number(
+    goals?.initial_weight
+  );
+
+  const goalWeight = Number(
+    goals?.goal_weight
+  );
+
+  if (
+    !goals ||
+    !Number.isFinite(startWeight) ||
+    !Number.isFinite(goalWeight) ||
+    weightData.length === 0
+  ) {
+    goalProgressInfo.textContent =
+      "Set a goal weight and log your weight to see progress.";
+
+    goalProgressBarFill.style.width =
+      "0%";
+
+    goalProgressText.textContent =
+      "0% complete";
+
+    return;
+  }
+
+  const sortedEntries = [...weightData].sort(
+    (a, b) =>
+      new Date(a.date) - new Date(b.date)
+  );
+
+  const currentWeight = Number(
+    sortedEntries[
+      sortedEntries.length - 1
+    ].weight
+  );
+
+  const totalChangeNeeded =
+    goalWeight - startWeight;
+
+  const currentChange =
+    currentWeight - startWeight;
+
+  let progressPercent = 0;
+
+  if (totalChangeNeeded === 0) {
+    progressPercent = 100;
+  } else {
+    progressPercent =
+      (currentChange / totalChangeNeeded) * 100;
+  }
+
+  progressPercent = Math.max(
+    0,
+    Math.min(progressPercent, 100)
+  );
+
+  goalProgressBarFill.style.width =
+    progressPercent + "%";
+
+  goalProgressInfo.textContent =
+    `Start: ${startWeight} lbs | ` +
+    `Current: ${currentWeight} lbs | ` +
+    `Goal: ${goalWeight} lbs`;
+
+  goalProgressText.textContent =
+    Math.round(progressPercent) +
+    "% complete";
+}
+
+/* ---------------- ACHIEVEMENT SHOWCASE ---------------- */
+
+const habitAchievements = document.getElementById("habitAchievements");
+const pullUpAchievements = document.getElementById("pullUpAchievements");
+const pushUpAchievements = document.getElementById("pushUpAchievements");
+const squatAchievements = document.getElementById("squatAchievements");
+const benchAchievements = document.getElementById("benchAchievements");
+const deadliftAchievements = document.getElementById("deadliftAchievements");
+const runningAchievements = document.getElementById("runningAchievements");
+
+function addAchievement(row, imagePath, altText) {
+  const img = document.createElement("img");
+  img.src = imagePath;
+  img.alt = altText;
+  img.className = "achievement-icon";
+  row.appendChild(img);
+}
+
+function addPrAchievement(row, prValue) {
+  const item = document.createElement("div");
+
+  item.className = "pr-achievement";
+  item.innerHTML = `
+    <strong>${prValue ? prValue + " lbs" : "--"}</strong>
+  `;
+
+  row.appendChild(item);
+}
+
+async function countDailyQuestCompletions(
+  userId,
+  questName
+) {
+  const { count, error } =
+    await window.auth.supabase
+      .from("side_quests")
+      .select("*", {
+        count: "exact",
+        head: true
+      })
+      .eq("user_id", userId)
+      .eq("quest_type", "daily")
+      .eq("quest_name", questName);
+
+  if (error) {
+    throw error;
+  }
+
+  return count || 0;
+}
+
+function addHabitAchievement(label, count) {
+  const item = document.createElement("div");
+
+  item.className = "habit-achievement";
+  item.innerHTML = `
+    <span>${label}</span>
+    <strong>${count}x</strong>
+  `;
+
+  habitAchievements.appendChild(item);
+}
+
+async function initializeProgressPage() {
+  try {
+    const user =
+      await window.auth.requireAuth();
+
+    if (!user) {
+      return;
+    }
+
+    currentUserId = user.id;
+
+    await generateCalendar(
+      currentYear,
+      currentMonth
+    );
+
+    await loadWeightData(user.id);
+    await updateGoalProgress(user.id);
+    await renderAchievements(user.id);
+
+  } catch (error) {
+    console.error(
+      "Could not initialize progress page:",
+      error
+    );
+  }
+}
+
+initializeProgressPage();
+
+initializeProgressPage();
+
+    
+
+async function renderAchievements(userId) {
+  const { data: challengeRows, error } =
+    await window.auth.supabase
+      .from("side_quests")
+      .select("quest_name, pr_value")
+      .eq("user_id", userId)
+      .eq("quest_type", "challenge");
+
+  if (error) {
+    throw error;
+  }
+
+  const challengeCompletions =
+    (challengeRows || []).map(
+      row => row.quest_name
+    );
+
+  const challengeMap = new Map(
+    (challengeRows || []).map(row => [
+      row.quest_name,
+      row
+    ])
+  );
+
+  habitAchievements.innerHTML = "";
+  pullUpAchievements.innerHTML = "";
+  pushUpAchievements.innerHTML = "";
+  squatAchievements.innerHTML = "";
+  benchAchievements.innerHTML = "";
+  deadliftAchievements.innerHTML = "";
+  runningAchievements.innerHTML = "";
+
+  const [
+    waterCount,
+    veggieCount,
+    fruitCount,
+    stretchCount,
+    stepsCount
+  ] = await Promise.all([
+    countDailyQuestCompletions(
+      userId,
+      "Drink Enough Water"
+    ),
+    countDailyQuestCompletions(
+      userId,
+      "Eat Veggies"
+    ),
+    countDailyQuestCompletions(
+      userId,
+      "Eat Fruit"
+    ),
+    countDailyQuestCompletions(
+      userId,
+      "Stretch"
+    ),
+    countDailyQuestCompletions(
+      userId,
+      "Hit 10,000 Steps"
+    )
+  ]);
+
+  addHabitAchievement(
+    "Water Goal",
+    waterCount
+  );
+
+  addHabitAchievement(
+    "Eat Veggies",
+    veggieCount
+  );
+
+  addHabitAchievement(
+    "Eat Fruit",
+    fruitCount
+  );
+
+  addHabitAchievement(
+    "Stretch",
+    stretchCount
+  );
+
+  addHabitAchievement(
+    "10,000 Steps",
+    stepsCount
+  );
+
+  if (
+    challengeCompletions.includes(
+      "Do a Pull Up"
+    )
+  ) {
+    addAchievement(
+      pullUpAchievements,
+      "/myfolder/gamePhotos/bronze.png",
+      "Bronze"
+    );
+  }
+
+  if (
+    challengeCompletions.includes(
+      "3 Pull Ups"
+    )
+  ) {
+    addAchievement(
+      pullUpAchievements,
+      "/myfolder/gamePhotos/silver.png",
+      "Silver"
+    );
+  }
+
+  if (
+    challengeCompletions.includes(
+      "5 Pull Ups"
+    )
+  ) {
+    addAchievement(
+      pullUpAchievements,
+      "/myfolder/gamePhotos/gold.png",
+      "Gold"
+    );
+  }
+
+  if (
+    challengeCompletions.includes(
+      "10 Pull Ups"
+    )
+  ) {
+    addAchievement(
+      pullUpAchievements,
+      "/myfolder/gamePhotos/defaulttrophy.png",
+      "Trophy"
+    );
+  }
+
+  if (
+    challengeCompletions.includes(
+      "Do a Push Up"
+    )
+  ) {
+    addAchievement(
+      pushUpAchievements,
+      "/myfolder/gamePhotos/bronze.png",
+      "Bronze"
+    );
+  }
+
+  if (
+    challengeCompletions.includes(
+      "3 Push Ups"
+    )
+  ) {
+    addAchievement(
+      pushUpAchievements,
+      "/myfolder/gamePhotos/silver.png",
+      "Silver"
+    );
+  }
+
+  if (
+    challengeCompletions.includes(
+      "5 Push Ups"
+    )
+  ) {
+    addAchievement(
+      pushUpAchievements,
+      "/myfolder/gamePhotos/gold.png",
+      "Gold"
+    );
+  }
+
+  if (
+    challengeCompletions.includes(
+      "10 Push Ups"
+    )
+  ) {
+    addAchievement(
+      pushUpAchievements,
+      "/myfolder/gamePhotos/defaulttrophy.png",
+      "Trophy"
+    );
+  }
+
+  const squatRow =
+    challengeMap.get(
+      "Find your Max Squat"
+    );
+
+  if (squatRow) {
+    addPrAchievement(
+      squatAchievements,
+      squatRow.pr_value
+    );
+  }
+
+  const benchRow =
+    challengeMap.get(
+      "Find your Max Bench"
+    );
+
+  if (benchRow) {
+    addPrAchievement(
+      benchAchievements,
+      benchRow.pr_value
+    );
+  }
+
+  const deadliftRow =
+    challengeMap.get(
+      "Find your Max Deadlift"
+    );
+
+  if (deadliftRow) {
+    addPrAchievement(
+      deadliftAchievements,
+      deadliftRow.pr_value
+    );
+  }
+
+  if (
+    challengeCompletions.includes(
+      "Run A Mile"
+    )
+  ) {
+    addAchievement(
+      runningAchievements,
+      "/myfolder/gamePhotos/bronze.png",
+      "Bronze"
+    );
+  }
+
+  if (
+    challengeCompletions.includes(
+      "3 Miles"
+    )
+  ) {
+    addAchievement(
+      runningAchievements,
+      "/myfolder/gamePhotos/silver.png",
+      "Silver"
+    );
+  }
+
+  if (
+    challengeCompletions.includes(
+      "5 Miles"
+    )
+  ) {
+    addAchievement(
+      runningAchievements,
+      "/myfolder/gamePhotos/gold.png",
+      "Gold"
+    );
+  }
+
+  if (
+    challengeCompletions.includes(
+      "10 Miles"
+    )
+  ) {
+    addAchievement(
+      runningAchievements,
+      "/myfolder/gamePhotos/defaulttrophy.png",
+      "Trophy"
+    );
+  }
+}
+
+
+
+  </script>
+
+</body>
+</html>
