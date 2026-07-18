@@ -1433,7 +1433,7 @@ body.game-page main {
 
 .back-button:hover {
   background: #ece9e6;
-  transform: translateX(-4px);
+  transform: translateX(4px);
 }
 
 .client-progress-title {
