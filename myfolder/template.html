@@ -32,7 +32,7 @@
   <!-- =========================
        NAVIGATION
   ========================== -->
-  <nav>
+  <nav id="mainNav">
     <a href="/myfolder/template.html">Home</a>
     <a href="/myfolder/workouts.html">Workouts</a>
     <a href="/myfolder/meal_planner.html">Meal Planner</a>
@@ -825,6 +825,86 @@ async function getOrCreateGameProgress(userId) {
   return newProgress;
 }
 
+function updateNavigationForRole(role) {
+  if (role !== "coach") {
+    return;
+  }
+
+  const mainNav =
+    document.getElementById("mainNav");
+
+  const mobileMenu =
+    document.getElementById("mobile-menu");
+
+  if (!mainNav || !mobileMenu) {
+    return;
+  }
+
+  /*
+    Prevent duplicate links if this function
+    accidentally runs more than once.
+  */
+  if (
+    mainNav.querySelector(
+      '[data-coach-nav="true"]'
+    )
+  ) {
+    return;
+  }
+
+  /* Desktop coach link */
+
+  const coachLink =
+    document.createElement("a");
+
+  coachLink.href =
+    "/myfolder/coach.html";
+
+  coachLink.textContent =
+    "Coach Dashboard";
+
+  coachLink.dataset.coachNav =
+    "true";
+
+  const desktopHomeLink =
+    mainNav.querySelector(
+      ':scope > a[href="/myfolder/template.html"]'
+    );
+
+  if (desktopHomeLink) {
+    desktopHomeLink.insertAdjacentElement(
+      "afterend",
+      coachLink
+    );
+  }
+
+  /* Mobile coach link */
+
+  const mobileCoachLink =
+    document.createElement("a");
+
+  mobileCoachLink.href =
+    "/myfolder/coach.html";
+
+  mobileCoachLink.textContent =
+    "Coach Dashboard";
+
+  mobileCoachLink.dataset.coachNav =
+    "true";
+
+  const mobileHomeLink =
+    mobileMenu.querySelector(
+      'a[href="/myfolder/template.html"]'
+    );
+
+  if (mobileHomeLink) {
+    mobileHomeLink.insertAdjacentElement(
+      "afterend",
+      mobileCoachLink
+    );
+  }
+}
+    
 /* =========================
    INITIALIZE PAGE
 ========================== */
@@ -843,13 +923,17 @@ async function initializePage() {
       error: profileError
     } = await window.auth.supabase
       .from("profiles")
-      .select("display_name")
+      .select("display_name, role")
       .eq("id", user.id)
       .maybeSingle();
 
     if (profileError) {
       throw profileError;
     }
+
+    updateNavigationForRole(
+  profile?.role
+);
 
     const {
       data: gameProgress,
