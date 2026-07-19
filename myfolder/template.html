@@ -283,7 +283,7 @@
        JAVASCRIPT
   ========================== -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/myfolder/js/auth.js?v=8"></script>
+<script src="/myfolder/js/auth.js?v=10"></script>
   
   <script>
 
@@ -950,18 +950,22 @@ async function initializePage() {
       throw gameProgressError;
     }
 
-    if (!gameProgress) {
-      throw new Error(
-        "No game_progress row exists for this user."
-      );
-    }
+let resolvedGameProgress =
+  gameProgress;
+
+if (!resolvedGameProgress) {
+  resolvedGameProgress =
+    await getOrCreateGameProgress(
+      user.id
+    );
+}
 
     displayGreeting(
       profile?.display_name || "Outlier",
       user.id
     );
 
-    updateDashboard(gameProgress);
+    updateDashboard(resolvedGameProgress);
     await loadSavedGoals(user.id);
 
   } catch (error) {
