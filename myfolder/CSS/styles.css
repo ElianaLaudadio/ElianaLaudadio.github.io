@@ -1449,3 +1449,10 @@ body.game-page main {
   margin: 0;
   text-align: center;
 }
+
+/* SIDE QUESTS BUTTON FIX */
+
+.sidequest-progress-img {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
