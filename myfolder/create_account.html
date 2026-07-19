@@ -2,14 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+
   <title>Online Coaching</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto&display=swap" rel="stylesheet" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto&display=swap"
+    rel="stylesheet"
+  />
+
   <style>
     body {
       margin: 0;
-      font-family: 'Roboto', sans-serif;
-      background-color: #FCFBF4;
+      font-family: "Roboto", sans-serif;
+      background-color: #fcfbf4;
     }
 
     .image-wrapper {
@@ -51,18 +61,18 @@
     }
 
     .name-overlay {
-      font-family: 'Playfair Display', serif;
+      font-family: "Playfair Display", serif;
       font-size: 48px;
-      color: #fff;
+      color: #ffffff;
       text-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
       letter-spacing: 2px;
       margin-bottom: 16px;
     }
 
     .subheading {
-      font-family: 'Roboto', sans-serif;
+      font-family: "Roboto", sans-serif;
       font-size: 20px;
-      color: #fff;
+      color: #ffffff;
       letter-spacing: 1.5px;
       text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
       font-weight: 400;
@@ -79,24 +89,27 @@
     }
 
     .header-button {
-      background-color: #fff;
-      color: black;
-      border: 2px solid #fff;
+      background-color: #ffffff;
+      color: #000000;
+      border: 2px solid #ffffff;
       font-size: 20px;
       padding: 12px 32px;
       border-radius: 999px;
       width: 100%;
       cursor: pointer;
       text-align: center;
-      transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+      transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        transform 0.2s ease;
       font-weight: 500;
       letter-spacing: 1px;
     }
 
     .header-button:hover {
       background-color: #121212;
-      border: 2px solid #121212;
-      color: #fff;
+      border-color: #121212;
+      color: #ffffff;
       transform: scale(1.03);
     }
 
@@ -115,13 +128,13 @@
       max-width: 400px;
       box-sizing: border-box;
       display: none;
-      color: white;
+      color: #ffffff;
     }
 
     .login-box input {
-      background-color: rgba(255 255 255 / 0.15);
+      background-color: rgba(255, 255, 255, 0.15);
       border: none;
-      color: white;
+      color: #ffffff;
       width: 100%;
       font-size: 16px;
       padding: 10px;
@@ -131,31 +144,30 @@
     }
 
     .login-box input::placeholder {
-      color: rgba(255 255 255 / 0.7);
+      color: rgba(255, 255, 255, 0.7);
     }
 
     .login-box input:focus {
-      background-color: rgba(255 255 255 / 0.3);
+      background-color: rgba(255, 255, 255, 0.3);
       outline: none;
     }
 
-    /* Password row with small icon and big input */
     .password-row {
       display: flex;
       align-items: center;
       gap: 10px;
       width: 100%;
-      margin-bottom: 15px; /* matches other inputs spacing */
+      margin-bottom: 15px;
     }
 
     .password-row input {
-      margin-bottom: 0; /* spacing handled by .password-row */
+      margin-bottom: 0;
       flex: 1 1 100%;
-      min-width: 0; /* prevents flex overflow */
+      min-width: 0;
     }
 
     .toggle-visibility {
-      width: 26px;            /* smaller button */
+      width: 26px;
       height: 26px;
       border-radius: 8px;
       border: 1px solid rgba(255, 255, 255, 0.45);
@@ -166,8 +178,11 @@
       cursor: pointer;
       padding: 0;
       user-select: none;
-      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
-      flex: 0 0 26px;         /* keeps it tiny, doesn't steal space */
+      transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.15s ease;
+      flex: 0 0 26px;
     }
 
     .toggle-visibility:hover {
@@ -177,11 +192,11 @@
     }
 
     .toggle-visibility:active {
-      transform: translateY(0px);
+      transform: translateY(0);
     }
 
     .toggle-visibility svg {
-      width: 13px;            /* smaller icon */
+      width: 13px;
       height: 13px;
       display: block;
     }
@@ -193,13 +208,13 @@
 
     .toggle-visibility.is-on svg path,
     .toggle-visibility.is-on svg circle {
-      stroke: rgba(255, 255, 255, 1);
+      stroke: #ffffff;
     }
 
     .login-box button {
       background-color: #121212;
       border: none;
-      color: white;
+      color: #ffffff;
       padding: 12px;
       font-size: 18px;
       font-weight: 600;
@@ -211,6 +226,11 @@
 
     .login-box button:hover {
       background-color: #0a0a0a;
+    }
+
+    .login-box button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
     }
 
     .desktop-photo {
@@ -250,141 +270,321 @@
     }
   </style>
 </head>
+
 <body>
   <div class="image-wrapper">
-    <img src="/myfolder/photos/otccover.png" alt="Main background" class="profile-photo desktop-photo" />
-    <img src="/myfolder/photos/otccover.png" alt="Mobile background" class="profile-photo mobile-photo" />
+    <img
+      src="/myfolder/photos/otccover.png"
+      alt="Main background"
+      class="profile-photo desktop-photo"
+    />
+
+    <img
+      src="/myfolder/photos/otccover.png"
+      alt="Mobile background"
+      class="profile-photo mobile-photo"
+    />
 
     <div class="content">
-      <div class="name-overlay">OUTLIERS TRAINING CLUB</div>
-      <div class="subheading">ONLINE COACHING</div>
+      <div class="name-overlay">
+        OUTLIERS TRAINING CLUB
+      </div>
+
+      <div class="subheading">
+        ONLINE COACHING
+      </div>
 
       <div class="button-container">
-        <div id="loginBox" class="login-box">
-          <input type="email" id="email" placeholder="Email" required />
+        <div
+          id="loginBox"
+          class="login-box"
+        >
+          <input
+            type="text"
+            id="displayName"
+            placeholder="Display Name"
+            maxlength="30"
+            autocomplete="nickname"
+            required
+          />
+
+          <input
+            type="email"
+            id="email"
+            placeholder="Email"
+            autocomplete="email"
+            required
+          />
 
           <div class="password-row">
-            <input type="password" id="password" placeholder="Password" required />
-            <button id="togglePassword" class="toggle-visibility" type="button" aria-label="Show password">
-              <!-- subtle outline icon (eye-style but not emoji) -->
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="12" cy="12" r="2.8" stroke-width="1.8"/>
+            <input
+              type="password"
+              id="password"
+              placeholder="Password"
+              autocomplete="new-password"
+              required
+            />
+
+            <button
+              id="togglePassword"
+              class="toggle-visibility"
+              type="button"
+              aria-label="Show password"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7Z"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="2.8"
+                  stroke-width="1.8"
+                />
               </svg>
             </button>
           </div>
 
-          <button id="loginSubmit" type="button">Create</button>
+          <button
+            id="loginSubmit"
+            type="button"
+          >
+            Create
+          </button>
         </div>
 
-        <button id="signInBtn" class="header-button" type="button">Create Account</button>
+        <button
+          id="signInBtn"
+          class="header-button"
+          type="button"
+        >
+          Create Account
+        </button>
       </div>
     </div>
   </div>
 
   <!-- SUPABASE + SHARED AUTH -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/myfolder/js/auth.js?v=5"></script>
+  <script src="/myfolder/js/auth.js?v=10"></script>
 
   <script>
-    const signInBtn = document.getElementById('signInBtn');
-    const loginBox = document.getElementById('loginBox');
-    const loginSubmit = document.getElementById('loginSubmit');
-    const passwordInput = document.getElementById('password');
-    const togglePassword = document.getElementById('togglePassword');
+    const signInBtn =
+      document.getElementById(
+        "signInBtn"
+      );
 
-    // If already logged in, skip this page
+    const loginBox =
+      document.getElementById(
+        "loginBox"
+      );
+
+    const loginSubmit =
+      document.getElementById(
+        "loginSubmit"
+      );
+
+    const displayNameInput =
+      document.getElementById(
+        "displayName"
+      );
+
+    const emailInput =
+      document.getElementById(
+        "email"
+      );
+
+    const passwordInput =
+      document.getElementById(
+        "password"
+      );
+
+    const togglePassword =
+      document.getElementById(
+        "togglePassword"
+      );
+
+    /* =========================
+       REDIRECT LOGGED-IN USERS
+    ========================== */
+
     (async () => {
       try {
-        await window.auth.redirectIfAuthed("/myfolder/template.html");
-      } catch (e) {
-        // do nothing
+        await window.auth.redirectIfAuthed(
+          "/myfolder/template.html"
+        );
+      } catch (error) {
+        console.error(
+          "Could not check current session:",
+          error
+        );
       }
     })();
 
-    signInBtn.addEventListener('click', () => {
-      loginBox.style.display = (loginBox.style.display === 'block') ? 'none' : 'block';
-    });
+    /* =========================
+       SHOW / HIDE FORM
+    ========================== */
 
-    // Toggle password visibility
-    togglePassword.addEventListener('click', () => {
-      const isHidden = passwordInput.type === "password";
-      passwordInput.type = isHidden ? "text" : "password";
+    signInBtn.addEventListener(
+      "click",
+      () => {
+        loginBox.style.display =
+          loginBox.style.display === "block"
+            ? "none"
+            : "block";
+      }
+    );
 
-      // subtle state change + accessibility label
-      togglePassword.classList.toggle('is-on', isHidden);
-      togglePassword.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
-    });
+    /* =========================
+       PASSWORD VISIBILITY
+    ========================== */
 
-    // Helper: show a nicer error message when possible
-    function showAuthError(err) {
-      const msg =
-        (err && (err.message || err.error_description)) ||
+    togglePassword.addEventListener(
+      "click",
+      () => {
+        const isHidden =
+          passwordInput.type === "password";
+
+        passwordInput.type =
+          isHidden
+            ? "text"
+            : "password";
+
+        togglePassword.classList.toggle(
+          "is-on",
+          isHidden
+        );
+
+        togglePassword.setAttribute(
+          "aria-label",
+          isHidden
+            ? "Hide password"
+            : "Show password"
+        );
+      }
+    );
+
+    /* =========================
+       ERROR MESSAGE
+    ========================== */
+
+    function showAuthError(error) {
+      const message =
+        error?.message ||
+        error?.error_description ||
         "Something went wrong. Please try again.";
-      alert(msg);
+
+      alert(message);
     }
 
-    loginSubmit.addEventListener('click', async (e) => {
-      e.preventDefault();
+    /* =========================
+       CREATE ACCOUNT
+    ========================== */
 
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
+    loginSubmit.addEventListener(
+      "click",
+      async event => {
+        event.preventDefault();
 
-      if (!email || !password) {
-        alert("Please enter your email and password.");
-        return;
-      }
+        const displayName =
+          displayNameInput.value.trim();
 
-      loginSubmit.disabled = true;
-      const originalText = loginSubmit.textContent;
-      loginSubmit.textContent = "Creating...";
+        const email =
+          emailInput.value.trim();
 
-      try {
-        // Prefer your shared auth wrapper if it supports signUp
-        if (window.auth && typeof window.auth.signUp === "function") {
-          const data = await window.auth.signUp(email, password);
+        const password =
+          passwordInput.value;
 
-          // If email confirmation is OFF, you usually get a session immediately
-          if (data && data.session) {
-            window.location.href = "/myfolder/template.html";
-            return;
-          }
+        if (
+          !displayName ||
+          !email ||
+          !password
+        ) {
+          alert(
+            "Please enter a display name, email, and password."
+          );
 
-          // If email confirmation is ON, session may be null until they confirm
-          alert("Account created! Please check your email to confirm, then sign in.");
-          loginBox.style.display = 'none';
           return;
         }
 
-        // Fallback: direct Supabase signUp (requires your auth.js to expose client keys,
-        // so this only works if window.auth.supabase exists)
-        if (window.auth && window.auth.supabase) {
-          const { data, error } = await window.auth.supabase.auth.signUp({
-            email,
-            password
-          });
+        if (displayName.length < 2) {
+          alert(
+            "Your display name must be at least 2 characters."
+          );
 
-          if (error) throw error;
-
-          if (data && data.session) {
-            window.location.href = "/myfolder/template.html";
-            return;
-          }
-
-          alert("Account created! Please check your email to confirm, then sign in.");
-          loginBox.style.display = 'none';
           return;
         }
 
-        // If we get here, we don't have a way to call Supabase from this page
-        alert("Auth is not configured on this page. Make sure auth.js exposes window.auth.signUp(...) or window.auth.supabase.");
-      } catch (err) {
-        showAuthError(err);
-      } finally {
-        loginSubmit.disabled = false;
-        loginSubmit.textContent = originalText;
+        loginSubmit.disabled = true;
+
+        const originalText =
+          loginSubmit.textContent;
+
+        loginSubmit.textContent =
+          "Creating...";
+
+        try {
+          if (
+            !window.auth ||
+            !window.auth.supabase
+          ) {
+            throw new Error(
+              "Authentication is not configured on this page."
+            );
+          }
+
+          const { data, error } =
+            await window.auth.supabase.auth.signUp({
+              email,
+              password,
+              options: {
+                data: {
+                  display_name: displayName
+                }
+              }
+            });
+
+          if (error) {
+            throw error;
+          }
+
+          if (data?.session) {
+            window.location.href =
+              "/myfolder/template.html";
+
+            return;
+          }
+
+          alert(
+            "Account created! Please check your email to confirm, then sign in."
+          );
+
+          loginBox.style.display =
+            "none";
+
+          displayNameInput.value = "";
+          emailInput.value = "";
+          passwordInput.value = "";
+
+        } catch (error) {
+          showAuthError(error);
+
+        } finally {
+          loginSubmit.disabled = false;
+
+          loginSubmit.textContent =
+            originalText;
+        }
       }
-    });
+    );
   </script>
 </body>
 </html>
