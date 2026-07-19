@@ -892,7 +892,7 @@ body.game-page main {
 
 
 .grass-mode {
-  background-image: url("myfolder/gamePhotos/grass.png");
+  background-image: url("/myfolder/gamePhotos/grass.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
