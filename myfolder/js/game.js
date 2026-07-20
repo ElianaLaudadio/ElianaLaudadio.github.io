@@ -163,7 +163,7 @@ const levels = {
   2: {
     title: "Level 2: Explore",
     hudTitle: "LEVEL 2: EXPLORE",
-    requiredXp: 600,
+    requiredXp: 720,
     startX: 60,
     startY: 370,
     totalLogs: 3,
