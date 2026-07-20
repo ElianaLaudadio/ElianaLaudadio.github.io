@@ -1456,3 +1456,31 @@ body.game-page main {
   margin-top: 20px;
   margin-bottom: 0;
 }
+
+/* Pretty Cards */
+
+.daily-log-details {
+  width: 100%;
+  display: grid;
+  gap: 16px;
+}
+
+.daily-log-details > div {
+  width: 100%;
+  border: 3px solid var(--border);
+  background: var(--hover);
+  padding: 12px;
+}
+
+.daily-log-details strong {
+  display: block;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.daily-log-details p {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
