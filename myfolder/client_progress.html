@@ -832,6 +832,112 @@ async function loadClientName() {
   ).textContent =
     `${data.display_name}'s Progress`;
 }
+
+const clientLevels = [
+  {
+    number: 0,
+    name: "Baseline",
+    requiredXp: 300
+  },
+  {
+    number: 1,
+    name: "Consistency",
+    requiredXp: 300
+  },
+  {
+    number: 2,
+    name: "Explore",
+    requiredXp: 600
+  },
+  {
+    number: 3,
+    name: "Program",
+    requiredXp: 900
+  },
+  {
+    number: 4,
+    name: "Nutrition",
+    requiredXp: 900
+  },
+  {
+    number: 5,
+    name: "Discipline",
+    requiredXp: 600
+  },
+  {
+    number: 6,
+    name: "Mastery",
+    requiredXp: 600
+  },
+  {
+    number: 7,
+    name: "Outlier",
+    requiredXp: 300
+  }
+];
+
+async function loadClientGameProgress(
+  userId
+) {
+  const { data, error } =
+    await window.auth.supabase
+      .from("game_progress")
+      .select(
+        "current_level, current_xp"
+      )
+      .eq("user_id", userId)
+      .maybeSingle();
+
+  if (error) {
+    throw error;
+  }
+
+  const currentLevelNumber =
+    Number(
+      data?.current_level ?? 0
+    );
+
+  const currentXp =
+    Number(
+      data?.current_xp ?? 0
+    );
+
+  const currentLevel =
+    clientLevels[
+      currentLevelNumber
+    ] || clientLevels[0];
+
+  const xpPercent =
+    Math.min(
+      (
+        currentXp /
+        currentLevel.requiredXp
+      ) * 100,
+      100
+    );
+
+  document.getElementById(
+    "clientXpTitle"
+  ).textContent =
+    `${currentLevel.name} XP`;
+
+  document.getElementById(
+    "clientLevelStatus"
+  ).textContent =
+    `Level ${currentLevel.number}: ` +
+    currentLevel.name;
+
+  document.getElementById(
+    "clientXpBarFill"
+  ).style.width =
+    `${xpPercent}%`;
+
+  document.getElementById(
+    "clientXpText"
+  ).textContent =
+    `${currentXp} / ` +
+    `${currentLevel.requiredXp} XP`;
+}
     
 async function initializeProgressPage() {
   try {
@@ -863,22 +969,34 @@ async function initializeProgressPage() {
     console.log("4. Loading client name");
     await loadClientName();
 
-    console.log("5. Loading calendar");
-    await generateCalendar(
-      currentYear,
-      currentMonth
-    );
+  console.log("5. Loading calendar");
 
-    console.log("6. Loading weight");
-    await loadWeightData(clientId);
+await generateCalendar(
+  currentYear,
+  currentMonth
+);
 
-    console.log("7. Loading goals");
+console.log(
+  "6. Loading client level"
+);
+
+await loadClientGameProgress(
+  clientId
+);
+
+console.log("7. Loading weight");
+
+await loadWeightData(
+  clientId
+);
+
+    console.log("8. Loading goals");
     await updateGoalProgress(clientId);
 
-    console.log("8. Loading achievements");
+    console.log("9. Loading achievements");
     await renderAchievements(clientId);
 
-    console.log("9. Client progress page finished");
+    console.log("10. Client progress page finished");
 
   } catch (error) {
     console.error(
