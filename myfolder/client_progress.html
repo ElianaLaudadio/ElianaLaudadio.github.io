@@ -675,7 +675,7 @@ async function loadWeightData(userId) {
 
 
     /* ---------------- GOAL WEIGHT PROGRESS ---------------- */
-
+const clientGoalsList = document.getElementById("clientGoalsList");
 const goalProgressInfo = document.getElementById('goalProgressInfo');
 const goalProgressBarFill = document.getElementById('goalProgressBarFill');
 const goalProgressText = document.getElementById('goalProgressText');
@@ -956,6 +956,90 @@ async function loadClientGameProgress(
     `${currentXp} / ` +
     `${currentLevel.requiredXp} XP`;
 }
+
+function displayClientGoals(goals) {
+  clientGoalsList.innerHTML = `
+    <div>
+      Protein:
+      ${
+        goals?.protein != null
+          ? goals.protein + "g"
+          : "--"
+      }
+    </div>
+
+    <div>
+      Carbs:
+      ${
+        goals?.carbs != null
+          ? goals.carbs + "g"
+          : "--"
+      }
+    </div>
+
+    <div>
+      Fats:
+      ${
+        goals?.fats != null
+          ? goals.fats + "g"
+          : "--"
+      }
+    </div>
+
+    <div>
+      Calories:
+      ${
+        goals?.calories != null
+          ? goals.calories
+          : "--"
+      }
+    </div>
+
+    <div>
+      Initial Weight:
+      ${
+        goals?.initial_weight != null
+          ? goals.initial_weight + " lbs"
+          : "--"
+      }
+    </div>
+
+    <div>
+      Goal Weight:
+      ${
+        goals?.goal_weight != null
+          ? goals.goal_weight + " lbs"
+          : "--"
+      }
+    </div>
+  `;
+}
+
+async function loadClientGoals(
+  userId
+) {
+  const { data, error } =
+    await window.auth.supabase
+      .from("goals")
+      .select(`
+        protein,
+        carbs,
+        fats,
+        calories,
+        initial_weight,
+        goal_weight
+      `)
+      .eq("user_id", userId)
+      .maybeSingle();
+
+  if (error) {
+    throw error;
+  }
+
+  displayClientGoals(
+    data
+  );
+}
     
 async function initializeProgressPage() {
   try {
@@ -1002,19 +1086,27 @@ await loadClientGameProgress(
   clientId
 );
 
-console.log("7. Loading weight");
+console.log(
+  "7. Loading client goals"
+);
+
+await loadClientGoals(
+  clientId
+);
+
+console.log("8. Loading weight");
 
 await loadWeightData(
   clientId
 );
 
-    console.log("8. Loading goals");
+    console.log("9. Loading goals");
     await updateGoalProgress(clientId);
 
-    console.log("9. Loading achievements");
+    console.log("10. Loading achievements");
     await renderAchievements(clientId);
 
-    console.log("10. Client progress page finished");
+    console.log("11. Client progress page finished");
 
   } catch (error) {
     console.error(
