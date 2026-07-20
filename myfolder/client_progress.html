@@ -102,6 +102,8 @@
 
 <!-- CLIENT GOALS -->
 
+<!-- CLIENT GOALS -->
+
 <section class="card goals-card">
   <h2>Goals</h2>
 
@@ -116,6 +118,14 @@
     <div>Initial Weight: --</div>
     <div>Goal Weight: --</div>
   </div>
+
+  <button
+    class="pixel-button"
+    id="openClientGoalsBtn"
+    type="button"
+  >
+    Edit Goals
+  </button>
 </section>
       
       <!-- WEIGHT TRACKING -->
@@ -194,6 +204,81 @@
 
   </main>
 
+  <!-- COACH EDIT CLIENT GOALS MODAL -->
+
+<div
+  class="goal-modal"
+  id="clientGoalModal"
+>
+  <div class="goal-modal-content">
+    <h2>Edit Client Goals</h2>
+
+    <label>
+      Protein Goal
+      <input
+        type="number"
+        id="clientProteinInput"
+        placeholder="Example: 130"
+      >
+    </label>
+
+    <label>
+      Carbohydrate Goal
+      <input
+        type="number"
+        id="clientCarbsInput"
+        placeholder="Example: 220"
+      >
+    </label>
+
+    <label>
+      Fats Goal
+      <input
+        type="number"
+        id="clientFatsInput"
+        placeholder="Example: 60"
+      >
+    </label>
+
+    <label>
+      Daily Calorie Goal
+      <input
+        type="number"
+        id="clientCalorieInput"
+        placeholder="Example: 2200"
+      >
+    </label>
+
+    <label>
+      Initial Weight
+      <input
+        type="number"
+        id="clientInitialWeightInput"
+        placeholder="Example: 130.1"
+        step="0.1"
+      >
+    </label>
+
+    <label>
+      Goal Weight
+      <input
+        type="number"
+        id="clientGoalWeightInput"
+        placeholder="Example: 125"
+        step="0.1"
+      >
+    </label>
+
+    <button
+      class="pixel-button"
+      id="saveClientGoalsBtn"
+      type="button"
+    >
+      Save Goals
+    </button>
+  </div>
+</div>
+  
   <!-- NOTE MODAL -->
 
   <div id="note-modal">
@@ -679,6 +764,55 @@ const clientGoalsList = document.getElementById("clientGoalsList");
 const goalProgressInfo = document.getElementById('goalProgressInfo');
 const goalProgressBarFill = document.getElementById('goalProgressBarFill');
 const goalProgressText = document.getElementById('goalProgressText');
+const clientGoalsList =
+  document.getElementById(
+    "clientGoalsList"
+  );
+
+const openClientGoalsBtn =
+  document.getElementById(
+    "openClientGoalsBtn"
+  );
+
+const clientGoalModal =
+  document.getElementById(
+    "clientGoalModal"
+  );
+
+const saveClientGoalsBtn =
+  document.getElementById(
+    "saveClientGoalsBtn"
+  );
+
+const clientProteinInput =
+  document.getElementById(
+    "clientProteinInput"
+  );
+
+const clientCarbsInput =
+  document.getElementById(
+    "clientCarbsInput"
+  );
+
+const clientFatsInput =
+  document.getElementById(
+    "clientFatsInput"
+  );
+
+const clientCalorieInput =
+  document.getElementById(
+    "clientCalorieInput"
+  );
+
+const clientInitialWeightInput =
+  document.getElementById(
+    "clientInitialWeightInput"
+  );
+
+const clientGoalWeightInput =
+  document.getElementById(
+    "clientGoalWeightInput"
+  );
 
 async function updateGoalProgress(userId) {
   const { data: goals, error } =
@@ -1040,6 +1174,197 @@ async function loadClientGoals(
     data
   );
 }
+
+async function openClientGoalModal() {
+  clientGoalModal.classList.add(
+    "active"
+  );
+
+  try {
+    const { data, error } =
+      await window.auth.supabase
+        .from("goals")
+        .select(`
+          protein,
+          carbs,
+          fats,
+          calories,
+          initial_weight,
+          goal_weight
+        `)
+        .eq("user_id", clientId)
+        .maybeSingle();
+
+    if (error) {
+      throw error;
+    }
+
+    clientProteinInput.value =
+      data?.protein ?? "";
+
+    clientCarbsInput.value =
+      data?.carbs ?? "";
+
+    clientFatsInput.value =
+      data?.fats ?? "";
+
+    clientCalorieInput.value =
+      data?.calories ?? "";
+
+    clientInitialWeightInput.value =
+      data?.initial_weight ?? "";
+
+    clientGoalWeightInput.value =
+      data?.goal_weight ?? "";
+
+  } catch (error) {
+    console.error(
+      "Could not load client goals:",
+      error
+    );
+
+    alert(
+      "The client's goals could not be loaded."
+    );
+  }
+}
+
+function closeClientGoalModal() {
+  clientGoalModal.classList.remove(
+    "active"
+  );
+}
+
+async function saveClientGoals() {
+  try {
+    if (!clientId) {
+      throw new Error(
+        "No client was selected."
+      );
+    }
+
+    saveClientGoalsBtn.disabled =
+      true;
+
+    saveClientGoalsBtn.textContent =
+      "Saving...";
+
+    const goals = {
+      user_id: clientId,
+
+      protein:
+        clientProteinInput.value
+          ? Number(
+              clientProteinInput.value
+            )
+          : null,
+
+      carbs:
+        clientCarbsInput.value
+          ? Number(
+              clientCarbsInput.value
+            )
+          : null,
+
+      fats:
+        clientFatsInput.value
+          ? Number(
+              clientFatsInput.value
+            )
+          : null,
+
+      calories:
+        clientCalorieInput.value
+          ? Number(
+              clientCalorieInput.value
+            )
+          : null,
+
+      initial_weight:
+        clientInitialWeightInput.value
+          ? Number(
+              clientInitialWeightInput.value
+            )
+          : null,
+
+      goal_weight:
+        clientGoalWeightInput.value
+          ? Number(
+              clientGoalWeightInput.value
+            )
+          : null,
+
+      updated_at:
+        new Date().toISOString()
+    };
+
+    const { data, error } =
+      await window.auth.supabase
+        .from("goals")
+        .upsert(
+          goals,
+          {
+            onConflict: "user_id"
+          }
+        )
+        .select()
+        .single();
+
+    if (error) {
+      throw error;
+    }
+
+    displayClientGoals(data);
+
+    /*
+      Refresh the existing goal-weight
+      progress bar too.
+    */
+    await updateGoalProgress(
+      clientId
+    );
+
+    closeClientGoalModal();
+
+  } catch (error) {
+    console.error(
+      "Could not save client goals:",
+      error
+    );
+
+    alert(
+      "The client's goals could not be saved."
+    );
+
+  } finally {
+    saveClientGoalsBtn.disabled =
+      false;
+
+    saveClientGoalsBtn.textContent =
+      "Save Goals";
+  }
+}
+    openClientGoalsBtn.addEventListener(
+  "click",
+  openClientGoalModal
+);
+
+saveClientGoalsBtn.addEventListener(
+  "click",
+  saveClientGoals
+);
+
+clientGoalModal.addEventListener(
+  "click",
+  event => {
+    if (
+      event.target ===
+      clientGoalModal
+    ) {
+      closeClientGoalModal();
+    }
+  }
+);
     
 async function initializeProgressPage() {
   try {
