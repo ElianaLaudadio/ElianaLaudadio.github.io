@@ -474,9 +474,7 @@ footer {
     display: none;
   }
 
-  body {
-  padding-top: 120px;
-}
+
 
   #hamburger {
     display: block;
@@ -966,6 +964,10 @@ body.game-page main {
   .mobile-controls {
     display: flex;
   }
+
+    body {
+  padding-top: 120px;
+}
 }
 
 .game-actions {
