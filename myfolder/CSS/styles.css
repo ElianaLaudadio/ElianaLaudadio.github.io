@@ -1430,16 +1430,35 @@ body.game-page main {
 }
 
 .quick-log-grid button {
-  padding: 14px;
-  border: 2px solid #111111;
-  background: #f5f4f2;
-  font-family: inherit;
+  padding: 18px 14px;
+
+  background: var(--fg);
+  color: var(--card);
+
+  border: 3px solid var(--border);
+
+  font-family: 'Atkinson Hyperlegible', sans-serif;
+  font-size: 15px;
   font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
   cursor: pointer;
+
+  box-shadow: 4px 4px 0 var(--hover);
+
+  transition: 0.1s ease;
 }
 
 .quick-log-grid button:hover {
-  background: #ece9e6;
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--hover);
+}
+
+.quick-log-grid button:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--hover);
 }
 
 
