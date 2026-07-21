@@ -11,7 +11,7 @@
   gap: 18px;
   align-items: stretch;
 
-  transform: translateX(-12px);
+  transform: translateX(-15px);
 }
 
 @media (max-width: 768px) {
