@@ -945,19 +945,41 @@ body.game-page main {
   margin: 18px 0;
 }
 
+.mobile-controls {
+  display: none;
+  justify-content: center;
+  gap: 18px;
+  margin: 18px 0;
+}
+
 .mobile-controls button {
-  width: 70px;
-  height: 70px;
-  border: 3px solid #111;
-  background: #fff;
+  width: 72px;
+  height: 72px;
+
+  background: var(--fg);
+  color: var(--card);
+
+  border: 3px solid var(--border);
+
   font-size: 2rem;
-  font-family: inherit;
+  font-family: 'Atkinson Hyperlegible', sans-serif;
+  font-weight: 700;
+
   cursor: pointer;
   touch-action: manipulation;
+
+  box-shadow: 4px 4px 0 var(--hover);
+  transition: 0.1s ease;
+}
+
+.mobile-controls button:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--hover);
 }
 
 .mobile-controls button:active {
-  transform: scale(0.95);
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--hover);
 }
 
 @media (max-width: 768px) {
