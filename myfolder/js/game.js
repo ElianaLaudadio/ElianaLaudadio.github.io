@@ -123,8 +123,16 @@ let activeLog = null;
 const gravity = 0.7;
 const friction = 0.82;
 const spriteYOffset = 19;
-const questXp = 30;
-const bonusXp = 20;
+const questXp = {
+  food: 5,
+  activity: 10,
+  weight: 5,
+  workout: 20,
+  protein: 5,
+  carbs: 5,
+  fat: 5,
+  bonus: 20
+};
 
 const levels = {
   0: {
@@ -714,7 +722,7 @@ async function saveCarbsLog() {
     },
     calendarTitle: "Carbs Log",
     calendarText: carbs + "g",
-    xpAmount: questXp,
+    xpAmount: questXp.carbs,
     completedKey: "carbs"
   });
 }
@@ -738,7 +746,7 @@ async function saveFatLog() {
     },
     calendarTitle: "Fat Log",
     calendarText: fat + "g",
-    xpAmount: questXp,
+    xpAmount: questXp.fat,
     completedKey: "fat"
   });
 }
@@ -760,7 +768,7 @@ async function saveFoodLog() {
     },
     calendarTitle: "Food Log",
     calendarText: food,
-    xpAmount: questXp,
+    xpAmount: questXp.food,
     completedKey: "food"
   });
 }
@@ -835,8 +843,8 @@ async function saveActivityLog() {
     );
 
     if (isNewCompletion) {
-      await addLevelXp(questXp);
-    }
+  await addLevelXp(questXp.activity);
+}
 
     completedLogs.activity = true;
     closeLogPanel();
@@ -874,7 +882,7 @@ async function saveWeightLog() {
     },
     calendarTitle: "Weight Log",
     calendarText: weight + " lbs",
-    xpAmount: questXp,
+    xpAmount: questXp.weight,
     completedKey: "weight"
   });
 
@@ -933,7 +941,7 @@ async function saveWorkoutLog() {
     },
     calendarTitle: "Workout Log",
     calendarText: workout,
-    xpAmount: questXp,
+    xpAmount: questXp.workout,
     completedKey: "workout"
   });
 }
@@ -957,7 +965,7 @@ async function saveProteinLog() {
     },
     calendarTitle: "Protein Log",
     calendarText: protein + "g",
-    xpAmount: questXp,
+    xpAmount: questXp.protein,
     completedKey: "protein"
   });
 }
@@ -982,7 +990,7 @@ async function saveBonusLog() {
     calendarTitle:
       "Bonus Leverage Point",
     calendarText: bonus,
-    xpAmount: bonusXp,
+    xpAmount: questXp.bonus,
     completedKey: "bonus"
   });
 }
@@ -1223,7 +1231,7 @@ function drawHUD() {
 
   Object.keys(completedLogs).forEach(logType => {
     if (completedLogs[logType]) {
-      const earnedXp = logType === "bonus" ? bonusXp : questXp;
+      const earnedXp = questXp[logType] || 0;
       ctx.fillText(logType.toUpperCase() + " LOGGED +" + earnedXp + "XP", 20, yPosition);
       yPosition += 25;
     }
