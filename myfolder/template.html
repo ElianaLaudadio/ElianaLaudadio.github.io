@@ -75,7 +75,7 @@
         </div>
 
         <div class="xp-text" id="xpText">
-          0 / 300 XP
+            0 / 70 XP
         </div>
       </div>
 
@@ -174,21 +174,20 @@
             <div class="flow-step-number">Level 3</div>
             <div class="flow-step-name">Program</div>
           </div>
+<div class="flow-step" id="level4">
+  <div class="flow-step-number">Level 4</div>
+  <div class="flow-step-name">Discipline</div>
+</div>
 
-          <div class="flow-step" id="level4">
-            <div class="flow-step-number">Level 4</div>
-            <div class="flow-step-name">Nutrition</div>
-          </div>
+<div class="flow-step" id="level5">
+  <div class="flow-step-number">Level 5</div>
+  <div class="flow-step-name">Nutrition</div>
+</div>
 
-          <div class="flow-step" id="level5">
-            <div class="flow-step-number">Level 5</div>
-            <div class="flow-step-name">Discipline</div>
-          </div>
-
-          <div class="flow-step" id="level6">
-            <div class="flow-step-number">Level 6</div>
-            <div class="flow-step-name">Mastery</div>
-          </div>
+<div class="flow-step" id="level6">
+  <div class="flow-step-number">Level 6</div>
+  <div class="flow-step-name">Vitality</div>
+</div>
 
           <div class="flow-step" id="level7">
             <div class="flow-step-number">Level 7</div>
@@ -359,95 +358,214 @@ function displayGreeting(displayName, userId) {
        LEVEL DATA
     ========================== */
 
-    const levels = [
+const levels = [
+  {
+    number: 0,
+    name: "Baseline",
+    requiredXp: 70,
+    weeks: 1,
+    quests: [
       {
-        number: 0,
-        name: 'Baseline',
-        requiredXp: 300,
-        quests: [
-          { name: 'Log Food', xp: 30, storageKey: 'foodLogs' },
-          { name: 'Log Activity', xp: 30, storageKey: 'activityLogs' }
-        ]
+        name: "Log Food",
+        xp: 30,
+        storageKey: "foodLogs"
       },
       {
-        number: 1,
-        name: 'Consistency',
-        requiredXp: 300,
-        quests: [
-          { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
-          { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
-          { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' }
-        ]
-      },
-      {
-        number: 2,
-        name: 'Explore',
-        requiredXp: 720,
-        quests: [
-          { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
-          { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
-          { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' }
-        ]
-      },
-      {
-        number: 3,
-        name: 'Program',
-        requiredXp: 900,
-        quests: [
-          { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
-          { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
-          { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' }
-        ]
-      },
-      {
-        number: 4,
-        name: 'Nutrition',
-        requiredXp: 900,
-        quests: [
-          { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
-          { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
-          { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' },
-          { name: 'Log Carbs', xp: 30, storageKey: 'carbsLogs' },
-          { name: 'Log Fat', xp: 30, storageKey: 'fatLogs' }
-        ]
-      },
-      {
-        number: 5,
-        name: 'Discipline',
-        requiredXp: 600,
-        quests: [
-          { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
-          { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
-          { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' },
-          { name: 'Log Carbs', xp: 30, storageKey: 'carbsLogs' },
-          { name: 'Log Fat', xp: 30, storageKey: 'fatLogs' }
-        ]
-      },
-      {
-        number: 6,
-        name: 'Mastery',
-        requiredXp: 600,
-        quests: [
-          { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
-          { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
-          { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' },
-          { name: 'Log Carbs', xp: 30, storageKey: 'carbsLogs' },
-          { name: 'Log Fat', xp: 30, storageKey: 'fatLogs' }
-        ]
-      },
-      {
-        number: 7,
-        name: 'Outlier',
-        requiredXp: 300,
-        quests: [
-          { name: 'Log Weight', xp: 30, storageKey: 'weightLogs' },
-          { name: 'Log Workout', xp: 30, storageKey: 'workoutLogs' },
-          { name: 'Log Protein', xp: 30, storageKey: 'proteinLogs' },
-          { name: 'Log Carbs', xp: 30, storageKey: 'carbsLogs' },
-          { name: 'Log Fat', xp: 30, storageKey: 'fatLogs' }
-        ]
+        name: "Log Activity",
+        xp: 30,
+        storageKey: "activityLogs"
       }
-    ];
+    ]
+  },
+
+  {
+    number: 1,
+    name: "Consistency",
+    requiredXp: 100,
+    weeks: 1,
+    quests: [
+      {
+        name: "Log Weight",
+        xp: 30,
+        storageKey: "weightLogs"
+      },
+      {
+        name: "Log Activity",
+        xp: 30,
+        storageKey: "activityLogs"
+      },
+      {
+        name: "Log Protein",
+        xp: 30,
+        storageKey: "proteinLogs"
+      }
+    ]
+  },
+
+  {
+    number: 2,
+    name: "Explore",
+    requiredXp: 280,
+    weeks: 2,
+    quests: [
+      {
+        name: "Log Weight",
+        xp: 30,
+        storageKey: "weightLogs"
+      },
+      {
+        name: "Log Workout",
+        xp: 30,
+        storageKey: "workoutLogs"
+      },
+      {
+        name: "Log Protein",
+        xp: 30,
+        storageKey: "proteinLogs"
+      }
+    ]
+  },
+
+  {
+    number: 3,
+    name: "Program",
+    requiredXp: 280,
+    weeks: 2,
+    quests: [
+      {
+        name: "Log Weight",
+        xp: 30,
+        storageKey: "weightLogs"
+      },
+      {
+        name: "Log Workout",
+        xp: 30,
+        storageKey: "workoutLogs"
+      },
+      {
+        name: "Log Protein",
+        xp: 30,
+        storageKey: "proteinLogs"
+      }
+    ]
+  },
+
+  {
+    number: 4,
+    name: "Discipline",
+    requiredXp: 280,
+    weeks: 2,
+    quests: [
+      {
+        name: "Log Weight",
+        xp: 30,
+        storageKey: "weightLogs"
+      },
+      {
+        name: "Log Workout",
+        xp: 30,
+        storageKey: "workoutLogs"
+      },
+      {
+        name: "Log Protein",
+        xp: 30,
+        storageKey: "proteinLogs"
+      }
+    ]
+  },
+
+  {
+    number: 5,
+    name: "Nutrition",
+    requiredXp: 400,
+    weeks: 2,
+    quests: [
+      {
+        name: "Log Weight",
+        xp: 30,
+        storageKey: "weightLogs"
+      },
+      {
+        name: "Log Workout",
+        xp: 30,
+        storageKey: "workoutLogs"
+      },
+      {
+        name: "Log Protein",
+        xp: 30,
+        storageKey: "proteinLogs"
+      },
+      {
+        name: "Log Carbs",
+        xp: 30,
+        storageKey: "carbsLogs"
+      },
+      {
+        name: "Log Fat",
+        xp: 30,
+        storageKey: "fatLogs"
+      }
+    ]
+  },
+
+  {
+    number: 6,
+    name: "Vitality",
+    requiredXp: 400,
+    weeks: 2,
+    quests: [
+      {
+        name: "Log Weight",
+        xp: 30,
+        storageKey: "weightLogs"
+      },
+      {
+        name: "Log Workout",
+        xp: 30,
+        storageKey: "workoutLogs"
+      },
+      {
+        name: "Log Protein",
+        xp: 30,
+        storageKey: "proteinLogs"
+      },
+      {
+        name: "Log Carbs",
+        xp: 30,
+        storageKey: "carbsLogs"
+      },
+      {
+        name: "Log Fat",
+        xp: 30,
+        storageKey: "fatLogs"
+      }
+    ]
+  },
+
+  {
+    number: 7,
+    name: "Outlier",
+    requiredXp: 560,
+    weeks: 4,
+    quests: [
+      {
+        name: "Log Food",
+        xp: 30,
+        storageKey: "foodLogs"
+      },
+      {
+        name: "Log Workout",
+        xp: 30,
+        storageKey: "workoutLogs"
+      },
+      {
+        name: "Hit Macros",
+        xp: 30,
+        storageKey: "hitMacrosLogs"
+      }
+    ]
+  }
+];
 
     /* =========================
        DOM ELEMENTS
