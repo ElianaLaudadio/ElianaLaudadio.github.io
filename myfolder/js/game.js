@@ -130,7 +130,7 @@ const levels = {
   0: {
     title: "Level 0: Baseline",
     hudTitle: "LEVEL 0: BASELINE",
-    requiredXp: 300,
+    requiredXp: 70,
     startX: 65,
     startY: 300,
     totalLogs: 2,
@@ -146,14 +146,14 @@ const levels = {
   1: {
     title: "Level 1: Consistency",
     hudTitle: "LEVEL 1: CONSISTENCY",
-    requiredXp: 300,
+    requiredXp: 70,
     startX: 75,
     startY: 365,
     totalLogs: 3,
     platforms: [
       { x: 40, y: 420, width: 150, height: 22, label: "" },
       { x: 245, y: 370, width: 145, height: 22, label: "WEIGHT", logType: "weight" },
-      { x: 470, y: 310, width: 160, height: 22, label: "WORKOUT", logType: "workout" },
+      { x: 470, y: 310, width: 160, height: 22, label: "ACTIVITY", logType: "activity" },
       { x: 690, y: 250, width: 145, height: 22, label: ""},
       { x: 500, y: 175, width: 145, height: 22, label: "PROTEIN", logType: "protein" },
       { x: 170, y: 230, width: 145, height: 22, label:  "" }
@@ -163,7 +163,7 @@ const levels = {
   2: {
     title: "Level 2: Explore",
     hudTitle: "LEVEL 2: EXPLORE",
-    requiredXp: 720,
+    requiredXp: 280,
     startX: 60,
     startY: 370,
     totalLogs: 3,
@@ -182,7 +182,7 @@ const levels = {
   3: {
   title: "Level 3: Program",
   hudTitle: "LEVEL 3: PROGRAM",
-  requiredXp: 900,
+  requiredXp: 280,
   startX: 760,
   startY: 365,
   totalLogs: 3,
@@ -199,9 +199,28 @@ const levels = {
 },
 
 4: {
+  title: "Level 5: Discipline",
+  hudTitle: "LEVEL 5: DISCIPLINE",
+  requiredXp: 280,
+  startX: 735,
+  startY: 380,
+  totalLogs: 3,
+  platforms: [
+    { x: 710, y: 435, width: 150, height: 22, label: "" },
+    { x: 520, y: 370, width: 165, height: 22, label: "" },
+    { x: 315, y: 315, width: 145, height: 22, label: "WEIGHT", logType: "weight" },
+    { x: 95, y: 260, width: 160, height: 22, label: "WORKOUT", logType: "workout" },
+    { x: 300, y: 190, width: 145, height: 22, label: "PROTEIN", logType: "protein" },
+    { x: 510, y: 145, width: 145, height: 22, label: "", },
+    { x: 710, y: 220, width: 145, height: 22, label: "", }
+
+  ]
+},
+
+5: {
   title: "Level 4: Nutrition",
   hudTitle: "LEVEL 4: NUTRITION",
-  requiredXp: 900,
+  requiredXp: 400,
   startX: 70,
   startY: 380,
   totalLogs: 5,
@@ -217,32 +236,13 @@ const levels = {
   ]
 },
 
-5: {
-  title: "Level 5: Discipline",
-  hudTitle: "LEVEL 5: DISCIPLINE",
-  requiredXp: 600,
-  startX: 735,
-  startY: 380,
-  totalLogs: 6,
-  platforms: [
-    { x: 710, y: 435, width: 150, height: 22, label: "" },
-    { x: 520, y: 370, width: 165, height: 22, label: "" },
-    { x: 315, y: 315, width: 145, height: 22, label: "WEIGHT", logType: "weight" },
-    { x: 95, y: 260, width: 160, height: 22, label: "WORKOUT", logType: "workout" },
-    { x: 300, y: 190, width: 145, height: 22, label: "PROTEIN", logType: "protein" },
-    { x: 510, y: 145, width: 145, height: 22, label: "CARBS", logType: "carbs" },
-    { x: 710, y: 220, width: 145, height: 22, label: "FAT", logType: "fat" },
-    { x: 710, y: 70, width: 145, height: 22, label: "BONUS", logType: "bonus" }
-  ]
-},
-
 6: {
-  title: "Level 6: Mastery",
-  hudTitle: "LEVEL 6: MASTERY",
-  requiredXp: 600,
+  title: "Level 6: Vitality",
+  hudTitle: "LEVEL 6: VITALITY",
+  requiredXp: 400,
   startX: 415,
   startY: 390,
-  totalLogs: 6,
+  totalLogs: 5,
   platforms: [
 
     // Start
@@ -262,14 +262,14 @@ const levels = {
     // Peak
 
     { x: 250, y: 150, width: 165, height: 22, label: "" },
-    { x: 360, y: 50, width: 165, height: 22, label: "BONUS", logType: "bonus" }
+    { x: 360, y: 50, width: 165, height: 22, label: "", }
   ]
 },
 
 7: {
   title: "Level 7: Outlier",
   hudTitle: "LEVEL 7: OUTLIER",
-  requiredXp: 300,
+  requiredXp: 560,
   startX: 60,
   startY: 390,
   totalLogs: 6,
