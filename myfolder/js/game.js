@@ -15,6 +15,7 @@ const weightLogPanel = document.getElementById("weightLogPanel");
 const workoutLogPanel = document.getElementById("workoutLogPanel");
 const proteinLogPanel = document.getElementById("proteinLogPanel");
 const bonusLogPanel = document.getElementById("bonusLogPanel");
+const hitMacrosLogPanel = document.getElementById( "hitMacrosLogPanel");
 
 const foodInput = document.getElementById("foodInput");
 const activityInput = document.getElementById("activityInput");
@@ -22,6 +23,7 @@ const weightInput = document.getElementById("weightInput");
 const workoutInput = document.getElementById("workoutInput");
 const proteinInput = document.getElementById("proteinInput");
 const bonusInput = document.getElementById("bonusInput");
+const hitMacrosInput = document.getElementById("hitMacrosInput");
 
 const saveFoodBtn = document.getElementById("saveFoodBtn");
 const saveActivityBtn = document.getElementById("saveActivityBtn");
@@ -29,6 +31,7 @@ const saveWeightBtn = document.getElementById("saveWeightBtn");
 const saveWorkoutBtn = document.getElementById("saveWorkoutBtn");
 const saveProteinBtn = document.getElementById("saveProteinBtn");
 const saveBonusBtn = document.getElementById("saveBonusBtn");
+const saveHitMacrosBtn = document.getElementById( "saveHitMacrosBtn");
 
 const carbsLogPanel = document.getElementById("carbsLogPanel");
 const fatLogPanel = document.getElementById("fatLogPanel");
@@ -115,7 +118,8 @@ const completedLogs = {
   protein: false,
   bonus: false,
   carbs: false,
-  fat: false
+  fat: false,
+  hit_macros: false
 };
 
 let activeLog = null;
@@ -131,7 +135,8 @@ const questXp = {
   protein: 5,
   carbs: 5,
   fat: 5,
-  bonus: 20
+  bonus: 20,
+  hit_macros: 5
 };
 
 const weeklyLogCaps = {
@@ -141,7 +146,8 @@ const weeklyLogCaps = {
   workout: 4,
   protein: 6,
   carbs: 6,
-  fat: 6
+  fat: 6,
+  hit_macros: 6
 };
 
 const levels = {
@@ -290,7 +296,7 @@ const levels = {
   requiredXp: 560,
   startX: 60,
   startY: 390,
-  totalLogs: 6,
+  totalLogs: 3,
   platforms: [
     // Start
     { x: 35, y: 445, width: 150, height: 22, label: "" },
@@ -301,12 +307,12 @@ const levels = {
     { x: 625, y: 390, width: 130, height: 22, label: "" },
 
     // Right climb
-    { x: 735, y: 305, width: 145, height: 22, label: "ACTIVITY", logType: "activity" },
+    { x: 735, y: 305, width: 145, height: 22, label: "WORKOUT", logType: "workout" },
     { x: 575, y: 250, width: 145, height: 22, label: "" },
 
     // Middle path
     { x: 355, y: 295, width: 145, height: 22, label: "" },
-    { x: 150, y: 250, width: 145, height: 22, label: "PROTEIN", logType: "protein" },
+    { x: 150, y: 250, width: 145, height: 22, label: "HIT MACROS", logType: "hit_macros" },
 
     // Empty challenge jumps
 
@@ -340,6 +346,7 @@ const logLabels = {
   protein: "Log Protein",
   carbs: "Log Carbs",
   fat: "Log Fat",
+  hit_macros: "Hit Macros",
   bonus: "Bonus Point"
 };
 
@@ -808,6 +815,18 @@ if (type === "fat" && fatLogPanel) {
   fatLogPanel.classList.add("active");
   fatInput.focus();
 }
+
+if (
+  type === "hit_macros" &&
+  hitMacrosLogPanel
+) {
+  hitMacrosLogPanel.classList.add(
+    "active"
+  );
+
+  hitMacrosInput.focus();
+}
+
 }
 
 function closeLogPanel() {
@@ -819,6 +838,8 @@ function closeLogPanel() {
   if (workoutLogPanel) workoutLogPanel.classList.remove("active");
   if (proteinLogPanel) proteinLogPanel.classList.remove("active");
   if (bonusLogPanel) bonusLogPanel.classList.remove("active");
+  if (hitMacrosLogPanel) { hitMacrosLogPanel.classList.remove("active");
+}
 
   if (foodInput) foodInput.value = "";
   if (activityInput) activityInput.value = "";
@@ -832,6 +853,8 @@ if (fatLogPanel) fatLogPanel.classList.remove("active");
 
 if (carbsInput) carbsInput.value = "";
 if (fatInput) fatInput.value = "";
+
+if (hitMacrosInput) {hitMacrosInput.checked = false;}
 
   canvas.focus();
 }
@@ -1039,6 +1062,29 @@ async function saveProteinLog() {
   });
 }
 
+async function saveHitMacrosLog() {
+  if (!hitMacrosInput.checked) {
+    alert(
+      "Check the box if you hit your macro goals today."
+    );
+
+    return;
+  }
+
+  await saveQuestEntry({
+    fieldName: "hit_macros",
+    fieldValue: true,
+    storageKey: "hitMacrosLogs",
+    localLog: {
+      hitMacros: true
+    },
+    calendarTitle: "Hit Macros",
+    calendarText: "Yes",
+    xpAmount: questXp.hit_macros,
+    completedKey: "hit_macros"
+  });
+}
+
 async function saveBonusLog() {
   const bonus = bonusInput.value.trim();
 
@@ -1073,6 +1119,8 @@ if (saveBonusBtn) saveBonusBtn.addEventListener("click", saveBonusLog);
 
 if (saveCarbsBtn) saveCarbsBtn.addEventListener("click", saveCarbsLog);
 if (saveFatBtn) saveFatBtn.addEventListener("click", saveFatLog);
+if (saveHitMacrosBtn) {saveHitMacrosBtn.addEventListener("click",saveHitMacrosLog);
+}
 
 if (carbsInput) {
   carbsInput.addEventListener("keydown", (e) => {
@@ -1301,7 +1349,16 @@ function drawHUD() {
   Object.keys(completedLogs).forEach(logType => {
     if (completedLogs[logType]) {
       const earnedXp = questXp[logType] || 0;
-      ctx.fillText(logType.toUpperCase() + " LOGGED +" + earnedXp + "XP", 20, yPosition);
+const displayLogType =logType.replaceAll("_", " ").toUpperCase();
+
+ctx.fillText(
+  displayLogType +
+  " LOGGED +" +
+  earnedXp +
+  "XP",
+  20,
+  yPosition
+);
       yPosition += 25;
     }
   });
