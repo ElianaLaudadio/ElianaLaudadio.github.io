@@ -323,7 +323,10 @@
 
       <h2 id="nextLevelTitle"></h2>
 
-      <p id="nextLevelMessage"></p>
+      <div
+  class="next-level-content"
+  id="nextLevelMessage"
+></div>
 
       <button
         class="pixel-button celebration-button"
@@ -629,13 +632,97 @@ const levels = [
 ];
 
 const levelCelebrationContent = {
-  0: {
-    completedMessage:
-      "This week wasn't about eating perfectly or training harder than everyone else. It was about becoming aware of your current habits. \n\nAwareness is where every lasting change begins. You can't improve what you don't understand, and by taking the time to observe your food intake and activity, you've already completed one of the most important steps in your journey.",
+0: {
+  completedMessage: `
+This week wasn't about eating perfectly or training harder than everyone else. It was about becoming aware of your current habits.
 
-    nextMessage:
-      "In Consistency, you will begin turning awareness into action. You do not need to be perfect—you only need to keep showing up."
-  },
+Awareness is where every lasting change begins. You can't improve what you don't understand, and by taking the time to observe your food intake and activity, you've already completed one of the most important steps in your journey.
+
+One day, you'll look back on this week and realize it was the moment everything started to change.
+  `,
+
+  nextCard: {
+    title: "Welcome to Consistency!",
+
+    duration: "1 Week • 100 XP",
+
+    objectives: [
+      {
+        name: "Weight",
+        days: "6 Days"
+      },
+      {
+        name: "Activity",
+        days: "4 Days"
+      },
+      {
+        name: "Protein",
+        days: "6 Days"
+      }
+    ],
+
+    paragraphs: [
+      `
+Now that you understand your current habits, it's time to start building new ones.
+      `,
+
+      `
+This week, I want to focus on one thing: consistency.
+      `,
+
+      `
+Instead of throwing meal plans and complicated workout programs at you, I simply want you to practice showing up.
+      `,
+
+      `
+Move your body on 4 different days this week. That could mean going for a walk, stretching, or exploring one of the workouts on the Workouts page. You have complete freedom to decide what movement looks like for you. All I ask is that you intentionally carve out 20–30 minutes on four different days to move your body and log your activity.
+      `,
+
+      `
+I want to establish that same consistency with your nutrition.
+      `,
+
+      `
+You'll notice that I've already set a daily protein goal for you on the home page. This week, your only nutrition objective is to do your best to reach that goal on 6 different days.
+      `,
+
+      `
+Don't worry if you don't hit it every time. I still want you to log it. Honest information helps us make better decisions together, and progress starts with understanding where you are today.
+      `,
+
+      `
+This level isn't about being perfect. It's about proving to yourself that you can keep showing up, even when life gets busy.
+      `
+    ],
+
+    takeaway:
+      "Small actions repeated over time will always beat short bursts of motivation.",
+
+    dropdowns: [
+      {
+        title: "Why Protein?",
+
+        paragraphs: [
+          `
+Protein is the primary building block your body uses to repair and build muscle. It also helps your body recover from exercise and helps keep you feeling full throughout the day.
+          `,
+
+          `
+If your goal is to gain weight, eating enough protein helps your body build healthy muscle.
+          `,
+
+          `
+If your goal is to lose weight, protein helps preserve muscle while keeping you fuller for longer, making fat loss more sustainable.
+          `,
+
+          `
+No matter what your goal is—building muscle, losing fat, getting stronger, or improving your overall health—protein plays an important role in helping you get there.
+          `
+        ]
+      }
+    ]
+  }
+},
 
   1: {
     completedMessage:
@@ -924,6 +1011,86 @@ function launchConfetti() {
   }
 }
 
+function renderNextLevelCard(cardContent) {
+  if (!cardContent) {
+    nextLevelMessage.innerHTML = "";
+    return;
+  }
+
+  const objectivesHtml =
+    cardContent.objectives
+      .map(objective => {
+        return `
+          <div class="level-objective">
+            <span>${objective.name}</span>
+            <strong>${objective.days}</strong>
+          </div>
+        `;
+      })
+      .join("");
+
+  const paragraphsHtml =
+    cardContent.paragraphs
+      .map(paragraph => {
+        return `
+          <p>${paragraph.trim()}</p>
+        `;
+      })
+      .join("");
+
+  const dropdownsHtml =
+    cardContent.dropdowns
+      .map(dropdown => {
+        const dropdownParagraphs =
+          dropdown.paragraphs
+            .map(paragraph => {
+              return `
+                <p>${paragraph.trim()}</p>
+              `;
+            })
+            .join("");
+
+        return `
+          <details class="lesson-dropdown">
+            <summary>
+              ${dropdown.title}
+            </summary>
+
+            <div class="lesson-dropdown-content">
+              ${dropdownParagraphs}
+            </div>
+          </details>
+        `;
+      })
+      .join("");
+
+  nextLevelMessage.innerHTML = `
+    <div class="next-level-duration">
+      ${cardContent.duration}
+    </div>
+
+    <div class="next-level-section">
+      <h3>Weekly Objectives</h3>
+
+      <div class="level-objectives">
+        ${objectivesHtml}
+      </div>
+    </div>
+
+    <div class="next-level-copy">
+      ${paragraphsHtml}
+    </div>
+
+    <div class="next-level-takeaway">
+      ${cardContent.takeaway}
+    </div>
+
+    <div class="next-level-lessons">
+      ${dropdownsHtml}
+    </div>
+  `;
+}
+
 let celebrationNextLevelNumber = null;
 
 function openLevelCelebration(
@@ -969,11 +1136,18 @@ function openLevelCelebration(
     Level 7 has no normal next level.
   */
   if (nextLevel) {
-    nextLevelTitle.textContent =
-      `Level ${nextLevel.number}: ${nextLevel.name}`;
+nextLevelTitle.textContent =
+  content.nextCard?.title ||
+  `Level ${nextLevel.number}: ${nextLevel.name}`;
 
-    nextLevelMessage.textContent =
-      content.nextMessage;
+if (content.nextCard) {
+  renderNextLevelCard(
+    content.nextCard
+  );
+} else {
+  nextLevelMessage.textContent =
+    content.nextMessage || "";
+}
 
     showNextLevelBtn.textContent =
       "Continue";
