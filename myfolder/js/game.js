@@ -164,7 +164,7 @@ const levels = {
   1: {
     title: "Level 1: Consistency",
     hudTitle: "LEVEL 1: CONSISTENCY",
-    requiredXp: 70,
+    requiredXp: 100,
     startX: 75,
     startY: 365,
     totalLogs: 3,
@@ -193,7 +193,7 @@ const levels = {
       { x: 565, y: 285, width: 145, height: 22, label: "PROTEIN", logType: "protein" },
       { x: 720, y: 190, width: 145, height: 22, label: "" },
       { x: 510, y: 125, width: 165, height: 22, label: "" },
-      { x: 720, y: 50, width: 145, height: 22, label: "BONUS", logType: "bonus" }
+      { x: 720, y: 50, width: 145, height: 22, label: "" }
     ]
   },
 
@@ -211,14 +211,14 @@ const levels = {
     { x: 95, y: 255, width: 145, height: 22, label: "PROTEIN", logType: "protein" },
     { x: 150, y: 370, width: 145, height: 22, label: "WORKOUT", logType: "workout" },
     { x: 320, y: 185, width: 145, height: 22, label: "" },
-    { x: 565, y: 145, width: 165, height: 22, label: "BONUS", logType: "bonus" },
+    { x: 565, y: 145, width: 165, height: 22, label: "" },
     { x: 730, y: 245, width: 130, height: 22, label: "" }
   ]
 },
 
 4: {
-  title: "Level 5: Discipline",
-  hudTitle: "LEVEL 5: DISCIPLINE",
+  title: "Level 4: Discipline",
+  hudTitle: "LEVEL 4: DISCIPLINE",
   requiredXp: 280,
   startX: 735,
   startY: 380,
@@ -236,8 +236,8 @@ const levels = {
 },
 
 5: {
-  title: "Level 4: Nutrition",
-  hudTitle: "LEVEL 4: NUTRITION",
+  title: "Level 5: Nutrition",
+  hudTitle: "LEVEL 5: NUTRITION",
   requiredXp: 400,
   startX: 70,
   startY: 380,
@@ -297,15 +297,15 @@ const levels = {
 
     // Lower route
     { x: 230, y: 395, width: 130, height: 22, label: "" },
-    { x: 420, y: 430, width: 145, height: 22, label: "WEIGHT", logType: "weight" },
+    { x: 420, y: 430, width: 145, height: 22, label: "FOOD", logType: "food" },
     { x: 625, y: 390, width: 130, height: 22, label: "" },
 
     // Right climb
-    { x: 735, y: 305, width: 145, height: 22, label: "WORKOUT", logType: "workout" },
-    { x: 575, y: 250, width: 145, height: 22, label: "FAT", logType: "fat" },
+    { x: 735, y: 305, width: 145, height: 22, label: "ACTIVITY", logType: "activity" },
+    { x: 575, y: 250, width: 145, height: 22, label: "" },
 
     // Middle path
-    { x: 355, y: 295, width: 145, height: 22, label: "CARBS", logType: "carbs" },
+    { x: 355, y: 295, width: 145, height: 22, label: "" },
     { x: 150, y: 250, width: 145, height: 22, label: "PROTEIN", logType: "protein" },
 
     // Empty challenge jumps
@@ -315,7 +315,7 @@ const levels = {
     { x: 735, y: 180, width: 120, height: 22, label: "" },
 
     // Final destination
-    { x: 365, y: 80, width: 175, height: 22, label: "OUTLIER", logType: "bonus" }
+    { x: 365, y: 80, width: 175, height: 22, label: "", }
   ]
 }
 };
