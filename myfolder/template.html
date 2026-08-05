@@ -25,6 +25,9 @@
   ========================== -->
   <link rel="stylesheet" href="/myfolder/CSS/base.css">
   <link rel="stylesheet" href="/myfolder/CSS/index.css">
+
+
+  
 </head>
 
 <body>
@@ -83,7 +86,7 @@
            TODAY'S QUEST CARD
       ========================== -->
       <div class="card action-card">
-        <h2>Today's Quest</h2>
+        <h2>This Week's Quests</h2>
 
         <div class="quest-list" id="questList"></div>
 
@@ -567,6 +570,28 @@ const levels = [
   }
 ];
 
+  const questFieldMap = {
+  foodLogs: "food",
+  activityLogs: "activity",
+  weightLogs: "weight",
+  workoutLogs: "workout",
+  proteinLogs: "protein",
+  carbsLogs: "carbs",
+  fatLogs: "fat",
+  hitMacrosLogs: "hit_macros"
+};
+
+const weeklyQuestCaps = {
+  food: 6,
+  activity: 4,
+  weight: 6,
+  workout: 4,
+  protein: 6,
+  carbs: 6,
+  fat: 6,
+  hit_macros: 6
+};
+
     /* =========================
        DOM ELEMENTS
     ========================== */
@@ -603,12 +628,102 @@ const levels = [
       return date.toISOString().split('T')[0];
     }
 
-    function hasCompletedToday(storageKey) {
-      const today = getTodayDate();
-      const logs = JSON.parse(localStorage.getItem(storageKey) || '[]');
+function formatLocalDate(date) {
+  const localDate = new Date(date);
 
-      return logs.some(log => log.date === today);
-    }
+  localDate.setMinutes(
+    localDate.getMinutes() -
+    localDate.getTimezoneOffset()
+  );
+
+  return localDate
+    .toISOString()
+    .split("T")[0];
+}
+
+function getCurrentWeekRange() {
+  const today = new Date();
+  const dayOfWeek = today.getDay();
+
+  /*
+    Monday is the beginning of the game week.
+    Sunday is the final day.
+  */
+  const daysSinceMonday =
+    dayOfWeek === 0
+      ? 6
+      : dayOfWeek - 1;
+
+  const monday = new Date(today);
+
+  monday.setDate(
+    today.getDate() - daysSinceMonday
+  );
+
+  const sunday = new Date(monday);
+
+  sunday.setDate(
+    monday.getDate() + 6
+  );
+
+  return {
+    startDate: formatLocalDate(monday),
+    endDate: formatLocalDate(sunday)
+  };
+}
+
+async function loadWeeklyLogs(userId) {
+  const {
+    startDate,
+    endDate
+  } = getCurrentWeekRange();
+
+  const {
+    data: weeklyLogs,
+    error
+  } = await window.auth.supabase
+    .from("daily_logs")
+    .select(
+      `
+        log_date,
+        food,
+        activity,
+        weight,
+        workout,
+        protein,
+        carbs,
+        fat,
+        hit_macros
+      `
+    )
+    .eq("user_id", userId)
+    .gte("log_date", startDate)
+    .lte("log_date", endDate)
+    .order("log_date", {
+      ascending: true
+    });
+
+  if (error) {
+    throw error;
+  }
+
+  return weeklyLogs || [];
+}
+
+function countCompletedQuestDays(
+  weeklyLogs,
+  fieldName
+) {
+  return weeklyLogs.filter(log => {
+    const value = log[fieldName];
+
+    return (
+      value !== null &&
+      value !== undefined &&
+      value !== ""
+    );
+  }).length;
+}
 
     /* =========================
        LEVEL LOGIC
@@ -641,7 +756,7 @@ function launchConfetti() {
 }
 
 
-function updateDashboard(gameProgress) {
+function updateDashboard(gameProgress,weeklyLogs = []) {
   const currentLevelNumber = Number(
     gameProgress?.current_level ?? 0
   );
@@ -697,25 +812,82 @@ function updateDashboard(gameProgress) {
     currentLevel.requiredXp +
     ' XP';
 
-  questList.innerHTML = '';
+questList.innerHTML = "";
 
-  currentLevel.quests.forEach(quest => {
-    const questItem =
-      document.createElement('div');
+currentLevel.quests.forEach(quest => {
+  const fieldName =
+    questFieldMap[quest.storageKey];
 
-    questItem.classList.add('quest-item');
+  const weeklyCap =
+    weeklyQuestCaps[fieldName] || 1;
 
-    if (hasCompletedToday(quest.storageKey)) {
-      questItem.classList.add('complete');
-    }
+  const completedDays =
+    countCompletedQuestDays(
+      weeklyLogs,
+      fieldName
+    );
 
-    questItem.innerHTML = `
-      <span>${quest.name}</span>
-      <span>+${quest.xp} XP</span>
-    `;
+  const displayedDays = Math.min(
+    completedDays,
+    weeklyCap
+  );
 
-    questList.appendChild(questItem);
-  });
+  const progressPercent = Math.min(
+    (displayedDays / weeklyCap) * 100,
+    100
+  );
+
+  const remainingDays = Math.max(
+    weeklyCap - displayedDays,
+    0
+  );
+
+  const questItem =
+    document.createElement("div");
+
+  questItem.classList.add(
+    "weekly-quest-item"
+  );
+
+  if (displayedDays >= weeklyCap) {
+    questItem.classList.add("complete");
+  }
+
+  questItem.innerHTML = `
+    <div class="weekly-quest-header">
+      <span class="weekly-quest-name">
+        ${quest.name}
+      </span>
+
+      <span class="weekly-quest-count">
+        ${displayedDays} / ${weeklyCap}
+      </span>
+    </div>
+
+    <div class="weekly-quest-bar">
+      <div
+        class="weekly-quest-bar-fill"
+        style="width: ${progressPercent}%"
+      ></div>
+    </div>
+
+    <div class="weekly-quest-footer">
+      ${
+        remainingDays === 0
+          ? `Quest complete ✓`
+          : `${remainingDays} ${
+              remainingDays === 1
+                ? "day"
+                : "days"
+            } remaining`
+      }
+
+      <span>+${quest.xp} XP per day</span>
+    </div>
+  `;
+
+  questList.appendChild(questItem);
+});
 
   levels.forEach(level => {
     const levelElement =
@@ -1082,13 +1254,20 @@ if (!resolvedGameProgress) {
     );
 }
 
-    displayGreeting(
-      profile?.display_name || "Outlier",
-      user.id
-    );
+const weeklyLogs =
+  await loadWeeklyLogs(user.id);
 
-    updateDashboard(resolvedGameProgress);
-    await loadSavedGoals(user.id);
+displayGreeting(
+  profile?.display_name || "Outlier",
+  user.id
+);
+
+updateDashboard(
+  resolvedGameProgress,
+  weeklyLogs
+);
+
+await loadSavedGoals(user.id);
 
   } catch (error) {
     console.error(
@@ -1100,10 +1279,13 @@ if (!resolvedGameProgress) {
       "Hi, Outlier";
 
     // Safe fallback if Supabase fails.
-    updateDashboard({
-      current_level: 0,
-      current_xp: 0
-    });
+updateDashboard(
+  {
+    current_level: 0,
+    current_xp: 0
+  },
+  []
+);
 
 
   }
