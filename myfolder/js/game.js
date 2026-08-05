@@ -134,6 +134,16 @@ const questXp = {
   bonus: 20
 };
 
+const weeklyLogCaps = {
+  food: 6,
+  activity: 4,
+  weight: 6,
+  workout: 4,
+  protein: 6,
+  carbs: 6,
+  fat: 6
+};
+
 const levels = {
   0: {
     title: "Level 0: Baseline",
@@ -455,6 +465,86 @@ function getTodayDate() {
   return date.toISOString().split("T")[0];
 }
 
+function formatLocalDate(date) {
+  const localDate = new Date(date);
+
+  localDate.setMinutes(
+    localDate.getMinutes() -
+    localDate.getTimezoneOffset()
+  );
+
+  return localDate
+    .toISOString()
+    .split("T")[0];
+}
+
+function getCurrentWeekRange() {
+  const today = new Date();
+
+  /*
+    JavaScript:
+    Sunday = 0
+    Monday = 1
+    Tuesday = 2
+    etc.
+
+    This converts the week to Monday through Sunday.
+  */
+  const dayOfWeek = today.getDay();
+
+  const daysSinceMonday =
+    dayOfWeek === 0
+      ? 6
+      : dayOfWeek - 1;
+
+  const monday = new Date(today);
+
+  monday.setDate(
+    today.getDate() - daysSinceMonday
+  );
+
+  const sunday = new Date(monday);
+
+  sunday.setDate(
+    monday.getDate() + 6
+  );
+
+  return {
+    startDate: formatLocalDate(monday),
+    endDate: formatLocalDate(sunday)
+  };
+}
+
+async function getWeeklyLogCount(
+  userId,
+  fieldName
+) {
+  const {
+    startDate,
+    endDate
+  } = getCurrentWeekRange();
+
+  const {
+    count,
+    error
+  } = await window.auth.supabase
+    .from("daily_logs")
+    .select("*", {
+      count: "exact",
+      head: true
+    })
+    .eq("user_id", userId)
+    .gte("log_date", startDate)
+    .lte("log_date", endDate)
+    .not(fieldName, "is", null);
+
+  if (error) {
+    throw error;
+  }
+
+  return count || 0;
+}
+
 function getCalendarKey() {
   const date = new Date();
   const year = date.getFullYear();
@@ -561,9 +651,52 @@ async function saveQuestEntry({
       calendarText
     );
 
-    if (isNewCompletion) {
-      await addLevelXp(xpAmount);
-    }
+if (isNewCompletion) {
+  const user =
+    await window.auth.getUser();
+
+  if (!user) {
+    throw new Error(
+      "User is not authenticated."
+    );
+  }
+
+  const weeklyCap =
+    weeklyLogCaps[fieldName];
+
+  /*
+    The log has already been saved, so this count
+    includes today's new entry.
+  */
+  const weeklyCount =
+    await getWeeklyLogCount(
+      user.id,
+      fieldName
+    );
+
+  if (
+    weeklyCap !== undefined &&
+    weeklyCount <= weeklyCap
+  ) {
+    await addLevelXp(xpAmount);
+
+    console.log(
+      `${fieldName}: ${weeklyCount}/${weeklyCap} XP days used`
+    );
+  } else if (
+    weeklyCap !== undefined
+  ) {
+    console.log(
+      `${fieldName} saved, but its weekly XP cap has been reached.`
+    );
+  } else {
+    /*
+      Temporary fallback for logs such as Bonus
+      that do not currently have a weekly cap.
+    */
+    await addLevelXp(xpAmount);
+  }
+}
 
     completedLogs[completedKey] = true;
     closeLogPanel();
@@ -774,93 +907,29 @@ async function saveFoodLog() {
 }
 
 async function saveActivityLog() {
-
-  const activity = activityInput.value.trim();
+  const activity =
+    activityInput.value.trim();
 
   if (!activity) {
-    alert("Please enter your activity for today.");
-    return;
-  }
-
-  const user = await window.auth.getUser();
-
-  if (!user) {
-    alert("You must be logged in.");
-    return;
-  }
-
-  const today = getTodayDate();
-
-  try {
-    // Check whether activity was already logged today.
-    const { data: existingLog, error: readError } =
-      await window.auth.supabase
-        .from("daily_logs")
-        .select("activity")
-        .eq("user_id", user.id)
-        .eq("log_date", today)
-        .maybeSingle();
-
-    if (readError) {
-      throw readError;
-    }
-
-    const isNewCompletion =
-      existingLog?.activity === null ||
-      existingLog?.activity === undefined;
-
-    // Save activity to Supabase.
-    const { data, error: saveError } =
-      await window.auth.supabase
-        .from("daily_logs")
-        .upsert(
-          {
-            user_id: user.id,
-            log_date: today,
-            activity: activity,
-            updated_at: new Date().toISOString()
-          },
-          {
-            onConflict: "user_id,log_date"
-          }
-        )
-        .select()
-        .single();
-
-    if (saveError) {
-      throw saveError;
-    }
-
-    // Keep current local features working temporarily.
-    saveLog("activityLogs", {
-      date: today,
-      activity: activity
-    });
-
-    addLogToCalendar(
-      "Activity Log",
-      activity
-    );
-
-    if (isNewCompletion) {
-  await addLevelXp(questXp.activity);
-}
-
-    completedLogs.activity = true;
-    closeLogPanel();
-
-    console.log("Activity saved:", data);
-
-  } catch (error) {
-    console.error(
-      "Could not save activity log:",
-      error
-    );
-
     alert(
-      "Your activity log could not be saved. Check the console for details."
+      "Please enter your activity for today."
     );
+
+    return;
   }
+
+  await saveQuestEntry({
+    fieldName: "activity",
+    fieldValue: activity,
+    storageKey: "activityLogs",
+    localLog: {
+      activity: activity
+    },
+    calendarTitle: "Activity Log",
+    calendarText: activity,
+    xpAmount: questXp.activity,
+    completedKey: "activity"
+  });
 }
 
 async function saveWeightLog() {
