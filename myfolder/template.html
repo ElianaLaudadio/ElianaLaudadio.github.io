@@ -279,6 +279,64 @@
   </div>
 
   <!-- =========================
+     LEVEL CELEBRATION MODAL
+========================== -->
+<div
+  class="level-celebration-modal"
+  id="levelCelebrationModal"
+  aria-hidden="true"
+>
+  <div class="level-celebration-card">
+
+    <!-- Completed-level card -->
+    <div
+      class="celebration-screen"
+      id="completedLevelScreen"
+    >
+      <div class="celebration-label">
+        LEVEL COMPLETE
+      </div>
+
+      <h2 id="completedLevelTitle">
+        Congratulations!
+      </h2>
+
+      <p id="completedLevelMessage"></p>
+
+      <button
+        class="pixel-button celebration-button"
+        id="showNextLevelBtn"
+      >
+        Continue
+      </button>
+    </div>
+
+    <!-- New-level card -->
+    <div
+      class="celebration-screen"
+      id="nextLevelScreen"
+      hidden
+    >
+      <div class="celebration-label">
+        NEXT LEVEL
+      </div>
+
+      <h2 id="nextLevelTitle"></h2>
+
+      <p id="nextLevelMessage"></p>
+
+      <button
+        class="pixel-button celebration-button"
+        id="beginNextLevelBtn"
+      >
+        Begin Level
+      </button>
+    </div>
+
+  </div>
+</div>
+
+  <!-- =========================
        FOOTER
   ========================== -->
   <footer>
@@ -570,6 +628,72 @@ const levels = [
   }
 ];
 
+const levelCelebrationContent = {
+  0: {
+    completedMessage:
+      "You completed Baseline. You learned how to observe your current habits without judgment. Awareness is the first step toward meaningful change.",
+
+    nextMessage:
+      "In Consistency, you will begin turning awareness into action. You do not need to be perfect—you only need to keep showing up."
+  },
+
+  1: {
+    completedMessage:
+      "You completed Consistency. You proved that healthy choices do not have to happen perfectly to happen regularly.",
+
+    nextMessage:
+      "In Explore, you will try new approaches and begin discovering what works best for your body, schedule, and lifestyle."
+  },
+
+  2: {
+    completedMessage:
+      "You completed Explore. You learned that fitness is not one rigid path. You can experiment, adjust, and find methods that work for you.",
+
+    nextMessage:
+      "In Program, you will begin following a structured plan and training with greater intention."
+  },
+
+  3: {
+    completedMessage:
+      "You completed Program. You learned how to follow a plan instead of relying on random workouts or temporary motivation.",
+
+    nextMessage:
+      "In Discipline, you will practice following that plan long enough for consistency to become something you can rely on."
+  },
+
+  4: {
+    completedMessage:
+      "You completed Discipline. You proved that you can keep promises to yourself even when motivation changes.",
+
+    nextMessage:
+      "In Nutrition, you will apply that same discipline to fueling your body with protein, carbohydrates, and fats."
+  },
+
+  5: {
+    completedMessage:
+      "You completed Nutrition. You learned how your food choices support your training, recovery, performance, and goals.",
+
+    nextMessage:
+      "In Vitality, you will connect these habits to a bigger purpose: strength, health, mobility, energy, and a longer life."
+  },
+
+  6: {
+    completedMessage:
+      "You completed Vitality. You learned that exercise and nutrition are not punishments for your appearance. They are ways to care for the body that carries you through life.",
+
+    nextMessage:
+      "In Outlier, you will bring everything together. The fundamentals become simpler because you now understand how—and why—to use them."
+  },
+
+  7: {
+    completedMessage:
+      "You completed Outlier. You did not get here by being perfect. You got here by continuing to show up, learn, and care for yourself.",
+
+    nextMessage:
+      "You are now an Outlier. This is not the end of your progress—it is the beginning of your next goal."
+  }
+};
+
   const questFieldMap = {
   foodLogs: "food",
   activityLogs: "activity",
@@ -603,6 +727,51 @@ const weeklyQuestCaps = {
     const xpText = document.getElementById('xpText');
     const questList = document.getElementById('questList');
     const startLogButton = document.getElementById('startLogButton');
+
+    const levelCelebrationModal =
+  document.getElementById(
+    "levelCelebrationModal"
+  );
+
+const completedLevelScreen =
+  document.getElementById(
+    "completedLevelScreen"
+  );
+
+const nextLevelScreen =
+  document.getElementById(
+    "nextLevelScreen"
+  );
+
+const completedLevelTitle =
+  document.getElementById(
+    "completedLevelTitle"
+  );
+
+const completedLevelMessage =
+  document.getElementById(
+    "completedLevelMessage"
+  );
+
+const nextLevelTitle =
+  document.getElementById(
+    "nextLevelTitle"
+  );
+
+const nextLevelMessage =
+  document.getElementById(
+    "nextLevelMessage"
+  );
+
+const showNextLevelBtn =
+  document.getElementById(
+    "showNextLevelBtn"
+  );
+
+const beginNextLevelBtn =
+  document.getElementById(
+    "beginNextLevelBtn"
+  );
 
     const openGoalsBtn = document.getElementById('openGoalsBtn');
     const goalModal = document.getElementById('goalModal');
@@ -755,6 +924,123 @@ function launchConfetti() {
   }
 }
 
+let celebrationNextLevelNumber = null;
+
+function openLevelCelebration(
+  completedLevelNumber,
+  nextLevelNumber
+) {
+  const completedLevel =
+    levels[completedLevelNumber];
+
+  const nextLevel =
+    levels[nextLevelNumber];
+
+  const content =
+    levelCelebrationContent[
+      completedLevelNumber
+    ];
+
+  if (
+    !completedLevel ||
+    !content ||
+    !levelCelebrationModal
+  ) {
+    return;
+  }
+
+  celebrationNextLevelNumber =
+    nextLevelNumber;
+
+  completedLevelTitle.textContent =
+    `Congratulations!`;
+
+  completedLevelMessage.textContent =
+    `You have completed Level ${
+      completedLevel.number
+    }: ${completedLevel.name}. ${
+      content.completedMessage
+    }`;
+
+  completedLevelScreen.hidden = false;
+  nextLevelScreen.hidden = true;
+
+  /*
+    Level 7 has no normal next level.
+  */
+  if (nextLevel) {
+    nextLevelTitle.textContent =
+      `Level ${nextLevel.number}: ${nextLevel.name}`;
+
+    nextLevelMessage.textContent =
+      content.nextMessage;
+
+    showNextLevelBtn.textContent =
+      "Continue";
+  } else {
+    nextLevelTitle.textContent =
+      "Welcome to the Outliers";
+
+    nextLevelMessage.textContent =
+      content.nextMessage;
+
+    showNextLevelBtn.textContent =
+      "Continue";
+  }
+
+  levelCelebrationModal.classList.add(
+    "active"
+  );
+
+  levelCelebrationModal.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+}
+
+function showNextLevelCard() {
+  completedLevelScreen.hidden = true;
+  nextLevelScreen.hidden = false;
+
+  if (
+    celebrationNextLevelNumber === null ||
+    !levels[celebrationNextLevelNumber]
+  ) {
+    beginNextLevelBtn.textContent =
+      "Return to Dashboard";
+  } else {
+    beginNextLevelBtn.textContent =
+      "Begin Level";
+  }
+}
+
+function closeLevelCelebration() {
+  levelCelebrationModal.classList.remove(
+    "active"
+  );
+
+  levelCelebrationModal.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+  completedLevelScreen.hidden = false;
+  nextLevelScreen.hidden = true;
+}
+
+function beginNextLevel() {
+  const nextLevel =
+    levels[celebrationNextLevelNumber];
+
+  if (!nextLevel) {
+    closeLevelCelebration();
+    return;
+  }
+
+  window.location.href =
+    `/myfolder/game.html?level=${nextLevel.number}`;
+}
+
 
 function updateDashboard(gameProgress,weeklyLogs = []) {
   const currentLevelNumber = Number(
@@ -768,18 +1054,55 @@ function updateDashboard(gameProgress,weeklyLogs = []) {
   const currentLevel =
     levels[currentLevelNumber] || levels[0];
 
-  const lastCelebratedLevel = Number(
-    localStorage.getItem('lastCelebratedLevel') || 0
+const celebrationStorageKey =
+  "lastCelebratedLevel";
+
+const savedCelebratedLevel =
+  localStorage.getItem(
+    celebrationStorageKey
   );
 
-  if (currentLevelNumber > lastCelebratedLevel) {
-    launchConfetti();
+const lastCelebratedLevel =
+  savedCelebratedLevel === null
+    ? currentLevelNumber
+    : Number(savedCelebratedLevel);
 
-    localStorage.setItem(
-      'lastCelebratedLevel',
+/*
+  A higher current level means the previous
+  level was just completed.
+*/
+if (
+  currentLevelNumber >
+  lastCelebratedLevel
+) {
+  const completedLevelNumber =
+    currentLevelNumber - 1;
+
+  launchConfetti();
+
+  setTimeout(() => {
+    openLevelCelebration(
+      completedLevelNumber,
       currentLevelNumber
     );
-  }
+  }, 700);
+
+  localStorage.setItem(
+    celebrationStorageKey,
+    String(currentLevelNumber)
+  );
+}
+
+/*
+  Establish the user's current level without
+  triggering celebrations for old progress.
+*/
+if (savedCelebratedLevel === null) {
+  localStorage.setItem(
+    celebrationStorageKey,
+    String(currentLevelNumber)
+  );
+}
 
   updateStartLogButton(currentLevelNumber);
 
@@ -1198,6 +1521,17 @@ function updateNavigationForRole(role) {
     );
   }
 }
+
+
+showNextLevelBtn.addEventListener(
+  "click",
+  showNextLevelCard
+);
+
+beginNextLevelBtn.addEventListener(
+  "click",
+  beginNextLevel
+);
     
 /* =========================
    INITIALIZE PAGE
