@@ -42,7 +42,11 @@ const fatInput = document.getElementById("fatInput");
 const saveCarbsBtn = document.getElementById("saveCarbsBtn");
 const saveFatBtn = document.getElementById("saveFatBtn");
 
-const gameTitle = document.querySelector(".game-title");
+const selectedDateLabel = document.getElementById("selectedDateLabel");
+
+const previousDateBtn = document.getElementById("previousDateBtn");
+
+const nextDateBtn = document.getElementById("nextDateBtn");
 
 const sheepImg = new Image();
 sheepImg.src = "/myfolder/gamePhotos/shadow.png";
@@ -383,9 +387,7 @@ function renderQuickLogButtons() {
 
 
 
-if (gameTitle) {
-  gameTitle.textContent = currentLevel.title;
-}
+
 
 const player = {
   x: currentLevel.startX,
@@ -400,6 +402,63 @@ const player = {
   facingRight: true,
   currentPlatform: null
 };
+
+async function loadSelectedDateStatus() {
+  const user =
+    await window.auth.getUser();
+
+  if (!user) {
+    return;
+  }
+
+  /*
+    Reset today's visual completion state.
+  */
+  Object.keys(completedLogs)
+    .forEach(logType => {
+      completedLogs[logType] = false;
+    });
+
+  const requiredLogs =
+    getRequiredLogsForLevel();
+
+  if (requiredLogs.length === 0) {
+    return;
+  }
+
+  const { data, error } =
+    await window.auth.supabase
+      .from("daily_logs")
+      .select("*")
+      .eq("user_id", user.id)
+      .eq(
+        "log_date",
+        getSelectedDate()
+      )
+      .maybeSingle();
+
+  if (error) {
+    console.error(
+      "Could not load selected date:",
+      error
+    );
+
+    return;
+  }
+
+  if (!data) {
+    return;
+  }
+
+  requiredLogs.forEach(logType => {
+    const value = data[logType];
+
+    completedLogs[logType] =
+      value !== null &&
+      value !== undefined &&
+      value !== "";
+  });
+}
 
 const platforms = currentLevel.platforms;
 
@@ -472,6 +531,82 @@ function getTodayDate() {
   return date.toISOString().split("T")[0];
 }
 
+let selectedDate = getTodayDate();
+
+function dateStringToLocalDate(dateString) {
+  const [year, month, day] =
+    dateString.split("-").map(Number);
+
+  return new Date(
+    year,
+    month - 1,
+    day
+  );
+}
+
+function getSelectedDate() {
+  return selectedDate;
+}
+
+function formatSelectedDateLabel() {
+  if (!selectedDateLabel) {
+    return;
+  }
+
+  if (selectedDate === getTodayDate()) {
+    selectedDateLabel.textContent = "Today";
+    return;
+  }
+
+  const date = dateStringToLocalDate(selectedDate);
+
+  selectedDateLabel.textContent =
+    date.toLocaleDateString(
+      undefined,
+      {
+        weekday: "short",
+        month: "short",
+        day: "numeric"
+      }
+    );
+}
+
+
+function updateDateNavigation() {
+  formatSelectedDateLabel();
+
+  if (nextDateBtn) {
+    nextDateBtn.disabled =
+      selectedDate >= getTodayDate();
+  }
+}
+
+async function changeSelectedDate(dayChange) {
+  const currentDate =
+    dateStringToLocalDate(selectedDate);
+
+  currentDate.setDate(
+    currentDate.getDate() + dayChange
+  );
+
+  const newDate =
+    formatLocalDate(currentDate);
+
+  /*
+    Never allow future logging.
+  */
+  if (newDate > getTodayDate()) {
+    return;
+  }
+
+  selectedDate = newDate;
+
+  updateDateNavigation();
+
+  await loadSelectedDateStatus();
+}
+
+
 function formatLocalDate(date) {
   const localDate = new Date(date);
 
@@ -485,40 +620,41 @@ function formatLocalDate(date) {
     .split("T")[0];
 }
 
-function getCurrentWeekRange() {
-  const today = new Date();
+function getWeekRangeForDate(
+  dateString = getSelectedDate()
+) {
+  const selected =
+    dateStringToLocalDate(dateString);
 
-  /*
-    JavaScript:
-    Sunday = 0
-    Monday = 1
-    Tuesday = 2
-    etc.
-
-    This converts the week to Monday through Sunday.
-  */
-  const dayOfWeek = today.getDay();
+  const dayOfWeek =
+    selected.getDay();
 
   const daysSinceMonday =
     dayOfWeek === 0
       ? 6
       : dayOfWeek - 1;
 
-  const monday = new Date(today);
+  const monday =
+    new Date(selected);
 
   monday.setDate(
-    today.getDate() - daysSinceMonday
+    selected.getDate() -
+    daysSinceMonday
   );
 
-  const sunday = new Date(monday);
+  const sunday =
+    new Date(monday);
 
   sunday.setDate(
     monday.getDate() + 6
   );
 
   return {
-    startDate: formatLocalDate(monday),
-    endDate: formatLocalDate(sunday)
+    startDate:
+      formatLocalDate(monday),
+
+    endDate:
+      formatLocalDate(sunday)
   };
 }
 
@@ -526,10 +662,12 @@ async function getWeeklyLogCount(
   userId,
   fieldName
 ) {
-  const {
-    startDate,
-    endDate
-  } = getCurrentWeekRange();
+const {
+  startDate,
+  endDate
+} = getWeekRangeForDate(
+  getSelectedDate()
+);
 
   const {
     count,
@@ -552,8 +690,12 @@ async function getWeeklyLogCount(
   return count || 0;
 }
 
-function getCalendarKey() {
-  const date = new Date();
+function getCalendarKey(
+  dateString = getSelectedDate()
+) {
+  const date =
+    dateStringToLocalDate(dateString);
+
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   const day = date.getDate();
@@ -583,7 +725,7 @@ async function saveDailyLogField(fieldName, fieldValue) {
     throw new Error("User is not authenticated.");
   }
 
-  const today = getTodayDate();
+  const logDate = getSelectedDate();
 
   // Check whether this field was already completed today.
   const { data: existingLog, error: readError } =
@@ -591,7 +733,7 @@ async function saveDailyLogField(fieldName, fieldValue) {
       .from("daily_logs")
       .select(fieldName)
       .eq("user_id", user.id)
-      .eq("log_date", today)
+      .eq("log_date", logDate)
       .maybeSingle();
 
   if (readError) {
@@ -607,7 +749,7 @@ async function saveDailyLogField(fieldName, fieldValue) {
     .upsert(
       {
         user_id: user.id,
-        log_date: today,
+        log_date: logDate,
         [fieldName]: fieldValue,
         updated_at: new Date().toISOString()
       },
@@ -637,7 +779,7 @@ async function saveQuestEntry({
   xpAmount,
   completedKey
 }) {
-  const today = getTodayDate();
+  const logDate = getSelectedDate();
 
   try {
     const { isNewCompletion } =
@@ -649,7 +791,7 @@ async function saveQuestEntry({
     // Keep these temporarily for your current
     // dashboard/calendar/progress functionality.
     saveLog(storageKey, {
-      date: today,
+      date: logDate,
       ...localLog
     });
 
@@ -984,7 +1126,7 @@ async function saveWeightLog() {
 
   // Keep the existing local weight chart working
   // until progress.html is converted to Supabase.
-  const today = getTodayDate();
+  const logDate = getSelectedDate();
 
   const weightEntries = JSON.parse(
     localStorage.getItem(
@@ -994,14 +1136,14 @@ async function saveWeightLog() {
 
   const existingWeightIndex =
     weightEntries.findIndex(
-      entry => entry.date === today
+      entry => entry.date === logDate
     );
 
-  const newWeightEntry = {
-    date: today,
-    label: today,
-    weight: weight
-  };
+const newWeightEntry = {
+  date: logDate,
+  label: logDate,
+  weight: weight
+};
 
   if (existingWeightIndex !== -1) {
     weightEntries[existingWeightIndex] =
@@ -1400,9 +1542,30 @@ function updateGameModeView() {
   }
 }
 
+if (previousDateBtn) {
+  previousDateBtn.addEventListener(
+    "click",
+    () => {
+      changeSelectedDate(-1);
+    }
+  );
+}
+
+if (nextDateBtn) {
+  nextDateBtn.addEventListener(
+    "click",
+    () => {
+      changeSelectedDate(1);
+    }
+  );
+}
+
 toggle.checked = localStorage.getItem("gameMode") !== "false";
 
 toggle.addEventListener("change", updateGameModeView);
+
+updateDateNavigation();
+loadSelectedDateStatus();
 
 updateGameModeView();
 renderQuickLogButtons();
