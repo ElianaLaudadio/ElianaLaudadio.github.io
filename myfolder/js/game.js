@@ -127,6 +127,7 @@ const completedLogs = {
 };
 
 let activeLog = null;
+let dismissedLogType = null;
 
 const gravity = 0.7;
 const friction = 0.82;
@@ -393,7 +394,10 @@ const cancelLogButtons =
 cancelLogButtons.forEach(button => {
   button.addEventListener(
     "click",
-    closeLogPanel
+    () => {
+      dismissedLogType = activeLog;
+      closeLogPanel();
+    }
   );
 });
 
@@ -1416,11 +1420,22 @@ function updatePlayer() {
       player.grounded = true;
       player.currentPlatform = platform;
 
-      if (platform.logType && !completedLogs[platform.logType]) {
-        openLogPanel(platform.logType);
-      }
+     if (
+  platform.logType &&
+  !completedLogs[platform.logType] &&
+  dismissedLogType !== platform.logType
+) {
+  openLogPanel(platform.logType);
+}
     }
   });
+
+  if (
+  dismissedLogType &&
+  player.currentPlatform?.logType !== dismissedLogType
+) {
+  dismissedLogType = null;
+}
 
   if (player.x < 0) player.x = 0;
 
