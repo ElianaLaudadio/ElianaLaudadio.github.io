@@ -571,13 +571,32 @@ function formatSelectedDateLabel() {
     );
 }
 
+function getEarliestEditableDate() {
+  const date = new Date();
+
+  date.setDate(date.getDate() - 7);
+
+  return formatLocalDate(date);
+}
+
 
 function updateDateNavigation() {
   formatSelectedDateLabel();
 
+  const today =
+    getTodayDate();
+
+  const earliestDate =
+    getEarliestEditableDate();
+
   if (nextDateBtn) {
     nextDateBtn.disabled =
-      selectedDate >= getTodayDate();
+      selectedDate >= today;
+  }
+
+  if (previousDateBtn) {
+    previousDateBtn.disabled =
+      selectedDate <= earliestDate;
   }
 }
 
@@ -592,10 +611,19 @@ async function changeSelectedDate(dayChange) {
   const newDate =
     formatLocalDate(currentDate);
 
-  /*
-    Never allow future logging.
-  */
-  if (newDate > getTodayDate()) {
+  const today =
+    getTodayDate();
+
+  const earliestDate =
+    getEarliestEditableDate();
+
+  // No future dates.
+  if (newDate > today) {
+    return;
+  }
+
+  // No dates older than 7 days.
+  if (newDate < earliestDate) {
     return;
   }
 
