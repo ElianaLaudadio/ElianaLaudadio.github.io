@@ -1576,3 +1576,11 @@ body.game-page main {
   opacity: 0.3;
   cursor: default;
 }
+
+.log-panel textarea {
+    width: 100%;
+    text-align: left;
+    vertical-align: top;
+    padding: 12px;
+    box-sizing: border-box;
+}
