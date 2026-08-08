@@ -22,7 +22,32 @@
       </label>
     </div>
 
-    <h1 class="game-title">Level 0: Baseline</h1>
+  <div class="game-date-nav">
+  <button
+    type="button"
+    id="previousDateBtn"
+    class="date-arrow"
+    aria-label="Previous day"
+  >
+    ←
+  </button>
+
+  <h1
+    class="game-title"
+    id="selectedDateLabel"
+  >
+    Today
+  </h1>
+
+  <button
+    type="button"
+    id="nextDateBtn"
+    class="date-arrow"
+    aria-label="Next day"
+  >
+    →
+  </button>
+</div>
 
     <div id="gameModeContent">
       <canvas id="game" width="900" height="500"></canvas>
