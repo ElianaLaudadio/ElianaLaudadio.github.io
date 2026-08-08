@@ -1544,3 +1544,35 @@ body.game-page main {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+
+.game-date-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 15px;
+}
+
+.game-date-nav .game-title {
+  min-width: 180px;
+  margin: 0;
+  text-align: center;
+}
+
+.date-arrow {
+  border: 2px solid #111;
+  background: #fff;
+  padding: 6px 12px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.date-arrow:hover:not(:disabled) {
+  background: #ece9e6;
+}
+
+.date-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
