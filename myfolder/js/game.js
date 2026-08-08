@@ -385,7 +385,17 @@ function renderQuickLogButtons() {
   });
 }
 
+const cancelLogButtons =
+  document.querySelectorAll(
+    ".cancel-log-button"
+  );
 
+cancelLogButtons.forEach(button => {
+  button.addEventListener(
+    "click",
+    closeLogPanel
+  );
+});
 
 
 
