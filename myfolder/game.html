@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,32 +23,32 @@
       </label>
     </div>
 
-  <div class="game-date-nav">
-  <button
-    type="button"
-    id="previousDateBtn"
-    class="date-arrow"
-    aria-label="Previous day"
-  >
-    ←
-  </button>
+    <div class="game-date-nav">
+      <button
+        type="button"
+        id="previousDateBtn"
+        class="date-arrow"
+        aria-label="Previous day"
+      >
+        ←
+      </button>
 
-  <h1
-    class="game-title"
-    id="selectedDateLabel"
-  >
-    Today
-  </h1>
+      <h1
+        class="game-title"
+        id="selectedDateLabel"
+      >
+        Today
+      </h1>
 
-  <button
-    type="button"
-    id="nextDateBtn"
-    class="date-arrow"
-    aria-label="Next day"
-  >
-    →
-  </button>
-</div>
+      <button
+        type="button"
+        id="nextDateBtn"
+        class="date-arrow"
+        aria-label="Next day"
+      >
+        →
+      </button>
+    </div>
 
     <div id="gameModeContent">
       <canvas id="game" width="900" height="500"></canvas>
@@ -66,125 +67,197 @@
     <div id="quickLogMode" class="quick-log-mode">
       <h2>Quick Log</h2>
 
-
       <div class="quick-log-grid" id="quickLogGrid"></div>
     </div>
 
     <div class="game-actions">
       <a href="/myfolder/template.html" class="exit-button">
-        Exit 
+        Exit
       </a>
-
-
-
-      
     </div>
 
   </main>
 
   <div class="log-panel" id="foodLogPanel">
     <h2>Track Food</h2>
+
     <textarea
       id="foodInput"
       placeholder="What did you eat today?"
       rows="5"
     ></textarea>
+
     <button id="saveFoodBtn">Enter</button>
+
+    <button
+      type="button"
+      class="cancel-log-button"
+    >
+      Don't Log
+    </button>
   </div>
 
   <div class="log-panel" id="activityLogPanel">
     <h2>Track Activity</h2>
+
     <textarea
       id="activityInput"
       placeholder="What activity did you do today?"
       rows="5"
     ></textarea>
+
     <button id="saveActivityBtn">Enter</button>
+
+    <button
+      type="button"
+      class="cancel-log-button"
+    >
+      Don't Log
+    </button>
   </div>
 
   <div class="log-panel" id="weightLogPanel">
     <h2>Log Weight</h2>
+
     <input
       type="number"
       id="weightInput"
       placeholder="Weight in lbs"
       step="0.1"
     >
+
     <button id="saveWeightBtn">Enter</button>
+
+    <button
+      type="button"
+      class="cancel-log-button"
+    >
+      Don't Log
+    </button>
   </div>
 
   <div class="log-panel" id="workoutLogPanel">
     <h2>Log Workout</h2>
+
     <textarea
       id="workoutInput"
       placeholder="What workout did you do today? What did you try that was new?"
       rows="5"
     ></textarea>
+
     <button id="saveWorkoutBtn">Enter</button>
+
+    <button
+      type="button"
+      class="cancel-log-button"
+    >
+      Don't Log
+    </button>
   </div>
 
   <div class="log-panel" id="proteinLogPanel">
     <h2>Log Protein</h2>
+
     <input
       type="number"
       id="proteinInput"
       placeholder="Protein in grams"
     >
+
     <button id="saveProteinBtn">Enter</button>
+
+    <button
+      type="button"
+      class="cancel-log-button"
+    >
+      Don't Log
+    </button>
   </div>
 
   <div class="log-panel" id="carbsLogPanel">
     <h2>Log Carbohydrates</h2>
+
     <input
       type="number"
       id="carbsInput"
       placeholder="Carbs in grams"
     >
+
     <button id="saveCarbsBtn">Enter</button>
+
+    <button
+      type="button"
+      class="cancel-log-button"
+    >
+      Don't Log
+    </button>
   </div>
 
   <div class="log-panel" id="fatLogPanel">
     <h2>Log Fat</h2>
+
     <input
       type="number"
       id="fatInput"
       placeholder="Fat in grams"
     >
+
     <button id="saveFatBtn">Enter</button>
+
+    <button
+      type="button"
+      class="cancel-log-button"
+    >
+      Don't Log
+    </button>
   </div>
 
   <div class="log-panel" id="hitMacrosLogPanel">
-  <h2>Hit Macros</h2>
+    <h2>Hit Macros</h2>
 
-  <label>
-    <input
-      type="checkbox"
-      id="hitMacrosInput"
+    <label>
+      <input
+        type="checkbox"
+        id="hitMacrosInput"
+      >
+      I hit my macro goals today
+    </label>
+
+    <button id="saveHitMacrosBtn">
+      Enter
+    </button>
+
+    <button
+      type="button"
+      class="cancel-log-button"
     >
-    I hit my macro goals today
-  </label>
-
-  <button id="saveHitMacrosBtn">
-    Enter
-  </button>
-</div>
-  
+      Don't Log
+    </button>
+  </div>
 
   <div class="log-panel" id="bonusLogPanel">
     <h2>Bonus Leverage Point</h2>
+
     <textarea
       id="bonusInput"
       placeholder="Did you do any extra activities today? Any extra wins?"
       rows="5"
     ></textarea>
+
     <button id="saveBonusBtn">Enter</button>
+
+    <button
+      type="button"
+      class="cancel-log-button"
+    >
+      Don't Log
+    </button>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="/myfolder/js/auth.js?v=10"></script>
-<script src="/myfolder/js/game.js?v=16"></script>
+  <script src="/myfolder/js/game.js?v=16"></script>
 
 </body>
 </html>
-
-
+```
