@@ -28,6 +28,7 @@ const hitMacrosInput = document.getElementById("hitMacrosInput");
 const saveFoodBtn = document.getElementById("saveFoodBtn");
 const saveActivityBtn = document.getElementById("saveActivityBtn");
 const saveWeightBtn = document.getElementById("saveWeightBtn");
+const skipWeightBtn = document.getElementById("skipWeightBtn");
 const saveWorkoutBtn = document.getElementById("saveWorkoutBtn");
 const saveProteinBtn = document.getElementById("saveProteinBtn");
 const saveBonusBtn = document.getElementById("saveBonusBtn");
@@ -1200,6 +1201,44 @@ const newWeightEntry = {
   );
 }
 
+
+async function skipWeightLog() {
+  const logDate = getSelectedDate();
+
+  const weightLogs = JSON.parse(
+    localStorage.getItem("weightLogs") || "[]"
+  );
+
+  const alreadyCompleted =
+    weightLogs.some(
+      log => log.date === logDate
+    );
+
+  if (alreadyCompleted) {
+    completedLogs.weight = true;
+    closeLogPanel();
+    return;
+  }
+
+  /*
+    Record ONLY that the Weight quest
+    was acknowledged for this date.
+    No bodyweight value is stored.
+  */
+  saveLog("weightLogs", {
+    date: logDate,
+    skipped: true
+  });
+
+  await addLevelXp(
+    questXp.weight
+  );
+
+  completedLogs.weight = true;
+
+  closeLogPanel();
+}
+
 async function saveWorkoutLog() {
   const workout = workoutInput.value.trim();
 
@@ -1297,6 +1336,8 @@ async function saveBonusLog() {
 if (saveFoodBtn) saveFoodBtn.addEventListener("click", saveFoodLog);
 if (saveActivityBtn) saveActivityBtn.addEventListener("click", saveActivityLog);
 if (saveWeightBtn) saveWeightBtn.addEventListener("click", saveWeightLog);
+if (skipWeightBtn) {skipWeightBtn.addEventListener("click",skipWeightLog );
+}
 if (saveWorkoutBtn) saveWorkoutBtn.addEventListener("click", saveWorkoutLog);
 if (saveProteinBtn) saveProteinBtn.addEventListener("click", saveProteinLog);
 if (saveBonusBtn) saveBonusBtn.addEventListener("click", saveBonusLog);
