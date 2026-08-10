@@ -1569,19 +1569,28 @@ body.game-page main {
 }
 
 .date-arrow {
-  border: 2px solid #111;
-  background: #fff;
+  border: 2px solid var(--border);
+  background: var(--card);
+  color: var(--fg);
+
   padding: 6px 12px;
+
   font: inherit;
   font-weight: 700;
+
   cursor: pointer;
+
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .date-arrow:hover:not(:disabled) {
-  background: #ece9e6;
+  background: var(--hover);
+  color: var(--fg);
 }
 
 .date-arrow:disabled {
+  color: var(--fg);
   opacity: 0.3;
   cursor: default;
 }
