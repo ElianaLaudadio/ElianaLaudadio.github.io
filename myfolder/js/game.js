@@ -461,18 +461,43 @@ async function loadSelectedDateStatus() {
     return;
   }
 
-  if (!data) {
+
+
+requiredLogs.forEach(logType => {
+
+  if (logType === "weight") {
+    const weightLogs = JSON.parse(
+      localStorage.getItem(
+        "weightLogs"
+      ) || "[]"
+    );
+
+    const localWeightCompleted =
+      weightLogs.some(
+        log =>
+          log.date ===
+          getSelectedDate()
+      );
+
+    const realWeightCompleted =
+      data?.weight !== null &&
+      data?.weight !== undefined;
+
+    completedLogs.weight =
+      localWeightCompleted ||
+      realWeightCompleted;
+
     return;
   }
 
-  requiredLogs.forEach(logType => {
-    const value = data[logType];
+  const value =
+    data?.[logType];
 
-    completedLogs[logType] =
-      value !== null &&
-      value !== undefined &&
-      value !== "";
-  });
+  completedLogs[logType] =
+    value !== null &&
+    value !== undefined &&
+    value !== "";
+});
 }
 
 const platforms = currentLevel.platforms;
@@ -705,26 +730,56 @@ async function getWeeklyLogCount(
   userId,
   fieldName
 ) {
-const {
-  startDate,
-  endDate
-} = getWeekRangeForDate(
-  getSelectedDate()
-);
+  const {
+    startDate,
+    endDate
+  } = getWeekRangeForDate(
+    getSelectedDate()
+  );
 
+  /*
+    Weight uses local weightLogs because
+    both real weights and "No Weight Today"
+    are stored there.
+  */
+  if (fieldName === "weight") {
+    const weightLogs = JSON.parse(
+      localStorage.getItem(
+        "weightLogs"
+      ) || "[]"
+    );
+
+    const weeklyWeightDates =
+      new Set(
+        weightLogs
+          .filter(log =>
+            log.date >= startDate &&
+            log.date <= endDate
+          )
+          .map(log => log.date)
+      );
+
+    return weeklyWeightDates.size;
+  }
+
+  /*
+    Every other log type continues
+    using Supabase.
+  */
   const {
     count,
     error
-  } = await window.auth.supabase
-    .from("daily_logs")
-    .select("*", {
-      count: "exact",
-      head: true
-    })
-    .eq("user_id", userId)
-    .gte("log_date", startDate)
-    .lte("log_date", endDate)
-    .not(fieldName, "is", null);
+  } =
+    await window.auth.supabase
+      .from("daily_logs")
+      .select("*", {
+        count: "exact",
+        head: true
+      })
+      .eq("user_id", userId)
+      .gte("log_date", startDate)
+      .lte("log_date", endDate)
+      .not(fieldName, "is", null);
 
   if (error) {
     throw error;
@@ -1150,27 +1205,85 @@ async function saveWeightLog() {
     return;
   }
 
-  const saved = await saveQuestEntry({
-    fieldName: "weight",
-    fieldValue: weight,
-    storageKey: "weightLogs",
-    localLog: {
-      weight: weight
-    },
-    calendarTitle: "Weight Log",
-    calendarText: weight + " lbs",
-    xpAmount: questXp.weight,
-    completedKey: "weight"
+  const logDate =
+    getSelectedDate();
+
+  const weightLogs = JSON.parse(
+    localStorage.getItem(
+      "weightLogs"
+    ) || "[]"
+  );
+
+  const wasAlreadyCompletedLocally =
+    weightLogs.some(
+      log => log.date === logDate
+    );
+
+  /*
+    Save the actual weight to Supabase.
+  */
+  const {
+    isNewCompletion
+  } = await saveDailyLogField(
+    "weight",
+    weight
+  );
+
+  /*
+    Store/update the local weight log.
+  */
+  saveLog("weightLogs", {
+    date: logDate,
+    weight: weight
   });
 
-  if (!saved) {
-    return;
+  addLogToCalendar(
+    "Weight Log",
+    weight + " lbs"
+  );
+
+  /*
+    Award XP only if this date had not
+    already been completed by either
+    a real weight or "No Weight Today."
+  */
+  if (
+    isNewCompletion &&
+    !wasAlreadyCompletedLocally
+  ) {
+    const user =
+      await window.auth.getUser();
+
+    if (!user) {
+      throw new Error(
+        "User is not authenticated."
+      );
+    }
+
+    const weeklyCount =
+      await getWeeklyLogCount(
+        user.id,
+        "weight"
+      );
+
+    const weeklyCap =
+      weeklyLogCaps.weight;
+
+    if (weeklyCount <= weeklyCap) {
+      await addLevelXp(
+        questXp.weight
+      );
+    }
   }
 
-  // Keep the existing local weight chart working
-  // until progress.html is converted to Supabase.
-  const logDate = getSelectedDate();
+  completedLogs.weight = true;
 
+  closeLogPanel();
+
+  /*
+    Only real weights go into the
+    progress weight chart.
+  */
   const weightEntries = JSON.parse(
     localStorage.getItem(
       "weightEntries"
@@ -1179,25 +1292,31 @@ async function saveWeightLog() {
 
   const existingWeightIndex =
     weightEntries.findIndex(
-      entry => entry.date === logDate
+      entry =>
+        entry.date === logDate
     );
 
-const newWeightEntry = {
-  date: logDate,
-  label: logDate,
-  weight: weight
-};
+  const newWeightEntry = {
+    date: logDate,
+    label: logDate,
+    weight: weight
+  };
 
   if (existingWeightIndex !== -1) {
-    weightEntries[existingWeightIndex] =
-      newWeightEntry;
+    weightEntries[
+      existingWeightIndex
+    ] = newWeightEntry;
   } else {
-    weightEntries.push(newWeightEntry);
+    weightEntries.push(
+      newWeightEntry
+    );
   }
 
   localStorage.setItem(
     "weightEntries",
-    JSON.stringify(weightEntries)
+    JSON.stringify(
+      weightEntries
+    )
   );
 }
 
@@ -1214,25 +1333,51 @@ async function skipWeightLog() {
       log => log.date === logDate
     );
 
+  // Already completed Weight for this date.
   if (alreadyCompleted) {
     completedLogs.weight = true;
     closeLogPanel();
     return;
   }
 
-  /*
-    Record ONLY that the Weight quest
-    was acknowledged for this date.
-    No bodyweight value is stored.
-  */
+  // Save only a local acknowledgement.
+  // No bodyweight value goes to Supabase.
   saveLog("weightLogs", {
     date: logDate,
     skipped: true
   });
 
-  await addLevelXp(
-    questXp.weight
-  );
+  const user =
+    await window.auth.getUser();
+
+  if (!user) {
+    throw new Error(
+      "User is not authenticated."
+    );
+  }
+
+  const weeklyCount =
+    await getWeeklyLogCount(
+      user.id,
+      "weight"
+    );
+
+  const weeklyCap =
+    weeklyLogCaps.weight;
+
+  if (weeklyCount <= weeklyCap) {
+    await addLevelXp(
+      questXp.weight
+    );
+
+    console.log(
+      `weight: ${weeklyCount}/${weeklyCap} XP days used`
+    );
+  } else {
+    console.log(
+      "Weight acknowledged, but weekly XP cap has been reached."
+    );
+  }
 
   completedLogs.weight = true;
 
