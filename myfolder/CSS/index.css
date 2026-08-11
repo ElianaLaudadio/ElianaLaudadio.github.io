@@ -757,3 +757,60 @@
   }
 
 }
+
+/* =========================
+   FAQ CARD LIBRARY
+========================= */
+
+.faq-card-dropdown {
+  border: 3px solid var(--border);
+  background: var(--card);
+  margin-bottom: 14px;
+}
+
+.faq-card-dropdown summary {
+  padding: 16px 18px;
+
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  cursor: pointer;
+
+  list-style: none;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-card-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-card-dropdown summary::after {
+  content: "▼";
+  font-size: 12px;
+}
+
+.faq-card-dropdown[open] summary::after {
+  content: "▲";
+}
+
+.faq-card-content {
+  border-top: 3px solid var(--border);
+  padding: 20px;
+}
+
+.faq-card-content h3 {
+  margin-bottom: 12px;
+}
+
+.faq-card-content h4 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.faq-card-content p {
+  margin-bottom: 14px;
+}
