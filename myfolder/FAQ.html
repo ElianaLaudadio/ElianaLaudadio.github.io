@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,6 +51,233 @@
     rel="stylesheet"
     href="/myfolder/CSS/index.css"
   >
+
+
+  <!-- =========================
+       FAQ PAGE CSS
+  ========================== -->
+
+  <style>
+
+    .faq-page {
+      width: 90%;
+      max-width: 900px;
+      margin: 40px auto;
+    }
+
+    .faq-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .faq-header h1 {
+      margin-bottom: 10px;
+    }
+
+    .faq-section {
+      background: var(--card, #ffffff);
+      border: 3px solid var(--border, #111111);
+      padding: 24px;
+      margin-bottom: 28px;
+      box-sizing: border-box;
+    }
+
+    .faq-section > h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+
+    /* =========================
+       GETTING STARTED DROPDOWNS
+    ========================== */
+
+    .faq-card-dropdown {
+      border: 3px solid var(--border, #111111);
+      background: var(--card, #ffffff);
+      margin-bottom: 14px;
+    }
+
+    .faq-card-dropdown summary {
+      padding: 16px 18px;
+
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+
+      cursor: pointer;
+      list-style: none;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-card-dropdown summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-card-dropdown summary::after {
+      content: "▼";
+      font-size: 12px;
+    }
+
+    .faq-card-dropdown[open] summary::after {
+      content: "▲";
+    }
+
+    .faq-card-content {
+      border-top: 3px solid var(--border, #111111);
+      padding: 20px;
+    }
+
+    .faq-card-content p:last-child {
+      margin-bottom: 0;
+    }
+
+
+    /* =========================
+       VERTICAL LEVEL FLOW
+    ========================== */
+
+    .faq-level-flow {
+      display: flex;
+      flex-direction: column;
+
+      gap: 18px;
+
+      width: 100%;
+      max-width: 500px;
+
+      margin: 25px auto;
+    }
+
+
+    .faq-level-button {
+      position: relative;
+
+      width: 100%;
+      min-height: 90px;
+
+      border: 3px solid var(--border, #111111);
+
+      background: var(--card, #ffffff);
+      color: var(--fg, #111111);
+
+      padding: 14px;
+
+      font-family: "Atkinson Hyperlegible", sans-serif;
+
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+
+      cursor: pointer;
+
+      box-shadow: 5px 5px 0 var(--fg, #111111);
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      gap: 6px;
+
+      transition: 0.1s ease;
+    }
+
+
+    .faq-level-button::after {
+      content: "";
+
+      position: absolute;
+
+      width: 4px;
+      height: 18px;
+
+      background: var(--fg, #111111);
+
+      left: 50%;
+      bottom: -21px;
+
+      transform: translateX(-50%);
+    }
+
+
+    .faq-level-button:last-child::after {
+      display: none;
+    }
+
+
+    .faq-level-button:hover:not(:disabled) {
+      transform: translate(2px, 2px);
+      box-shadow: 3px 3px 0 var(--fg, #111111);
+    }
+
+
+    .faq-level-button.available {
+      background: var(--fg, #111111);
+      color: var(--card, #ffffff);
+    }
+
+
+    .faq-level-button.future {
+      opacity: 0.45;
+      cursor: default;
+    }
+
+
+    .faq-level-button.future::before {
+      content: "COMING SOON";
+
+      position: absolute;
+
+      right: 12px;
+      top: 8px;
+
+      font-size: 10px;
+      letter-spacing: 1px;
+    }
+
+
+    .faq-level-number {
+      font-size: 13px;
+    }
+
+    .faq-level-name {
+      font-size: 18px;
+    }
+
+
+    /* =========================
+       FAQ LEVEL MODAL
+    ========================== */
+
+    #faqLevelModal {
+      z-index: 5000;
+    }
+
+
+    @media (max-width: 600px) {
+
+      .faq-page {
+        width: 92%;
+        margin: 24px auto;
+      }
+
+      .faq-section {
+        padding: 18px;
+      }
+
+      .faq-level-flow {
+        max-width: 100%;
+      }
+
+    }
+
+  </style>
 
 </head>
 
@@ -118,231 +344,316 @@
        MAIN PAGE
   ========================== -->
 
-<main>
-  <section class="faq-page">
+  <main>
 
-    <div class="faq-header">
-      <h1>Outliers Guide</h1>
-      <p>
-        Review information from your coaching program at any time.
-      </p>
+    <section class="faq-page">
+
+
+      <!-- =========================
+           PAGE HEADER
+      ========================== -->
+
+      <div class="faq-header">
+
+        <h1>
+          Outliers Guide
+        </h1>
+
+        <p>
+          Review information from your coaching
+          program at any time.
+        </p>
+
+      </div>
+
+
+      <!-- =========================
+           GETTING STARTED
+      ========================== -->
+
+      <section class="faq-section">
+
+        <h2>
+          Getting Started
+        </h2>
+
+
+        <!-- WELCOME TO OUTLIERS -->
+
+        <details class="faq-card-dropdown">
+
+          <summary>
+            Welcome to Outliers
+          </summary>
+
+          <div class="faq-card-content">
+
+            <p>
+              Welcome card content will go here.
+            </p>
+
+          </div>
+
+        </details>
+
+
+        <!-- MEET YOUR COACH -->
+
+        <details class="faq-card-dropdown">
+
+          <summary>
+            Meet Your Coach
+          </summary>
+
+          <div class="faq-card-content">
+
+            <p>
+              Meet Your Coach content will go here.
+            </p>
+
+          </div>
+
+        </details>
+
+
+        <!-- HOW OUTLIERS WORKS -->
+
+        <details class="faq-card-dropdown">
+
+          <summary>
+            How Outliers Works
+          </summary>
+
+          <div class="faq-card-content">
+
+            <p>
+              How Outliers Works content will go here.
+            </p>
+
+          </div>
+
+        </details>
+
+      </section>
+
+
+      <!-- =========================
+           LEVELS
+      ========================== -->
+
+      <section class="faq-section">
+
+        <h2>
+          Levels
+        </h2>
+
+        <div class="faq-level-flow">
+
+
+          <!-- LEVEL 0 -->
+
+          <button
+            type="button"
+            class="faq-level-button available"
+            data-level="0"
+          >
+
+            <span class="faq-level-number">
+              Level 0
+            </span>
+
+            <span class="faq-level-name">
+              Baseline
+            </span>
+
+          </button>
+
+
+          <!-- LEVEL 1 -->
+
+          <button
+            type="button"
+            class="faq-level-button available"
+            data-level="1"
+          >
+
+            <span class="faq-level-number">
+              Level 1
+            </span>
+
+            <span class="faq-level-name">
+              Consistency
+            </span>
+
+          </button>
+
+
+          <!-- LEVEL 2 -->
+
+          <button
+            type="button"
+            class="faq-level-button available"
+            data-level="2"
+          >
+
+            <span class="faq-level-number">
+              Level 2
+            </span>
+
+            <span class="faq-level-name">
+              Explore
+            </span>
+
+          </button>
+
+
+          <!-- LEVEL 3 -->
+
+          <button
+            type="button"
+            class="faq-level-button future"
+            data-level="3"
+            disabled
+          >
+
+            <span class="faq-level-number">
+              Level 3
+            </span>
+
+            <span class="faq-level-name">
+              Program
+            </span>
+
+          </button>
+
+
+          <!-- LEVEL 4 -->
+
+          <button
+            type="button"
+            class="faq-level-button future"
+            data-level="4"
+            disabled
+          >
+
+            <span class="faq-level-number">
+              Level 4
+            </span>
+
+            <span class="faq-level-name">
+              Discipline
+            </span>
+
+          </button>
+
+
+          <!-- LEVEL 5 -->
+
+          <button
+            type="button"
+            class="faq-level-button future"
+            data-level="5"
+            disabled
+          >
+
+            <span class="faq-level-number">
+              Level 5
+            </span>
+
+            <span class="faq-level-name">
+              Nutrition
+            </span>
+
+          </button>
+
+
+          <!-- LEVEL 6 -->
+
+          <button
+            type="button"
+            class="faq-level-button future"
+            data-level="6"
+            disabled
+          >
+
+            <span class="faq-level-number">
+              Level 6
+            </span>
+
+            <span class="faq-level-name">
+              Vitality
+            </span>
+
+          </button>
+
+
+          <!-- LEVEL 7 -->
+
+          <button
+            type="button"
+            class="faq-level-button future"
+            data-level="7"
+            disabled
+          >
+
+            <span class="faq-level-number">
+              Level 7
+            </span>
+
+            <span class="faq-level-name">
+              Outlier
+            </span>
+
+          </button>
+
+
+        </div>
+
+      </section>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       LEVEL GUIDE MODAL
+  ========================== -->
+
+  <div
+    class="level-celebration-modal"
+    id="faqLevelModal"
+    aria-hidden="true"
+  >
+
+    <div class="level-celebration-card">
+
+      <div class="celebration-screen">
+
+        <div class="celebration-label">
+          LEVEL GUIDE
+        </div>
+
+        <h2 id="faqLevelTitle"></h2>
+
+        <div
+          class="next-level-content"
+          id="faqLevelContent"
+        ></div>
+
+        <button
+          type="button"
+          class="pixel-button celebration-button"
+          id="closeFaqLevelBtn"
+        >
+          Close
+        </button>
+
+      </div>
+
     </div>
 
-
-    <!-- =========================
-         GETTING STARTED
-    ========================== -->
-
-    <section class="faq-section">
-
-      <h2>Getting Started</h2>
-
-      <details class="faq-card-dropdown">
-        <summary>
-          Welcome to Outliers
-        </summary>
-
-        <div class="faq-card-content">
-
-          <p>
-            Welcome card content will go here.
-          </p>
-
-        </div>
-      </details>
-
-
-      <details class="faq-card-dropdown">
-        <summary>
-          Meet Your Coach
-        </summary>
-
-        <div class="faq-card-content">
-
-          <p>
-            Meet Your Coach content will go here.
-          </p>
-
-        </div>
-      </details>
-
-
-      <details class="faq-card-dropdown">
-        <summary>
-          How Outliers Works
-        </summary>
-
-        <div class="faq-card-content">
-
-          <p>
-            How Outliers Works content will go here.
-          </p>
-
-        </div>
-      </details>
-
-    </section>
-
-
-    <!-- =========================
-         LEVELS
-    ========================== -->
-
-    <section class="faq-section">
-
-      <h2>Levels</h2>
-
-
-      <!-- BASELINE -->
-
-      <details class="faq-card-dropdown">
-
-        <summary>
-          Level 0: Baseline
-        </summary>
-
-        <div class="faq-card-content">
-
-          <h3>Welcome to Baseline</h3>
-
-          <p>
-            <strong>Duration:</strong>
-            1 Week • 70 XP
-          </p>
-
-          <h4>Weekly Objectives</h4>
-
-          <div class="level-objectives">
-
-            <div class="level-objective">
-              <span>Food</span>
-              <strong>6 Days</strong>
-            </div>
-
-            <div class="level-objective">
-              <span>Activity</span>
-              <strong>4 Days</strong>
-            </div>
-
-          </div>
-
-          <!-- Baseline paragraphs/dropdowns here -->
-
-        </div>
-
-      </details>
-
-
-      <!-- CONSISTENCY -->
-
-      <details class="faq-card-dropdown">
-
-        <summary>
-          Level 1: Consistency
-        </summary>
-
-        <div class="faq-card-content">
-
-          <h3>Welcome to Consistency</h3>
-
-          <p>
-            <strong>Duration:</strong>
-            1 Week • 100 XP
-          </p>
-
-          <h4>Weekly Objectives</h4>
-
-          <div class="level-objectives">
-
-            <div class="level-objective">
-              <span>Weight</span>
-              <strong>6 Days</strong>
-            </div>
-
-            <div class="level-objective">
-              <span>Activity</span>
-              <strong>4 Days</strong>
-            </div>
-
-            <div class="level-objective">
-              <span>Protein</span>
-              <strong>6 Days</strong>
-            </div>
-
-          </div>
-
-          <!-- Consistency paragraphs/dropdowns here -->
-
-        </div>
-
-      </details>
-
-
-      <!-- EXPLORE -->
-
-      <details class="faq-card-dropdown">
-
-        <summary>
-          Level 2: Explore
-        </summary>
-
-        <div class="faq-card-content">
-
-          <h3>Welcome to Explore</h3>
-
-          <p>
-            <strong>Duration:</strong>
-            2 Weeks • 280 XP
-          </p>
-
-          <h4>Weekly Objectives</h4>
-
-          <div class="level-objectives">
-
-            <div class="level-objective">
-              <span>Weight</span>
-              <strong>6 Days</strong>
-            </div>
-
-            <div class="level-objective">
-              <span>Workout</span>
-              <strong>4 Days</strong>
-            </div>
-
-            <div class="level-objective">
-              <span>Protein</span>
-              <strong>6 Days</strong>
-            </div>
-
-          </div>
-
-          <!-- Explore paragraphs/dropdowns here -->
-
-        </div>
-
-      </details>
-
-
-      <!-- FUTURE LEVELS -->
-
-      <details class="faq-card-dropdown">
-
-        <summary>
-          Level 3: Program
-        </summary>
-
-        <div class="faq-card-content">
-          <p>
-            Content coming soon.
-          </p>
-        </div>
-
-      </details>
-
-    </section>
-
-  </section>
-</main>
+  </div>
 
 
   <!-- =========================
@@ -402,6 +713,780 @@
 
 
     /* =========================
+       LEVEL INTRO CONTENT
+    ========================== */
+
+    const levelIntroContent = {
+
+
+      /* =========================
+         LEVEL 0: BASELINE
+      ========================== */
+
+      0: {
+
+        title: "Welcome to Baseline!",
+
+        duration: "1 Week • 70 XP",
+
+        objectives: [
+
+          {
+            name: "Food",
+            days: "6 Days"
+          },
+
+          {
+            name: "Activity",
+            days: "4 Days"
+          }
+
+        ],
+
+        paragraphs: [
+
+          `
+Before making changes to your routine,
+we need to understand your current habits.
+          `,
+
+          `
+For the next week, continue eating and
+exercising as you normally would. Your goal
+is simply to log your food and activity so
+we can establish a starting point.
+          `,
+
+          `
+This information will help me identify where
+changes may be useful and what we should focus
+on in the next levels.
+          `,
+
+          `
+There is no need to change anything this week.
+Focus on logging your normal routine as
+accurately as you can.
+          `
+
+        ],
+
+        takeaway:
+          "Baseline gives us the information we need to make more specific and realistic changes.",
+
+        dropdowns: [
+
+          {
+
+            title: "How to Log Food",
+
+            paragraphs: [
+
+              `
+For now, you do not need to count calories or
+macros. Simply record what you eat throughout
+the day.
+              `,
+
+              `
+Try to include meals, snacks, and drinks when
+possible.
+              `
+
+            ]
+
+          },
+
+
+          {
+
+            title: "How to Log Activity",
+
+            paragraphs: [
+
+              `
+Log any intentional activity or exercise you
+complete.
+              `,
+
+              `
+This can include strength training, walking,
+running, sports, fitness classes, stretching,
+mobility work, or other physical activity.
+              `,
+
+              `
+Include what you did and, when possible,
+approximately how long you did it.
+              `
+
+            ]
+
+          },
+
+
+          {
+
+            title: "Why Start With a Baseline?",
+
+            paragraphs: [
+
+              `
+A baseline gives us actual information about
+your current habits instead of relying on
+estimates.
+              `,
+
+              `
+Your food logs help me understand your typical
+eating patterns, while your activity logs show
+me how much movement is already part of your
+routine.
+              `,
+
+              `
+We can then use that information to make more
+specific and realistic changes as you progress
+through the program.
+              `
+
+            ]
+
+          }
+
+        ]
+
+      },
+
+
+      /* =========================
+         LEVEL 1: CONSISTENCY
+      ========================== */
+
+      1: {
+
+        title: "Welcome to Consistency!",
+
+        duration: "1 Week • 100 XP",
+
+        objectives: [
+
+          {
+            name: "Weight",
+            days: "6 Days"
+          },
+
+          {
+            name: "Activity",
+            days: "4 Days"
+          },
+
+          {
+            name: "Protein",
+            days: "6 Days"
+          }
+
+        ],
+
+        paragraphs: [
+
+          `
+Now that you understand your current habits,
+it's time to start building new ones.
+          `,
+
+          `
+This week, the focus is consistency.
+          `,
+
+          `
+Instead of introducing a full meal plan or
+structured workout program immediately, the
+goal is to practice showing up regularly.
+          `,
+
+          `
+Move your body on four different days this
+week. This could mean walking, stretching,
+or exploring workouts on the Workouts page.
+Aim for approximately 20–30 minutes of
+intentional movement and log the activity.
+          `,
+
+          `
+You'll also begin working toward the protein
+goal listed on your home page.
+          `,
+
+          `
+Try to reach that protein goal on six
+different days. Even if you do not reach the
+goal, continue logging your protein so we can
+see where adjustments may be useful.
+          `
+
+        ],
+
+        takeaway:
+          "The goal of Consistency is to establish repeatable habits before adding more structure.",
+
+        dropdowns: [
+
+          {
+
+            title: "Why Protein?",
+
+            paragraphs: [
+
+              `
+Protein is one of the primary nutrients your
+body uses to repair and build muscle.
+              `,
+
+              `
+It also supports recovery from exercise and
+can help you stay full throughout the day.
+              `,
+
+              `
+If your goal is to gain weight, adequate
+protein can help support muscle growth.
+              `,
+
+              `
+If your goal is to lose fat, protein can help
+preserve muscle while supporting fullness.
+              `,
+
+              `
+No matter whether your goal is building
+muscle, losing fat, getting stronger, or
+improving your overall health, protein plays
+an important role.
+              `
+
+            ]
+
+          }
+
+        ]
+
+      },
+
+
+      /* =========================
+         LEVEL 2: EXPLORE
+      ========================== */
+
+      2: {
+
+        title: "Welcome to Explore!",
+
+        duration: "2 Weeks • 280 XP",
+
+        objectives: [
+
+          {
+            name: "Weight",
+            days: "6 Days"
+          },
+
+          {
+            name: "Workout",
+            days: "4 Days"
+          },
+
+          {
+            name: "Protein",
+            days: "6 Days"
+          }
+
+        ],
+
+        paragraphs: [
+
+          `
+You've spent the last level building
+consistency. Now we're going to start learning
+what types of training work best for you.
+          `,
+
+          `
+For the next two weeks, use the Workouts page
+to explore different exercises and equipment.
+Pay attention to which exercises you enjoy,
+which feel comfortable, which feel
+challenging, and which you would prefer not
+to include in your training.
+          `,
+
+          `
+There are many ways to train the same muscle
+groups, so there is no need to force an
+exercise into your routine simply because it
+is commonly recommended.
+          `,
+
+          `
+Learning your preferences will help me create
+a program that is both effective and realistic
+for you to follow consistently.
+          `,
+
+          `
+Log each workout with the exercises you
+completed, including your sets and reps when
+possible.
+          `,
+
+          `
+You can also include notes about exercises you
+liked, disliked, found difficult, or had
+questions about.
+          `,
+
+          `
+I will use your workout logs during Explore
+to help build your programming in the next
+level.
+          `,
+
+          `
+You are not expected to have everything
+figured out yet. The purpose of Explore is to
+try different options and give us the
+information we need to create a more
+structured training plan.
+          `
+
+        ],
+
+        takeaway:
+          "Explore is your opportunity to learn which exercises and training styles work best for you before your program becomes more structured.",
+
+        dropdowns: [
+
+          {
+
+            title: "How to Log Your Workouts",
+
+            paragraphs: [
+
+              `
+Your workout logs become especially important
+during Explore because I will use them when
+creating your programming.
+              `,
+
+              `
+You do not need to write an essay. Include the
+exercises you completed, along with your sets
+and reps when possible.
+              `,
+
+              `
+Instead of writing:
+"Did glute workout"
+              `,
+
+              `
+Try something like:
+Warm-up: 5 min treadmill
+Lower Back Extensions: 3 × 12
+Glute Kickbacks: 3 × 12
+Hip Abductors: 3 × 12
+Treadmill: 1 mile
+              `,
+
+              `
+You can also include short notes about how an
+exercise felt or whether you had questions
+about it.
+              `
+
+            ]
+
+          },
+
+
+          {
+
+            title: "Looking for More Structure?",
+
+            paragraphs: [
+
+              `
+You have flexibility during Explore, but if
+walking into the gym without a plan feels
+overwhelming, you can use a basic four-day
+structure.
+              `,
+
+              `
+Day 1: Legs
+              `,
+
+              `
+Day 2: Back + Biceps
+              `,
+
+              `
+Day 3: Glutes
+              `,
+
+              `
+Day 4: Chest + Shoulders
+              `,
+
+              `
+Use the Workouts page to select a few exercises
+for each area.
+              `,
+
+              `
+This is not your permanent program. The goal
+is to try different exercises and gather
+information that can be used when your
+structured program is created.
+              `
+
+            ]
+
+          },
+
+
+          {
+
+            title: "Some Tips",
+
+            paragraphs: [
+
+              `
+Take some time to learn the general layout of
+your gym. Knowing where the machines,
+dumbbells, cables, and cardio equipment are
+located can make workouts easier to navigate.
+              `,
+
+              `
+Do not worry about finding a perfect exercise.
+If something does not feel comfortable or you
+do not enjoy it, try another option.
+              `,
+
+              `
+When learning a new exercise, start with a
+manageable weight and focus on becoming
+comfortable with the movement.
+              `,
+
+              `
+Keep me informed about exercises that feel
+good, feel uncomfortable, or create questions.
+That information is useful when building your
+program.
+              `,
+
+              `
+If an exercise is written as 3 × 12, the first
+number represents the number of sets and the
+second number represents the number of
+repetitions, or reps, in each set.
+              `,
+
+              `
+For example, 3 × 12 means completing 12 reps,
+resting, and repeating until you have completed
+three total sets.
+              `
+
+            ]
+
+          }
+
+        ]
+
+      }
+
+    };
+
+
+    /* =========================
+       FAQ LEVEL MODAL ELEMENTS
+    ========================== */
+
+    const faqLevelModal =
+      document.getElementById(
+        "faqLevelModal"
+      );
+
+    const faqLevelTitle =
+      document.getElementById(
+        "faqLevelTitle"
+      );
+
+    const faqLevelContent =
+      document.getElementById(
+        "faqLevelContent"
+      );
+
+    const closeFaqLevelBtn =
+      document.getElementById(
+        "closeFaqLevelBtn"
+      );
+
+    const faqLevelButtons =
+      document.querySelectorAll(
+        ".faq-level-button"
+      );
+
+
+    /* =========================
+       RENDER LEVEL CARD
+    ========================== */
+
+    function renderFaqLevelCard(
+      cardContent
+    ) {
+
+      if (!cardContent) {
+        return;
+      }
+
+
+      const objectivesHtml =
+        cardContent.objectives
+          .map(objective => {
+
+            return `
+              <div class="level-objective">
+
+                <span>
+                  ${objective.name}
+                </span>
+
+                <strong>
+                  ${objective.days}
+                </strong>
+
+              </div>
+            `;
+
+          })
+          .join("");
+
+
+      const paragraphsHtml =
+        cardContent.paragraphs
+          .map(paragraph => {
+
+            return `
+              <p>
+                ${paragraph.trim()}
+              </p>
+            `;
+
+          })
+          .join("");
+
+
+      const dropdownsHtml =
+        cardContent.dropdowns
+          .map(dropdown => {
+
+            const dropdownParagraphs =
+              dropdown.paragraphs
+                .map(paragraph => {
+
+                  return `
+                    <p>
+                      ${paragraph.trim()}
+                    </p>
+                  `;
+
+                })
+                .join("");
+
+
+            return `
+              <details class="lesson-dropdown">
+
+                <summary>
+                  ${dropdown.title}
+                </summary>
+
+                <div
+                  class="lesson-dropdown-content"
+                >
+
+                  ${dropdownParagraphs}
+
+                </div>
+
+              </details>
+            `;
+
+          })
+          .join("");
+
+
+      faqLevelContent.innerHTML = `
+
+        <div class="next-level-duration">
+          ${cardContent.duration}
+        </div>
+
+
+        <div class="next-level-section">
+
+          <h3>
+            Weekly Objectives
+          </h3>
+
+          <div class="level-objectives">
+            ${objectivesHtml}
+          </div>
+
+        </div>
+
+
+        <div class="next-level-copy">
+          ${paragraphsHtml}
+        </div>
+
+
+        <div class="next-level-takeaway">
+          ${cardContent.takeaway}
+        </div>
+
+
+        <div class="next-level-lessons">
+          ${dropdownsHtml}
+        </div>
+
+      `;
+
+    }
+
+
+    /* =========================
+       OPEN LEVEL CARD
+    ========================== */
+
+    faqLevelButtons.forEach(
+      button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            if (button.disabled) {
+              return;
+            }
+
+
+            const levelNumber =
+              Number(
+                button.dataset.level
+              );
+
+
+            const cardContent =
+              levelIntroContent[
+                levelNumber
+              ];
+
+
+            if (!cardContent) {
+              return;
+            }
+
+
+            faqLevelTitle.textContent =
+              cardContent.title;
+
+
+            renderFaqLevelCard(
+              cardContent
+            );
+
+
+            faqLevelModal.classList.add(
+              "active"
+            );
+
+
+            faqLevelModal.setAttribute(
+              "aria-hidden",
+              "false"
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+    /* =========================
+       CLOSE LEVEL CARD
+    ========================== */
+
+    if (closeFaqLevelBtn) {
+
+      closeFaqLevelBtn.addEventListener(
+        "click",
+        () => {
+
+          faqLevelModal.classList.remove(
+            "active"
+          );
+
+          faqLevelModal.setAttribute(
+            "aria-hidden",
+            "true"
+          );
+
+        }
+      );
+
+    }
+
+
+    /*
+      Also close the modal when the user clicks
+      outside of the card.
+    */
+
+    if (faqLevelModal) {
+
+      faqLevelModal.addEventListener(
+        "click",
+        event => {
+
+          if (
+            event.target ===
+            faqLevelModal
+          ) {
+
+            faqLevelModal.classList.remove(
+              "active"
+            );
+
+            faqLevelModal.setAttribute(
+              "aria-hidden",
+              "true"
+            );
+
+          }
+
+        }
+      );
+
+    }
+
+
+    /* =========================
        REQUIRE LOGIN
     ========================== */
 
@@ -436,4 +1521,3 @@
 </body>
 
 </html>
-```
