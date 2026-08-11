@@ -642,3 +642,10 @@
     padding: 9px 10px;
   }
 }
+
+.faq-card {
+  width: 100%;
+  max-width: 500px;
+  margin: 24px auto;
+  box-sizing: border-box;
+}
