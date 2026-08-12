@@ -86,20 +86,19 @@
     }
 
 
-    .program-header p {
-      margin: 0;
-    }
-
-
     /* =========================
        PROGRAM INFO
     ========================== */
 
     .program-info {
       background: var(--card, #ffffff);
+
       border: 3px solid var(--border, #111111);
+
       padding: 20px;
+
       margin-bottom: 28px;
+
       box-sizing: border-box;
     }
 
@@ -112,6 +111,24 @@
 
     .program-info p {
       margin-bottom: 0;
+      white-space: pre-wrap;
+    }
+
+
+    /* =========================
+       NO PROGRAM MESSAGE
+    ========================== */
+
+    .no-program-message {
+      background: var(--card, #ffffff);
+
+      border: 3px solid var(--border, #111111);
+
+      padding: 24px;
+
+      text-align: center;
+
+      box-sizing: border-box;
     }
 
 
@@ -121,14 +138,18 @@
 
     .workout-day {
       background: var(--card, #ffffff);
+
       border: 3px solid var(--border, #111111);
+
       margin-bottom: 28px;
+
       box-sizing: border-box;
     }
 
 
     .workout-day-header {
       border-bottom: 3px solid var(--border, #111111);
+
       padding: 16px 20px;
     }
 
@@ -174,12 +195,15 @@
 
     .exercise-prescription {
       font-weight: 700;
+
       margin-bottom: 6px;
     }
 
 
     .exercise-note {
       margin: 0;
+
+      white-space: pre-wrap;
     }
 
 
@@ -193,6 +217,7 @@
       padding: 16px 20px;
 
       display: flex;
+
       justify-content: center;
       align-items: center;
     }
@@ -202,6 +227,7 @@
       border: 3px solid var(--border, #111111);
 
       background: var(--fg, #111111);
+
       color: var(--card, #ffffff);
 
       padding: 10px 22px;
@@ -211,6 +237,7 @@
         sans-serif;
 
       font-weight: 700;
+
       font-size: 15px;
 
       cursor: pointer;
@@ -221,6 +248,7 @@
 
     .quick-log-button:hover {
       transform: translate(2px, 2px);
+
       box-shadow: 2px 2px 0 #777;
     }
 
@@ -233,6 +261,7 @@
 
       .program-page {
         width: 92%;
+
         margin: 24px auto;
       }
 
@@ -336,8 +365,6 @@
           My Program
         </h1>
 
-
-
       </div>
 
 
@@ -345,393 +372,27 @@
            PROGRAM INFO
       ========================== -->
 
-      <section class="program-info">
+      <section
+        class="program-info"
+        id="programInfo"
+      >
 
         <h2>
           Notes from your Coach
         </h2>
 
-        <p>
-          Your coach will update your program as you progress.
+        <p id="coachNotesDisplay">
+          Loading your program...
         </p>
 
       </section>
 
 
       <!-- =========================
-           DAY 1
+           WORKOUT DAYS
       ========================== -->
 
-      <section
-        class="workout-day"
-        data-workout-day="1"
-      >
-
-        <div class="workout-day-header">
-
-          <h2>
-            Day 1
-          </h2>
-
-          <p>
-            Legs
-          </p>
-
-        </div>
-
-
-        <div class="exercise-list">
-
-          <div class="exercise">
-
-            <h3>
-              Squat
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 8
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-
-          <div class="exercise">
-
-            <h3>
-              Romanian Deadlift
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 10
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-
-          <div class="exercise">
-
-            <h3>
-              Leg Extension
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 12
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <!-- QUICK LOG -->
-
-        <div class="workout-actions">
-
-          <button
-            type="button"
-            class="quick-log-button"
-            data-day="1"
-          >
-            Quick Log Workout
-          </button>
-
-        </div>
-
-      </section>
-
-
-      <!-- =========================
-           DAY 2
-      ========================== -->
-
-      <section
-        class="workout-day"
-        data-workout-day="2"
-      >
-
-        <div class="workout-day-header">
-
-          <h2>
-            Day 2
-          </h2>
-
-          <p>
-            Back + Biceps
-          </p>
-
-        </div>
-
-
-        <div class="exercise-list">
-
-          <div class="exercise">
-
-            <h3>
-              Lat Pulldown
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 10
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-
-          <div class="exercise">
-
-            <h3>
-              Seated Cable Row
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 10
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-
-          <div class="exercise">
-
-            <h3>
-              Dumbbell Curl
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 12
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <!-- QUICK LOG -->
-
-        <div class="workout-actions">
-
-          <button
-            type="button"
-            class="quick-log-button"
-            data-day="2"
-          >
-            Quick Log Workout
-          </button>
-
-        </div>
-
-      </section>
-
-
-      <!-- =========================
-           DAY 3
-      ========================== -->
-
-      <section
-        class="workout-day"
-        data-workout-day="3"
-      >
-
-        <div class="workout-day-header">
-
-          <h2>
-            Day 3
-          </h2>
-
-          <p>
-            Glutes
-          </p>
-
-        </div>
-
-
-        <div class="exercise-list">
-
-          <div class="exercise">
-
-            <h3>
-              Hip Thrust
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 10
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-
-          <div class="exercise">
-
-            <h3>
-              Glute Kickback
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 12
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-
-          <div class="exercise">
-
-            <h3>
-              Hip Abductor
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 12
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <!-- QUICK LOG -->
-
-        <div class="workout-actions">
-
-          <button
-            type="button"
-            class="quick-log-button"
-            data-day="3"
-          >
-            Quick Log Workout
-          </button>
-
-        </div>
-
-      </section>
-
-
-      <!-- =========================
-           DAY 4
-      ========================== -->
-
-      <section
-        class="workout-day"
-        data-workout-day="4"
-      >
-
-        <div class="workout-day-header">
-
-          <h2>
-            Day 4
-          </h2>
-
-          <p>
-            Chest + Shoulders
-          </p>
-
-        </div>
-
-
-        <div class="exercise-list">
-
-          <div class="exercise">
-
-            <h3>
-              Dumbbell Bench Press
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 10
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-
-          <div class="exercise">
-
-            <h3>
-              Shoulder Press
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 10
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-
-          <div class="exercise">
-
-            <h3>
-              Lateral Raise
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 12
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <!-- QUICK LOG -->
-
-        <div class="workout-actions">
-
-          <button
-            type="button"
-            class="quick-log-button"
-            data-day="4"
-          >
-            Quick Log Workout
-          </button>
-
-        </div>
-
-      </section>
+      <div id="workoutDaysContainer"></div>
 
 
     </section>
@@ -751,6 +412,7 @@
     <h2>
       Log Workout
     </h2>
+
 
     <textarea
       id="workoutInput"
@@ -792,6 +454,7 @@
     src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
   ></script>
 
+
   <script
     src="/myfolder/js/auth.js?v=10"
   ></script>
@@ -808,20 +471,25 @@
         "hamburger"
       );
 
+
     const mobileMenu =
       document.getElementById(
         "mobile-menu"
       );
 
 
-    if (hamburger && mobileMenu) {
+    if (
+      hamburger &&
+      mobileMenu
+    ) {
 
       hamburger.addEventListener(
         "click",
         () => {
 
           mobileMenu.style.display =
-            mobileMenu.style.display === "flex"
+            mobileMenu.style.display ===
+            "flex"
               ? "none"
               : "flex";
 
@@ -832,37 +500,82 @@
 
 
     /* =========================
-       PROGRAM ELEMENTS
+       PAGE ELEMENTS
     ========================== */
+
+    const workoutDaysContainer =
+      document.getElementById(
+        "workoutDaysContainer"
+      );
+
+
+    const coachNotesDisplay =
+      document.getElementById(
+        "coachNotesDisplay"
+      );
+
 
     const workoutLogPanel =
       document.getElementById(
         "workoutLogPanel"
       );
 
+
     const workoutInput =
       document.getElementById(
         "workoutInput"
       );
+
 
     const saveWorkoutBtn =
       document.getElementById(
         "saveWorkoutBtn"
       );
 
+
     const cancelWorkoutLogBtn =
       document.getElementById(
         "cancelWorkoutLogBtn"
       );
 
-    const quickLogButtons =
-      document.querySelectorAll(
-        ".quick-log-button"
-      );
-
 
     let activeQuickLogButton =
       null;
+
+
+    /* =========================
+       ESCAPE HTML
+    ========================== */
+
+    function escapeHtml(
+      value
+    ) {
+
+      return String(
+        value ?? ""
+      )
+        .replaceAll(
+          "&",
+          "&amp;"
+        )
+        .replaceAll(
+          "<",
+          "&lt;"
+        )
+        .replaceAll(
+          ">",
+          "&gt;"
+        )
+        .replaceAll(
+          '"',
+          "&quot;"
+        )
+        .replaceAll(
+          "'",
+          "&#039;"
+        );
+
+    }
 
 
     /* =========================
@@ -879,8 +592,13 @@
       } =
         await window.auth.supabase
           .from("profiles")
-          .select("display_name")
-          .eq("id", userId)
+          .select(
+            "display_name"
+          )
+          .eq(
+            "id",
+            userId
+          )
           .single();
 
 
@@ -912,6 +630,7 @@
         heading.textContent =
           "My Program";
 
+
         return;
 
       }
@@ -919,6 +638,250 @@
 
       heading.textContent =
         `${displayName}'s Program`;
+
+    }
+
+
+    /* =========================
+       RENDER CLIENT PROGRAM
+    ========================== */
+
+    function renderClientProgram(
+      programData
+    ) {
+
+      const days =
+        Array.isArray(
+          programData?.days
+        )
+          ? programData.days
+          : [];
+
+
+      if (
+        days.length === 0
+      ) {
+
+        workoutDaysContainer.innerHTML = `
+
+          <div class="no-program-message">
+
+            <strong>
+              Your training program has not been added yet.
+            </strong>
+
+            <p>
+              Check back after your coach updates your program.
+            </p>
+
+          </div>
+
+        `;
+
+
+        return;
+
+      }
+
+
+      workoutDaysContainer.innerHTML =
+        days
+          .map(
+            (
+              day,
+              dayIndex
+            ) => {
+
+              const exercises =
+                Array.isArray(
+                  day.exercises
+                )
+                  ? day.exercises
+                  : [];
+
+
+              const exercisesHtml =
+                exercises
+                  .map(
+                    exercise => {
+
+                      const exerciseName =
+                        escapeHtml(
+                          exercise.name
+                        );
+
+
+                      const sets =
+                        escapeHtml(
+                          exercise.sets
+                        );
+
+
+                      const reps =
+                        escapeHtml(
+                          exercise.reps
+                        );
+
+
+                      const note =
+                        escapeHtml(
+                          exercise.note
+                        );
+
+
+                      return `
+
+                        <div class="exercise">
+
+                          <h3>
+                            ${exerciseName}
+                          </h3>
+
+
+                          <div class="exercise-prescription">
+                            ${sets} × ${reps}
+                          </div>
+
+
+                          ${
+                            note
+                              ? `
+                                <p class="exercise-note">
+                                  ${note}
+                                </p>
+                              `
+                              : ""
+                          }
+
+                        </div>
+
+                      `;
+
+                    }
+                  )
+                  .join("");
+
+
+              return `
+
+                <section
+                  class="workout-day"
+                  data-workout-day="${dayIndex + 1}"
+                >
+
+                  <div class="workout-day-header">
+
+                    <h2>
+                      Day ${dayIndex + 1}
+                    </h2>
+
+                    <p>
+                      ${escapeHtml(
+                        day.name
+                      )}
+                    </p>
+
+                  </div>
+
+
+                  <div class="exercise-list">
+
+                    ${exercisesHtml}
+
+                  </div>
+
+
+                  <div class="workout-actions">
+
+                    <button
+                      type="button"
+                      class="quick-log-button"
+                      data-day="${dayIndex + 1}"
+                    >
+                      Quick Log Workout
+                    </button>
+
+                  </div>
+
+                </section>
+
+              `;
+
+            }
+          )
+          .join("");
+
+    }
+
+
+    /* =========================
+       LOAD PROGRAM FROM
+       SUPABASE
+    ========================== */
+
+    async function loadClientProgram(
+      userId
+    ) {
+
+      const {
+        data,
+        error
+      } =
+        await window.auth.supabase
+          .from("programs")
+          .select(
+            "coach_notes, program_data"
+          )
+          .eq(
+            "user_id",
+            userId
+          )
+          .maybeSingle();
+
+
+      if (error) {
+        throw error;
+      }
+
+
+      /*
+        No program assigned yet.
+      */
+
+      if (!data) {
+
+        coachNotesDisplay.textContent =
+          "Your coach has not added program notes yet.";
+
+
+        renderClientProgram(
+          {
+            days: []
+          }
+        );
+
+
+        return;
+
+      }
+
+
+      /*
+        Display coach notes.
+      */
+
+      coachNotesDisplay.textContent =
+        data.coach_notes ||
+        "No additional notes from your coach.";
+
+
+      /*
+        Display workout days.
+      */
+
+      renderClientProgram(
+        data.program_data
+      );
 
     }
 
@@ -984,7 +947,9 @@
 
 
       const monday =
-        new Date(today);
+        new Date(
+          today
+        );
 
 
       monday.setDate(
@@ -994,7 +959,9 @@
 
 
       const sunday =
-        new Date(monday);
+        new Date(
+          monday
+        );
 
 
       sunday.setDate(
@@ -1005,10 +972,14 @@
       return {
 
         startDate:
-          formatLocalDate(monday),
+          formatLocalDate(
+            monday
+          ),
 
         endDate:
-          formatLocalDate(sunday)
+          formatLocalDate(
+            sunday
+          )
 
       };
 
@@ -1034,9 +1005,17 @@
       } =
         await window.auth.supabase
           .from("daily_logs")
-          .select("workout")
-          .eq("user_id", userId)
-          .eq("log_date", logDate)
+          .select(
+            "workout"
+          )
+          .eq(
+            "user_id",
+            userId
+          )
+          .eq(
+            "log_date",
+            logDate
+          )
           .maybeSingle();
 
 
@@ -1059,11 +1038,14 @@
           .upsert(
             {
 
-              user_id: userId,
+              user_id:
+                userId,
 
-              log_date: logDate,
+              log_date:
+                logDate,
 
-              workout: workout,
+              workout:
+                workout,
 
               updated_at:
                 new Date().toISOString()
@@ -1084,8 +1066,10 @@
 
 
       return {
+
         isNewCompletion:
           !wasAlreadyCompleted
+
       };
 
     }
@@ -1112,10 +1096,13 @@
       } =
         await window.auth.supabase
           .from("daily_logs")
-          .select("*", {
-            count: "exact",
-            head: true
-          })
+          .select(
+            "*",
+            {
+              count: "exact",
+              head: true
+            }
+          )
           .eq(
             "user_id",
             userId
@@ -1177,12 +1164,19 @@
       const requiredXpByLevel = {
 
         0: 70,
+
         1: 100,
+
         2: 280,
+
         3: 280,
+
         4: 280,
+
         5: 400,
+
         6: 400,
+
         7: 560
 
       };
@@ -1206,6 +1200,11 @@
         ] ?? 280;
 
 
+      /*
+        Level up and carry
+        remaining XP forward.
+      */
+
       if (
         newXp >= requiredXp &&
         newLevel < 7
@@ -1214,10 +1213,15 @@
         newXp -=
           requiredXp;
 
+
         newLevel += 1;
 
       }
 
+
+      /*
+        Level 7 is the maximum.
+      */
 
       if (
         newLevel === 7
@@ -1237,18 +1241,20 @@
       } =
         await window.auth.supabase
           .from("game_progress")
-          .update({
+          .update(
+            {
 
-            current_level:
-              newLevel,
+              current_level:
+                newLevel,
 
-            current_xp:
-              newXp,
+              current_xp:
+                newXp,
 
-            updated_at:
-              new Date().toISOString()
+              updated_at:
+                new Date().toISOString()
 
-          })
+            }
+          )
           .eq(
             "user_id",
             userId
@@ -1280,77 +1286,81 @@
         );
 
 
-      if (workoutDay) {
-
-        const dayNumber =
-          workoutDay.dataset.workoutDay;
-
-
-        const workoutName =
-          workoutDay.querySelector(
-            ".workout-day-header p"
-          )?.textContent.trim() || "";
+      if (!workoutDay) {
+        return;
+      }
 
 
-        const exercises =
-          workoutDay.querySelectorAll(
-            ".exercise"
-          );
+      const dayNumber =
+        workoutDay.dataset.workoutDay;
 
 
-        let workoutText =
-          `Day ${dayNumber}`;
+      const workoutName =
+        workoutDay.querySelector(
+          ".workout-day-header p"
+        )?.textContent.trim() ||
+        "";
 
 
-        if (workoutName) {
-
-          workoutText +=
-            `: ${workoutName}`;
-
-        }
-
-
-        workoutText +=
-          "\n\n";
-
-
-        exercises.forEach(
-          exercise => {
-
-            const exerciseName =
-              exercise.querySelector(
-                "h3"
-              )?.textContent.trim();
-
-
-            const prescription =
-              exercise.querySelector(
-                ".exercise-prescription"
-              )?.textContent.trim();
-
-
-            if (
-              exerciseName &&
-              prescription
-            ) {
-
-              workoutText +=
-                `${exerciseName} — ${prescription}\n`;
-
-            }
-
-          }
+      const exercises =
+        workoutDay.querySelectorAll(
+          ".exercise"
         );
 
 
+      let workoutText =
+        `Day ${dayNumber}`;
+
+
+      if (
+        workoutName
+      ) {
+
         workoutText +=
-          "\nNotes:";
-
-
-        workoutInput.value =
-          workoutText;
+          `: ${workoutName}`;
 
       }
+
+
+      workoutText +=
+        "\n\n";
+
+
+      exercises.forEach(
+        exercise => {
+
+          const exerciseName =
+            exercise.querySelector(
+              "h3"
+            )?.textContent.trim();
+
+
+          const prescription =
+            exercise.querySelector(
+              ".exercise-prescription"
+            )?.textContent.trim();
+
+
+          if (
+            exerciseName &&
+            prescription
+          ) {
+
+            workoutText +=
+              `${exerciseName} — ${prescription}\n`;
+
+          }
+
+        }
+      );
+
+
+      workoutText +=
+        "\nNotes:";
+
+
+      workoutInput.value =
+        workoutText;
 
 
       workoutLogPanel.classList.add(
@@ -1361,6 +1371,34 @@
       workoutInput.focus();
 
     }
+
+
+    /* =========================
+       QUICK LOG BUTTONS
+       DYNAMIC EVENT LISTENER
+    ========================== */
+
+    workoutDaysContainer.addEventListener(
+      "click",
+      event => {
+
+        const button =
+          event.target.closest(
+            ".quick-log-button"
+          );
+
+
+        if (!button) {
+          return;
+        }
+
+
+        openWorkoutLog(
+          button
+        );
+
+      }
+    );
 
 
     /* =========================
@@ -1385,28 +1423,6 @@
 
 
     /* =========================
-       QUICK LOG BUTTONS
-    ========================== */
-
-    quickLogButtons.forEach(
-      button => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            openWorkoutLog(
-              button
-            );
-
-          }
-        );
-
-      }
-    );
-
-
-    /* =========================
        SAVE WORKOUT LOG
     ========================== */
 
@@ -1421,6 +1437,7 @@
         alert(
           "Please enter your workout."
         );
+
 
         return;
 
@@ -1451,6 +1468,11 @@
           );
 
 
+        /*
+          Award XP only on the first
+          workout log for this date.
+        */
+
         if (
           isNewCompletion
         ) {
@@ -1460,6 +1482,11 @@
               user.id
             );
 
+
+          /*
+            Workout XP is capped at
+            four days per week.
+          */
 
           if (
             weeklyCount <= 4
@@ -1473,6 +1500,12 @@
 
         }
 
+
+        /*
+          Keep local workoutLogs
+          synchronized with the
+          existing game system.
+        */
 
         const workoutLogs =
           JSON.parse(
@@ -1578,6 +1611,7 @@
 
           event.preventDefault();
 
+
           saveWorkoutLog();
 
         }
@@ -1603,17 +1637,24 @@
         }
 
 
+        /*
+          Display the logged-in
+          client's name.
+        */
+
         await loadClientName(
           user.id
         );
 
 
-        /* =========================
-           LOAD CLIENT PROGRAM
-        ========================== */
+        /*
+          Load the exact program
+          saved by their coach.
+        */
 
-        // Later we will load this client's
-        // actual program from Supabase here.
+        await loadClientProgram(
+          user.id
+        );
 
 
       } catch (error) {
@@ -1622,6 +1663,10 @@
           "Could not initialize program page:",
           error
         );
+
+
+        coachNotesDisplay.textContent =
+          "Your program could not be loaded.";
 
       }
 
