@@ -14,7 +14,7 @@
     content="width=device-width, initial-scale=1.0"
   />
 
-  <title>Program | Outliers Training Club</title>
+  <title>My Program | Outliers Training Club</title>
 
 
   <!-- =========================
@@ -51,6 +51,188 @@
     rel="stylesheet"
     href="/myfolder/CSS/index.css"
   >
+
+
+  <!-- =========================
+       PROGRAM PAGE CSS
+  ========================== -->
+
+  <style>
+
+    /* =========================
+       PAGE
+    ========================== */
+
+    .program-page {
+      width: 90%;
+      max-width: 900px;
+      margin: 40px auto;
+    }
+
+
+    .program-header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+
+    .program-header h1 {
+      margin-bottom: 8px;
+    }
+
+
+    .program-header p {
+      margin: 0;
+    }
+
+
+    /* =========================
+       PROGRAM INFO
+    ========================== */
+
+    .program-info {
+      background: var(--card, #ffffff);
+      border: 3px solid var(--border, #111111);
+      padding: 20px;
+      margin-bottom: 28px;
+      box-sizing: border-box;
+    }
+
+
+    .program-info h2 {
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+
+    .program-info p {
+      margin-bottom: 0;
+    }
+
+
+    /* =========================
+       WORKOUT DAYS
+    ========================== */
+
+    .workout-day {
+      background: var(--card, #ffffff);
+      border: 3px solid var(--border, #111111);
+      margin-bottom: 28px;
+      box-sizing: border-box;
+    }
+
+
+    .workout-day-header {
+      border-bottom: 3px solid var(--border, #111111);
+      padding: 16px 20px;
+    }
+
+
+    .workout-day-header h2 {
+      margin: 0;
+    }
+
+
+    .workout-day-header p {
+      margin: 5px 0 0;
+    }
+
+
+    /* =========================
+       EXERCISES
+    ========================== */
+
+    .exercise-list {
+      padding: 20px;
+    }
+
+
+    .exercise {
+      padding: 16px 0;
+      border-bottom: 2px solid var(--border, #111111);
+    }
+
+
+    .exercise:first-child {
+      padding-top: 0;
+    }
+
+
+    .exercise:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+
+    .exercise h3 {
+      margin: 0 0 8px;
+    }
+
+
+    .exercise-prescription {
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+
+    .exercise-note {
+      margin: 0;
+    }
+
+
+    /* =========================
+       COACH NOTES
+    ========================== */
+
+    .coach-notes {
+      background: var(--card, #ffffff);
+      border: 3px solid var(--border, #111111);
+      padding: 20px;
+      margin-bottom: 28px;
+      box-sizing: border-box;
+    }
+
+
+    .coach-notes h2 {
+      margin-top: 0;
+    }
+
+
+    .coach-notes p:last-child {
+      margin-bottom: 0;
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================== */
+
+    @media (max-width: 600px) {
+
+      .program-page {
+        width: 92%;
+        margin: 24px auto;
+      }
+
+
+      .program-info,
+      .coach-notes {
+        padding: 16px;
+      }
+
+
+      .workout-day-header {
+        padding: 14px 16px;
+      }
+
+
+      .exercise-list {
+        padding: 16px;
+      }
+
+    }
+
+  </style>
 
 </head>
 
@@ -119,30 +301,397 @@
 
   <main>
 
+    <section class="program-page">
 
-    <!-- =========================
-         PAGE HEADER
-    ========================== -->
 
-    <section>
+      <!-- =========================
+           PAGE HEADER
+      ========================== -->
 
-      <h1>
-        My Program
-      </h1>
+      <div class="program-header">
+
+        <h1>
+          My Program
+        </h1>
+
+        <p>
+          Your current training program.
+        </p>
+
+      </div>
+
+
+      <!-- =========================
+           PROGRAM INFO
+      ========================== -->
+
+      <section class="program-info">
+
+        <h2>
+          Current Program
+        </h2>
+
+        <p>
+          Your coach will update your program as you progress.
+        </p>
+
+      </section>
+
+
+      <!-- =========================
+           DAY 1
+      ========================== -->
+
+      <section class="workout-day">
+
+        <div class="workout-day-header">
+
+          <h2>
+            Day 1
+          </h2>
+
+          <p>
+            Legs
+          </p>
+
+        </div>
+
+
+        <div class="exercise-list">
+
+
+          <!-- EXERCISE -->
+
+          <div class="exercise">
+
+            <h3>
+              Squat
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 8
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+
+          <!-- EXERCISE -->
+
+          <div class="exercise">
+
+            <h3>
+              Romanian Deadlift
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 10
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+
+          <!-- EXERCISE -->
+
+          <div class="exercise">
+
+            <h3>
+              Leg Extension
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 12
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           DAY 2
+      ========================== -->
+
+      <section class="workout-day">
+
+        <div class="workout-day-header">
+
+          <h2>
+            Day 2
+          </h2>
+
+          <p>
+            Back + Biceps
+          </p>
+
+        </div>
+
+
+        <div class="exercise-list">
+
+
+          <!-- EXERCISE -->
+
+          <div class="exercise">
+
+            <h3>
+              Lat Pulldown
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 10
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+
+          <!-- EXERCISE -->
+
+          <div class="exercise">
+
+            <h3>
+              Seated Cable Row
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 10
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+
+          <!-- EXERCISE -->
+
+          <div class="exercise">
+
+            <h3>
+              Dumbbell Curl
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 12
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           DAY 3
+      ========================== -->
+
+      <section class="workout-day">
+
+        <div class="workout-day-header">
+
+          <h2>
+            Day 3
+          </h2>
+
+          <p>
+            Glutes
+          </p>
+
+        </div>
+
+
+        <div class="exercise-list">
+
+
+          <!-- EXERCISE -->
+
+          <div class="exercise">
+
+            <h3>
+              Hip Thrust
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 10
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+
+          <!-- EXERCISE -->
+
+          <div class="exercise">
+
+            <h3>
+              Glute Kickback
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 12
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+
+          <!-- EXERCISE -->
+
+          <div class="exercise">
+
+            <h3>
+              Hip Abductor
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 12
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           DAY 4
+      ========================== -->
+
+      <section class="workout-day">
+
+        <div class="workout-day-header">
+
+          <h2>
+            Day 4
+          </h2>
+
+          <p>
+            Chest + Shoulders
+          </p>
+
+        </div>
+
+
+        <div class="exercise-list">
+
+
+          <!-- EXERCISE -->
+
+          <div class="exercise">
+
+            <h3>
+              Dumbbell Bench Press
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 10
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+
+          <!-- EXERCISE -->
+
+          <div class="exercise">
+
+            <h3>
+              Shoulder Press
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 10
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+
+          <!-- EXERCISE -->
+
+          <div class="exercise">
+
+            <h3>
+              Lateral Raise
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 12
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           COACH NOTES
+      ========================== -->
+
+      <section class="coach-notes">
+
+        <h2>
+          Coach Notes
+        </h2>
+
+        <p>
+          Your coach's notes about your current program will appear here.
+        </p>
+
+      </section>
+
 
     </section>
-
-
-    <!-- =========================
-         PROGRAM
-    ========================== -->
-
-    <section id="programSection">
-
-      <!-- Program content will go here -->
-
-    </section>
-
 
   </main>
 
@@ -220,10 +769,11 @@
 
 
         /* =========================
-           PROGRAM INITIALIZATION
+           LOAD CLIENT PROGRAM
         ========================== */
 
-        // Program setup will go here.
+        // Later, we will load the client's
+        // program from Supabase here.
 
 
       } catch (error) {
