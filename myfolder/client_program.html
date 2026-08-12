@@ -92,6 +92,42 @@
 
 
     /* =========================
+       FORM FIELDS
+    ========================== */
+
+    .program-page label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+
+    .program-page input,
+    .program-page textarea {
+      width: 100%;
+      box-sizing: border-box;
+      border: 2px solid var(--border, #111111);
+      background: var(--card, #ffffff);
+      color: var(--fg, #111111);
+      font: inherit;
+      padding: 10px;
+    }
+
+
+    .program-page textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+
+    .program-page input:focus,
+    .program-page textarea:focus {
+      outline: 2px solid var(--border, #111111);
+      outline-offset: 2px;
+    }
+
+
+    /* =========================
        PROGRAM INFO
     ========================== */
 
@@ -106,12 +142,7 @@
 
     .program-info h2 {
       margin-top: 0;
-      margin-bottom: 8px;
-    }
-
-
-    .program-info p {
-      margin-bottom: 0;
+      margin-bottom: 12px;
     }
 
 
@@ -133,13 +164,22 @@
     }
 
 
+    .workout-day-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+
     .workout-day-header h2 {
       margin: 0;
     }
 
 
-    .workout-day-header p {
-      margin: 5px 0 0;
+    .day-name-input {
+      max-width: 420px;
     }
 
 
@@ -167,19 +207,77 @@
     }
 
 
-    .exercise h3 {
-      margin: 0 0 8px;
+    .exercise-grid {
+      display: grid;
+      grid-template-columns: 1fr 110px 110px;
+      gap: 12px;
+      align-items: end;
     }
 
 
-    .exercise-prescription {
+    .exercise-note-field {
+      margin-top: 12px;
+    }
+
+
+    .exercise-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 10px;
+    }
+
+
+    /* =========================
+       BUTTONS
+    ========================== */
+
+    .program-editor-button {
+      display: inline-block;
+      border: 2px solid var(--border, #111111);
+      background: var(--card, #ffffff);
+      color: var(--fg, #111111);
+      font: inherit;
       font-weight: 700;
-      margin-bottom: 6px;
+      padding: 9px 14px;
+      cursor: pointer;
     }
 
 
-    .exercise-note {
+    .program-editor-button:hover {
+      background: var(--hover, #ece9e6);
+    }
+
+
+    .remove-button {
+      padding: 7px 10px;
+    }
+
+
+    .add-exercise-row {
+      padding: 0 20px 20px;
+      text-align: center;
+    }
+
+
+    .program-bottom-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      margin: 30px 0;
+    }
+
+
+    .save-program-button {
+      min-width: 190px;
+    }
+
+
+    .save-status {
+      min-height: 24px;
       margin: 0;
+      text-align: center;
+      font-weight: 700;
     }
 
 
@@ -205,8 +303,28 @@
       }
 
 
+      .workout-day-header-row {
+        align-items: flex-start;
+      }
+
+
       .exercise-list {
         padding: 16px;
+      }
+
+
+      .exercise-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+
+      .exercise-name-field {
+        grid-column: 1 / -1;
+      }
+
+
+      .add-exercise-row {
+        padding: 0 16px 16px;
       }
 
     }
@@ -314,327 +432,53 @@
           Notes from Coach
         </h2>
 
-        <p>
-          Your program notes will go here.
-        </p>
+        <label for="coachNotes">
+          Program Notes
+        </label>
+
+        <textarea
+          id="coachNotes"
+          placeholder="Add notes about the client's current program..."
+        >Your program notes will go here.</textarea>
 
       </section>
 
 
       <!-- =========================
-           DAY 1
+           WORKOUT DAYS
       ========================== -->
 
-      <section
-        class="workout-day"
-        data-workout-day="1"
-      >
-
-        <div class="workout-day-header">
-
-          <h2>
-            Day 1
-          </h2>
-
-          <p>
-            Legs
-          </p>
-
-        </div>
-
-
-        <div class="exercise-list">
-
-          <div class="exercise">
-
-            <h3>
-              Squat
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 8
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-
-          <div class="exercise">
-
-            <h3>
-              Romanian Deadlift
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 10
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-
-          <div class="exercise">
-
-            <h3>
-              Leg Extension
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 12
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-        </div>
-
-      </section>
+      <div id="workoutDaysContainer"></div>
 
 
       <!-- =========================
-           DAY 2
+           PROGRAM ACTIONS
       ========================== -->
 
-      <section
-        class="workout-day"
-        data-workout-day="2"
-      >
-
-        <div class="workout-day-header">
-
-          <h2>
-            Day 2
-          </h2>
-
-          <p>
-            Back + Biceps
-          </p>
-
-        </div>
-
-
-        <div class="exercise-list">
-
-          <div class="exercise">
-
-            <h3>
-              Lat Pulldown
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 10
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-
-          <div class="exercise">
-
-            <h3>
-              Seated Cable Row
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 10
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-
-          <div class="exercise">
-
-            <h3>
-              Dumbbell Curl
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 12
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- =========================
-           DAY 3
-      ========================== -->
-
-      <section
-        class="workout-day"
-        data-workout-day="3"
-      >
-
-        <div class="workout-day-header">
-
-          <h2>
-            Day 3
-          </h2>
-
-          <p>
-            Glutes
-          </p>
-
-        </div>
-
-
-        <div class="exercise-list">
-
-          <div class="exercise">
-
-            <h3>
-              Hip Thrust
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 10
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-
-          <div class="exercise">
-
-            <h3>
-              Glute Kickback
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 12
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-
-          <div class="exercise">
-
-            <h3>
-              Hip Abductor
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 12
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- =========================
-           DAY 4
-      ========================== -->
-
-      <section
-        class="workout-day"
-        data-workout-day="4"
-      >
-
-        <div class="workout-day-header">
-
-          <h2>
-            Day 4
-          </h2>
-
-          <p>
-            Chest + Shoulders
-          </p>
-
-        </div>
-
-
-        <div class="exercise-list">
-
-          <div class="exercise">
-
-            <h3>
-              Dumbbell Bench Press
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 10
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-
-          <div class="exercise">
-
-            <h3>
-              Shoulder Press
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 10
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-
-          <div class="exercise">
-
-            <h3>
-              Lateral Raise
-            </h3>
-
-            <div class="exercise-prescription">
-              3 × 12
-            </div>
-
-            <p class="exercise-note">
-              Coach note will go here.
-            </p>
-
-          </div>
-
-        </div>
-
-      </section>
+      <div class="program-bottom-actions">
+
+        <button
+          type="button"
+          class="program-editor-button"
+          id="addWorkoutDayBtn"
+        >
+          + Add Workout Day
+        </button>
+
+        <button
+          type="button"
+          class="program-editor-button save-program-button"
+          id="saveProgramBtn"
+        >
+          Save Program
+        </button>
+
+        <p
+          class="save-status"
+          id="saveStatus"
+        ></p>
+
+      </div>
 
 
     </section>
@@ -713,6 +557,592 @@
 
 
     /* =========================
+       EDITOR ELEMENTS
+    ========================== */
+
+    const workoutDaysContainer =
+      document.getElementById(
+        "workoutDaysContainer"
+      );
+
+    const coachNotes =
+      document.getElementById(
+        "coachNotes"
+      );
+
+    const addWorkoutDayBtn =
+      document.getElementById(
+        "addWorkoutDayBtn"
+      );
+
+    const saveProgramBtn =
+      document.getElementById(
+        "saveProgramBtn"
+      );
+
+    const saveStatus =
+      document.getElementById(
+        "saveStatus"
+      );
+
+
+    /* =========================
+       DEFAULT PROGRAM
+    ========================== */
+
+    let programData = {
+
+      days: [
+
+        {
+          name: "Legs",
+          exercises: [
+            {
+              name: "Squat",
+              sets: 3,
+              reps: 8,
+              note: "Coach note will go here."
+            },
+            {
+              name: "Romanian Deadlift",
+              sets: 3,
+              reps: 10,
+              note: "Coach note will go here."
+            },
+            {
+              name: "Leg Extension",
+              sets: 3,
+              reps: 12,
+              note: "Coach note will go here."
+            }
+          ]
+        },
+
+        {
+          name: "Back + Biceps",
+          exercises: [
+            {
+              name: "Lat Pulldown",
+              sets: 3,
+              reps: 10,
+              note: "Coach note will go here."
+            },
+            {
+              name: "Seated Cable Row",
+              sets: 3,
+              reps: 10,
+              note: "Coach note will go here."
+            },
+            {
+              name: "Dumbbell Curl",
+              sets: 3,
+              reps: 12,
+              note: "Coach note will go here."
+            }
+          ]
+        },
+
+        {
+          name: "Glutes",
+          exercises: [
+            {
+              name: "Hip Thrust",
+              sets: 3,
+              reps: 10,
+              note: "Coach note will go here."
+            },
+            {
+              name: "Glute Kickback",
+              sets: 3,
+              reps: 12,
+              note: "Coach note will go here."
+            },
+            {
+              name: "Hip Abductor",
+              sets: 3,
+              reps: 12,
+              note: "Coach note will go here."
+            }
+          ]
+        },
+
+        {
+          name: "Chest + Shoulders",
+          exercises: [
+            {
+              name: "Dumbbell Bench Press",
+              sets: 3,
+              reps: 10,
+              note: "Coach note will go here."
+            },
+            {
+              name: "Shoulder Press",
+              sets: 3,
+              reps: 10,
+              note: "Coach note will go here."
+            },
+            {
+              name: "Lateral Raise",
+              sets: 3,
+              reps: 12,
+              note: "Coach note will go here."
+            }
+          ]
+        }
+
+      ]
+
+    };
+
+
+    /* =========================
+       HTML ESCAPING
+    ========================== */
+
+    function escapeHtml(value) {
+
+      return String(
+        value ?? ""
+      )
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+    }
+
+
+    /* =========================
+       RENDER PROGRAM EDITOR
+    ========================== */
+
+    function renderProgramEditor() {
+
+      workoutDaysContainer.innerHTML =
+        programData.days
+          .map(
+            (
+              day,
+              dayIndex
+            ) => {
+
+              const exercisesHtml =
+                day.exercises
+                  .map(
+                    (
+                      exercise,
+                      exerciseIndex
+                    ) => `
+                      <div
+                        class="exercise"
+                        data-exercise-index="${exerciseIndex}"
+                      >
+
+                        <div class="exercise-grid">
+
+                          <div class="exercise-name-field">
+
+                            <label>
+                              Exercise
+                            </label>
+
+                            <input
+                              type="text"
+                              class="exercise-name-input"
+                              value="${escapeHtml(
+                                exercise.name
+                              )}"
+                              data-day-index="${dayIndex}"
+                              data-exercise-index="${exerciseIndex}"
+                            >
+
+                          </div>
+
+
+                          <div>
+
+                            <label>
+                              Sets
+                            </label>
+
+                            <input
+                              type="number"
+                              min="0"
+                              class="exercise-sets-input"
+                              value="${escapeHtml(
+                                exercise.sets
+                              )}"
+                              data-day-index="${dayIndex}"
+                              data-exercise-index="${exerciseIndex}"
+                            >
+
+                          </div>
+
+
+                          <div>
+
+                            <label>
+                              Reps
+                            </label>
+
+                            <input
+                              type="text"
+                              class="exercise-reps-input"
+                              value="${escapeHtml(
+                                exercise.reps
+                              )}"
+                              data-day-index="${dayIndex}"
+                              data-exercise-index="${exerciseIndex}"
+                            >
+
+                          </div>
+
+                        </div>
+
+
+                        <div class="exercise-note-field">
+
+                          <label>
+                            Coach Note
+                          </label>
+
+                          <textarea
+                            class="exercise-note-input"
+                            data-day-index="${dayIndex}"
+                            data-exercise-index="${exerciseIndex}"
+                            placeholder="Optional note for this exercise..."
+                          >${escapeHtml(
+                            exercise.note
+                          )}</textarea>
+
+                        </div>
+
+
+                        <div class="exercise-actions">
+
+                          <button
+                            type="button"
+                            class="program-editor-button remove-button remove-exercise-btn"
+                            data-day-index="${dayIndex}"
+                            data-exercise-index="${exerciseIndex}"
+                          >
+                            Remove Exercise
+                          </button>
+
+                        </div>
+
+                      </div>
+                    `
+                  )
+                  .join("");
+
+
+              return `
+                <section
+                  class="workout-day"
+                  data-workout-day="${dayIndex + 1}"
+                >
+
+                  <div class="workout-day-header">
+
+                    <div class="workout-day-header-row">
+
+                      <h2>
+                        Day ${dayIndex + 1}
+                      </h2>
+
+                      <button
+                        type="button"
+                        class="program-editor-button remove-button remove-day-btn"
+                        data-day-index="${dayIndex}"
+                      >
+                        Remove Day
+                      </button>
+
+                    </div>
+
+
+                    <label>
+                      Workout Name
+                    </label>
+
+                    <input
+                      type="text"
+                      class="day-name-input"
+                      value="${escapeHtml(
+                        day.name
+                      )}"
+                      data-day-index="${dayIndex}"
+                      placeholder="Example: Legs"
+                    >
+
+                  </div>
+
+
+                  <div class="exercise-list">
+
+                    ${exercisesHtml}
+
+                  </div>
+
+
+                  <div class="add-exercise-row">
+
+                    <button
+                      type="button"
+                      class="program-editor-button add-exercise-btn"
+                      data-day-index="${dayIndex}"
+                    >
+                      + Add Exercise
+                    </button>
+
+                  </div>
+
+                </section>
+              `;
+
+            }
+          )
+          .join("");
+
+    }
+
+
+    /* =========================
+       KEEP DATA IN SYNC
+    ========================== */
+
+    workoutDaysContainer.addEventListener(
+      "input",
+      event => {
+
+        const target =
+          event.target;
+
+        const dayIndex =
+          Number(
+            target.dataset.dayIndex
+          );
+
+        const exerciseIndex =
+          Number(
+            target.dataset.exerciseIndex
+          );
+
+
+        if (
+          target.classList.contains(
+            "day-name-input"
+          )
+        ) {
+
+          programData.days[
+            dayIndex
+          ].name =
+            target.value;
+
+          return;
+
+        }
+
+
+        if (
+          !Number.isInteger(
+            exerciseIndex
+          )
+        ) {
+          return;
+        }
+
+
+        const exercise =
+          programData.days[
+            dayIndex
+          ]?.exercises[
+            exerciseIndex
+          ];
+
+
+        if (!exercise) {
+          return;
+        }
+
+
+        if (
+          target.classList.contains(
+            "exercise-name-input"
+          )
+        ) {
+
+          exercise.name =
+            target.value;
+
+        }
+
+
+        if (
+          target.classList.contains(
+            "exercise-sets-input"
+          )
+        ) {
+
+          exercise.sets =
+            target.value;
+
+        }
+
+
+        if (
+          target.classList.contains(
+            "exercise-reps-input"
+          )
+        ) {
+
+          exercise.reps =
+            target.value;
+
+        }
+
+
+        if (
+          target.classList.contains(
+            "exercise-note-input"
+          )
+        ) {
+
+          exercise.note =
+            target.value;
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       ADD / REMOVE
+    ========================== */
+
+    workoutDaysContainer.addEventListener(
+      "click",
+      event => {
+
+        const button =
+          event.target.closest(
+            "button"
+          );
+
+
+        if (!button) {
+          return;
+        }
+
+
+        const dayIndex =
+          Number(
+            button.dataset.dayIndex
+          );
+
+
+        if (
+          button.classList.contains(
+            "add-exercise-btn"
+          )
+        ) {
+
+          programData.days[
+            dayIndex
+          ].exercises.push(
+            {
+              name: "",
+              sets: 3,
+              reps: 10,
+              note: ""
+            }
+          );
+
+
+          renderProgramEditor();
+
+          return;
+
+        }
+
+
+        if (
+          button.classList.contains(
+            "remove-exercise-btn"
+          )
+        ) {
+
+          const exerciseIndex =
+            Number(
+              button.dataset.exerciseIndex
+            );
+
+
+          programData.days[
+            dayIndex
+          ].exercises.splice(
+            exerciseIndex,
+            1
+          );
+
+
+          renderProgramEditor();
+
+          return;
+
+        }
+
+
+        if (
+          button.classList.contains(
+            "remove-day-btn"
+          )
+        ) {
+
+          programData.days.splice(
+            dayIndex,
+            1
+          );
+
+
+          renderProgramEditor();
+
+        }
+
+      }
+    );
+
+
+    addWorkoutDayBtn.addEventListener(
+      "click",
+      () => {
+
+        programData.days.push(
+          {
+            name: "",
+            exercises: [
+              {
+                name: "",
+                sets: 3,
+                reps: 10,
+                note: ""
+              }
+            ]
+          }
+        );
+
+
+        renderProgramEditor();
+
+      }
+    );
+
+
+    /* =========================
        LOAD CLIENT NAME
     ========================== */
 
@@ -759,26 +1189,18 @@
       /*
         NEXT STEP:
 
-        This function will eventually
-        retrieve the selected client's
-        program from Supabase.
+        Once the Supabase "programs"
+        table exists, this function
+        will retrieve:
 
-        For example:
+        - coach_notes
+        - program_data
 
-        clientId
-            ↓
-        program table
-            ↓
-        workout days
-            ↓
-        exercises
-            ↓
-        sets / reps / notes
-            ↓
-        render on this page
+        for clientId.
 
-        For now, the sample program
-        remains in the HTML above.
+        Until then, the default
+        program above is loaded into
+        the editor.
       */
 
       console.log(
@@ -786,7 +1208,56 @@
         clientId
       );
 
+
+      renderProgramEditor();
+
     }
+
+
+    /* =========================
+       SAVE PROGRAM
+    ========================== */
+
+    async function saveProgram() {
+
+      /*
+        The editor is fully functional,
+        but Supabase saving is intentionally
+        not connected yet.
+
+        Once the programs table exists,
+        this is where we will upsert:
+
+        {
+          user_id: clientId,
+          coach_notes: coachNotes.value,
+          program_data: programData,
+          updated_at: new Date().toISOString()
+        }
+      */
+
+      console.log(
+        "Program ready to save:",
+        {
+          user_id: clientId,
+          coach_notes:
+            coachNotes.value,
+          program_data:
+            programData
+        }
+      );
+
+
+      saveStatus.textContent =
+        "Program is ready — connect the programs table to save it.";
+
+    }
+
+
+    saveProgramBtn.addEventListener(
+      "click",
+      saveProgram
+    );
 
 
     /* =========================
@@ -842,9 +1313,7 @@
 
 
         /*
-          Later this will load the
-          selected client's actual
-          training program.
+          Load the editable program.
         */
 
         await loadClientProgram();
