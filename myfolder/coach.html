@@ -158,7 +158,7 @@
   ========================== -->
   <nav>
     <a href="/myfolder/template.html">Home</a>
-        <a href="/myfolder/coach.html">Coach Dashboard</a>
+    <a href="/myfolder/coach.html">Coach Dashboard</a>
     <a href="/myfolder/workouts.html">Workouts</a>
     <a href="/myfolder/meal_planner.html">Meal Planner</a>
     <a href="/myfolder/cart.html">Grocery List</a>
@@ -166,11 +166,11 @@
     <span id="hamburger">&#9776;</span>
 
     <div id="mobile-menu">
-    <a href="/myfolder/template.html">Home</a>
-        <a href="/myfolder/coach.html">Coach Dashboard</a>
-    <a href="/myfolder/workouts.html">Workouts</a>
-    <a href="/myfolder/meal_planner.html">Meal Planner</a>
-    <a href="/myfolder/cart.html">Grocery List</a>
+      <a href="/myfolder/template.html">Home</a>
+      <a href="/myfolder/coach.html">Coach Dashboard</a>
+      <a href="/myfolder/workouts.html">Workouts</a>
+      <a href="/myfolder/meal_planner.html">Meal Planner</a>
+      <a href="/myfolder/cart.html">Grocery List</a>
     </div>
   </nav>
 
@@ -240,6 +240,7 @@
        Move this to coach.js later
   ========================== -->
   <script>
+
     /* =========================
        MOBILE NAVIGATION
     ========================== */
@@ -270,6 +271,7 @@
       );
     }
 
+
     /* =========================
        PAGE ELEMENTS
     ========================== */
@@ -284,6 +286,7 @@
         "programmingClientList"
       );
 
+
     /* =========================
        CREATE CLIENT BUTTON
     ========================== */
@@ -292,23 +295,30 @@
       client,
       destination
     ) {
+
       const link =
-        document.createElement("a");
+        document.createElement(
+          "a"
+        );
 
       link.className =
         "client-button";
+
 
       link.href =
         `${destination}?client=${encodeURIComponent(
           client.id
         )}`;
 
+
       link.dataset.clientId =
         client.id;
+
 
       const clientName =
         client.display_name ||
         "Unnamed Client";
+
 
       link.innerHTML = `
         <span>
@@ -320,8 +330,11 @@
         </span>
       `;
 
+
       return link;
+
     }
+
 
     /* =========================
        RENDER CLIENT BUTTONS
@@ -330,17 +343,23 @@
     function renderClientLists(
       clients
     ) {
-      clientList.innerHTML = "";
+
+      clientList.innerHTML =
+        "";
+
 
       programmingClientList.innerHTML =
         "";
 
+
       if (!clients.length) {
+
         clientList.innerHTML = `
           <p class="coach-status-message">
             No clients are assigned yet.
           </p>
         `;
+
 
         programmingClientList.innerHTML = `
           <p class="coach-status-message">
@@ -348,41 +367,51 @@
           </p>
         `;
 
+
         return;
+
       }
 
-      clients.forEach(client => {
-        /*
-          Both buttons temporarily open
-          progress.html.
 
-          Later, Clients can open
-          client_progress.html and
-          Programming can open a separate
-          programming page.
-        */
+      clients.forEach(
+        client => {
 
-        const progressButton =
-          createClientButton(
-            client,
-            "/myfolder/client_progress.html"
+          /* =========================
+             PROGRESS BUTTON
+          ========================== */
+
+          const progressButton =
+            createClientButton(
+              client,
+              "/myfolder/client_progress.html"
+            );
+
+
+          /* =========================
+             PROGRAMMING BUTTON
+          ========================== */
+
+          const programmingButton =
+            createClientButton(
+              client,
+              "/myfolder/client_program.html"
+            );
+
+
+          clientList.appendChild(
+            progressButton
           );
 
-const programmingButton =
-  createClientButton(
-    client,
-    "/myfolder/client_program.html"
-  );
 
-        clientList.appendChild(
-          progressButton
-        );
+          programmingClientList.appendChild(
+            programmingButton
+          );
 
-        programmingClientList.appendChild(
-          programmingButton
-        );
-      });
+        }
+      );
+
     }
+
 
     /* =========================
        LOAD ASSIGNED CLIENTS
@@ -391,7 +420,11 @@ const programmingButton =
     async function loadCoachClients(
       coachId
     ) {
-      const { data, error } =
+
+      const {
+        data,
+        error
+      } =
         await window.auth.supabase
           .from("profiles")
           .select(
@@ -412,12 +445,16 @@ const programmingButton =
             }
           );
 
+
       if (error) {
         throw error;
       }
 
+
       return data || [];
+
     }
+
 
     /* =========================
        LOAD COACH PROFILE
@@ -426,7 +463,11 @@ const programmingButton =
     async function loadCoachProfile(
       userId
     ) {
-      const { data, error } =
+
+      const {
+        data,
+        error
+      } =
         await window.auth.supabase
           .from("profiles")
           .select(
@@ -438,12 +479,16 @@ const programmingButton =
           )
           .single();
 
+
       if (error) {
         throw error;
       }
 
+
       return data;
+
     }
+
 
     /* =========================
        SHOW PAGE ERROR
@@ -452,69 +497,90 @@ const programmingButton =
     function showCoachPageError(
       message
     ) {
+
       clientList.innerHTML = `
         <p class="coach-error-message">
           ${message}
         </p>
       `;
 
+
       programmingClientList.innerHTML = `
         <p class="coach-error-message">
           ${message}
         </p>
       `;
+
     }
+
 
     /* =========================
        INITIALIZE PAGE
     ========================== */
 
     async function initializeCoachPage() {
+
       try {
+
         const user =
           await window.auth.requireAuth();
+
 
         if (!user) {
           return;
         }
+
 
         const coachProfile =
           await loadCoachProfile(
             user.id
           );
 
+
         if (
           coachProfile.role !==
           "coach"
         ) {
+
           window.location.href =
             "/myfolder/template.html";
 
+
           return;
+
         }
+
 
         const clients =
           await loadCoachClients(
             user.id
           );
 
+
         renderClientLists(
           clients
         );
 
+
       } catch (error) {
+
         console.error(
           "Could not load coach dashboard:",
           error
         );
 
+
         showCoachPageError(
           "Clients could not be loaded."
         );
+
       }
+
     }
 
+
     initializeCoachPage();
+
   </script>
 
 </body>
