@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- =========================
+       PAGE SETUP
+  ========================== -->
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Program | Outliers Training Club</title>
+
+
+  <!-- =========================
+       FONT
+  ========================== -->
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- =========================
+       CSS
+  ========================== -->
+
+  <link
+    rel="stylesheet"
+    href="/myfolder/CSS/base.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/myfolder/CSS/index.css"
+  >
+
+</head>
+
+
+<body>
+
+
+  <!-- =========================
+       NAVIGATION
+  ========================== -->
+
+  <nav id="mainNav">
+
+    <a href="/myfolder/template.html">
+      Home
+    </a>
+
+    <a href="/myfolder/workouts.html">
+      Workouts
+    </a>
+
+    <a href="/myfolder/meal_planner.html">
+      Meal Planner
+    </a>
+
+    <a href="/myfolder/cart.html">
+      Grocery List
+    </a>
+
+
+    <!-- MOBILE HAMBURGER -->
+
+    <span id="hamburger">
+      &#9776;
+    </span>
+
+
+    <!-- MOBILE MENU -->
+
+    <div id="mobile-menu">
+
+      <a href="/myfolder/template.html">
+        Home
+      </a>
+
+      <a href="/myfolder/workouts.html">
+        Workouts
+      </a>
+
+      <a href="/myfolder/meal_planner.html">
+        Meal Planner
+      </a>
+
+      <a href="/myfolder/cart.html">
+        Grocery List
+      </a>
+
+    </div>
+
+  </nav>
+
+
+  <!-- =========================
+       MAIN PAGE
+  ========================== -->
+
+  <main>
+
+
+    <!-- =========================
+         PAGE HEADER
+    ========================== -->
+
+    <section>
+
+      <h1>
+        My Program
+      </h1>
+
+    </section>
+
+
+    <!-- =========================
+         PROGRAM
+    ========================== -->
+
+    <section id="programSection">
+
+      <!-- Program content will go here -->
+
+    </section>
+
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
+  <footer>
+    OUTLIERS TRAINING CLUB © 2026
+  </footer>
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
+
+  <script
+    src="/myfolder/js/auth.js?v=10"
+  ></script>
+
+
+  <script>
+
+    /* =========================
+       MOBILE NAVIGATION
+    ========================== */
+
+    const hamburger =
+      document.getElementById(
+        "hamburger"
+      );
+
+    const mobileMenu =
+      document.getElementById(
+        "mobile-menu"
+      );
+
+
+    if (hamburger && mobileMenu) {
+
+      hamburger.addEventListener(
+        "click",
+        () => {
+
+          mobileMenu.style.display =
+            mobileMenu.style.display === "flex"
+              ? "none"
+              : "flex";
+
+        }
+      );
+
+    }
+
+
+    /* =========================
+       REQUIRE LOGIN
+    ========================== */
+
+    async function initializePage() {
+
+      try {
+
+        const user =
+          await window.auth.requireAuth();
+
+        if (!user) {
+          return;
+        }
+
+
+        /* =========================
+           PROGRAM INITIALIZATION
+        ========================== */
+
+        // Program setup will go here.
+
+
+      } catch (error) {
+
+        console.error(
+          "Could not initialize program page:",
+          error
+        );
+
+      }
+
+    }
+
+
+    initializePage();
+
+  </script>
+
+
+</body>
+
+</html>
