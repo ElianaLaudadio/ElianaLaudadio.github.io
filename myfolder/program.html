@@ -52,6 +52,11 @@
     href="/myfolder/CSS/index.css"
   >
 
+  <link
+    rel="stylesheet"
+    href="/myfolder/CSS/styles.css"
+  >
+
 
   <!-- =========================
        PROGRAM PAGE CSS
@@ -181,6 +186,44 @@
 
 
     /* =========================
+       WORKOUT ACTIONS
+    ========================== */
+
+    .workout-actions {
+      border-top: 3px solid var(--border, #111111);
+
+      padding: 16px 20px;
+
+      display: flex;
+      flex-wrap: wrap;
+
+      gap: 18px;
+    }
+
+
+    .workout-check {
+      display: flex;
+      align-items: center;
+
+      gap: 8px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+
+    .workout-check input {
+      width: 20px;
+      height: 20px;
+
+      cursor: pointer;
+
+      accent-color: #111111;
+    }
+
+
+    /* =========================
        COACH NOTES
     ========================== */
 
@@ -230,6 +273,15 @@
         padding: 16px;
       }
 
+
+      .workout-actions {
+        padding: 14px 16px;
+
+        flex-direction: column;
+
+        gap: 12px;
+      }
+
     }
 
   </style>
@@ -263,14 +315,10 @@
     </a>
 
 
-    <!-- MOBILE HAMBURGER -->
-
     <span id="hamburger">
       &#9776;
     </span>
 
-
-    <!-- MOBILE MENU -->
 
     <div id="mobile-menu">
 
@@ -310,7 +358,7 @@
 
       <div class="program-header">
 
-        <h1>
+        <h1 id="clientProgramHeading">
           My Program
         </h1>
 
@@ -342,7 +390,10 @@
            DAY 1
       ========================== -->
 
-      <section class="workout-day">
+      <section
+        class="workout-day"
+        data-workout-day="1"
+      >
 
         <div class="workout-day-header">
 
@@ -358,9 +409,6 @@
 
 
         <div class="exercise-list">
-
-
-          <!-- EXERCISE -->
 
           <div class="exercise">
 
@@ -379,8 +427,6 @@
           </div>
 
 
-          <!-- EXERCISE -->
-
           <div class="exercise">
 
             <h3>
@@ -398,8 +444,6 @@
           </div>
 
 
-          <!-- EXERCISE -->
-
           <div class="exercise">
 
             <h3>
@@ -416,6 +460,37 @@
 
           </div>
 
+        </div>
+
+
+        <!-- WORKOUT ACTIONS -->
+
+        <div class="workout-actions">
+
+          <label class="workout-check">
+
+            <input
+              type="checkbox"
+              class="workout-complete-checkbox"
+              data-day="1"
+            >
+
+            Workout Complete
+
+          </label>
+
+
+          <label class="workout-check">
+
+            <input
+              type="checkbox"
+              class="quick-log-checkbox"
+              data-day="1"
+            >
+
+            Quick Log Workout
+
+          </label>
 
         </div>
 
@@ -426,7 +501,10 @@
            DAY 2
       ========================== -->
 
-      <section class="workout-day">
+      <section
+        class="workout-day"
+        data-workout-day="2"
+      >
 
         <div class="workout-day-header">
 
@@ -442,9 +520,6 @@
 
 
         <div class="exercise-list">
-
-
-          <!-- EXERCISE -->
 
           <div class="exercise">
 
@@ -463,8 +538,6 @@
           </div>
 
 
-          <!-- EXERCISE -->
-
           <div class="exercise">
 
             <h3>
@@ -482,8 +555,6 @@
           </div>
 
 
-          <!-- EXERCISE -->
-
           <div class="exercise">
 
             <h3>
@@ -500,6 +571,37 @@
 
           </div>
 
+        </div>
+
+
+        <!-- WORKOUT ACTIONS -->
+
+        <div class="workout-actions">
+
+          <label class="workout-check">
+
+            <input
+              type="checkbox"
+              class="workout-complete-checkbox"
+              data-day="2"
+            >
+
+            Workout Complete
+
+          </label>
+
+
+          <label class="workout-check">
+
+            <input
+              type="checkbox"
+              class="quick-log-checkbox"
+              data-day="2"
+            >
+
+            Quick Log Workout
+
+          </label>
 
         </div>
 
@@ -510,7 +612,10 @@
            DAY 3
       ========================== -->
 
-      <section class="workout-day">
+      <section
+        class="workout-day"
+        data-workout-day="3"
+      >
 
         <div class="workout-day-header">
 
@@ -526,9 +631,6 @@
 
 
         <div class="exercise-list">
-
-
-          <!-- EXERCISE -->
 
           <div class="exercise">
 
@@ -547,8 +649,6 @@
           </div>
 
 
-          <!-- EXERCISE -->
-
           <div class="exercise">
 
             <h3>
@@ -566,8 +666,6 @@
           </div>
 
 
-          <!-- EXERCISE -->
-
           <div class="exercise">
 
             <h3>
@@ -584,6 +682,37 @@
 
           </div>
 
+        </div>
+
+
+        <!-- WORKOUT ACTIONS -->
+
+        <div class="workout-actions">
+
+          <label class="workout-check">
+
+            <input
+              type="checkbox"
+              class="workout-complete-checkbox"
+              data-day="3"
+            >
+
+            Workout Complete
+
+          </label>
+
+
+          <label class="workout-check">
+
+            <input
+              type="checkbox"
+              class="quick-log-checkbox"
+              data-day="3"
+            >
+
+            Quick Log Workout
+
+          </label>
 
         </div>
 
@@ -594,7 +723,10 @@
            DAY 4
       ========================== -->
 
-      <section class="workout-day">
+      <section
+        class="workout-day"
+        data-workout-day="4"
+      >
 
         <div class="workout-day-header">
 
@@ -610,9 +742,6 @@
 
 
         <div class="exercise-list">
-
-
-          <!-- EXERCISE -->
 
           <div class="exercise">
 
@@ -631,8 +760,6 @@
           </div>
 
 
-          <!-- EXERCISE -->
-
           <div class="exercise">
 
             <h3>
@@ -650,8 +777,6 @@
           </div>
 
 
-          <!-- EXERCISE -->
-
           <div class="exercise">
 
             <h3>
@@ -668,6 +793,37 @@
 
           </div>
 
+        </div>
+
+
+        <!-- WORKOUT ACTIONS -->
+
+        <div class="workout-actions">
+
+          <label class="workout-check">
+
+            <input
+              type="checkbox"
+              class="workout-complete-checkbox"
+              data-day="4"
+            >
+
+            Workout Complete
+
+          </label>
+
+
+          <label class="workout-check">
+
+            <input
+              type="checkbox"
+              class="quick-log-checkbox"
+              data-day="4"
+            >
+
+            Quick Log Workout
+
+          </label>
 
         </div>
 
@@ -694,6 +850,42 @@
     </section>
 
   </main>
+
+
+  <!-- =========================
+       QUICK WORKOUT LOG PANEL
+  ========================== -->
+
+  <div
+    class="log-panel"
+    id="workoutLogPanel"
+  >
+
+    <h2>
+      Log Workout
+    </h2>
+
+    <textarea
+      id="workoutInput"
+      placeholder="What workout did you do today? What did you try that was new?"
+      rows="5"
+    ></textarea>
+
+
+    <button id="saveWorkoutBtn">
+      Save Log
+    </button>
+
+
+    <button
+      type="button"
+      class="cancel-log-button"
+      id="cancelWorkoutLogBtn"
+    >
+      Don't Log
+    </button>
+
+  </div>
 
 
   <!-- =========================
@@ -753,7 +945,752 @@
 
 
     /* =========================
-       REQUIRE LOGIN
+       PROGRAM ELEMENTS
+    ========================== */
+
+    const workoutLogPanel =
+      document.getElementById(
+        "workoutLogPanel"
+      );
+
+    const workoutInput =
+      document.getElementById(
+        "workoutInput"
+      );
+
+    const saveWorkoutBtn =
+      document.getElementById(
+        "saveWorkoutBtn"
+      );
+
+    const cancelWorkoutLogBtn =
+      document.getElementById(
+        "cancelWorkoutLogBtn"
+      );
+
+    const quickLogCheckboxes =
+      document.querySelectorAll(
+        ".quick-log-checkbox"
+      );
+
+    const workoutCompleteCheckboxes =
+      document.querySelectorAll(
+        ".workout-complete-checkbox"
+      );
+
+
+    let activeQuickLogCheckbox = null;
+
+
+    /* =========================
+       LOAD CLIENT NAME
+    ========================== */
+
+    async function loadClientName(
+      userId
+    ) {
+
+      const {
+        data,
+        error
+      } =
+        await window.auth.supabase
+          .from("profiles")
+          .select("display_name")
+          .eq("id", userId)
+          .single();
+
+
+      if (error) {
+        throw error;
+      }
+
+
+      const displayName =
+        data?.display_name ||
+        "My";
+
+
+      const heading =
+        document.getElementById(
+          "clientProgramHeading"
+        );
+
+
+      if (!heading) {
+        return;
+      }
+
+
+      if (
+        displayName === "My"
+      ) {
+
+        heading.textContent =
+          "My Program";
+
+        return;
+
+      }
+
+
+      heading.textContent =
+        `${displayName}'s Program`;
+
+    }
+
+
+    /* =========================
+       DATE HELPERS
+    ========================== */
+
+    function getTodayDate() {
+
+      const date =
+        new Date();
+
+
+      date.setMinutes(
+        date.getMinutes() -
+        date.getTimezoneOffset()
+      );
+
+
+      return date
+        .toISOString()
+        .split("T")[0];
+
+    }
+
+
+    function formatLocalDate(
+      date
+    ) {
+
+      const localDate =
+        new Date(date);
+
+
+      localDate.setMinutes(
+        localDate.getMinutes() -
+        localDate.getTimezoneOffset()
+      );
+
+
+      return localDate
+        .toISOString()
+        .split("T")[0];
+
+    }
+
+
+    function getCurrentWeekRange() {
+
+      const today =
+        new Date();
+
+
+      const dayOfWeek =
+        today.getDay();
+
+
+      const daysSinceMonday =
+        dayOfWeek === 0
+          ? 6
+          : dayOfWeek - 1;
+
+
+      const monday =
+        new Date(today);
+
+
+      monday.setDate(
+        today.getDate() -
+        daysSinceMonday
+      );
+
+
+      const sunday =
+        new Date(monday);
+
+
+      sunday.setDate(
+        monday.getDate() + 6
+      );
+
+
+      return {
+
+        startDate:
+          formatLocalDate(monday),
+
+        endDate:
+          formatLocalDate(sunday)
+
+      };
+
+    }
+
+
+    /* =========================
+       SAVE DAILY WORKOUT
+    ========================== */
+
+    async function saveDailyWorkout(
+      userId,
+      workout
+    ) {
+
+      const logDate =
+        getTodayDate();
+
+
+      const {
+        data: existingLog,
+        error: readError
+      } =
+        await window.auth.supabase
+          .from("daily_logs")
+          .select("workout")
+          .eq("user_id", userId)
+          .eq("log_date", logDate)
+          .maybeSingle();
+
+
+      if (readError) {
+        throw readError;
+      }
+
+
+      const wasAlreadyCompleted =
+        existingLog?.workout !== null &&
+        existingLog?.workout !== undefined &&
+        existingLog?.workout !== "";
+
+
+      const {
+        error
+      } =
+        await window.auth.supabase
+          .from("daily_logs")
+          .upsert(
+            {
+
+              user_id: userId,
+
+              log_date: logDate,
+
+              workout: workout,
+
+              updated_at:
+                new Date().toISOString()
+
+            },
+            {
+
+              onConflict:
+                "user_id,log_date"
+
+            }
+          );
+
+
+      if (error) {
+        throw error;
+      }
+
+
+      return {
+        isNewCompletion:
+          !wasAlreadyCompleted
+      };
+
+    }
+
+
+    /* =========================
+       WEEKLY WORKOUT COUNT
+    ========================== */
+
+    async function getWeeklyWorkoutCount(
+      userId
+    ) {
+
+      const {
+        startDate,
+        endDate
+      } =
+        getCurrentWeekRange();
+
+
+      const {
+        count,
+        error
+      } =
+        await window.auth.supabase
+          .from("daily_logs")
+          .select("*", {
+            count: "exact",
+            head: true
+          })
+          .eq(
+            "user_id",
+            userId
+          )
+          .gte(
+            "log_date",
+            startDate
+          )
+          .lte(
+            "log_date",
+            endDate
+          )
+          .not(
+            "workout",
+            "is",
+            null
+          );
+
+
+      if (error) {
+        throw error;
+      }
+
+
+      return count || 0;
+
+    }
+
+
+    /* =========================
+       ADD WORKOUT XP
+    ========================== */
+
+    async function addWorkoutXp(
+      userId
+    ) {
+
+      const {
+        data: progress,
+        error: readError
+      } =
+        await window.auth.supabase
+          .from("game_progress")
+          .select(
+            "current_level, current_xp"
+          )
+          .eq(
+            "user_id",
+            userId
+          )
+          .single();
+
+
+      if (readError) {
+        throw readError;
+      }
+
+
+      const requiredXpByLevel = {
+
+        0: 70,
+        1: 100,
+        2: 280,
+        3: 280,
+        4: 280,
+        5: 400,
+        6: 400,
+        7: 560
+
+      };
+
+
+      let newLevel =
+        Number(
+          progress.current_level
+        );
+
+
+      let newXp =
+        Number(
+          progress.current_xp
+        ) + 20;
+
+
+      const requiredXp =
+        requiredXpByLevel[
+          newLevel
+        ] ?? 280;
+
+
+      if (
+        newXp >= requiredXp &&
+        newLevel < 7
+      ) {
+
+        newXp -=
+          requiredXp;
+
+        newLevel += 1;
+
+      }
+
+
+      if (
+        newLevel === 7
+      ) {
+
+        newXp =
+          Math.min(
+            newXp,
+            requiredXpByLevel[7]
+          );
+
+      }
+
+
+      const {
+        error: updateError
+      } =
+        await window.auth.supabase
+          .from("game_progress")
+          .update({
+
+            current_level:
+              newLevel,
+
+            current_xp:
+              newXp,
+
+            updated_at:
+              new Date().toISOString()
+
+          })
+          .eq(
+            "user_id",
+            userId
+          );
+
+
+      if (updateError) {
+        throw updateError;
+      }
+
+    }
+
+
+    /* =========================
+       OPEN QUICK LOG
+    ========================== */
+
+    function openWorkoutLog(
+      checkbox
+    ) {
+
+      activeQuickLogCheckbox =
+        checkbox;
+
+
+      workoutLogPanel.classList.add(
+        "active"
+      );
+
+
+      workoutInput.focus();
+
+    }
+
+
+    /* =========================
+       CLOSE QUICK LOG
+    ========================== */
+
+    function closeWorkoutLog() {
+
+      workoutLogPanel.classList.remove(
+        "active"
+      );
+
+
+      workoutInput.value =
+        "";
+
+
+      if (
+        activeQuickLogCheckbox
+      ) {
+
+        activeQuickLogCheckbox.checked =
+          false;
+
+      }
+
+
+      activeQuickLogCheckbox =
+        null;
+
+    }
+
+
+    /* =========================
+       QUICK LOG CHECKBOXES
+    ========================== */
+
+    quickLogCheckboxes.forEach(
+      checkbox => {
+
+        checkbox.addEventListener(
+          "change",
+          () => {
+
+            if (
+              checkbox.checked
+            ) {
+
+              openWorkoutLog(
+                checkbox
+              );
+
+            }
+
+          }
+        );
+
+      }
+    );
+
+
+    /* =========================
+       SAVE WORKOUT LOG
+    ========================== */
+
+    async function saveWorkoutLog() {
+
+      const workout =
+        workoutInput.value.trim();
+
+
+      if (!workout) {
+
+        alert(
+          "Please enter your workout."
+        );
+
+        return;
+
+      }
+
+
+      try {
+
+        const user =
+          await window.auth.getUser();
+
+
+        if (!user) {
+
+          throw new Error(
+            "User is not authenticated."
+          );
+
+        }
+
+
+        const {
+          isNewCompletion
+        } =
+          await saveDailyWorkout(
+            user.id,
+            workout
+          );
+
+
+        /*
+          Only award workout XP when
+          this is the first workout log
+          for this date.
+        */
+
+        if (
+          isNewCompletion
+        ) {
+
+          const weeklyCount =
+            await getWeeklyWorkoutCount(
+              user.id
+            );
+
+
+          /*
+            Same weekly cap as game.js:
+            4 workout XP days.
+          */
+
+          if (
+            weeklyCount <= 4
+          ) {
+
+            await addWorkoutXp(
+              user.id
+            );
+
+          }
+
+        }
+
+
+        /*
+          Keep workoutLogs synchronized
+          with the existing game system.
+        */
+
+        const workoutLogs =
+          JSON.parse(
+            localStorage.getItem(
+              "workoutLogs"
+            ) || "[]"
+          );
+
+
+        const logDate =
+          getTodayDate();
+
+
+        const existingIndex =
+          workoutLogs.findIndex(
+            log =>
+              log.date ===
+              logDate
+          );
+
+
+        const workoutLog = {
+
+          date:
+            logDate,
+
+          workout:
+            workout
+
+        };
+
+
+        if (
+          existingIndex === -1
+        ) {
+
+          workoutLogs.push(
+            workoutLog
+          );
+
+        } else {
+
+          workoutLogs[
+            existingIndex
+          ] =
+            workoutLog;
+
+        }
+
+
+        localStorage.setItem(
+          "workoutLogs",
+          JSON.stringify(
+            workoutLogs
+          )
+        );
+
+
+        closeWorkoutLog();
+
+
+      } catch (error) {
+
+        console.error(
+          "Could not save workout:",
+          error
+        );
+
+
+        alert(
+          "Your workout could not be saved. Please try again."
+        );
+
+      }
+
+    }
+
+
+    /* =========================
+       WORKOUT LOG BUTTONS
+    ========================== */
+
+    saveWorkoutBtn.addEventListener(
+      "click",
+      saveWorkoutLog
+    );
+
+
+    cancelWorkoutLogBtn.addEventListener(
+      "click",
+      closeWorkoutLog
+    );
+
+
+    workoutInput.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          event.key === "Enter" &&
+          !event.shiftKey
+        ) {
+
+          event.preventDefault();
+
+          saveWorkoutLog();
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       WORKOUT COMPLETE
+    ========================== */
+
+    workoutCompleteCheckboxes.forEach(
+      checkbox => {
+
+        checkbox.addEventListener(
+          "change",
+          () => {
+
+            /*
+              For now this is just the
+              client-side workout completion
+              control.
+
+              We can connect this to Supabase
+              when we build the actual
+              programmed-workout database.
+            */
+
+            console.log(
+              `Workout Day ${checkbox.dataset.day} complete:`,
+              checkbox.checked
+            );
+
+          }
+        );
+
+      }
+    );
+
+
+    /* =========================
+       INITIALIZE PAGE
     ========================== */
 
     async function initializePage() {
@@ -763,17 +1700,23 @@
         const user =
           await window.auth.requireAuth();
 
+
         if (!user) {
           return;
         }
+
+
+        await loadClientName(
+          user.id
+        );
 
 
         /* =========================
            LOAD CLIENT PROGRAM
         ========================== */
 
-        // Later, we will load the client's
-        // program from Supabase here.
+        // Later we will load this client's
+        // actual program from Supabase here.
 
 
       } catch (error) {
