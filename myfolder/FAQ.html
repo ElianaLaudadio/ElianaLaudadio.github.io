@@ -91,50 +91,44 @@
 
 
     /* =========================
-       GETTING STARTED DROPDOWNS
+       GETTING STARTED CARDS
     ========================== */
 
-    .faq-card-dropdown {
-      border: 3px solid var(--border, #111111);
-      background: var(--card, #ffffff);
-      margin-bottom: 14px;
+    .faq-starting-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+      max-width: 500px;
+      margin: 25px auto;
     }
 
-    .faq-card-dropdown summary {
-      padding: 16px 18px;
+    .faq-starting-button {
+      width: 100%;
+      min-height: 70px;
 
+      border: 3px solid var(--border, #111111);
+
+      background: var(--card, #ffffff);
+      color: var(--fg, #111111);
+
+      padding: 14px;
+
+      font-family: "Atkinson Hyperlegible", sans-serif;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1px;
 
       cursor: pointer;
-      list-style: none;
 
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      box-shadow: 5px 5px 0 var(--fg, #111111);
+
+      transition: 0.1s ease;
     }
 
-    .faq-card-dropdown summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .faq-card-dropdown summary::after {
-      content: "▼";
-      font-size: 12px;
-    }
-
-    .faq-card-dropdown[open] summary::after {
-      content: "▲";
-    }
-
-    .faq-card-content {
-      border-top: 3px solid var(--border, #111111);
-      padding: 20px;
-    }
-
-    .faq-card-content p:last-child {
-      margin-bottom: 0;
+    .faq-starting-button:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 3px 3px 0 var(--fg, #111111);
     }
 
 
@@ -252,7 +246,7 @@
 
 
     /* =========================
-       FAQ LEVEL MODAL
+       FAQ MODAL
     ========================== */
 
     #faqLevelModal {
@@ -271,20 +265,21 @@
         padding: 18px;
       }
 
-      .faq-level-flow {
+      .faq-level-flow,
+      .faq-starting-cards {
         max-width: 100%;
       }
 
     }
 
+
     .faq-level-instructions {
-  margin-top: -8px;
-  margin-bottom: 24px;
-  color: #555;
-  font-size: 15px;
-  text-align: center;
-}
-    
+      margin-top: -8px;
+      margin-bottom: 24px;
+      color: #555;
+      font-size: 15px;
+      text-align: center;
+    }
 
   </style>
 
@@ -368,7 +363,6 @@
           Outliers Guide
         </h1>
 
-
       </div>
 
 
@@ -383,367 +377,35 @@
         </h2>
 
 
-<!-- WELCOME TO OUTLIERS -->
-
-<details class="faq-card-dropdown">
-
-  <summary>
-    Welcome to Outliers
-  </summary>
-
-  <div class="faq-card-content">
-
-    <h3>
-      Welcome to Outliers.
-    </h3>
-
-    <p>
-      I'm excited you're here.
-    </p>
-
-    <p>
-      Before we begin, I want you to know something:
-    </p>
-
-    <p>
-      This isn't another fitness program that's going
-      to ask you to completely change your life
-      overnight.
-    </p>
-
-    <p>
-      You won't find fad diets.
-      <br>
-      You won't find trends.
-      <br>
-      And you definitely won't be expected to become
-      a different person by next Monday.
-    </p>
-
-    <p>
-      Instead, we're going to focus on building habits
-      that actually last.
-    </p>
-
-    <p>
-      Outliers is designed for those who feel they
-      need a different approach to fitness. Something
-      more sustainable. Something more personal.
-    </p>
-
-  </div>
-
-</details>
-
-
-<!-- MEET YOUR COACH -->
-
-<details class="faq-card-dropdown">
-
-  <summary>
-    Meet Your Coach
-  </summary>
-
-  <div class="faq-card-content">
-
-    <h3>
-      Meet Your Coach
-    </h3>
-
-    <p>
-      Hi! I'm Eliana, and I'm so excited you're here.
-    </p>
-
-    <p>
-      Before we begin, I want to tell you a little
-      about why I created Outliers Training Club.
-    </p>
-
-    <p>
-      When I first started my fitness journey back
-      in 2016, I weighed 80lbs, and I constantly felt
-      like I was the smallest person in the room.
-      I remember walking around looking for just one
-      person who was skinnier than I was because I
-      felt so alone in my insecurity.
-    </p>
-
-    <p>
-      At the time, there were very few women in the
-      fitness space sharing their experiences, and
-      even less information about how women should
-      get started in the gym. Most of what I found
-      wasn't designed for someone in my situation,
-      so I had to learn through years of trial and
-      error.
-    </p>
-
-    <p>
-      For a long time, I felt like an outlier.
-    </p>
-
-    <p>
-      And that is where I thought, ironically, what
-      if everyone feels like an outlier?
-    </p>
-
-    <p>
-      Every person has a different story, different
-      challenges, and different goals.
-    </p>
-
-    <p>
-      Your fitness journey should be built around
-      <strong>you</strong>—your goals, your lifestyle,
-      your strengths, and your challenges.
-    </p>
-
-    <p>
-      That's exactly what Outliers is designed to do.
-    </p>
-
-    <p>
-      Throughout this journey, I'll be here to guide
-      you, celebrate your progress, and help you build
-      habits that last long after we work together.
-    </p>
-
-    <p>
-      I truly believe that everyone has the ability
-      to become healthier, stronger, and more
-      confident.
-    </p>
-
-    <p>
-      Sometimes, all they need is a path that finally
-      feels like it was made for them.
-    </p>
-
-    <p>
-      Since 2016 I have gained 50lbs, I am pursuing
-      elite level numbers in powerlifting, and
-      overall, I am so confident in my body both in
-      performance and aesthetics.
-    </p>
-
-    <p>
-      My fitness journey has changed my life, and I
-      am so excited to see what yours can do for you.
-    </p>
-
-    <p>
-      <strong>Let's get started.</strong>
-    </p>
-
-  </div>
-
-</details>
-
-
-        <!-- HOW OUTLIERS WORKS -->
-
-<!-- HOW OUTLIERS WORKS -->
-
-<details class="faq-card-dropdown">
-
-  <summary>
-    How Outliers Works
-  </summary>
-
-  <div class="faq-card-content">
-
-    <p>
-      Outliers is designed to help you build lasting
-      habits one level at a time. Instead of trying
-      to change everything overnight, each level
-      introduces new challenges while reinforcing
-      the habits you've already built.
-    </p>
-
-
-    <h3>
-      Weekly Progress
-    </h3>
-
-    <p>
-      Each level has a set of
-      <strong>Weekly Objectives</strong>.
-      Completing these objectives earns you
-      <strong>XP (Experience Points)</strong>.
-      Once you've earned enough XP, you'll unlock
-      the next level and begin learning a new skill
-      or habit.
-    </p>
-
-
-    <h3>
-      Workouts
-    </h3>
-
-    <p>
-      The program is designed around
-      <strong>4 workouts per week</strong>.
-    </p>
-
-    <p>
-      This doesn't mean you have to work out
-      exactly four days every week.
-    </p>
-
-    <p>
-      If you complete your objectives in 3 days
-      one week because life gets busy, that's okay.
-      It will simply take a little longer to
-      progress.
-    </p>
-
-    <p>
-      There is no penalty for moving at your
-      own pace.
-    </p>
-
-
-    <h3>
-      Food Logging
-    </h3>
-
-    <p>
-      Some objectives, like food logging or protein
-      tracking, are designed to be completed more
-      frequently throughout the week.
-    </p>
-
-    <p>
-      You do not need to hit your nutrition goals
-      perfectly every single day, but I do want
-      you to be aware of what you're eating most
-      days — about 6 days per week.
-    </p>
-
-    <p>
-      The goal isn't perfection. It's building
-      awareness and consistency over time.
-    </p>
-
-
-    <h3>
-      Weight Logs
-    </h3>
-
-    <p>
-      You are encouraged to log your weight as it can be an indicator of your progress, but I do acknowledge that not everyone has access to a scale, might forget to weigh in (I definitely still do this), or simply might not respond to the weight on the scale in a healthy way.
-    </p>
-
-    <p>
-      Weight check-ins are still part of earning
-      XP, but you can select
-      <strong>"No Weigh-In Today"</strong>
-      instead of entering a weight and still
-      complete that day's objective for XP.
-    </p>
-
-    <p>
-      When you do enter a weight, it will be saved
-      so we can use your weigh-ins
-      to track progress over time.
-    </p>
-
-
-    <h3>
-      Weekly XP Caps
-    </h3>
-
-    <p>
-      Each objective has a weekly XP cap.
-    </p>
-
-    <p>
-      This means you can't earn all of your XP in
-      a single day or finish an entire level before
-      the week is over.
-    </p>
-
-    <p>
-      You're still encouraged to log extra workouts,
-      meals, or healthy habits. They simply won't
-      award additional XP after you've reached that
-      objective's weekly limit.
-    </p>
-
-    <p>
-      The purpose of these caps is to help you build
-      <strong>consistent habits</strong>, rather
-      than short bursts of motivation.
-    </p>
-
-
-    <h3>
-      Progress at Your Own Pace
-    </h3>
-
-    <p>
-      Everyone progresses through Outliers at a
-      different speed.
-    </p>
-
-    <p>
-      Some people may complete every objective each
-      week. Others may need a little more time.
-      Both are completely okay.
-    </p>
-
-    <p>
-      The goal isn't to finish the program as
-      quickly as possible. It's to build habits
-      that you can continue after you've completed
-      the level system.
-    </p>
-
-
-    <h3>
-      Side Quests
-    </h3>
-
-    <p>
-      Visit the Side Quests page to work toward
-      additional goals and earn trophies outside
-      of your regular level objectives.
-    </p>
-
-
-    <h3>
-      Coaching
-    </h3>
-
-    <p>
-      As your coach, I can see your progress
-      throughout each level.
-    </p>
-
-    <p>
-      If I notice you're struggling with a habit,
-      missing objectives, or life has simply gotten
-      in the way, your logs help me understand where
-      I can better support you.
-    </p>
-
-    <p>
-      Outliers isn't meant to replace coaching.
-      The level system gives us information that
-      helps make your coaching more personal.
-    </p>
-
-    <p>
-      I will check in with you at least once a week
-      to make sure everything is going smoothly.
-      You can also reach out to me at any time if
-      you have questions, need help, or want to
-      make adjustments.
-    </p>
-
-  </div>
-
-</details>
+        <div class="faq-starting-cards">
+
+          <button
+            type="button"
+            class="faq-starting-button"
+            data-guide="welcome"
+          >
+            Welcome to Outliers
+          </button>
+
+
+          <button
+            type="button"
+            class="faq-starting-button"
+            data-guide="coach"
+          >
+            Meet Your Coach
+          </button>
+
+
+          <button
+            type="button"
+            class="faq-starting-button"
+            data-guide="how"
+          >
+            How Outliers Works
+          </button>
+
+        </div>
 
       </section>
 
@@ -754,13 +416,11 @@
 
       <section class="faq-section">
 
+        <p class="faq-level-instructions">
+          Click on a level to review its objectives, instructions, and tips.
+        </p>
 
-
-<p class="faq-level-instructions">
-  Click on a level to review its objectives, instructions, and tips.
-</p>
-
-<div class="faq-level-flow">
+        <div class="faq-level-flow">
 
 
           <!-- LEVEL 0 -->
@@ -930,7 +590,7 @@
 
 
   <!-- =========================
-       LEVEL GUIDE MODAL
+       GUIDE MODAL
   ========================== -->
 
   <div
@@ -943,7 +603,10 @@
 
       <div class="celebration-screen">
 
-        <div class="celebration-label">
+        <div
+          class="celebration-label"
+          id="faqModalLabel"
+        >
           LEVEL GUIDE
         </div>
 
@@ -1026,6 +689,367 @@
 
 
     /* =========================
+       GETTING STARTED CONTENT
+    ========================== */
+
+    const gettingStartedContent = {
+
+      welcome: {
+
+        title: "Welcome to Outliers",
+
+        html: `
+
+          <div class="next-level-copy">
+
+            <p>
+              I'm excited you're here.
+            </p>
+
+            <p>
+              Before we begin, I want you to know something:
+            </p>
+
+            <p>
+              This isn't another fitness program that's going
+              to ask you to completely change your life
+              overnight.
+            </p>
+
+            <p>
+              You won't find fad diets.
+              <br>
+              You won't find trends.
+              <br>
+              And you definitely won't be expected to become
+              a different person by next Monday.
+            </p>
+
+            <p>
+              Instead, we're going to focus on building habits
+              that actually last.
+            </p>
+
+            <p>
+              Outliers is designed for those who feel they
+              need a different approach to fitness. Something
+              more sustainable. Something more personal.
+            </p>
+
+          </div>
+
+        `
+
+      },
+
+
+      coach: {
+
+        title: "Meet Your Coach",
+
+        html: `
+
+          <div class="next-level-copy">
+
+            <p>
+              Hi! I'm Eliana, and I'm so excited you're here.
+            </p>
+
+            <p>
+              Before we begin, I want to tell you a little
+              about why I created Outliers Training Club.
+            </p>
+
+            <p>
+              When I first started my fitness journey back
+              in 2016, I weighed 80lbs, and I constantly felt
+              like I was the smallest person in the room.
+              I remember walking around looking for just one
+              person who was skinnier than I was because I
+              felt so alone in my insecurity.
+            </p>
+
+            <p>
+              At the time, there were very few women in the
+              fitness space sharing their experiences, and
+              even less information about how women should
+              get started in the gym. Most of what I found
+              wasn't designed for someone in my situation,
+              so I had to learn through years of trial and
+              error.
+            </p>
+
+            <p>
+              For a long time, I felt like an outlier.
+            </p>
+
+            <p>
+              And that is where I thought, ironically, what
+              if everyone feels like an outlier?
+            </p>
+
+            <p>
+              Every person has a different story, different
+              challenges, and different goals.
+            </p>
+
+            <p>
+              Your fitness journey should be built around
+              <strong>you</strong>—your goals, your lifestyle,
+              your strengths, and your challenges.
+            </p>
+
+            <p>
+              That's exactly what Outliers is designed to do.
+            </p>
+
+            <p>
+              Throughout this journey, I'll be here to guide
+              you, celebrate your progress, and help you build
+              habits that last long after we work together.
+            </p>
+
+            <p>
+              I truly believe that everyone has the ability
+              to become healthier, stronger, and more
+              confident.
+            </p>
+
+            <p>
+              Sometimes, all they need is a path that finally
+              feels like it was made for them.
+            </p>
+
+            <p>
+              Since 2016 I have gained 50lbs, I am pursuing
+              elite level numbers in powerlifting, and
+              overall, I am so confident in my body both in
+              performance and aesthetics.
+            </p>
+
+            <p>
+              My fitness journey has changed my life, and I
+              am so excited to see what yours can do for you.
+            </p>
+
+            <p>
+              <strong>Let's get started.</strong>
+            </p>
+
+          </div>
+
+        `
+
+      },
+
+
+      how: {
+
+        title: "How Outliers Works",
+
+        html: `
+
+          <div class="next-level-copy">
+
+            <p>
+              Outliers is designed to help you build lasting
+              habits one level at a time. Instead of trying
+              to change everything overnight, each level
+              introduces new challenges while reinforcing
+              the habits you've already built.
+            </p>
+
+
+            <h3>
+              Weekly Progress
+            </h3>
+
+            <p>
+              Each level has a set of
+              <strong>Weekly Objectives</strong>.
+              Completing these objectives earns you
+              <strong>XP (Experience Points)</strong>.
+              Once you've earned enough XP, you'll unlock
+              the next level and begin learning a new skill
+              or habit.
+            </p>
+
+
+            <h3>
+              Workouts
+            </h3>
+
+            <p>
+              The program is designed around
+              <strong>4 workouts per week</strong>.
+            </p>
+
+            <p>
+              This doesn't mean you have to work out
+              exactly four days every week.
+            </p>
+
+            <p>
+              If you complete your objectives in 3 days
+              one week because life gets busy, that's okay.
+              It will simply take a little longer to
+              progress.
+            </p>
+
+            <p>
+              There is no penalty for moving at your
+              own pace.
+            </p>
+
+
+            <h3>
+              Food Logging
+            </h3>
+
+            <p>
+              Some objectives, like food logging or protein
+              tracking, are designed to be completed more
+              frequently throughout the week.
+            </p>
+
+            <p>
+              You do not need to hit your nutrition goals
+              perfectly every single day, but I do want
+              you to be aware of what you're eating most
+              days — about 6 days per week.
+            </p>
+
+            <p>
+              The goal isn't perfection. It's building
+              awareness and consistency over time.
+            </p>
+
+
+            <h3>
+              Weight Logs
+            </h3>
+
+            <p>
+              You are encouraged to log your weight as it can be an indicator of your progress, but I do acknowledge that not everyone has access to a scale, might forget to weigh in (I definitely still do this), or simply might not respond to the weight on the scale in a healthy way.
+            </p>
+
+            <p>
+              Weight check-ins are still part of earning
+              XP, but you can select
+              <strong>"No Weigh-In Today"</strong>
+              instead of entering a weight and still
+              complete that day's objective for XP.
+            </p>
+
+            <p>
+              When you do enter a weight, it will be saved
+              so we can use your weigh-ins
+              to track progress over time.
+            </p>
+
+
+            <h3>
+              Weekly XP Caps
+            </h3>
+
+            <p>
+              Each objective has a weekly XP cap.
+            </p>
+
+            <p>
+              This means you can't earn all of your XP in
+              a single day or finish an entire level before
+              the week is over.
+            </p>
+
+            <p>
+              You're still encouraged to log extra workouts,
+              meals, or healthy habits. They simply won't
+              award additional XP after you've reached that
+              objective's weekly limit.
+            </p>
+
+            <p>
+              The purpose of these caps is to help you build
+              <strong>consistent habits</strong>, rather
+              than short bursts of motivation.
+            </p>
+
+
+            <h3>
+              Progress at Your Own Pace
+            </h3>
+
+            <p>
+              Everyone progresses through Outliers at a
+              different speed.
+            </p>
+
+            <p>
+              Some people may complete every objective each
+              week. Others may need a little more time.
+              Both are completely okay.
+            </p>
+
+            <p>
+              The goal isn't to finish the program as
+              quickly as possible. It's to build habits
+              that you can continue after you've completed
+              the level system.
+            </p>
+
+
+            <h3>
+              Side Quests
+            </h3>
+
+            <p>
+              Visit the Side Quests page to work toward
+              additional goals and earn trophies outside
+              of your regular level objectives.
+            </p>
+
+
+            <h3>
+              Coaching
+            </h3>
+
+            <p>
+              As your coach, I can see your progress
+              throughout each level.
+            </p>
+
+            <p>
+              If I notice you're struggling with a habit,
+              missing objectives, or life has simply gotten
+              in the way, your logs help me understand where
+              I can better support you.
+            </p>
+
+            <p>
+              Outliers isn't meant to replace coaching.
+              The level system gives us information that
+              helps make your coaching more personal.
+            </p>
+
+            <p>
+              I will check in with you at least once a week
+              to make sure everything is going smoothly.
+              You can also reach out to me at any time if
+              you have questions, need help, or want to
+              make adjustments.
+            </p>
+
+          </div>
+
+        `
+
+      }
+
+    };
+
+
+    /* =========================
        LEVEL INTRO CONTENT
     ========================== */
 
@@ -1036,95 +1060,95 @@
          LEVEL 0: BASELINE
       ========================== */
 
-0: {
+      0: {
 
-  title: "Welcome to Baseline!",
+        title: "Welcome to Baseline!",
 
-  duration: "1 Week / 70 XP",
+        duration: "1 Week / 70 XP",
 
-  goal: "Establish Your Baseline",
+        goal: "Establish Your Baseline",
 
-  objectives: [
+        objectives: [
 
-    {
-      name: "Food",
-      days: "6 Days"
-    },
+          {
+            name: "Food",
+            days: "6 Days"
+          },
 
-    {
-      name: "Activity",
-      days: "4 Days"
-    }
+          {
+            name: "Activity",
+            days: "4 Days"
+          }
 
-  ],
+        ],
 
-  paragraphs: [
+        paragraphs: [
 
-    `
+          `
 This week is all about finding out your natural eating habits and how much activity you get in so we can build off of those habits.
-    `,
+          `,
 
-    `
+          `
 For the next week, <strong>continue eating and exercising as you normally would. Your goal is simply to log your food and activity</strong> so we can establish a starting point.
-    `,
+          `,
 
-    `
+          `
 This information will help me identify where changes may be useful and what we should focus on in the next levels.
-    `
+          `
 
-  ],
+        ],
 
-  takeaway: "",
+        takeaway: "",
 
-  dropdowns: [
+        dropdowns: [
 
-    {
-      title: "How to Log Food",
+          {
+            title: "How to Log Food",
 
-      paragraphs: [
+            paragraphs: [
 
-        `
+              `
 For your food logs, let me know what you ate that day and approximately when you ate it.
-        `,
+              `,
 
-        `
+              `
 For example:
-        `,
+              `,
 
-`
+              `
 <strong>Breakfast:</strong> Eggs and toast - 8am<br>
 <strong>Lunch:</strong> Turkey sandwich and chips - 12pm<br>
 <strong>Dinner:</strong> Chicken pasta - 7pm<br>
 <strong>Snack:</strong> Left over cake - 9pm
-`,
+              `,
 
-        `
+              `
 Try to be as detailed and as honest as you can. Your baseline will not only help us adjust your diet to your goals, but it will also help us find ways to sneak in a late night snack or anything that will help make nutrition easier with your current habits.
-        `,
+              `,
 
-        `
+              `
 Remember you can log back for up to 7 days - so if you forgot to log your food for a day, you can go back and log it. More data here will give us better results in the future!
-        `
+              `
 
-      ]
+            ]
 
-    },
+          },
 
 
-    {
-      title: "How to Log Activity",
+          {
+            title: "How to Log Activity",
 
-      paragraphs: [
+            paragraphs: [
 
-        `
+              `
 Log any intentional activity or exercise you complete.
-        `,
+              `,
 
-        `
+              `
 This can include:
-        `,
+              `,
 
-        `
+              `
 • Strength training
 • Walking
 • Running
@@ -1132,45 +1156,45 @@ This can include:
 • Fitness classes
 • Stretching or mobility work
 • Other forms of exercise or physical activity
-        `,
+              `,
 
-        `
+              `
 This will help me get an idea of what you are already used to and what type of activity you already enjoy.
-        `
+              `
 
-      ]
+            ]
 
-    },
+          },
 
 
-    {
-      title: "Why Start With a Baseline?",
+          {
+            title: "Why Start With a Baseline?",
 
-      paragraphs: [
+            paragraphs: [
 
-        `
+              `
 A baseline gives us actual information about your current habits instead of relying on estimates.
-        `,
+              `,
 
-        `
+              `
 Your food logs help me understand your typical eating patterns, while your activity logs show me how much movement is already part of your routine.
-        `,
+              `,
 
-        `
+              `
 We can then use that information to make more specific and realistic changes as you progress through the program.
-        `,
+              `,
 
-        `
+              `
 <strong>There is no need to change anything this week. Focus on logging your normal routine as accurately as you can.</strong>
-        `
+              `
 
-      ]
+            ]
 
-    }
+          }
 
-  ]
+        ]
 
-},
+      },
 
 
       /* =========================
@@ -1242,7 +1266,7 @@ see where adjustments may be useful.
         ],
 
         takeaway:
-        "If consistancy came in a bottle, it'd be the best-selling supplement on Earth",
+          "If consistancy came in a bottle, it'd be the best-selling supplement on Earth",
 
         dropdowns: [
 
@@ -1392,13 +1416,12 @@ during Explore because I will use them when
 creating your programming.
               `,
 
-
               `
 Instead of writing:
 "Did glute workout"
               `,
 
-`
+              `
 Try something like:<br><br>
 
 <strong>Warm-up:</strong> 5 min treadmill<br>
@@ -1406,7 +1429,7 @@ Try something like:<br><br>
 <strong>Glute Kickbacks:</strong> 3 × 12<br>
 <strong>Hip Abductors:</strong> 3 × 12<br>
 <strong>Treadmill:</strong> 1 mile
-`,
+              `,
 
               `
 You can also include short notes about how an
@@ -1451,8 +1474,7 @@ Day 4: Chest + Shoulders
               `
 Use the Workouts page to select a few exercises
 for each area.
-              `,
-
+              `
 
             ]
 
@@ -1463,48 +1485,49 @@ for each area.
 
             title: "Some Tips",
 
-           paragraphs: [
+            paragraphs: [
 
-  `
+              `
 → Take some time to learn the general layout of
 your gym. Knowing where the machines,
 dumbbells, cables, and cardio equipment are
 located can make workouts easier to navigate.
-  `,
+              `,
 
-  `
+              `
 → Do not worry about finding a perfect exercise.
 If something does not feel comfortable or you
 do not enjoy it, try another option.
-  `,
+              `,
 
-  `
+              `
 → When learning a new exercise, start with a
 manageable weight and focus on becoming
 comfortable with the movement.
-  `,
+              `,
 
-  `
+              `
 → Keep me informed about exercises that feel
 good, feel uncomfortable, or create questions.
 That information is useful when building your
 program.
-  `,
+              `,
 
-  `
+              `
 → If an exercise is written as 3 × 12, the first
 number represents the number of sets and the
 second number represents the number of
 repetitions, or reps, in each set.
-  `,
+              `,
 
-  `
+              `
  For example, 3 × 12 means completing 12 reps,
 resting, and repeating until you have completed
 three total sets.
-  `
+              `
 
-]
+            ]
+
           }
 
         ]
@@ -1515,12 +1538,17 @@ three total sets.
 
 
     /* =========================
-       FAQ LEVEL MODAL ELEMENTS
+       FAQ MODAL ELEMENTS
     ========================== */
 
     const faqLevelModal =
       document.getElementById(
         "faqLevelModal"
+      );
+
+    const faqModalLabel =
+      document.getElementById(
+        "faqModalLabel"
       );
 
     const faqLevelTitle =
@@ -1542,6 +1570,65 @@ three total sets.
       document.querySelectorAll(
         ".faq-level-button"
       );
+
+    const faqStartingButtons =
+      document.querySelectorAll(
+        ".faq-starting-button"
+      );
+
+
+    /* =========================
+       OPEN GETTING STARTED CARD
+    ========================== */
+
+    faqStartingButtons.forEach(
+      button => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            const guideName =
+              button.dataset.guide;
+
+            const guideContent =
+              gettingStartedContent[
+                guideName
+              ];
+
+
+            if (!guideContent) {
+              return;
+            }
+
+
+            faqModalLabel.textContent =
+              "OUTLIERS GUIDE";
+
+
+            faqLevelTitle.textContent =
+              guideContent.title;
+
+
+            faqLevelContent.innerHTML =
+              guideContent.html;
+
+
+            faqLevelModal.classList.add(
+              "active"
+            );
+
+
+            faqLevelModal.setAttribute(
+              "aria-hidden",
+              "false"
+            );
+
+          }
+        );
+
+      }
+    );
 
 
     /* =========================
@@ -1705,6 +1792,10 @@ three total sets.
             }
 
 
+            faqModalLabel.textContent =
+              "LEVEL GUIDE";
+
+
             faqLevelTitle.textContent =
               cardContent.title;
 
@@ -1732,7 +1823,7 @@ three total sets.
 
 
     /* =========================
-       CLOSE LEVEL CARD
+       CLOSE CARD
     ========================== */
 
     if (closeFaqLevelBtn) {
