@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- =========================
+       PAGE SETUP
+  ========================== -->
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Client Program | Outliers Training Club</title>
+
+
+  <!-- =========================
+       FONT
+  ========================== -->
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
+    rel="stylesheet"
+  >
+
+
+  <!-- =========================
+       CSS
+  ========================== -->
+
+  <link
+    rel="stylesheet"
+    href="/myfolder/CSS/base.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/myfolder/CSS/index.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="/myfolder/CSS/styles.css"
+  >
+
+
+  <!-- =========================
+       PROGRAM PAGE CSS
+  ========================== -->
+
+  <style>
+
+    /* =========================
+       PAGE
+    ========================== */
+
+    .program-page {
+      width: 90%;
+      max-width: 900px;
+      margin: 40px auto;
+    }
+
+
+    .program-header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+
+    .program-header h1 {
+      margin-bottom: 8px;
+    }
+
+
+    .program-header p {
+      margin: 0;
+    }
+
+
+    /* =========================
+       PROGRAM INFO
+    ========================== */
+
+    .program-info {
+      background: var(--card, #ffffff);
+      border: 3px solid var(--border, #111111);
+      padding: 20px;
+      margin-bottom: 28px;
+      box-sizing: border-box;
+    }
+
+
+    .program-info h2 {
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+
+    .program-info p {
+      margin-bottom: 0;
+    }
+
+
+    /* =========================
+       WORKOUT DAYS
+    ========================== */
+
+    .workout-day {
+      background: var(--card, #ffffff);
+      border: 3px solid var(--border, #111111);
+      margin-bottom: 28px;
+      box-sizing: border-box;
+    }
+
+
+    .workout-day-header {
+      border-bottom: 3px solid var(--border, #111111);
+      padding: 16px 20px;
+    }
+
+
+    .workout-day-header h2 {
+      margin: 0;
+    }
+
+
+    .workout-day-header p {
+      margin: 5px 0 0;
+    }
+
+
+    /* =========================
+       EXERCISES
+    ========================== */
+
+    .exercise-list {
+      padding: 20px;
+    }
+
+
+    .exercise {
+      padding: 16px 0;
+    }
+
+
+    .exercise:first-child {
+      padding-top: 0;
+    }
+
+
+    .exercise:last-child {
+      padding-bottom: 0;
+    }
+
+
+    .exercise h3 {
+      margin: 0 0 8px;
+    }
+
+
+    .exercise-prescription {
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+
+    .exercise-note {
+      margin: 0;
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================== */
+
+    @media (max-width: 600px) {
+
+      .program-page {
+        width: 92%;
+        margin: 24px auto;
+      }
+
+
+      .program-info {
+        padding: 16px;
+      }
+
+
+      .workout-day-header {
+        padding: 14px 16px;
+      }
+
+
+      .exercise-list {
+        padding: 16px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =========================
+       NAVIGATION
+  ========================== -->
+
+  <nav id="mainNav">
+
+    <a href="/myfolder/template.html">
+      Home
+    </a>
+
+    <a href="/myfolder/coach.html">
+      Coach Dashboard
+    </a>
+
+    <a href="/myfolder/workouts.html">
+      Workouts
+    </a>
+
+    <a href="/myfolder/meal_planner.html">
+      Meal Planner
+    </a>
+
+    <a href="/myfolder/cart.html">
+      Grocery List
+    </a>
+
+
+    <span id="hamburger">
+      &#9776;
+    </span>
+
+
+    <div id="mobile-menu">
+
+      <a href="/myfolder/template.html">
+        Home
+      </a>
+
+      <a href="/myfolder/coach.html">
+        Coach Dashboard
+      </a>
+
+      <a href="/myfolder/workouts.html">
+        Workouts
+      </a>
+
+      <a href="/myfolder/meal_planner.html">
+        Meal Planner
+      </a>
+
+      <a href="/myfolder/cart.html">
+        Grocery List
+      </a>
+
+    </div>
+
+  </nav>
+
+
+  <!-- =========================
+       MAIN PAGE
+  ========================== -->
+
+  <main>
+
+    <section class="program-page">
+
+
+      <!-- =========================
+           PAGE HEADER
+      ========================== -->
+
+      <div class="program-header">
+
+        <h1 id="clientProgramHeading">
+          Client Program
+        </h1>
+
+        <p>
+          View and manage this client's current training program.
+        </p>
+
+      </div>
+
+
+      <!-- =========================
+           PROGRAM INFO
+      ========================== -->
+
+      <section class="program-info">
+
+        <h2>
+          Notes from Coach
+        </h2>
+
+        <p>
+          Your program notes will go here.
+        </p>
+
+      </section>
+
+
+      <!-- =========================
+           DAY 1
+      ========================== -->
+
+      <section
+        class="workout-day"
+        data-workout-day="1"
+      >
+
+        <div class="workout-day-header">
+
+          <h2>
+            Day 1
+          </h2>
+
+          <p>
+            Legs
+          </p>
+
+        </div>
+
+
+        <div class="exercise-list">
+
+          <div class="exercise">
+
+            <h3>
+              Squat
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 8
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+
+          <div class="exercise">
+
+            <h3>
+              Romanian Deadlift
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 10
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+
+          <div class="exercise">
+
+            <h3>
+              Leg Extension
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 12
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           DAY 2
+      ========================== -->
+
+      <section
+        class="workout-day"
+        data-workout-day="2"
+      >
+
+        <div class="workout-day-header">
+
+          <h2>
+            Day 2
+          </h2>
+
+          <p>
+            Back + Biceps
+          </p>
+
+        </div>
+
+
+        <div class="exercise-list">
+
+          <div class="exercise">
+
+            <h3>
+              Lat Pulldown
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 10
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+
+          <div class="exercise">
+
+            <h3>
+              Seated Cable Row
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 10
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+
+          <div class="exercise">
+
+            <h3>
+              Dumbbell Curl
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 12
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           DAY 3
+      ========================== -->
+
+      <section
+        class="workout-day"
+        data-workout-day="3"
+      >
+
+        <div class="workout-day-header">
+
+          <h2>
+            Day 3
+          </h2>
+
+          <p>
+            Glutes
+          </p>
+
+        </div>
+
+
+        <div class="exercise-list">
+
+          <div class="exercise">
+
+            <h3>
+              Hip Thrust
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 10
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+
+          <div class="exercise">
+
+            <h3>
+              Glute Kickback
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 12
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+
+          <div class="exercise">
+
+            <h3>
+              Hip Abductor
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 12
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           DAY 4
+      ========================== -->
+
+      <section
+        class="workout-day"
+        data-workout-day="4"
+      >
+
+        <div class="workout-day-header">
+
+          <h2>
+            Day 4
+          </h2>
+
+          <p>
+            Chest + Shoulders
+          </p>
+
+        </div>
+
+
+        <div class="exercise-list">
+
+          <div class="exercise">
+
+            <h3>
+              Dumbbell Bench Press
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 10
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+
+          <div class="exercise">
+
+            <h3>
+              Shoulder Press
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 10
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+
+          <div class="exercise">
+
+            <h3>
+              Lateral Raise
+            </h3>
+
+            <div class="exercise-prescription">
+              3 × 12
+            </div>
+
+            <p class="exercise-note">
+              Coach note will go here.
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
+  <footer>
+    OUTLIERS TRAINING CLUB © 2026
+  </footer>
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
+
+  <script
+    src="/myfolder/js/auth.js?v=10"
+  ></script>
+
+
+  <script>
+
+    /* =========================
+       MOBILE NAVIGATION
+    ========================== */
+
+    const hamburger =
+      document.getElementById(
+        "hamburger"
+      );
+
+    const mobileMenu =
+      document.getElementById(
+        "mobile-menu"
+      );
+
+
+    if (hamburger && mobileMenu) {
+
+      hamburger.addEventListener(
+        "click",
+        () => {
+
+          mobileMenu.style.display =
+            mobileMenu.style.display === "flex"
+              ? "none"
+              : "flex";
+
+        }
+      );
+
+    }
+
+
+    /* =========================
+       CLIENT ID FROM URL
+    ========================== */
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+
+    const clientId =
+      params.get("client");
+
+
+    /* =========================
+       LOAD CLIENT NAME
+    ========================== */
+
+    async function loadClientName() {
+
+      const {
+        data,
+        error
+      } =
+        await window.auth.supabase
+          .from("profiles")
+          .select("display_name")
+          .eq(
+            "id",
+            clientId
+          )
+          .single();
+
+
+      if (error) {
+        throw error;
+      }
+
+
+      const displayName =
+        data?.display_name ||
+        "Client";
+
+
+      document.getElementById(
+        "clientProgramHeading"
+      ).textContent =
+        `${displayName}'s Program`;
+
+    }
+
+
+    /* =========================
+       LOAD CLIENT PROGRAM
+    ========================== */
+
+    async function loadClientProgram() {
+
+      /*
+        NEXT STEP:
+
+        This function will eventually
+        retrieve the selected client's
+        program from Supabase.
+
+        For example:
+
+        clientId
+            ↓
+        program table
+            ↓
+        workout days
+            ↓
+        exercises
+            ↓
+        sets / reps / notes
+            ↓
+        render on this page
+
+        For now, the sample program
+        remains in the HTML above.
+      */
+
+      console.log(
+        "Selected client program:",
+        clientId
+      );
+
+    }
+
+
+    /* =========================
+       INITIALIZE PAGE
+    ========================== */
+
+    async function initializePage() {
+
+      try {
+
+        /*
+          This authenticates YOU,
+          the logged-in coach.
+
+          It does NOT change clientId.
+        */
+
+        const user =
+          await window.auth.requireAuth();
+
+
+        if (!user) {
+          return;
+        }
+
+
+        /*
+          Make sure a client was
+          actually supplied in the URL.
+        */
+
+        if (!clientId) {
+
+          document.getElementById(
+            "clientProgramHeading"
+          ).textContent =
+            "Client Not Found";
+
+
+          throw new Error(
+            "No client ID was provided in the URL."
+          );
+
+        }
+
+
+        /*
+          Load the selected client's
+          display name.
+        */
+
+        await loadClientName();
+
+
+        /*
+          Later this will load the
+          selected client's actual
+          training program.
+        */
+
+        await loadClientProgram();
+
+
+      } catch (error) {
+
+        console.error(
+          "Could not initialize client program page:",
+          error
+        );
+
+
+        document.getElementById(
+          "clientProgramHeading"
+        ).textContent =
+          "Client Program Could Not Load";
+
+      }
+
+    }
+
+
+    initializePage();
+
+  </script>
+
+
+</body>
+
+</html>
