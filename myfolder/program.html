@@ -193,31 +193,35 @@
       padding: 16px 20px;
 
       display: flex;
-      flex-wrap: wrap;
-
-      gap: 18px;
+      justify-content: center;
+      align-items: center;
     }
 
 
-    .workout-check {
-      display: flex;
-      align-items: center;
+    .quick-log-button {
+      border: 3px solid var(--border, #111111);
 
-      gap: 8px;
+      background: var(--fg, #111111);
+      color: var(--card, #ffffff);
+
+      padding: 10px 22px;
+
+      font-family:
+        "Atkinson Hyperlegible",
+        sans-serif;
 
       font-weight: 700;
+      font-size: 15px;
 
       cursor: pointer;
+
+      box-shadow: 4px 4px 0 #777;
     }
 
 
-    .workout-check input {
-      width: 20px;
-      height: 20px;
-
-      cursor: pointer;
-
-      accent-color: #111111;
+    .quick-log-button:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 #777;
     }
 
 
@@ -250,10 +254,6 @@
 
       .workout-actions {
         padding: 14px 16px;
-
-        flex-direction: column;
-
-        gap: 12px;
       }
 
     }
@@ -437,34 +437,17 @@
         </div>
 
 
-        <!-- WORKOUT ACTIONS -->
+        <!-- QUICK LOG -->
 
         <div class="workout-actions">
 
-          <label class="workout-check">
-
-            <input
-              type="checkbox"
-              class="workout-complete-checkbox"
-              data-day="1"
-            >
-
-            Workout Complete
-
-          </label>
-
-
-          <label class="workout-check">
-
-            <input
-              type="checkbox"
-              class="quick-log-checkbox"
-              data-day="1"
-            >
-
+          <button
+            type="button"
+            class="quick-log-button"
+            data-day="1"
+          >
             Quick Log Workout
-
-          </label>
+          </button>
 
         </div>
 
@@ -548,34 +531,17 @@
         </div>
 
 
-        <!-- WORKOUT ACTIONS -->
+        <!-- QUICK LOG -->
 
         <div class="workout-actions">
 
-          <label class="workout-check">
-
-            <input
-              type="checkbox"
-              class="workout-complete-checkbox"
-              data-day="2"
-            >
-
-            Workout Complete
-
-          </label>
-
-
-          <label class="workout-check">
-
-            <input
-              type="checkbox"
-              class="quick-log-checkbox"
-              data-day="2"
-            >
-
+          <button
+            type="button"
+            class="quick-log-button"
+            data-day="2"
+          >
             Quick Log Workout
-
-          </label>
+          </button>
 
         </div>
 
@@ -659,34 +625,17 @@
         </div>
 
 
-        <!-- WORKOUT ACTIONS -->
+        <!-- QUICK LOG -->
 
         <div class="workout-actions">
 
-          <label class="workout-check">
-
-            <input
-              type="checkbox"
-              class="workout-complete-checkbox"
-              data-day="3"
-            >
-
-            Workout Complete
-
-          </label>
-
-
-          <label class="workout-check">
-
-            <input
-              type="checkbox"
-              class="quick-log-checkbox"
-              data-day="3"
-            >
-
+          <button
+            type="button"
+            class="quick-log-button"
+            data-day="3"
+          >
             Quick Log Workout
-
-          </label>
+          </button>
 
         </div>
 
@@ -770,34 +719,17 @@
         </div>
 
 
-        <!-- WORKOUT ACTIONS -->
+        <!-- QUICK LOG -->
 
         <div class="workout-actions">
 
-          <label class="workout-check">
-
-            <input
-              type="checkbox"
-              class="workout-complete-checkbox"
-              data-day="4"
-            >
-
-            Workout Complete
-
-          </label>
-
-
-          <label class="workout-check">
-
-            <input
-              type="checkbox"
-              class="quick-log-checkbox"
-              data-day="4"
-            >
-
+          <button
+            type="button"
+            class="quick-log-button"
+            data-day="4"
+          >
             Quick Log Workout
-
-          </label>
+          </button>
 
         </div>
 
@@ -925,18 +857,14 @@
         "cancelWorkoutLogBtn"
       );
 
-    const quickLogCheckboxes =
+    const quickLogButtons =
       document.querySelectorAll(
-        ".quick-log-checkbox"
-      );
-
-    const workoutCompleteCheckboxes =
-      document.querySelectorAll(
-        ".workout-complete-checkbox"
+        ".quick-log-button"
       );
 
 
-    let activeQuickLogCheckbox = null;
+    let activeQuickLogButton =
+      null;
 
 
     /* =========================
@@ -1341,15 +1269,15 @@
     ========================== */
 
     function openWorkoutLog(
-      checkbox
+      button
     ) {
 
-      activeQuickLogCheckbox =
-        checkbox;
+      activeQuickLogButton =
+        button;
 
 
       const workoutDay =
-        checkbox.closest(
+        button.closest(
           ".workout-day"
         );
 
@@ -1452,42 +1380,26 @@
         "";
 
 
-      if (
-        activeQuickLogCheckbox
-      ) {
-
-        activeQuickLogCheckbox.checked =
-          false;
-
-      }
-
-
-      activeQuickLogCheckbox =
+      activeQuickLogButton =
         null;
 
     }
 
 
     /* =========================
-       QUICK LOG CHECKBOXES
+       QUICK LOG BUTTONS
     ========================== */
 
-    quickLogCheckboxes.forEach(
-      checkbox => {
+    quickLogButtons.forEach(
+      button => {
 
-        checkbox.addEventListener(
-          "change",
+        button.addEventListener(
+          "click",
           () => {
 
-            if (
-              checkbox.checked
-            ) {
-
-              openWorkoutLog(
-                checkbox
-              );
-
-            }
+            openWorkoutLog(
+              button
+            );
 
           }
         );
@@ -1671,29 +1583,6 @@
           saveWorkoutLog();
 
         }
-
-      }
-    );
-
-
-    /* =========================
-       WORKOUT COMPLETE
-    ========================== */
-
-    workoutCompleteCheckboxes.forEach(
-      checkbox => {
-
-        checkbox.addEventListener(
-          "change",
-          () => {
-
-            console.log(
-              `Workout Day ${checkbox.dataset.day} complete:`,
-              checkbox.checked
-            );
-
-          }
-        );
 
       }
     );
