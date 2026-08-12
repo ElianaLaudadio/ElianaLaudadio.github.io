@@ -154,7 +154,6 @@
 
     .exercise {
       padding: 16px 0;
-      border-bottom: 2px solid var(--border, #111111);
     }
 
 
@@ -164,7 +163,6 @@
 
 
     .exercise:last-child {
-      border-bottom: none;
       padding-bottom: 0;
     }
 
@@ -224,29 +222,6 @@
 
 
     /* =========================
-       COACH NOTES
-    ========================== */
-
-    .coach-notes {
-      background: var(--card, #ffffff);
-      border: 3px solid var(--border, #111111);
-      padding: 20px;
-      margin-bottom: 28px;
-      box-sizing: border-box;
-    }
-
-
-    .coach-notes h2 {
-      margin-top: 0;
-    }
-
-
-    .coach-notes p:last-child {
-      margin-bottom: 0;
-    }
-
-
-    /* =========================
        MOBILE
     ========================== */
 
@@ -258,8 +233,7 @@
       }
 
 
-      .program-info,
-      .coach-notes {
+      .program-info {
         padding: 16px;
       }
 
@@ -830,8 +804,6 @@
       </section>
 
 
-
-
     </section>
 
   </main>
@@ -1376,11 +1348,6 @@
         checkbox;
 
 
-      /*
-        Find the workout day that
-        belongs to this checkbox.
-      */
-
       const workoutDay =
         checkbox.closest(
           ".workout-day"
@@ -1574,12 +1541,6 @@
           );
 
 
-        /*
-          Only award workout XP when
-          this is the first workout log
-          for this date.
-        */
-
         if (
           isNewCompletion
         ) {
@@ -1589,11 +1550,6 @@
               user.id
             );
 
-
-          /*
-            Same weekly cap as game.js:
-            4 workout XP days.
-          */
 
           if (
             weeklyCount <= 4
@@ -1607,11 +1563,6 @@
 
         }
 
-
-        /*
-          Keep workoutLogs synchronized
-          with the existing game system.
-        */
 
         const workoutLogs =
           JSON.parse(
@@ -1735,16 +1686,6 @@
         checkbox.addEventListener(
           "change",
           () => {
-
-            /*
-              For now this is just the
-              client-side workout completion
-              control.
-
-              We can connect this to Supabase
-              when we build the actual
-              programmed-workout database.
-            */
 
             console.log(
               `Workout Day ${checkbox.dataset.day} complete:`,
