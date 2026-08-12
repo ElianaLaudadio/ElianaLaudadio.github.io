@@ -106,10 +106,14 @@
     .program-page textarea {
       width: 100%;
       box-sizing: border-box;
+
       border: 2px solid var(--border, #111111);
+
       background: var(--card, #ffffff);
       color: var(--fg, #111111);
+
       font: inherit;
+
       padding: 10px;
     }
 
@@ -133,9 +137,13 @@
 
     .program-info {
       background: var(--card, #ffffff);
+
       border: 3px solid var(--border, #111111);
+
       padding: 20px;
+
       margin-bottom: 28px;
+
       box-sizing: border-box;
     }
 
@@ -152,23 +160,30 @@
 
     .workout-day {
       background: var(--card, #ffffff);
+
       border: 3px solid var(--border, #111111);
+
       margin-bottom: 28px;
+
       box-sizing: border-box;
     }
 
 
     .workout-day-header {
       border-bottom: 3px solid var(--border, #111111);
+
       padding: 16px 20px;
     }
 
 
     .workout-day-header-row {
       display: flex;
+
       justify-content: space-between;
       align-items: center;
+
       gap: 12px;
+
       margin-bottom: 12px;
     }
 
@@ -209,8 +224,12 @@
 
     .exercise-grid {
       display: grid;
-      grid-template-columns: 1fr 110px 110px;
+
+      grid-template-columns:
+        1fr 110px 110px;
+
       gap: 12px;
+
       align-items: end;
     }
 
@@ -222,7 +241,9 @@
 
     .exercise-actions {
       display: flex;
+
       justify-content: flex-end;
+
       margin-top: 10px;
     }
 
@@ -233,12 +254,17 @@
 
     .program-editor-button {
       display: inline-block;
+
       border: 2px solid var(--border, #111111);
+
       background: var(--card, #ffffff);
       color: var(--fg, #111111);
+
       font: inherit;
       font-weight: 700;
+
       padding: 9px 14px;
+
       cursor: pointer;
     }
 
@@ -255,28 +281,38 @@
 
     .add-exercise-row {
       padding: 0 20px 20px;
+
       text-align: center;
     }
 
 
     .program-bottom-actions {
       display: flex;
+
       flex-direction: column;
       align-items: center;
+
       gap: 16px;
+
       margin: 30px 0;
     }
 
 
     .save-program-button {
       min-width: 190px;
+
+      background: var(--fg, #111111);
+      color: var(--card, #ffffff);
     }
 
 
     .save-status {
       min-height: 24px;
+
       margin: 0;
+
       text-align: center;
+
       font-weight: 700;
     }
 
@@ -314,7 +350,8 @@
 
 
       .exercise-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns:
+          1fr 1fr;
       }
 
 
@@ -439,7 +476,7 @@
         <textarea
           id="coachNotes"
           placeholder="Add notes about the client's current program..."
-        >Your program notes will go here.</textarea>
+        ></textarea>
 
       </section>
 
@@ -465,6 +502,7 @@
           + Add Workout Day
         </button>
 
+
         <button
           type="button"
           class="program-editor-button save-program-button"
@@ -472,6 +510,7 @@
         >
           Save Program
         </button>
+
 
         <p
           class="save-status"
@@ -525,7 +564,10 @@
       );
 
 
-    if (hamburger && mobileMenu) {
+    if (
+      hamburger &&
+      mobileMenu
+    ) {
 
       hamburger.addEventListener(
         "click",
@@ -557,7 +599,7 @@
 
 
     /* =========================
-       EDITOR ELEMENTS
+       PAGE ELEMENTS
     ========================== */
 
     const workoutDaysContainer =
@@ -565,20 +607,24 @@
         "workoutDaysContainer"
       );
 
+
     const coachNotes =
       document.getElementById(
         "coachNotes"
       );
+
 
     const addWorkoutDayBtn =
       document.getElementById(
         "addWorkoutDayBtn"
       );
 
+
     const saveProgramBtn =
       document.getElementById(
         "saveProgramBtn"
       );
+
 
     const saveStatus =
       document.getElementById(
@@ -596,97 +642,120 @@
 
         {
           name: "Legs",
+
           exercises: [
+
             {
               name: "Squat",
               sets: 3,
               reps: 8,
               note: "Coach note will go here."
             },
+
             {
               name: "Romanian Deadlift",
               sets: 3,
               reps: 10,
               note: "Coach note will go here."
             },
+
             {
               name: "Leg Extension",
               sets: 3,
               reps: 12,
               note: "Coach note will go here."
             }
+
           ]
         },
 
+
         {
           name: "Back + Biceps",
+
           exercises: [
+
             {
               name: "Lat Pulldown",
               sets: 3,
               reps: 10,
               note: "Coach note will go here."
             },
+
             {
               name: "Seated Cable Row",
               sets: 3,
               reps: 10,
               note: "Coach note will go here."
             },
+
             {
               name: "Dumbbell Curl",
               sets: 3,
               reps: 12,
               note: "Coach note will go here."
             }
+
           ]
         },
 
+
         {
           name: "Glutes",
+
           exercises: [
+
             {
               name: "Hip Thrust",
               sets: 3,
               reps: 10,
               note: "Coach note will go here."
             },
+
             {
               name: "Glute Kickback",
               sets: 3,
               reps: 12,
               note: "Coach note will go here."
             },
+
             {
               name: "Hip Abductor",
               sets: 3,
               reps: 12,
               note: "Coach note will go here."
             }
+
           ]
         },
 
+
         {
           name: "Chest + Shoulders",
+
           exercises: [
+
             {
               name: "Dumbbell Bench Press",
               sets: 3,
               reps: 10,
               note: "Coach note will go here."
             },
+
             {
               name: "Shoulder Press",
               sets: 3,
               reps: 10,
               note: "Coach note will go here."
             },
+
             {
               name: "Lateral Raise",
               sets: 3,
               reps: 12,
               note: "Coach note will go here."
             }
+
           ]
         }
 
@@ -696,19 +765,36 @@
 
 
     /* =========================
-       HTML ESCAPING
+       ESCAPE HTML
     ========================== */
 
-    function escapeHtml(value) {
+    function escapeHtml(
+      value
+    ) {
 
       return String(
         value ?? ""
       )
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+        .replaceAll(
+          "&",
+          "&amp;"
+        )
+        .replaceAll(
+          "<",
+          "&lt;"
+        )
+        .replaceAll(
+          ">",
+          "&gt;"
+        )
+        .replaceAll(
+          '"',
+          "&quot;"
+        )
+        .replaceAll(
+          "'",
+          "&#039;"
+        );
 
     }
 
@@ -733,112 +819,130 @@
                     (
                       exercise,
                       exerciseIndex
-                    ) => `
-                      <div
-                        class="exercise"
-                        data-exercise-index="${exerciseIndex}"
-                      >
+                    ) => {
 
-                        <div class="exercise-grid">
+                      return `
 
-                          <div class="exercise-name-field">
+                        <div
+                          class="exercise"
+                          data-exercise-index="${exerciseIndex}"
+                        >
 
-                            <label>
-                              Exercise
-                            </label>
+                          <div class="exercise-grid">
 
-                            <input
-                              type="text"
-                              class="exercise-name-input"
-                              value="${escapeHtml(
-                                exercise.name
-                              )}"
-                              data-day-index="${dayIndex}"
-                              data-exercise-index="${exerciseIndex}"
-                            >
+
+                            <!-- EXERCISE NAME -->
+
+                            <div class="exercise-name-field">
+
+                              <label>
+                                Exercise
+                              </label>
+
+                              <input
+                                type="text"
+                                class="exercise-name-input"
+                                value="${escapeHtml(
+                                  exercise.name
+                                )}"
+                                data-day-index="${dayIndex}"
+                                data-exercise-index="${exerciseIndex}"
+                              >
+
+                            </div>
+
+
+                            <!-- SETS -->
+
+                            <div>
+
+                              <label>
+                                Sets
+                              </label>
+
+                              <input
+                                type="number"
+                                min="0"
+                                class="exercise-sets-input"
+                                value="${escapeHtml(
+                                  exercise.sets
+                                )}"
+                                data-day-index="${dayIndex}"
+                                data-exercise-index="${exerciseIndex}"
+                              >
+
+                            </div>
+
+
+                            <!-- REPS -->
+
+                            <div>
+
+                              <label>
+                                Reps
+                              </label>
+
+                              <input
+                                type="text"
+                                class="exercise-reps-input"
+                                value="${escapeHtml(
+                                  exercise.reps
+                                )}"
+                                data-day-index="${dayIndex}"
+                                data-exercise-index="${exerciseIndex}"
+                              >
+
+                            </div>
 
                           </div>
 
 
-                          <div>
+                          <!-- COACH NOTE -->
+
+                          <div class="exercise-note-field">
 
                             <label>
-                              Sets
+                              Coach Note
                             </label>
 
-                            <input
-                              type="number"
-                              min="0"
-                              class="exercise-sets-input"
-                              value="${escapeHtml(
-                                exercise.sets
-                              )}"
+                            <textarea
+                              class="exercise-note-input"
                               data-day-index="${dayIndex}"
                               data-exercise-index="${exerciseIndex}"
-                            >
+                              placeholder="Optional note for this exercise..."
+                            >${escapeHtml(
+                              exercise.note
+                            )}</textarea>
 
                           </div>
 
 
-                          <div>
+                          <!-- REMOVE EXERCISE -->
 
-                            <label>
-                              Reps
-                            </label>
+                          <div class="exercise-actions">
 
-                            <input
-                              type="text"
-                              class="exercise-reps-input"
-                              value="${escapeHtml(
-                                exercise.reps
-                              )}"
+                            <button
+                              type="button"
+                              class="program-editor-button remove-button remove-exercise-btn"
                               data-day-index="${dayIndex}"
                               data-exercise-index="${exerciseIndex}"
                             >
+                              Remove Exercise
+                            </button>
 
                           </div>
 
                         </div>
 
+                      `;
 
-                        <div class="exercise-note-field">
-
-                          <label>
-                            Coach Note
-                          </label>
-
-                          <textarea
-                            class="exercise-note-input"
-                            data-day-index="${dayIndex}"
-                            data-exercise-index="${exerciseIndex}"
-                            placeholder="Optional note for this exercise..."
-                          >${escapeHtml(
-                            exercise.note
-                          )}</textarea>
-
-                        </div>
-
-
-                        <div class="exercise-actions">
-
-                          <button
-                            type="button"
-                            class="program-editor-button remove-button remove-exercise-btn"
-                            data-day-index="${dayIndex}"
-                            data-exercise-index="${exerciseIndex}"
-                          >
-                            Remove Exercise
-                          </button>
-
-                        </div>
-
-                      </div>
-                    `
+                    }
                   )
                   .join("");
 
 
               return `
+
                 <section
                   class="workout-day"
                   data-workout-day="${dayIndex + 1}"
@@ -846,11 +950,13 @@
 
                   <div class="workout-day-header">
 
+
                     <div class="workout-day-header-row">
 
                       <h2>
                         Day ${dayIndex + 1}
                       </h2>
+
 
                       <button
                         type="button"
@@ -866,6 +972,7 @@
                     <label>
                       Workout Name
                     </label>
+
 
                     <input
                       type="text"
@@ -900,6 +1007,7 @@
                   </div>
 
                 </section>
+
               `;
 
             }
@@ -910,7 +1018,7 @@
 
 
     /* =========================
-       KEEP DATA IN SYNC
+       KEEP PROGRAM DATA UPDATED
     ========================== */
 
     workoutDaysContainer.addEventListener(
@@ -920,16 +1028,22 @@
         const target =
           event.target;
 
+
         const dayIndex =
           Number(
             target.dataset.dayIndex
           );
+
 
         const exerciseIndex =
           Number(
             target.dataset.exerciseIndex
           );
 
+
+        /* -------------------------
+           DAY NAME
+        ------------------------- */
 
         if (
           target.classList.contains(
@@ -942,17 +1056,26 @@
           ].name =
             target.value;
 
+
           return;
 
         }
 
+
+        /*
+          If this element is not
+          connected to an exercise,
+          stop here.
+        */
 
         if (
           !Number.isInteger(
             exerciseIndex
           )
         ) {
+
           return;
+
         }
 
 
@@ -969,6 +1092,10 @@
         }
 
 
+        /* -------------------------
+           EXERCISE NAME
+        ------------------------- */
+
         if (
           target.classList.contains(
             "exercise-name-input"
@@ -980,6 +1107,10 @@
 
         }
 
+
+        /* -------------------------
+           SETS
+        ------------------------- */
 
         if (
           target.classList.contains(
@@ -993,6 +1124,10 @@
         }
 
 
+        /* -------------------------
+           REPS
+        ------------------------- */
+
         if (
           target.classList.contains(
             "exercise-reps-input"
@@ -1004,6 +1139,10 @@
 
         }
 
+
+        /* -------------------------
+           EXERCISE NOTE
+        ------------------------- */
 
         if (
           target.classList.contains(
@@ -1021,7 +1160,8 @@
 
 
     /* =========================
-       ADD / REMOVE
+       ADD / REMOVE EXERCISES
+       AND WORKOUT DAYS
     ========================== */
 
     workoutDaysContainer.addEventListener(
@@ -1045,6 +1185,10 @@
           );
 
 
+        /* -------------------------
+           ADD EXERCISE
+        ------------------------- */
+
         if (
           button.classList.contains(
             "add-exercise-btn"
@@ -1065,10 +1209,15 @@
 
           renderProgramEditor();
 
+
           return;
 
         }
 
+
+        /* -------------------------
+           REMOVE EXERCISE
+        ------------------------- */
 
         if (
           button.classList.contains(
@@ -1092,10 +1241,15 @@
 
           renderProgramEditor();
 
+
           return;
 
         }
 
+
+        /* -------------------------
+           REMOVE DAY
+        ------------------------- */
 
         if (
           button.classList.contains(
@@ -1116,6 +1270,10 @@
       }
     );
 
+
+    /* =========================
+       ADD WORKOUT DAY
+    ========================== */
 
     addWorkoutDayBtn.addEventListener(
       "click",
@@ -1154,7 +1312,9 @@
       } =
         await window.auth.supabase
           .from("profiles")
-          .select("display_name")
+          .select(
+            "display_name"
+          )
           .eq(
             "id",
             clientId
@@ -1182,32 +1342,64 @@
 
     /* =========================
        LOAD CLIENT PROGRAM
+       FROM SUPABASE
     ========================== */
 
     async function loadClientProgram() {
 
+      const {
+        data,
+        error
+      } =
+        await window.auth.supabase
+          .from("programs")
+          .select(
+            "coach_notes, program_data"
+          )
+          .eq(
+            "user_id",
+            clientId
+          )
+          .maybeSingle();
+
+
+      if (error) {
+        throw error;
+      }
+
+
       /*
-        NEXT STEP:
-
-        Once the Supabase "programs"
-        table exists, this function
-        will retrieve:
-
-        - coach_notes
-        - program_data
-
-        for clientId.
-
-        Until then, the default
-        program above is loaded into
-        the editor.
+        If this client already has
+        a saved program, load it.
       */
 
-      console.log(
-        "Selected client program:",
-        clientId
-      );
+      if (data) {
 
+        coachNotes.value =
+          data.coach_notes ||
+          "";
+
+
+        if (
+          data.program_data &&
+          Array.isArray(
+            data.program_data.days
+          )
+        ) {
+
+          programData =
+            data.program_data;
+
+        }
+
+      }
+
+
+      /*
+        If there is no saved program,
+        the default program above
+        remains loaded.
+      */
 
       renderProgramEditor();
 
@@ -1216,40 +1408,98 @@
 
     /* =========================
        SAVE PROGRAM
+       TO SUPABASE
     ========================== */
 
     async function saveProgram() {
 
-      /*
-        The editor is fully functional,
-        but Supabase saving is intentionally
-        not connected yet.
+      try {
 
-        Once the programs table exists,
-        this is where we will upsert:
+        if (!clientId) {
 
-        {
-          user_id: clientId,
-          coach_notes: coachNotes.value,
-          program_data: programData,
-          updated_at: new Date().toISOString()
+          throw new Error(
+            "No client was selected."
+          );
+
         }
-      */
 
-      console.log(
-        "Program ready to save:",
-        {
-          user_id: clientId,
-          coach_notes:
-            coachNotes.value,
-          program_data:
-            programData
+
+        saveProgramBtn.disabled =
+          true;
+
+
+        saveProgramBtn.textContent =
+          "Saving...";
+
+
+        saveStatus.textContent =
+          "";
+
+
+        const {
+          error
+        } =
+          await window.auth.supabase
+            .from("programs")
+            .upsert(
+              {
+
+                user_id:
+                  clientId,
+
+                coach_notes:
+                  coachNotes.value.trim(),
+
+                program_data:
+                  programData,
+
+                updated_at:
+                  new Date().toISOString()
+
+              },
+              {
+
+                onConflict:
+                  "user_id"
+
+              }
+            );
+
+
+        if (error) {
+          throw error;
         }
-      );
 
 
-      saveStatus.textContent =
-        "Program is ready — connect the programs table to save it.";
+        saveStatus.textContent =
+          "Program saved!";
+
+      } catch (error) {
+
+        console.error(
+          "Could not save client program:",
+          error
+        );
+
+
+        saveStatus.textContent =
+          "Program could not be saved.";
+
+
+        alert(
+          "The client's program could not be saved."
+        );
+
+      } finally {
+
+        saveProgramBtn.disabled =
+          false;
+
+
+        saveProgramBtn.textContent =
+          "Save Program";
+
+      }
 
     }
 
@@ -1269,10 +1519,8 @@
       try {
 
         /*
-          This authenticates YOU,
-          the logged-in coach.
-
-          It does NOT change clientId.
+          Authenticate the logged-in
+          coach.
         */
 
         const user =
@@ -1285,8 +1533,7 @@
 
 
         /*
-          Make sure a client was
-          actually supplied in the URL.
+          Make sure a client ID exists.
         */
 
         if (!clientId) {
@@ -1305,15 +1552,15 @@
 
 
         /*
-          Load the selected client's
-          display name.
+          Load selected client.
         */
 
         await loadClientName();
 
 
         /*
-          Load the editable program.
+          Load the client's saved
+          program from Supabase.
         */
 
         await loadClientProgram();
