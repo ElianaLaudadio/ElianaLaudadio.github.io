@@ -1391,6 +1391,90 @@
         checkbox;
 
 
+      /*
+        Find the workout day that
+        belongs to this checkbox.
+      */
+
+      const workoutDay =
+        checkbox.closest(
+          ".workout-day"
+        );
+
+
+      if (workoutDay) {
+
+        const dayNumber =
+          workoutDay.dataset.workoutDay;
+
+
+        const workoutName =
+          workoutDay.querySelector(
+            ".workout-day-header p"
+          )?.textContent.trim() || "";
+
+
+        const exercises =
+          workoutDay.querySelectorAll(
+            ".exercise"
+          );
+
+
+        let workoutText =
+          `Day ${dayNumber}`;
+
+
+        if (workoutName) {
+
+          workoutText +=
+            `: ${workoutName}`;
+
+        }
+
+
+        workoutText +=
+          "\n\n";
+
+
+        exercises.forEach(
+          exercise => {
+
+            const exerciseName =
+              exercise.querySelector(
+                "h3"
+              )?.textContent.trim();
+
+
+            const prescription =
+              exercise.querySelector(
+                ".exercise-prescription"
+              )?.textContent.trim();
+
+
+            if (
+              exerciseName &&
+              prescription
+            ) {
+
+              workoutText +=
+                `${exerciseName} — ${prescription}\n`;
+
+            }
+
+          }
+        );
+
+
+        workoutText +=
+          "\nNotes:";
+
+
+        workoutInput.value =
+          workoutText;
+
+      }
+
+
       workoutLogPanel.classList.add(
         "active"
       );
