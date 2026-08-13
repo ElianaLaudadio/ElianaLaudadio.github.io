@@ -356,7 +356,85 @@
 
   </div>
 </div>
+<!-- =========================
+     FIRST LOGIN ONBOARDING
+========================== -->
 
+<div
+  class="level-celebration-modal"
+  id="onboardingModal"
+  aria-hidden="true"
+>
+  <div class="level-celebration-card">
+
+    <div class="celebration-screen">
+
+      <div class="celebration-label">
+        WELCOME
+      </div>
+
+      <h2>
+        Welcome to Outliers
+      </h2>
+
+      <div class="next-level-content">
+
+        <div class="next-level-copy">
+
+          <p>
+            I'm excited you're here.
+          </p>
+
+          <p>
+            Before we begin, I want you to know something:
+          </p>
+
+          <p>
+            This isn't another fitness program that's going
+            to ask you to completely change your life
+            overnight.
+          </p>
+
+          <p>
+            You won't find fad diets.
+            <br>
+            You won't find trends.
+            <br>
+            And you definitely won't be expected to become
+            a different person by next Monday.
+          </p>
+
+          <p>
+            Instead, we're going to focus on building habits
+            that actually last.
+          </p>
+
+          <p>
+            Outliers is designed for those who feel they
+            need a different approach to fitness.
+          </p>
+
+          <p>
+            Something more sustainable.
+            Something more personal.
+          </p>
+
+        </div>
+
+      </div>
+
+      <button
+        type="button"
+        class="pixel-button celebration-button"
+        id="onboardingContinueBtn"
+      >
+        Continue
+      </button>
+
+    </div>
+
+  </div>
+</div>
   <!-- =========================
        FOOTER
   ========================== -->
@@ -1036,6 +1114,16 @@ const beginNextLevelBtn =
     const carbsInput = document.getElementById('carbsInput');
     const fatsInput = document.getElementById('fatsInput');
     const calorieInput = document.getElementById('calorieInput');
+
+    const onboardingModal =
+  document.getElementById(
+    "onboardingModal"
+  );
+
+const onboardingContinueBtn =
+  document.getElementById(
+    "onboardingContinueBtn"
+  );
 
     /* =========================
        DATE HELPERS
@@ -1871,6 +1959,84 @@ beginNextLevelBtn.addEventListener(
   "click",
   beginNextLevel
 );
+
+function openOnboarding() {
+
+  onboardingModal.classList.add(
+    "active"
+  );
+
+  onboardingModal.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+}
+
+    async function completeOnboarding() {
+
+  try {
+
+    const user =
+      await window.auth.getUser();
+
+
+    if (!user) {
+      return;
+    }
+
+
+    const {
+      error
+    } =
+      await window.auth.supabase
+        .from("profiles")
+        .update({
+          onboarding_complete: true
+        })
+        .eq(
+          "id",
+          user.id
+        );
+
+
+    if (error) {
+      throw error;
+    }
+
+
+    closeOnboarding();
+
+
+  } catch (error) {
+
+    console.error(
+      "Could not complete onboarding:",
+      error
+    );
+
+  }
+
+}
+
+
+function closeOnboarding() {
+
+  onboardingModal.classList.remove(
+    "active"
+  );
+
+  onboardingModal.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+}
+
+onboardingContinueBtn.addEventListener(
+  "click",
+  completeOnboarding
+);
     
 /* =========================
    INITIALIZE PAGE
@@ -1890,7 +2056,7 @@ async function initializePage() {
       error: profileError
     } = await window.auth.supabase
       .from("profiles")
-      .select("display_name, role")
+      .select("display_name, role, onboarding_complete")
       .eq("id", user.id)
       .maybeSingle();
 
@@ -1901,6 +2067,15 @@ async function initializePage() {
     updateNavigationForRole(
   profile?.role
 );
+
+    if (
+  profile?.role === "client" &&
+  profile?.onboarding_complete !== true
+) {
+
+  openOnboarding();
+
+}
 
     const {
       data: gameProgress,
