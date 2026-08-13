@@ -372,64 +372,22 @@
       <div class="celebration-label">
         WELCOME
       </div>
+<h2 id="onboardingTitle">
+  Welcome to Outliers
+</h2>
 
-      <h2>
-        Welcome to Outliers
-      </h2>
+<div
+  class="next-level-content"
+  id="onboardingContent"
+></div>
 
-      <div class="next-level-content">
-
-        <div class="next-level-copy">
-
-          <p>
-            I'm excited you're here.
-          </p>
-
-          <p>
-            Before we begin, I want you to know something:
-          </p>
-
-          <p>
-            This isn't another fitness program that's going
-            to ask you to completely change your life
-            overnight.
-          </p>
-
-          <p>
-            You won't find fad diets.
-            <br>
-            You won't find trends.
-            <br>
-            And you definitely won't be expected to become
-            a different person by next Monday.
-          </p>
-
-          <p>
-            Instead, we're going to focus on building habits
-            that actually last.
-          </p>
-
-          <p>
-            Outliers is designed for those who feel they
-            need a different approach to fitness.
-          </p>
-
-          <p>
-            Something more sustainable.
-            Something more personal.
-          </p>
-
-        </div>
-
-      </div>
-
-      <button
-        type="button"
-        class="pixel-button celebration-button"
-        id="onboardingContinueBtn"
-      >
-        Continue
-      </button>
+<button
+  type="button"
+  class="pixel-button celebration-button"
+  id="onboardingContinueBtn"
+>
+  Continue
+</button>
 
     </div>
 
@@ -1124,6 +1082,447 @@ const onboardingContinueBtn =
   document.getElementById(
     "onboardingContinueBtn"
   );
+
+    const onboardingTitle =
+  document.getElementById(
+    "onboardingTitle"
+  );
+
+const onboardingContent =
+  document.getElementById(
+    "onboardingContent"
+  );
+
+    let onboardingStep = 0;
+
+    const onboardingCards = [
+
+  /* =========================
+     STEP 0: WELCOME
+  ========================== */
+
+  {
+    title: "Welcome to Outliers",
+
+    buttonText: "Continue",
+
+    html: `
+      <div class="next-level-copy">
+
+        <p>
+          I'm excited you're here.
+        </p>
+
+        <p>
+          Before we begin, I want you to know something:
+        </p>
+
+        <p>
+          This isn't another fitness program that's going
+          to ask you to completely change your life
+          overnight.
+        </p>
+
+        <p>
+          You won't find fad diets.
+          <br>
+          You won't find trends.
+          <br>
+          And you definitely won't be expected to become
+          a different person by next Monday.
+        </p>
+
+        <p>
+          Instead, we're going to focus on building habits
+          that actually last.
+        </p>
+
+        <p>
+          Outliers is designed for those who feel they
+          need a different approach to fitness.
+        </p>
+
+        <p>
+          Something more sustainable.
+          Something more personal.
+        </p>
+
+      </div>
+    `
+  },
+
+
+  /* =========================
+     STEP 1: HOW OUTLIERS WORKS
+  ========================== */
+
+  {
+    title: "How Outliers Works",
+
+    buttonText: "Continue",
+
+    html: `
+      <div class="next-level-copy">
+
+        <p>
+          I have two big goals when it comes to my work here at Outliers.
+        </p>
+
+        <p>
+          <strong>1 -</strong>
+          Of course I want to see you hit all of your fitness goals and become the healthiest version of yourself, but I mostly want
+          <strong>
+            to show you the fundamentals of creating a lifestyle that will allow you to hit those goals and maintain them.
+          </strong>
+        </p>
+
+        <p>
+          <strong>2 -</strong>
+          One thing about fitness is that it takes a long time to see meaningful results - but the good news is that time passes anyway.
+          Outliers is unique in that it is built
+          <strong>
+            to help create a sense of instant gratification in something that takes discipline in its delayed gratification.
+          </strong>
+        </p>
+
+        <p>
+          I created Outliers as a way to gamify those two goals.
+          As you work toward your long-term fitness goals, you will also have smaller goals to work toward along the way.
+          Logging your habits earns XP, XP moves you through levels, and each new level introduces something new for you to learn and apply.
+          Side Quests give you additional challenges to work toward and trophies to collect.
+        </p>
+
+        <p>
+          The idea is to give you something you can accomplish and feel good about now, while the bigger results are still being built in the background.
+        </p>
+
+        <p>
+          At the same time, progressing through the levels will gradually teach you more about your own training, nutrition, habits, and what works for you.
+          By the end, I don't just want you to have made progress — I want you to understand how you made that progress and have the tools to continue it.
+        </p>
+
+        <h3>
+          Weekly Progress
+        </h3>
+
+        <p>
+          Each level has a set of
+          <strong>Weekly Objectives</strong>.
+          Completing these objectives earns you
+          <strong>XP (Experience Points)</strong>.
+          Once you've earned enough XP, you'll unlock the next level and begin learning a new skill or habit.
+        </p>
+
+        <h3>
+          Workouts
+        </h3>
+
+        <p>
+          The program is designed around
+          <strong>4 workouts per week</strong>.
+        </p>
+
+        <p>
+          This doesn't mean you have to work out exactly four days every week.
+        </p>
+
+        <p>
+          If you complete your objectives in 3 days one week because life gets busy, that's okay.
+          It will simply take a little longer to progress.
+        </p>
+
+        <p>
+          There is no penalty for moving at your own pace.
+        </p>
+
+        <h3>
+          Food Logging
+        </h3>
+
+        <p>
+          Some objectives, like food logging or protein tracking, are designed to be completed more frequently throughout the week.
+        </p>
+
+        <p>
+          You do not need to hit your nutrition goals perfectly every single day, but I do want you to be aware of what you're eating most days — about 6 days per week.
+        </p>
+
+        <p>
+          The goal isn't perfection. It's building awareness and consistency over time.
+        </p>
+
+        <h3>
+          Weight Logs
+        </h3>
+
+        <p>
+          You are encouraged to log your weight as it can be an indicator of your progress, but I do acknowledge that not everyone has access to a scale, might forget to weigh in, or simply might not respond to the weight on the scale in a healthy way.
+        </p>
+
+        <p>
+          Weight check-ins are still part of earning XP, but you can select
+          <strong>"No Weigh-In Today"</strong>
+          instead of entering a weight and still complete that day's objective for XP.
+        </p>
+
+        <h3>
+          Weekly XP Caps
+        </h3>
+
+        <p>
+          Each objective has a weekly XP cap.
+        </p>
+
+        <p>
+          This means you can't earn all of your XP in a single day or finish an entire level before the week is over.
+        </p>
+
+        <p>
+          The purpose of these caps is to help you build
+          <strong>consistent habits</strong>,
+          rather than short bursts of motivation.
+        </p>
+
+        <h3>
+          Progress at Your Own Pace
+        </h3>
+
+        <p>
+          Everyone progresses through Outliers at a different speed.
+        </p>
+
+        <p>
+          The goal isn't to finish the program as quickly as possible.
+          It's to build habits that you can continue after you've completed the level system.
+        </p>
+
+      </div>
+    `
+  },
+
+
+  /* =========================
+     STEP 2: BASELINE
+  ========================== */
+
+  {
+    title: "Welcome to Baseline!",
+
+    buttonText: "Start",
+
+    html: `
+
+      <div class="next-level-duration">
+        1 Week / 70 XP
+      </div>
+
+
+      <div class="next-level-section">
+
+        <h3>
+          Weekly Objectives
+        </h3>
+
+        <div class="level-objectives">
+
+          <div class="level-objective">
+
+            <span>
+              Food
+            </span>
+
+            <strong>
+              6 Days
+            </strong>
+
+          </div>
+
+
+          <div class="level-objective">
+
+            <span>
+              Activity
+            </span>
+
+            <strong>
+              4 Days
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="next-level-copy">
+
+        <p>
+          This week is all about finding out your natural eating habits and how much activity you get in so we can build off of those habits.
+        </p>
+
+        <p>
+          For the next week,
+          <strong>
+            continue eating and exercising as you normally would.
+            Your goal is simply to log your food and activity
+          </strong>
+          so we can establish a starting point.
+        </p>
+
+        <p>
+          This information will help me identify where changes may be useful and what we should focus on in the next levels.
+        </p>
+
+      </div>
+
+
+      <div class="next-level-takeaway">
+
+        "You can, you should,<br>
+        and if you are brave enough to start,<br>
+        you will."<br><br>
+
+        — Stephen King
+
+      </div>
+
+
+      <div class="next-level-lessons">
+
+        <details class="lesson-dropdown">
+
+          <summary>
+            How to Log Food
+          </summary>
+
+          <div class="lesson-dropdown-content">
+
+            <p>
+              For your food logs, let me know what you ate that day and approximately when you ate it.
+            </p>
+
+            <p>
+              For example:
+            </p>
+
+            <p>
+              <strong>Breakfast:</strong> Eggs and toast - 8am<br>
+              <strong>Lunch:</strong> Turkey sandwich and chips - 12pm<br>
+              <strong>Dinner:</strong> Chicken pasta - 7pm<br>
+              <strong>Snack:</strong> Left over cake - 9pm
+            </p>
+
+            <p>
+              Try to be as detailed and as honest as you can.
+            </p>
+
+            <p>
+              Remember you can log back for up to 7 days - so if you forgot to log your food for a day, you can go back and log it.
+            </p>
+
+          </div>
+
+        </details>
+
+
+        <details class="lesson-dropdown">
+
+          <summary>
+            How to Log Activity
+          </summary>
+
+          <div class="lesson-dropdown-content">
+
+            <p>
+              Log any intentional activity or exercise you complete.
+            </p>
+
+            <p>
+              This can include:
+            </p>
+
+            <p>
+              • Strength training<br>
+              • Walking<br>
+              • Running<br>
+              • Sports<br>
+              • Fitness classes<br>
+              • Stretching or mobility work<br>
+              • Other forms of exercise or physical activity
+            </p>
+
+            <p>
+              This will help me get an idea of what you are already used to and what type of activity you already enjoy.
+            </p>
+
+          </div>
+
+        </details>
+
+
+        <details class="lesson-dropdown">
+
+          <summary>
+            Why Start With a Baseline?
+          </summary>
+
+          <div class="lesson-dropdown-content">
+
+            <p>
+              A baseline gives us actual information about your current habits instead of relying on estimates.
+            </p>
+
+            <p>
+              Your food logs help me understand your typical eating patterns, while your activity logs show me how much movement is already part of your routine.
+            </p>
+
+            <p>
+              We can then use that information to make more specific and realistic changes as you progress through the program.
+            </p>
+
+            <p>
+              <strong>
+                There is no need to change anything this week.
+                Focus on logging your normal routine as accurately as you can.
+              </strong>
+            </p>
+
+          </div>
+
+        </details>
+
+      </div>
+    `
+  }
+
+];
+
+    function renderOnboardingStep() {
+
+  const currentCard =
+    onboardingCards[
+      onboardingStep
+    ];
+
+
+  if (!currentCard) {
+    return;
+  }
+
+
+  onboardingTitle.textContent =
+    currentCard.title;
+
+
+  onboardingContent.innerHTML =
+    currentCard.html;
+
+
+  onboardingContinueBtn.textContent =
+    currentCard.buttonText;
+
+}
 
     /* =========================
        DATE HELPERS
@@ -1962,9 +2361,17 @@ beginNextLevelBtn.addEventListener(
 
 function openOnboarding() {
 
+  onboardingStep =
+    0;
+
+
+  renderOnboardingStep();
+
+
   onboardingModal.classList.add(
     "active"
   );
+
 
   onboardingModal.setAttribute(
     "aria-hidden",
@@ -2035,7 +2442,40 @@ function closeOnboarding() {
 
 onboardingContinueBtn.addEventListener(
   "click",
-  completeOnboarding
+  async () => {
+
+    /*
+      If we're NOT on the final card,
+      move forward one card.
+    */
+
+    if (
+      onboardingStep <
+      onboardingCards.length - 1
+    ) {
+
+      onboardingStep +=
+        1;
+
+
+      renderOnboardingStep();
+
+
+      return;
+
+    }
+
+
+    /*
+      We ARE on the final Baseline card.
+
+      Clicking Start now officially
+      completes onboarding.
+    */
+
+    await completeOnboarding();
+
+  }
 );
     
 /* =========================
