@@ -302,17 +302,7 @@
       white-space: pre-line;
     }
 
-    .welcome-intro-title {
-      min-height: 32px;
-      margin-top: auto;
 
-      font-family: "Atkinson Hyperlegible", sans-serif;
-      font-size: clamp(1rem, 2.5vw, 1.25rem);
-      font-weight: 700;
-
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
 
     #closeFaqLevelBtn.welcome-start-button {
       opacity: 0;
@@ -743,29 +733,24 @@
 
     const gettingStartedContent = {
 
-      welcome: {
+welcome: {
 
-        title: "Welcome to Outliers",
+  title: "Welcome to Outliers",
 
-        html: `
+  html: `
 
-          <div class="welcome-intro-wrap">
+    <div class="welcome-intro-wrap">
 
-            <div
-              class="welcome-intro-quote"
-              id="welcomeIntroQuote"
-            ></div>
+      <div
+        class="welcome-intro-quote"
+        id="welcomeIntroQuote"
+      ></div>
 
-            <div
-              class="welcome-intro-title"
-              id="welcomeIntroTitle"
-            ></div>
+    </div>
 
-          </div>
+  `
 
-        `
-
-      },
+},
 
 
       coach: {
@@ -1814,20 +1799,11 @@ three total sets.
         );
 
 
-      const titleElement =
-        document.getElementById(
-          "welcomeIntroTitle"
-        );
 
 
-      if (
-        !quoteElement ||
-        !titleElement
-      ) {
-
-        return;
-
-      }
+if (!quoteElement) {
+  return;
+}
 
 
       closeFaqLevelBtn.textContent =
@@ -1852,9 +1828,6 @@ you will.”
 
 — Stephen King`;
 
-
-      const welcomeTitle =
-        "WELCOME TO OUTLIERS TRAINING CLUB";
 
 
       await wait(
@@ -1884,28 +1857,6 @@ you will.”
         650
       );
 
-
-      const titleFinished =
-        await typeText(
-          titleElement,
-          welcomeTitle,
-          55,
-          animationRun
-        );
-
-
-      if (
-        !titleFinished
-      ) {
-
-        return;
-
-      }
-
-
-      await wait(
-        350
-      );
 
 
       if (
