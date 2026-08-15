@@ -369,9 +369,12 @@
 
     <div class="celebration-screen">
 
-      <div class="celebration-label">
-        WELCOME
-      </div>
+<div
+  class="celebration-label"
+  id="onboardingLabel"
+>
+  WELCOME
+</div>
 <h2 id="onboardingTitle">
   Welcome to Outliers
 </h2>
@@ -1187,6 +1190,10 @@ const beginNextLevelBtn =
   document.getElementById(
     "beginNextLevelBtn"
   );
+  const onboardingLabel =
+  document.getElementById(
+    "onboardingLabel"
+  );
 
     const openGoalsBtn = document.getElementById('openGoalsBtn');
     const goalModal = document.getElementById('goalModal');
@@ -1229,31 +1236,20 @@ const onboardingContent =
   ========================== */
 
 {
-  title: "Welcome to Outliers",
+  type: "intro",
 
-  buttonText: "Continue",
+  title: "",
+
+  buttonText: "Start",
 
   html: `
 
-    <div class="next-level-copy">
+    <div class="welcome-intro-wrap">
 
-      <p>
-        Welcome to Outliers!
-      </p>
-
-      <p>
-        I'm excited you're here.
-      </p>
-
-    </div>
-
-    <div class="next-level-takeaway">
-
-      "You can, you should,<br>
-      and if you are brave enough to start,<br>
-      you will."<br><br>
-
-      — Stephen King
+      <div
+        class="welcome-intro-quote"
+        id="onboardingIntroQuote"
+      ></div>
 
     </div>
 
@@ -1607,7 +1603,164 @@ const onboardingContent =
 
 ];
 
-    function renderOnboardingStep() {
+/* =========================
+   ONBOARDING INTRO ANIMATION
+========================== */
+
+let onboardingAnimationRun = 0;
+
+
+function onboardingWait(milliseconds) {
+
+  return new Promise(resolve => {
+
+    setTimeout(
+      resolve,
+      milliseconds
+    );
+
+  });
+
+}
+
+
+async function typeOnboardingText(
+  element,
+  text,
+  speed,
+  animationRun
+) {
+
+  element.textContent =
+    "";
+
+
+  for (
+    let characterIndex = 0;
+    characterIndex < text.length;
+    characterIndex++
+  ) {
+
+    if (
+      animationRun !==
+      onboardingAnimationRun
+    ) {
+
+      return false;
+
+    }
+
+
+    element.textContent +=
+      text.charAt(
+        characterIndex
+      );
+
+
+    await onboardingWait(
+      speed
+    );
+
+  }
+
+
+  return true;
+
+}
+
+async function playOnboardingIntro() {
+
+  const animationRun =
+    ++onboardingAnimationRun;
+
+
+  const quoteElement =
+    document.getElementById(
+      "onboardingIntroQuote"
+    );
+
+
+  if (!quoteElement) {
+    return;
+  }
+
+
+  onboardingContinueBtn.textContent =
+    "Start";
+
+
+  onboardingContinueBtn.classList.add(
+    "welcome-start-button"
+  );
+
+
+  onboardingContinueBtn.classList.remove(
+    "visible"
+  );
+
+
+  const quote =
+    `“You can,
+you should,
+and if you are brave enough to start,
+you will.”
+
+— Stephen King`;
+
+
+  await onboardingWait(
+    500
+  );
+
+
+  const quoteFinished =
+    await typeOnboardingText(
+      quoteElement,
+      quote,
+      80,
+      animationRun
+    );
+
+
+  if (!quoteFinished) {
+    return;
+  }
+
+
+  await onboardingWait(
+    600
+  );
+
+
+  if (
+    animationRun !==
+    onboardingAnimationRun
+  ) {
+
+    return;
+
+  }
+
+
+  onboardingContinueBtn.classList.add(
+    "visible"
+  );
+
+}
+
+function resetOnboardingIntro() {
+
+  onboardingAnimationRun++;
+
+
+  onboardingContinueBtn.classList.remove(
+    "welcome-start-button",
+    "visible"
+  );
+
+}
+
+function renderOnboardingStep() {
 
   const currentCard =
     onboardingCards[
@@ -1620,6 +1773,14 @@ const onboardingContent =
   }
 
 
+  /*
+    Stop/reset any intro animation
+    left over from the previous card.
+  */
+
+  resetOnboardingIntro();
+
+
   onboardingTitle.textContent =
     currentCard.title;
 
@@ -1630,6 +1791,35 @@ const onboardingContent =
 
   onboardingContinueBtn.textContent =
     currentCard.buttonText;
+
+
+  /*
+    The opening quote screen has
+    no normal label or heading.
+  */
+
+  if (
+    currentCard.type === "intro"
+  ) {
+
+    onboardingLabel.style.display =
+      "none";
+
+    onboardingTitle.style.display =
+      "none";
+
+
+    playOnboardingIntro();
+
+  } else {
+
+    onboardingLabel.style.display =
+      "";
+
+    onboardingTitle.style.display =
+      "";
+
+  }
 
 }
 
