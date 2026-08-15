@@ -704,4 +704,27 @@
     opacity: 1;
     pointer-events: auto;
   }
+/* =========================
+   BASELINE INTRO FADE
+========================= */
 
+.onboarding-fade-in {
+  opacity: 0;
+  transform: translateY(8px);
+
+  animation: onboardingFadeIn 1.5s ease forwards;
+}
+
+@keyframes onboardingFadeIn {
+
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
