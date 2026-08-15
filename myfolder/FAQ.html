@@ -33,7 +33,7 @@
   >
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Caveat:wght@500;600&display=swap"
     rel="stylesheet"
   >
 
@@ -273,6 +273,60 @@
     }
 
 
+    /* =========================
+       WELCOME INTRO ANIMATION
+    ========================== */
+
+    .welcome-intro-wrap {
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px 10px;
+      box-sizing: border-box;
+    }
+
+    .welcome-intro-quote {
+      width: 100%;
+      max-width: 680px;
+      min-height: 190px;
+      margin: 0 auto 30px;
+
+      font-family: "Caveat", cursive;
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 500;
+      line-height: 1.2;
+
+      white-space: pre-line;
+    }
+
+    .welcome-intro-title {
+      min-height: 32px;
+      margin-top: auto;
+
+      font-family: "Atkinson Hyperlegible", sans-serif;
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      font-weight: 700;
+
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    #closeFaqLevelBtn.welcome-start-button {
+      opacity: 0;
+      pointer-events: none;
+
+      transition: opacity 0.35s ease;
+    }
+
+    #closeFaqLevelBtn.welcome-start-button.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+
     .faq-level-instructions {
       margin-top: -8px;
       margin-bottom: 24px;
@@ -371,7 +425,6 @@
       ========================== -->
 
       <section class="faq-section">
-
 
         <div class="faq-starting-cards">
 
@@ -690,37 +743,29 @@
 
     const gettingStartedContent = {
 
-welcome: {
+      welcome: {
 
-  title: "Welcome to Outliers",
+        title: "Welcome to Outliers",
 
-  html: `
+        html: `
 
-    <div class="next-level-copy">
+          <div class="welcome-intro-wrap">
 
-      <p>
-        Welcome to Outliers!
-      </p>
+            <div
+              class="welcome-intro-quote"
+              id="welcomeIntroQuote"
+            ></div>
 
-      <p>
-        I'm excited you're here.
-      </p>
+            <div
+              class="welcome-intro-title"
+              id="welcomeIntroTitle"
+            ></div>
 
-    </div>
+          </div>
 
-    <div class="next-level-takeaway">
+        `
 
-      "You can, you should,<br>
-      and if you are brave enough to start,<br>
-      you will."<br><br>
-
-      — Stephen King
-
-    </div>
-
-  `
-
-},
+      },
 
 
       coach: {
@@ -831,29 +876,42 @@ welcome: {
 
           <div class="next-level-copy">
 
-<p>
-  I have two big goals when it comes to my work here at Outliers.
-</p>
+            <p>
+              I have two big goals when it comes to my work here at Outliers.
+            </p>
 
-<p>
-  <strong>1 -</strong> Of course I want to see you hit all of your fitness goals and become the healthiest version of yourself, but I mostly want <strong>to show you the fundamentals of creating a lifestyle that will allow you to hit those goals and maintain them.</strong>
-</p>
+            <p>
+              <strong>1 -</strong>
+              Of course I want to see you hit all of your fitness goals and become the healthiest version of yourself, but I mostly want
+              <strong>
+                to show you the fundamentals of creating a lifestyle that will allow you to hit those goals and maintain them.
+              </strong>
+            </p>
 
-<p>
-  <strong>2 -</strong> One thing about fitness is that it takes a long time to see meaningful results - but the good news is that time passes anyway. Outliers is unique in that it is built <strong>to help create a sense of instant gratification in something that takes discipline in its delayed gratification.</strong>
-</p>
+            <p>
+              <strong>2 -</strong>
+              One thing about fitness is that it takes a long time to see meaningful results - but the good news is that time passes anyway.
+              Outliers is unique in that it is built
+              <strong>
+                to help create a sense of instant gratification in something that takes discipline in its delayed gratification.
+              </strong>
+            </p>
 
-<p>
-  I created Outliers as a way to gamify those two goals. As you work toward your long-term fitness goals, you will also have smaller goals to work toward along the way. Logging your habits earns XP, XP moves you through levels, and each new level introduces something new for you to learn and apply. Side Quests give you additional challenges to work toward and trophies to collect.
-</p>
+            <p>
+              I created Outliers as a way to gamify those two goals.
+              As you work toward your long-term fitness goals, you will also have smaller goals to work toward along the way.
+              Logging your habits earns XP, XP moves you through levels, and each new level introduces something new for you to learn and apply.
+              Side Quests give you additional challenges to work toward and trophies to collect.
+            </p>
 
-<p>
-  The idea is to give you something you can accomplish and feel good about now, while the bigger results are still being built in the background.
-</p>
+            <p>
+              The idea is to give you something you can accomplish and feel good about now, while the bigger results are still being built in the background.
+            </p>
 
-<p>
-  At the same time, progressing through the levels will gradually teach you more about your own training, nutrition, habits, and what works for you. By the end, I don't just want you to have made progress — I want you to understand how you made that progress and have the tools to continue it.
-</p>
+            <p>
+              At the same time, progressing through the levels will gradually teach you more about your own training, nutrition, habits, and what works for you.
+              By the end, I don't just want you to have made progress — I want you to understand how you made that progress and have the tools to continue it.
+            </p>
 
             <h3>
               Weekly Progress
@@ -1265,161 +1323,161 @@ see where adjustments may be useful.
 
         ],
 
-takeaway: `
+        takeaway: `
   "success lies in relentless execution of the basics."<br><br>
   — Leonardo da Vinci
 `,
 
-dropdowns: [
+        dropdowns: [
 
-  {
+          {
 
-    title: "How to Count Your Protein",
+            title: "How to Count Your Protein",
 
-    paragraphs: [
+            paragraphs: [
 
-      `
+              `
 <strong>Step 1: Download a food-tracking app</strong>
-      `,
+              `,
 
-      `
+              `
 I recommend using either <strong>MyFitnessPal</strong> or <strong>My Macros+</strong>. Both allow you to search for foods and see how many grams of protein they contain. I personally use MyFitnessPal, but My Macros+ offers barcode and nutrition-label scanning, which makes it a lot easier.
-      `,
+              `,
 
-      `
+              `
 MyFitnessPal will ask you for information about your goals. Go ahead and choose the <strong>“maintain weight”</strong> option for now.
-      `,
+              `,
 
-      `
+              `
 <strong>Step 2: Read the nutrition label</strong>
-      `,
+              `,
 
-      `
+              `
 For packaged foods, look for two things:
-      `,
+              `,
 
-      `
+              `
 <strong>Serving Size</strong> — how much food the nutrition information applies to.<br><br>
 <strong>Protein</strong> — how many grams of protein are in that serving.
-      `,
+              `,
 
-      `
+              `
 For example, if a Greek yogurt container has:
-      `,
+              `,
 
-      `
+              `
 <strong>Serving Size:</strong> 1 container<br>
 <strong>Protein:</strong> 15g
-      `,
+              `,
 
-      `
+              `
 If you eat the entire container, you've eaten <strong>15g of protein</strong>.
-      `,
+              `,
 
-      `
+              `
 If something has:
-      `,
+              `,
 
-      `
+              `
 <strong>Serving Size:</strong> 2 oz<br>
 <strong>Protein:</strong> 10g
-      `,
+              `,
 
-      `
+              `
 and you eat <strong>4 oz</strong>, you've eaten two servings:
-      `,
+              `,
 
-      `
+              `
 <strong>10g + 10g = 20g protein</strong>
-      `,
+              `,
 
-      `
+              `
 This is why paying attention to the <strong>serving size</strong> is just as important as looking at the protein number.
-      `,
+              `,
 
-      `
+              `
 I highlyyyy recommend buying a food scale if you don’t have one already. If you don’t have one and find that you are having a difficult time with serving sizes, let me know.
-      `,
+              `,
 
-      `
+              `
 <strong>Step 3: Log what you actually ate</strong>
-      `,
+              `,
 
-      `
+              `
 Search for the food in your tracking app and make sure the serving size matches the amount you ate. MyFitnessPal, for example, lets you adjust both the serving size and number of servings before adding a food to your diary.
-      `,
+              `,
 
-      `
+              `
 If the app's nutrition information doesn't match the package in your hand, <strong>trust the nutrition label and find or create a better entry.</strong> MyFitnessPal specifically allows users to correct mismatched barcode results.
-      `,
+              `,
 
-      `
+              `
 <strong>Step 4: Log everything you eat and don’t worry about the calories</strong>
-      `,
+              `,
 
-      `
+              `
 A lot of the most random foods will have a decent amount of protein, like cheese or pasta. Make sure you log everything so you can get a <strong>correct protein count</strong> by the end of the day.
-      `,
+              `,
 
-      `
+              `
 For now, don’t worry about calories, fats, or carbs. We will get to that later :)
-      `,
+              `,
 
-      `
+              `
 <strong>Don't Stress About Being Perfect</strong>
-      `,
+              `,
 
-      `
+              `
 You are probably going to have to estimate sometimes, like if you go to a local restaurant that is not in your food-tracking app, and that is fine.
-      `,
+              `,
 
-      `
+              `
 Once you get a little more used to counting your protein, you’ll be able to know what 3 oz of chicken looks like just by looking at it.
-      `
+              `
 
-    ]
+            ]
 
-  },
+          },
 
 
-  {
+          {
 
-    title: "Why Protein?",
+            title: "Why Protein?",
 
-    paragraphs: [
+            paragraphs: [
 
-      `
+              `
 Protein is one of the primary nutrients your
 body uses to repair and build muscle.
-      `,
+              `,
 
-      `
+              `
 It also supports recovery from exercise and
 can help you stay full throughout the day.
-      `,
+              `,
 
-      `
+              `
 If your goal is to gain weight, adequate
 protein can help support muscle growth.
-      `,
+              `,
 
-      `
+              `
 If your goal is to lose fat, protein can help
 preserve muscle while supporting fullness.
-      `,
+              `,
 
-      `
+              `
 No matter whether your goal is building
 muscle, losing fat, getting stronger, or
 improving your overall health, protein plays
 an important role.
-      `
+              `
 
-    ]
+            ]
 
-  }
+          }
 
-]
+        ]
 
       },
 
@@ -1494,7 +1552,7 @@ structured training plan.
 
         ],
 
-takeaway: `
+        takeaway: `
   "fitness gets easier when you stop asking,<br>
   'what's the fastest way?'<br>
   and start asking,<br>
@@ -1621,7 +1679,7 @@ repetitions, or reps, in each set.
               `,
 
               `
- For example, 3 × 12 means completing 12 reps,
+For example, 3 × 12 means completing 12 reps,
 resting, and repeating until you have completed
 three total sets.
               `
@@ -1678,6 +1736,211 @@ three total sets.
 
 
     /* =========================
+       WELCOME INTRO ANIMATION
+    ========================== */
+
+    let welcomeAnimationRun = 0;
+
+
+    function wait(milliseconds) {
+
+      return new Promise(resolve => {
+
+        setTimeout(
+          resolve,
+          milliseconds
+        );
+
+      });
+
+    }
+
+
+    async function typeText(
+      element,
+      text,
+      speed,
+      animationRun
+    ) {
+
+      element.textContent =
+        "";
+
+
+      for (
+        let characterIndex = 0;
+        characterIndex < text.length;
+        characterIndex++
+      ) {
+
+        if (
+          animationRun !==
+          welcomeAnimationRun
+        ) {
+
+          return false;
+
+        }
+
+
+        element.textContent +=
+          text.charAt(
+            characterIndex
+          );
+
+
+        await wait(
+          speed
+        );
+
+      }
+
+
+      return true;
+
+    }
+
+
+    async function playWelcomeIntro() {
+
+      const animationRun =
+        ++welcomeAnimationRun;
+
+
+      const quoteElement =
+        document.getElementById(
+          "welcomeIntroQuote"
+        );
+
+
+      const titleElement =
+        document.getElementById(
+          "welcomeIntroTitle"
+        );
+
+
+      if (
+        !quoteElement ||
+        !titleElement
+      ) {
+
+        return;
+
+      }
+
+
+      closeFaqLevelBtn.textContent =
+        "Start";
+
+
+      closeFaqLevelBtn.classList.add(
+        "welcome-start-button"
+      );
+
+
+      closeFaqLevelBtn.classList.remove(
+        "visible"
+      );
+
+
+      const quote =
+        `“You can, you should,
+and if you are brave enough to start,
+you will.”
+
+— Stephen King`;
+
+
+      const welcomeTitle =
+        "WELCOME TO OUTLIERS TRAINING CLUB";
+
+
+      await wait(
+        500
+      );
+
+
+      const quoteFinished =
+        await typeText(
+          quoteElement,
+          quote,
+          42,
+          animationRun
+        );
+
+
+      if (
+        !quoteFinished
+      ) {
+
+        return;
+
+      }
+
+
+      await wait(
+        650
+      );
+
+
+      const titleFinished =
+        await typeText(
+          titleElement,
+          welcomeTitle,
+          55,
+          animationRun
+        );
+
+
+      if (
+        !titleFinished
+      ) {
+
+        return;
+
+      }
+
+
+      await wait(
+        350
+      );
+
+
+      if (
+        animationRun !==
+        welcomeAnimationRun
+      ) {
+
+        return;
+
+      }
+
+
+      closeFaqLevelBtn.classList.add(
+        "visible"
+      );
+
+    }
+
+
+    function resetFaqModalButton() {
+
+      welcomeAnimationRun++;
+
+
+      closeFaqLevelBtn.textContent =
+        "Close";
+
+
+      closeFaqLevelBtn.classList.remove(
+        "welcome-start-button",
+        "visible"
+      );
+
+    }
+
+
+    /* =========================
        OPEN GETTING STARTED CARD
     ========================== */
 
@@ -1691,23 +1954,35 @@ three total sets.
             const guideName =
               button.dataset.guide;
 
+
             const guideContent =
               gettingStartedContent[
                 guideName
               ];
 
 
-            if (!guideContent) {
+            if (
+              !guideContent
+            ) {
+
               return;
+
             }
 
 
+            resetFaqModalButton();
+
+
             faqModalLabel.textContent =
-              "OUTLIERS GUIDE";
+              guideName === "welcome"
+                ? ""
+                : "OUTLIERS GUIDE";
 
 
             faqLevelTitle.textContent =
-              guideContent.title;
+              guideName === "welcome"
+                ? ""
+                : guideContent.title;
 
 
             faqLevelContent.innerHTML =
@@ -1724,6 +1999,15 @@ three total sets.
               "false"
             );
 
+
+            if (
+              guideName === "welcome"
+            ) {
+
+              playWelcomeIntro();
+
+            }
+
           }
         );
 
@@ -1739,84 +2023,96 @@ three total sets.
       cardContent
     ) {
 
-      if (!cardContent) {
+      if (
+        !cardContent
+      ) {
+
         return;
+
       }
 
 
       const objectivesHtml =
         cardContent.objectives
-          .map(objective => {
+          .map(
+            objective => {
 
-            return `
-              <div class="level-objective">
+              return `
+                <div class="level-objective">
 
-                <span>
-                  ${objective.name}
-                </span>
+                  <span>
+                    ${objective.name}
+                  </span>
 
-                <strong>
-                  ${objective.days}
-                </strong>
+                  <strong>
+                    ${objective.days}
+                  </strong>
 
-              </div>
-            `;
+                </div>
+              `;
 
-          })
+            }
+          )
           .join("");
 
 
       const paragraphsHtml =
         cardContent.paragraphs
-          .map(paragraph => {
+          .map(
+            paragraph => {
 
-            return `
-              <p>
-                ${paragraph.trim()}
-              </p>
-            `;
+              return `
+                <p>
+                  ${paragraph.trim()}
+                </p>
+              `;
 
-          })
+            }
+          )
           .join("");
 
 
       const dropdownsHtml =
         cardContent.dropdowns
-          .map(dropdown => {
+          .map(
+            dropdown => {
 
-            const dropdownParagraphs =
-              dropdown.paragraphs
-                .map(paragraph => {
+              const dropdownParagraphs =
+                dropdown.paragraphs
+                  .map(
+                    paragraph => {
 
-                  return `
-                    <p>
-                      ${paragraph.trim()}
-                    </p>
-                  `;
+                      return `
+                        <p>
+                          ${paragraph.trim()}
+                        </p>
+                      `;
 
-                })
-                .join("");
+                    }
+                  )
+                  .join("");
 
 
-            return `
-              <details class="lesson-dropdown">
+              return `
+                <details class="lesson-dropdown">
 
-                <summary>
-                  ${dropdown.title}
-                </summary>
+                  <summary>
+                    ${dropdown.title}
+                  </summary>
 
-                <div
-                  class="lesson-dropdown-content"
-                >
+                  <div
+                    class="lesson-dropdown-content"
+                  >
 
-                  ${dropdownParagraphs}
+                    ${dropdownParagraphs}
 
-                </div>
+                  </div>
 
-              </details>
-            `;
+                </details>
+              `;
 
-          })
+            }
+          )
           .join("");
 
 
@@ -1870,8 +2166,12 @@ three total sets.
           "click",
           () => {
 
-            if (button.disabled) {
+            if (
+              button.disabled
+            ) {
+
               return;
+
             }
 
 
@@ -1887,9 +2187,16 @@ three total sets.
               ];
 
 
-            if (!cardContent) {
+            if (
+              !cardContent
+            ) {
+
               return;
+
             }
+
+
+            resetFaqModalButton();
 
 
             faqModalLabel.textContent =
@@ -1926,7 +2233,9 @@ three total sets.
        CLOSE CARD
     ========================== */
 
-    if (closeFaqLevelBtn) {
+    if (
+      closeFaqLevelBtn
+    ) {
 
       closeFaqLevelBtn.addEventListener(
         "click",
@@ -1936,10 +2245,14 @@ three total sets.
             "active"
           );
 
+
           faqLevelModal.setAttribute(
             "aria-hidden",
             "true"
           );
+
+
+          resetFaqModalButton();
 
         }
       );
@@ -1952,7 +2265,9 @@ three total sets.
       outside of the card.
     */
 
-    if (faqLevelModal) {
+    if (
+      faqLevelModal
+    ) {
 
       faqLevelModal.addEventListener(
         "click",
@@ -1967,10 +2282,14 @@ three total sets.
               "active"
             );
 
+
             faqLevelModal.setAttribute(
               "aria-hidden",
               "true"
             );
+
+
+            resetFaqModalButton();
 
           }
 
@@ -1991,11 +2310,18 @@ three total sets.
         const user =
           await window.auth.requireAuth();
 
-        if (!user) {
+
+        if (
+          !user
+        ) {
+
           return;
+
         }
 
-      } catch (error) {
+      } catch (
+        error
+      ) {
 
         console.error(
           "Could not initialize FAQ page:",
