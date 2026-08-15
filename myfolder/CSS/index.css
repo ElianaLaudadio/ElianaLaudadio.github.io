@@ -661,3 +661,47 @@
 .faq-card-content p {
   margin-bottom: 14px;
 }
+
+
+
+  /* =========================
+     WELCOME INTRO ANIMATION
+  ========================== */
+
+  .welcome-intro-wrap {
+    min-height: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px 10px;
+    box-sizing: border-box;
+  }
+
+  .welcome-intro-quote {
+    width: 100%;
+    max-width: 680px;
+    min-height: 190px;
+    margin: 0 auto 30px;
+
+    font-family: "Caveat", cursive;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 500;
+    line-height: 1.2;
+
+    white-space: pre-line;
+  }
+
+  #onboardingContinueBtn.welcome-start-button {
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 5s ease;
+  }
+
+  #onboardingContinueBtn.welcome-start-button.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
